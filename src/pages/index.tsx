@@ -14,7 +14,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Test />
-      <main className={styles.main}>
+      <main
+        css={{
+          backgroundColor: 'yellow',
+        }}
+        className={styles.main}
+      >
         <div
           css={(theme) => ({
             fontSize: theme.fontSizes.sm,
