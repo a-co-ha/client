@@ -1,0 +1,18 @@
+diff --git a/types/jsx-namespace.d.ts b/types/jsx-namespace.d.ts
+index d43bee28c832376bff4d11acfd48ec8044cc05bb..a51085af574b33281fd70f9e7d00d55f5d914edf 100644
+--- a/types/jsx-namespace.d.ts
++++ b/types/jsx-namespace.d.ts
+@@ -2,11 +2,9 @@ import 'react'
+ import { Interpolation } from '@emotion/serialize'
+ import { Theme } from './index'
+ 
+-type WithConditionalCSSProp<P> = 'className' extends keyof P
+-  ? string extends P['className' & keyof P]
++type WithConditionalCSSProp<P extends { className?: any }> = string extends P['className']
+     ? { css?: Interpolation<Theme> }
+-    : {}
+-  : {}
++    : {};
+ 
+ // unpack all here to avoid infinite self-referencing when defining our own JSX namespace
+ type ReactJSXElement = JSX.Element

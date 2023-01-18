@@ -3,6 +3,7 @@ import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
 import Example from '@/atom/Headless';
 import Example2 from '@/atom/Switch';
+import Example3 from '@/atom/Menu';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +26,7 @@ export default function Home() {
       >
         <Example />
         <Example2 />
+        <Example3 />
         <div
           css={(theme) => ({
             fontSize: theme.fontSizes.sm,
