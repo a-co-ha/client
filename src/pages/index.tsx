@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
-import styles from '@/styles/Home.module.css';
 import Example from '@/atom/Headless';
 import Example2 from '@/atom/Switch';
 import Example3 from '@/atom/Menu';
@@ -22,7 +21,6 @@ export default function Home() {
         css={{
           backgroundColor: 'yellow',
         }}
-        className={styles.main}
       >
         <Example />
         <Example2 />
