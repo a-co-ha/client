@@ -16,8 +16,13 @@ export default function LoginForm() {
   const code: any = router.query['code'];
   console.log(code);
 
+  const getToken = async () => {
+    const token = await getGithubOathToken(code);
+    console.log(token);
+  };
+
   useEffect(() => {
-    if (code) getGithubOathToken(code);
+    if (code) getToken();
   }, [code]);
 
   return (

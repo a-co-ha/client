@@ -42,29 +42,25 @@ interface GitHubUser {
   updated_at: Date;
 }
 
-export const getGithubOathToken = async ({
-  code,
-}: {
-  code: string;
-}): Promise<GitHubOauthToken> => {
-  const rootUrl = 'https://github.com/login/oauth/access_token';
+export const getGithubOathToken = async (
+  code: string
+): Promise<GitHubOauthToken> => {
+  const rootUrl = '/login/oauth/access_token';
+  const options = {
+    client_id: process.env.NEXT_PUBLIC_APP_GITHUB_OAUTH_CLIENT_ID as string,
+    client_secret: process.env
+      .NEXT_PUBLIC_APP_GITHUB_OAUTH_CLIENT_SECRET as string,
+    code,
+  };
+
+  const queryString = qs.stringify(options);
 
   try {
-    console.log(code);
-    const { data } = await axios.post(
-      `/api/test`,
-      {
-        client_id: process.env.NEXT_PUBLIC_APP_GITHUB_OAUTH_CLIENT_ID as string,
-        client_secret: process.env
-          .NEXT_PUBLIC_APP_GITHUB_OAUTH_CLIENT_SECRET as string,
-        code: '6600ca6684e2fde7513d',
+    const { data } = await axios.post(`${rootUrl}?${queryString}`, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      {
-        headers: {
-          accept: 'application/json',
-        },
-      }
-    );
+    });
 
     const decoded = qs.parse(data) as GitHubOauthToken;
 
@@ -95,3 +91,24 @@ export const getGithubUser = async ({
     throw Error(err);
   }
 };
+
+/**
+ * const rootUrl = 'https://github.com/login/oauth/access_token';
+  console.log('실행');
+  try {
+    console.log(code);
+    const { data } = await axios.post(
+      `/api/login/oauth/access_token`,
+      {
+        client_id: process.env.NEXT_PUBLIC_APP_GITHUB_OAUTH_CLIENT_ID as string,
+        client_secret: process.env
+          .NEXT_PUBLIC_APP_GITHUB_OAUTH_CLIENT_SECRET as string,
+        code: 'a2d8b187bc3bc742a360',
+      },
+      {
+        headers: {
+          accept: 'application/json',
+        },
+      }
+    );
+ */

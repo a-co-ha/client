@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        destination: `https://github.com/login/oauth/access_token/:path*`,
+        destination: `https://github.com/:path*`,
       },
     ];
   },
