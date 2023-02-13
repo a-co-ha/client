@@ -1,6 +1,8 @@
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { EditablePage } from '@/components/editablePage';
+import { useRecoilValue } from 'recoil';
+import { blocksState } from '@/recoil/editableBlock/atom';
 
 interface msgType {
   data: {
@@ -10,11 +12,11 @@ interface msgType {
 }
 
 const IndexPage = (props: msgType) => {
-  return <EditablePage name={props.data} />;
+  return <EditablePage name={props} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const blocks = [{ tag: 'p', html: '', imageUrl: '' }];
+  const blocks = useRecoilValue(blocksState);
 
   const datas = await axios.post(
     `http://localhost:3000/test`,
@@ -25,12 +27,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     }
   );
-  const data = datas.data;
-  console.log(datas);
   return {
-    props: {
-      data,
-    },
+    props: datas.data,
   };
 };
 
