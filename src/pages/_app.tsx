@@ -27,10 +27,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <RecoilRoot>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
         <Component {...pageProps} />
-      </RecoilRoot>
-    </ThemeProvider>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }

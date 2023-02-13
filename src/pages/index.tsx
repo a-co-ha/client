@@ -1,35 +1,37 @@
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { EditablePage } from '@/components/editablePage';
-import { useRecoilValue } from 'recoil';
-import { blocksState } from '@/recoil/editableBlock/atom';
+import { page } from '@/components/editablePage/types';
 
-interface msgType {
-  data: {
-    title: string;
-    text: string;
-  };
-}
-
-const IndexPage = (props: msgType) => {
-  return <EditablePage name={props} />;
+const IndexPage = ({ id, fetchedBlocks, err }: page) => {
+  return <EditablePage id={id} fetchedBlocks={fetchedBlocks} err={err} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const blocks = useRecoilValue(blocksState);
-
-  const datas = await axios.post(
-    `http://localhost:3000/test`,
-    { blocks },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
-  return {
-    props: datas.data,
-  };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const blocks = [{ tag: 'p', html: '', imageUrl: '' }];
+  const res = context.res;
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/pages`,
+      { blocks },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const pageId = response.data.pageId;
+    const creator = response.data.creator;
+    const query = !creator ? '?public=true' : '';
+    res.writeHead(302, { Location: `/page/${pageId}` });
+    res.end();
+    return { props: {} };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: { fetchedBlocks: null, id: null, err: true },
+    };
+  }
 };
 
 export default IndexPage;
