@@ -3,7 +3,7 @@ import { deleteBlockHandler } from './deleteBlock';
 import { updatePageOnserver } from './updatePageOnServer';
 import { updateBlockHandler } from './updateBlock';
 import { deleteImageOnServer } from './deleteImageOnServer';
-import { onDragEnd } from './onDragEnd';
+import { onDragEndHandler } from './onDragEnd';
 
 export {
   addBlockHandler,
@@ -11,5 +11,5 @@ export {
   updatePageOnserver,
   updateBlockHandler,
   deleteImageOnServer,
-  onDragEnd,
+  onDragEndHandler,
 };

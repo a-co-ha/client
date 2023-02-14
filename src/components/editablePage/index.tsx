@@ -1,30 +1,33 @@
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { blocksState, currnetBlockIdState } from '@/recoil/editableBlock/atom';
-import { addBlockHandler } from './handlers';
+import {
+  updatePageOnserver,
+  addBlockHandler,
+  updateBlockHandler,
+  deleteBlockHandler,
+  onDragEndHandler,
+} from './handlers';
 import { page } from '@/components/editablePage/types';
 import { EditableBlock } from '../editableBlock';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { usePrevious } from '@/hooks/usePrevious';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [blocks, setBlocks] = useRecoilState(blocksState);
   setBlocks(fetchedBlocks);
   const [currnetBlockId, setCurrnetBlockId] =
     useRecoilState(currnetBlockIdState);
+  const prevBlcoks = usePrevious(blocks);
 
-  const onDragEndHandler = (result: any) => {
-    const { destination, source } = result;
+  //block 변화시 put
+  useEffect(() => {
+    updatePageOnserver(blocks, id);
+    prevBlcoks && prevBlcoks !== blocks ? updatePageOnserver(blocks, id) : null;
+  }, [blocks, prevBlcoks]);
 
-    // If we don't have a destination (due to dropping outside the droppable)
-    // or the destination hasn't changed, we change nothing
-    if (!destination || destination.index === source.index) {
-      return;
-    }
-
-    const updatedBlocks = [...blocks];
-    const removedBlocks = updatedBlocks.splice(source.index - 1, 1);
-    updatedBlocks.splice(destination.index - 1, 0, removedBlocks[0]);
-    setBlocks(updatedBlocks);
-  };
+  //block 삭제시 커서를 전 블럭 끝으로 위치
+  useEffect(() => {});
 
   console.log('blocks', id, blocks);
   return (
@@ -44,6 +47,8 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
                   imageUrl={block.imageUrl}
                   pageId={id}
                   addBlock={addBlockHandler}
+                  updateBlock={updateBlockHandler}
+                  deleteBlock={deleteBlockHandler}
                 ></EditableBlock>
               );
             })}
@@ -57,11 +62,4 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
 
 /**
  * updatePageOnServer
-
-deleteImageOnServer
-
-addBlockHandler
-updateBlockHandler
-deleteBlockHandler
-onDragEndHandler
  */

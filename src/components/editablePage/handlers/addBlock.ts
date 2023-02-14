@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { blocksState, currnetBlockIdState } from '@/recoil/editableBlock/atom';
 import { nanoId } from '@/utils/nanoId';
-import { block } from '@/components/editablePage/types';
+import { block } from '../types';
 
 export const addBlockHandler = (currentBlock: block) => {
   const setCurrentBlockId = useSetRecoilState(currnetBlockIdState);
