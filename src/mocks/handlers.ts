@@ -24,6 +24,7 @@ const handlers = [
         page: {
           blocks: [
             {
+              _id: '1',
               tag: 'p',
               html: 'testPage',
               imageUrl: '',

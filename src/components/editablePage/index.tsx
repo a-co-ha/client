@@ -10,7 +10,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [currnetBlockId, setCurrnetBlockId] =
     useRecoilState(currnetBlockIdState);
 
-  console.log(id, fetchedBlocks);
+  console.log('blocks', id, blocks);
   return (
     <div>
       {blocks.map((block) => {
