@@ -9,7 +9,6 @@ import {
   onDragEndHandler,
 } from './handlers';
 import { page } from '@/components/editablePage/types';
-import { EditableBlock } from '../editableBlock';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 
@@ -59,7 +58,3 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
     </DragDropContext>
   );
 };
-
-/**
- * updatePageOnServer
- */
