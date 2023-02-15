@@ -1,22 +1,23 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { blocksState, currnetBlockIdState } from '@/recoil/editableBlock/atom';
 import {
   updatePageOnserver,
-  addBlockHandler,
-  updateBlockHandler,
-  deleteBlockHandler,
-  onDragEndHandler,
+  addBlock,
+  updateBlock,
+  deleteBlock,
+  onDragEnd,
 } from './handlers';
-import { page } from '@/components/editablePage/types';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
+import { EditableBlock } from '@/components/editableBlock';
+import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
+import type { AddBlock, page, block, DropResult } from '../editablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [blocks, setBlocks] = useRecoilState(blocksState);
   setBlocks(fetchedBlocks);
-  const [currnetBlockId, setCurrnetBlockId] =
-    useRecoilState(currnetBlockIdState);
+  const [currentBlockId, setCurrentBlockId] =
+    useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
 
   //block 변화시 put
@@ -27,6 +28,27 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
 
   //block 삭제시 커서를 전 블럭 끝으로 위치
   useEffect(() => {});
+
+  const addBlockHandler = (currentBlock: AddBlock) => {
+    setCurrentBlockId(currentBlock.id);
+    const updatedBlocks = addBlock(blocks, currentBlock);
+    setBlocks(updatedBlocks);
+  };
+
+  const updateBlockHandler = (currentBlock: block) => {
+    const updatedBlocks = updateBlock(blocks, currentBlock);
+    setBlocks(updatedBlocks);
+  };
+
+  const deleteBlockHandler = (currentBlockId: string) => {
+    const updatedBlocks = deleteBlock(blocks, currentBlockId);
+    setBlocks(updatedBlocks);
+  };
+
+  const onDragEndHandler = (result: DropResult) => {
+    const updatedBlocks = onDragEnd(blocks, result);
+    updatedBlocks && setBlocks(updatedBlocks);
+  };
 
   console.log('blocks', id, blocks);
   return (

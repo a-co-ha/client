@@ -1,15 +1,15 @@
-import { addBlockHandler } from './addBlock';
-import { deleteBlockHandler } from './deleteBlock';
+import { addBlock } from './addBlock';
+import { deleteBlock } from './deleteBlock';
 import { updatePageOnserver } from './updatePageOnServer';
-import { updateBlockHandler } from './updateBlock';
+import { updateBlock } from './updateBlock';
 import { deleteImageOnServer } from './deleteImageOnServer';
-import { onDragEndHandler } from './onDragEnd';
+import { onDragEnd } from './onDragEnd';
 
 export {
-  addBlockHandler,
-  deleteBlockHandler,
+  addBlock,
+  deleteBlock,
   updatePageOnserver,
-  updateBlockHandler,
+  updateBlock,
   deleteImageOnServer,
-  onDragEndHandler,
+  onDragEnd,
 };

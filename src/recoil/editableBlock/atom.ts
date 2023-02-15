@@ -16,7 +16,7 @@ export const blocksState = atom({
   ],
 });
 
-export const currnetBlockIdState = atom({
+export const currentBlockIdState = atom({
   key: 'currentBlockId',
   default: '',
 });

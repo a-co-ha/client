@@ -34,6 +34,23 @@ const handlers = [
       })
     );
   }),
+  rest.put(`http://localhost:3000/pages/:id`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        page: {
+          blocks: [
+            {
+              _id: '1',
+              tag: 'p',
+              html: 'testPage',
+              imageUrl: '',
+            },
+          ],
+        },
+      })
+    );
+  }),
 ];
 
 export default handlers;

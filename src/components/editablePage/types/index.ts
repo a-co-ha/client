@@ -6,8 +6,8 @@ export interface editableBlock {
   html: string;
   imageUrl: string;
   pageId: string;
-  addBlock: (currentBlock: block) => void;
-  deleteBlock?: (currentBlock: block) => void;
+  addBlock: (currentBlock: AddBlock) => void;
+  deleteBlock: (currentBlockId: string) => void;
   updateBlock: (currentBlock: block) => void;
 }
 /**
@@ -38,4 +38,13 @@ export interface DropResult {
   type: string;
   source: DraggableLocation;
   destination: DraggableLocation | undefined | null;
+}
+
+//addBlock
+export interface AddBlock {
+  id: string;
+  html: string;
+  tag: string;
+  imageUrl: string;
+  ref: React.MutableRefObject<null> | null;
 }

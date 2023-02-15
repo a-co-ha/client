@@ -1,6 +1,4 @@
 import { block } from '../types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { blocksState } from '@/recoil/editableBlock/atom';
 import { deleteImageOnServer } from './deleteImageOnServer';
 
 /**
@@ -9,9 +7,7 @@ import { deleteImageOnServer } from './deleteImageOnServer';
  * updatedBlocks로 setBlocks함
  * 추가로 imageUrl가 변하면 oldBlock변수로 체크, 다를 시 deleteImageOnserver handler 실행
  */
-export const updateBlockHandler = (currentBlock: block) => {
-  const blocks = useRecoilValue(blocksState);
-  const setBlocks = useSetRecoilState(blocksState);
+export const updateBlock = (blocks: block[], currentBlock: block) => {
   const index = blocks.map((b) => b._id).indexOf(currentBlock._id);
   const oldBlock = blocks[index];
   const updatedBlocks = [...blocks];
@@ -21,8 +17,8 @@ export const updateBlockHandler = (currentBlock: block) => {
     html: currentBlock.html,
     imageUrl: currentBlock.imageUrl,
   };
-  setBlocks(updatedBlocks);
   oldBlock.imageUrl !== currentBlock.imageUrl
     ? deleteImageOnServer(oldBlock.imageUrl)
     : null;
+  return updatedBlocks;
 };

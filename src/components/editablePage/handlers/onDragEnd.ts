@@ -1,6 +1,4 @@
-import { DropResult } from '../types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { blocksState } from '@/recoil/editableBlock/atom';
+import type { DropResult, block } from '../types';
 /**
  *
  * result: DropResult type
@@ -10,11 +8,8 @@ import { blocksState } from '@/recoil/editableBlock/atom';
  * result.destination: Draggable이 끝난 위치(location).
  * 만약에 Draggable이 시작한 위치와 같은 위치로 돌아오면 이 destination값은 null이 될것입니다
  */
-export const onDragEndHandler = (result: DropResult) => {
+export const onDragEnd = (blocks: block[], result: DropResult) => {
   const { destination, source } = result;
-  const blocks = useRecoilValue(blocksState);
-  const setBlocks = useSetRecoilState(blocksState);
-
   if (!destination || destination.index === source.index) {
     return;
   }
@@ -27,5 +22,5 @@ export const onDragEndHandler = (result: DropResult) => {
   const updatedBlocks = [...blocks];
   const removedBlocks = updatedBlocks.splice(source.index - 1, 1);
   updatedBlocks.splice(destination.index - 1, 0, removedBlocks[0]);
-  setBlocks(updatedBlocks);
+  return updatedBlocks;
 };
