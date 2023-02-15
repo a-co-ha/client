@@ -28,11 +28,18 @@ export interface page {
 }
 
 // react-beautiful-dnd
-// onDragEnd type
-export interface DraggableLocation {
+// onDragStart
+interface DraggableLocation {
   droppableId: string;
   index: number;
 }
+
+export interface DragStart {
+  draggableId: string;
+  type: string;
+  source: DraggableLocation;
+}
+// onDragEnd
 export interface DropResult {
   draggableId: string;
   type: string;

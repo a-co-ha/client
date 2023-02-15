@@ -7,15 +7,17 @@ import {
   deleteBlock,
   onDragEnd,
 } from './handlers';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editableBlock';
 import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
-import type { AddBlock, page, block, DropResult } from '../editablePage/types';
+import type { AddBlock, page, block } from '../editablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [blocks, setBlocks] = useRecoilState(blocksState);
+  // useEffect(() => {
   setBlocks(fetchedBlocks);
+  // }, []);
   const [currentBlockId, setCurrentBlockId] =
     useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
@@ -52,31 +54,35 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
 
   console.log('blocks', id, blocks);
   return (
-    <DragDropContext onDragEnd={onDragEndHandler}>
-      <Droppable droppableId={id}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {blocks.map((block) => {
-              const position = blocks.map((b) => b._id).indexOf(block._id) + 1;
-              return (
-                <EditableBlock
-                  key={block._id}
-                  position={position}
-                  id={block._id}
-                  tag={block.tag}
-                  html={block.html}
-                  imageUrl={block.imageUrl}
-                  pageId={id}
-                  addBlock={addBlockHandler}
-                  updateBlock={updateBlockHandler}
-                  deleteBlock={deleteBlockHandler}
-                ></EditableBlock>
-              );
-            })}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <DragDropContext onDragEnd={onDragEndHandler}>
+        <Droppable droppableId={id}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {blocks.map((block) => {
+                const position =
+                  blocks.map((b) => b._id).indexOf(block._id) + 1;
+                console.log(block._id);
+                return (
+                  <EditableBlock
+                    key={block._id}
+                    position={position}
+                    id={block._id}
+                    tag={block.tag}
+                    html={block.html}
+                    imageUrl={block.imageUrl}
+                    pageId={id}
+                    addBlock={addBlockHandler}
+                    updateBlock={updateBlockHandler}
+                    deleteBlock={deleteBlockHandler}
+                  />
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 };

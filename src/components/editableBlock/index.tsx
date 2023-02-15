@@ -29,7 +29,7 @@ export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef(null);
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
-    html: 'testBlock',
+    html: '',
     tag: 'p',
     imageUrl: '',
     placeholder: false,
@@ -47,21 +47,45 @@ export const EditableBlock = (props: editableBlock) => {
     },
   });
   console.log(state);
+  interface Placeholder {
+    block: any;
+    position: number;
+    content: string;
+  }
+
+  const addPlaceholder = ({ block, position, content }: Placeholder) => {
+    const isFirstBlockWithoutHtml = position === 1 && !content;
+    const isFirstBlockWithoutSibling = !block.parentElement.nextElementSibling;
+    if (isFirstBlockWithoutHtml && isFirstBlockWithoutSibling) {
+      setState({
+        ...state,
+        html: 'Type a page title...',
+        tag: 'h1',
+        imageUrl: '',
+        placeholder: true,
+        isTyping: false,
+      });
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   useEffect(() => {
     // Add a placeholder if the first block has no sibling elements and no content
-    // const hasPlaceholder = this.addPlaceholder({
-    //   block: contentEditable.current,
-    //   position: props.position,
-    //   content: props.html || props.imageUrl,
-    // });
-    // if (!hasPlaceholder) {
-    //   setState({
-    //     ...state,
-    //     html: props.html,
-    //     tag: props.tag,
-    //     imageUrl: props.imageUrl,
-    //   });
-    // }
+    const hasPlaceholder = addPlaceholder({
+      block: contentEditable.current,
+      position: props.position,
+      content: props.html || props.imageUrl,
+    });
+    if (!hasPlaceholder) {
+      setState({
+        ...state,
+        html: props.html,
+        tag: props.tag,
+        imageUrl: props.imageUrl,
+      });
+    }
   }, []);
 
   const handleChange = (e: ContentEditableEvent) => {
@@ -104,30 +128,6 @@ export const EditableBlock = (props: editableBlock) => {
             __html: string;
         };
  */
-
-  interface Placeholder {
-    block: any;
-    position: number;
-    content: string;
-  }
-
-  const addPlaceholder = ({ block, position, content }: Placeholder) => {
-    const isFirstBlockWithoutHtml = position === 1 && !content;
-    const isFirstBlockWithoutSibling = !block.parentElement.nextElementSibling;
-    if (isFirstBlockWithoutHtml && isFirstBlockWithoutSibling) {
-      setState({
-        ...state,
-        html: 'Type a page title...',
-        tag: 'h1',
-        imageUrl: '',
-        placeholder: true,
-        isTyping: false,
-      });
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const handleFocus = () => {
     // If a placeholder is set, we remove it when the block gets focused
@@ -196,12 +196,16 @@ export const EditableBlock = (props: editableBlock) => {
     getSelection(block);
     console.log('bye');
   };
-
+  console.log('propsId', props.id);
   return (
     <>
-      <Draggable draggableId={props.id} index={props.position}>
+      <Draggable key={props.id} draggableId={props.id} index={props.position}>
         {(provided, snapshot) => (
-          <div ref={provided.innerRef} {...provided.draggableProps}>
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
             <ContentEditable
               innerRef={contentEditable}
               data-position={props.position}
