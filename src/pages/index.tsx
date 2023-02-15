@@ -25,6 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = !creator ? '?public=true' : '';
     res.writeHead(302, { Location: `/page/${pageId}` });
     res.end();
+
     return { props: {} };
   } catch (err) {
     console.log(err);
