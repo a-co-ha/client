@@ -14,7 +14,6 @@ export const updatePageOnserver = async (blocks: block[], id: string) => {
         },
       }
     );
-    console.log(res.data);
   } catch (err) {
     return console.log(err);
   }

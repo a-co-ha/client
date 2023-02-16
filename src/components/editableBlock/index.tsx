@@ -1,8 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
+import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
+import Image from 'next/image';
+import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editablePage/types';
 
 interface StateTypes {
@@ -15,17 +18,19 @@ interface StateTypes {
   isTyping: boolean;
   tagSelectorMenuOpen: boolean;
   tagSelectorMenuPosition: {
-    x: null;
-    y: null;
+    x: null | number;
+    y: null | number;
   };
   actionMenuOpen: boolean;
   actionMenuPosition: {
-    x: null;
-    y: null;
+    x: null | number;
+    y: null | number;
   };
 }
 
 export const EditableBlock = (props: editableBlock) => {
+  const [id, setId] = useState(props.id);
+
   const contentEditable = useRef(null);
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
@@ -46,7 +51,7 @@ export const EditableBlock = (props: editableBlock) => {
       y: null,
     },
   });
-  console.log(state);
+  //
   interface Placeholder {
     block: any;
     position: number;
@@ -55,7 +60,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   const addPlaceholder = ({ block, position, content }: Placeholder) => {
     const isFirstBlockWithoutHtml = position === 1 && !content;
-    const isFirstBlockWithoutSibling = !block.parentElement.nextElementSibling;
+    const isFirstBlockWithoutSibling = !block?.parentElement.nextElementSibling;
     if (isFirstBlockWithoutHtml && isFirstBlockWithoutSibling) {
       setState({
         ...state,
@@ -88,8 +93,8 @@ export const EditableBlock = (props: editableBlock) => {
     }
   }, []);
 
-  const handleChange = (e: ContentEditableEvent) => {
-    setState({ ...state, html: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+    setState({ ...state, html: e.target.innerText });
   };
 
   // const handleFocus = () => {
@@ -144,7 +149,6 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    console.log(e);
     // Show placeholder if block is still the only one and empty
     const hasPlaceholder = addPlaceholder({
       block: contentEditable.current,
@@ -187,41 +191,126 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === CMD_KEY) {
-      console.log('hi');
     }
   };
 
   const handleMouseUp = () => {
     const block = contentEditable.current;
     getSelection(block);
-    console.log('bye');
   };
-  console.log('propsId', props.id);
+
+  // drag
+  const calculateActionMenuPosition = (parent: any, initiator: string) => {
+    switch (initiator) {
+      // case "TEXT_SELECTION":
+      //   const { x: endX, y: endY } = getCaretCoordinates(false); // fromEnd
+      //   const { x: startX, y: startY } = getCaretCoordinates(true); // fromStart
+      //   const middleX = startX + (endX - startX) / 2;
+      //   return { x: middleX, y: startY };
+      case 'DRAG_HANDLE_CLICK':
+        const x =
+          parent.offsetLeft - parent.scrollLeft + parent.clientLeft - 90;
+        const y = parent.offsetTop - parent.scrollTop + parent.clientTop + 35;
+        return { x: x, y: y };
+      default:
+        return { x: null, y: null };
+    }
+  };
+  const closeActionMenu = () => {
+    setState({
+      ...state,
+      actionMenuPosition: { x: null, y: null },
+      actionMenuOpen: false,
+    });
+    document.removeEventListener('click', closeActionMenu, false);
+  };
+
+  const openActionMenu = (parent: EventTarget, trigger: string) => {
+    const { x, y } = calculateActionMenuPosition(parent, trigger);
+    setState({
+      ...state,
+      actionMenuPosition: { x: x, y: y },
+      actionMenuOpen: true,
+    });
+    // Add listener asynchronously to avoid conflicts with
+    // the double click of the text selection
+    setTimeout(() => {
+      document.addEventListener('click', closeActionMenu, false);
+    }, 100);
+  };
+  const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const dragHandle = e.target;
+    openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
+  };
+
   return (
     <>
-      <Draggable key={props.id} draggableId={props.id} index={props.position}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            <ContentEditable
-              innerRef={contentEditable}
-              data-position={props.position}
-              data-tag={state.tag}
-              html={state.html}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              onKeyDown={handleKeyDown}
-              onKeyUp={handleKeyUp}
-              onMouseUp={handleMouseUp}
-              tagName={state.tag}
-            />
-          </div>
-        )}
-      </Draggable>
+      {id && (
+        <Draggable key={props.id} draggableId={props.id} index={props.position}>
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              css={draggable}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <div
+                contentEditable
+                suppressContentEditableWarning
+                ref={contentEditable}
+                key={props.id}
+                css={block}
+                data-position={props.position}
+                data-tag={state.tag}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onKeyDown={handleKeyDown}
+                onKeyUp={handleKeyUp}
+                onMouseUp={handleMouseUp}
+              >
+                {state.html}
+              </div>
+              <span
+                css={dragHandle}
+                role="button"
+                tabIndex={0}
+                onClick={handleDragHandleClick}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Image src={DragHandleIcon} alt="Icon" />
+              </span>
+            </div>
+          )}
+        </Draggable>
+      )}
     </>
   );
 };
+
+const draggable = css`
+  display: block;
+  &:hover {
+    span {
+      opacity: 1;
+    }
+  }
+`;
+
+const dragHandle = css`
+  opacity: 0;
+  display: inline-block;
+  width: 1rem;
+  img {
+    display: block;
+    margin: auto;
+  }
+`;
+const block = css`
+  display: inline-block;
+  width: calc(100% - 1rem);
+  padding: 0.25rem;
+  -webkit-user-select: text;
+  user-select: text;
+`;

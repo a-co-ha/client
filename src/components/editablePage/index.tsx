@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   updatePageOnserver,
@@ -7,7 +7,13 @@ import {
   deleteBlock,
   onDragEnd,
 } from './handlers';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Droppable,
+  DropResult,
+  Draggable,
+  DragStart,
+} from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editableBlock';
 import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
@@ -15,9 +21,9 @@ import type { AddBlock, page, block } from '../editablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [blocks, setBlocks] = useRecoilState(blocksState);
-  // useEffect(() => {
-  setBlocks(fetchedBlocks);
-  // }, []);
+  useEffect(() => {
+    setBlocks(fetchedBlocks);
+  }, []);
   const [currentBlockId, setCurrentBlockId] =
     useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
@@ -29,7 +35,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   }, [blocks, prevBlcoks]);
 
   //block 삭제시 커서를 전 블럭 끝으로 위치
-  useEffect(() => {});
+  // useEffect(() => {});
 
   const addBlockHandler = (currentBlock: AddBlock) => {
     setCurrentBlockId(currentBlock.id);
@@ -52,32 +58,59 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
     updatedBlocks && setBlocks(updatedBlocks);
   };
 
-  console.log('blocks', id, blocks);
+  // const onDragEndHandler = (result: DropResult) => {
+  //   const { destination, source } = result;
+
+  //   // If we don't have a destination (due to dropping outside the droppable)
+  //   // or the destination hasn't changed, we change nothing
+  //   if (!destination || destination.index === source.index) {
+  //     return;
+  //   }
+
+  //   const updatedBlocks = [...blocks];
+  //   const removedBlocks = updatedBlocks.splice(source.index, 1);
+  //   updatedBlocks.splice(destination.index, 0, removedBlocks[0]);
+  //   setBlocks(updatedBlocks);
+  // };
+
+  console.log(blocks);
   return (
     <>
       <DragDropContext onDragEnd={onDragEndHandler}>
-        <Droppable droppableId={id}>
+        <Droppable key={id} droppableId="ddd">
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {blocks.map((block) => {
-                const position =
-                  blocks.map((b) => b._id).indexOf(block._id) + 1;
-                console.log(block._id);
-                return (
-                  <EditableBlock
-                    key={block._id}
-                    position={position}
-                    id={block._id}
-                    tag={block.tag}
-                    html={block.html}
-                    imageUrl={block.imageUrl}
-                    pageId={id}
-                    addBlock={addBlockHandler}
-                    updateBlock={updateBlockHandler}
-                    deleteBlock={deleteBlockHandler}
-                  />
-                );
-              })}
+            <div
+              // className="ddd"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {blocks.map((e: any, i: number) => (
+                <Draggable
+                  draggableId={`test-${e._id}`}
+                  index={i}
+                  key={`test-${e._id}`}
+                >
+                  {(provided, snapshot) => {
+                    return (
+                      <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        <h3
+                          css={{
+                            outline: '1px solid limegreen',
+                            padding: '10px',
+                            margin: '5px',
+                          }}
+                        >
+                          {e.html}
+                        </h3>
+                      </div>
+                    );
+                  }}
+                </Draggable>
+              ))}
               {provided.placeholder}
             </div>
           )}

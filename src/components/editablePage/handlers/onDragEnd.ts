@@ -1,4 +1,5 @@
-import type { DropResult, block } from '../types';
+import type { block } from '../types';
+import type { DropResult } from 'react-beautiful-dnd';
 /**
  *
  * result: DropResult type
@@ -20,7 +21,7 @@ export const onDragEnd = (blocks: block[], result: DropResult) => {
    * 2. 목적지 블럭 index에 지운 블럭을 추가한다 (원래 블럭은 자동으로 밀림)
    */
   const updatedBlocks = [...blocks];
-  const removedBlocks = updatedBlocks.splice(source.index - 1, 1);
-  updatedBlocks.splice(destination.index - 1, 0, removedBlocks[0]);
+  const removedBlocks = updatedBlocks.splice(source.index, 1);
+  updatedBlocks.splice(destination.index, 0, removedBlocks[0]);
   return updatedBlocks;
 };
