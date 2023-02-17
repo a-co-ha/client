@@ -73,35 +73,36 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   //   setBlocks(updatedBlocks);
   // };
 
-  console.log(blocks);
   return (
     <>
-      <DragDropContext onDragEnd={onDragEndHandler}>
-        <Droppable key={id} droppableId={id}>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {blocks.map((block) => {
-                const position = blocks.map((b) => b._id).indexOf(block._id);
-                return (
-                  <EditableBlock
-                    key={block._id}
-                    position={position}
-                    id={block._id}
-                    tag={block.tag}
-                    html={block.html}
-                    imageUrl={block.imageUrl}
-                    pageId={id}
-                    addBlock={addBlockHandler}
-                    updateBlock={updateBlockHandler}
-                    deleteBlock={deleteBlockHandler}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      {blocks && (
+        <DragDropContext onDragEnd={onDragEndHandler}>
+          <Droppable key={id} droppableId={id}>
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {blocks.map((block) => {
+                  const position = blocks.map((b) => b._id).indexOf(block._id);
+                  return (
+                    <EditableBlock
+                      key={block._id}
+                      position={position}
+                      id={block._id}
+                      tag={block.tag}
+                      html={block.html}
+                      imageUrl={block.imageUrl}
+                      pageId={id}
+                      addBlock={addBlockHandler}
+                      updateBlock={updateBlockHandler}
+                      deleteBlock={deleteBlockHandler}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
     </>
   );
 };
