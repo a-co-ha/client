@@ -15,9 +15,9 @@ import {
   DragStart,
 } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
-import { EditableBlock } from '@/components/editableBlock';
+import { EditableBlock } from '@/components/EditableBlock';
 import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
-import type { AddBlock, page, block } from '../editablePage/types';
+import type { AddBlock, page, block } from '../EditablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [blocks, setBlocks] = useRecoilState(blocksState);

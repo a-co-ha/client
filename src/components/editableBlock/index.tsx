@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
-import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
-import type { editableBlock } from '../editablePage/types';
-
+import type { editableBlock } from '../EditablePage/types';
+import { CMD_KEY } from '@/utils/const';
 interface StateTypes {
   htmlBackup: null | string;
   html: string;
