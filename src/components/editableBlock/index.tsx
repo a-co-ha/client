@@ -29,8 +29,6 @@ interface StateTypes {
 }
 
 export const EditableBlock = (props: editableBlock) => {
-  const [id, setId] = useState(props.id);
-
   const contentEditable = useRef(null);
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
@@ -245,7 +243,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   return (
     <>
-      {id && (
+      {props.id && (
         <Draggable key={props.id} draggableId={props.id} index={props.position}>
           {(provided, snapshot) => (
             <div
@@ -313,4 +311,7 @@ const block = css`
   padding: 0.25rem;
   -webkit-user-select: text;
   user-select: text;
+  outline: 2px solid limegreen;
+  padding: 10px;
+  margin: 1px;
 `;

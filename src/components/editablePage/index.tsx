@@ -77,40 +77,26 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   return (
     <>
       <DragDropContext onDragEnd={onDragEndHandler}>
-        <Droppable key={id} droppableId="ddd">
+        <Droppable key={id} droppableId={id}>
           {(provided) => (
-            <div
-              // className="ddd"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {blocks.map((e: any, i: number) => (
-                <Draggable
-                  draggableId={`test-${e._id}`}
-                  index={i}
-                  key={`test-${e._id}`}
-                >
-                  {(provided, snapshot) => {
-                    return (
-                      <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                      >
-                        <h3
-                          css={{
-                            outline: '1px solid limegreen',
-                            padding: '10px',
-                            margin: '5px',
-                          }}
-                        >
-                          {e.html}
-                        </h3>
-                      </div>
-                    );
-                  }}
-                </Draggable>
-              ))}
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {blocks.map((block) => {
+                const position = blocks.map((b) => b._id).indexOf(block._id);
+                return (
+                  <EditableBlock
+                    key={block._id}
+                    position={position}
+                    id={block._id}
+                    tag={block.tag}
+                    html={block.html}
+                    imageUrl={block.imageUrl}
+                    pageId={id}
+                    addBlock={addBlockHandler}
+                    updateBlock={updateBlockHandler}
+                    deleteBlock={deleteBlockHandler}
+                  />
+                );
+              })}
               {provided.placeholder}
             </div>
           )}
