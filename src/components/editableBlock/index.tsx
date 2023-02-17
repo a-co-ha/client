@@ -16,6 +16,7 @@ interface StateTypes {
   imageUrl: string;
   previousKey: null | string;
   isTyping: boolean;
+  placeholder: boolean;
 }
 
 export const EditableBlock = (props: editableBlock) => {
@@ -28,20 +29,26 @@ export const EditableBlock = (props: editableBlock) => {
     imageUrl: '',
     previousKey: null,
     isTyping: false,
+    placeholder: false,
   });
   console.log(props);
   console.log(state);
 
   const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+    console.log(e);
     setState({ ...state, html: e.target.innerText });
   };
 
   const handleFocus = () => {
-    setState({
-      ...state,
-      html: '',
-      isTyping: true,
-    });
+    //placeholder state를 만들어야함
+    if (state.placeholder) {
+      setState({
+        ...state,
+        html: '',
+        isTyping: true,
+        placeholder: false,
+      });
+    }
   };
 
   const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -56,11 +63,13 @@ export const EditableBlock = (props: editableBlock) => {
   useEffect(() => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
-      setState({ ...state, html: 'dsafa' });
+      //html에 빈값이 처음부터 들어와서  placeholder가 나오지 않음
+      setState({ ...state, html: 'dsafa', placeholder: true });
     }
+    console.log(contentEditable);
   }, []);
 
-  const handleKeyDown = () => {};
+  const handleKeyDown = (e: React.KeyboardEvent) => {};
 
   return (
     <>
