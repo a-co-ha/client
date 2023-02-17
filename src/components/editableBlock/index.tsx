@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
-import ContentEditable from 'react-contenteditable';
 import { CMD_KEY } from '@/utils/const';
 import * as styles from './styles';
 import DragHandleIcon from '@/images/draggable.svg';
@@ -174,7 +173,6 @@ export const EditableBlock = (props: editableBlock) => {
       // Only the Shift-Enter-combination should add a new paragraph,
       // i.e. Shift-Enter acts as the default enter behaviour
       e.preventDefault();
-      console.log();
       contentEditable.current
         ? props.addBlock({
             id: props.id,
@@ -273,7 +271,7 @@ export const EditableBlock = (props: editableBlock) => {
                 suppressContentEditableWarning
                 ref={contentEditable}
                 key={props.id}
-                css={styles.block}
+                css={styles.block(snapshot.isDragging, snapshot.dropAnimation)}
                 data-position={props.position}
                 data-tag={state.tag}
                 onChange={handleChange}

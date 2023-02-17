@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { DropAnimation } from 'react-beautiful-dnd';
 
 export const draggable = css`
   display: block;
@@ -18,13 +19,16 @@ export const dragHandle = css`
     margin: auto;
   }
 `;
-export const block = css`
+export const block = (
+  isDragging: boolean,
+  dropAnimating: DropAnimation | undefined | null
+) => css`
   display: inline-block;
   width: calc(100% - 1.2rem);
   padding: 0.25rem;
+  margin: 1px;
+  background-color: ${isDragging ? '#F5F6FB' : null};
+  outline: ${dropAnimating ? '2px solid limegreen' : null};
   -webkit-user-select: text;
   user-select: text;
-  outline: 2px solid limegreen;
-  padding: 10px;
-  margin: 1px;
 `;
