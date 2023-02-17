@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
+import ContentEditable from 'react-contenteditable';
 import { CMD_KEY } from '@/utils/const';
 import * as styles from './styles';
 import DragHandleIcon from '@/images/draggable.svg';
@@ -25,9 +26,8 @@ interface StateTypes {
     y: null | number;
   };
 }
-
 export const EditableBlock = (props: editableBlock) => {
-  const contentEditable = useRef(null);
+  const contentEditable = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
     html: '',
@@ -90,6 +90,7 @@ export const EditableBlock = (props: editableBlock) => {
   }, []);
 
   const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+    console.log(state.html);
     setState({ ...state, html: e.target.innerText });
   };
 
@@ -173,21 +174,28 @@ export const EditableBlock = (props: editableBlock) => {
       // Only the Shift-Enter-combination should add a new paragraph,
       // i.e. Shift-Enter acts as the default enter behaviour
       e.preventDefault();
-      props.addBlock({
-        id: props.id,
-        html: state.html,
-        tag: state.tag,
-        imageUrl: state.imageUrl,
-        ref: contentEditable.current,
-      });
+      console.log();
+      contentEditable.current
+        ? props.addBlock({
+            id: props.id,
+            html: contentEditable.current.innerText,
+            tag: state.tag,
+            imageUrl: state.imageUrl,
+            ref: contentEditable.current,
+          })
+        : null;
     }
     // We need the previousKey to detect a Shift-Enter-combination
+    if (state.previousKey === 'Shift') {
+      return;
+    }
     setState({ ...state, previousKey: e.key });
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === CMD_KEY) {
     }
+    if (e.key === 'Shift') state.previousKey = null;
   };
 
   const handleMouseUp = () => {

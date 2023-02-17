@@ -17,7 +17,7 @@ import type { AddBlock, page, block } from '../EditablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   if (err) {
-    <Notice status="ERROR" />;
+    return <Notice status="ERROR" />;
   }
   const [blocks, setBlocks] = useRecoilState(blocksState);
   useEffect(() => {
