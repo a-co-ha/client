@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import {
   updatePageOnserver,
@@ -7,19 +8,17 @@ import {
   deleteBlock,
   onDragEnd,
 } from './handlers';
-import {
-  DragDropContext,
-  Droppable,
-  DropResult,
-  Draggable,
-  DragStart,
-} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/EditableBlock';
 import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
+import { Notice } from '@/components/Notice';
 import type { AddBlock, page, block } from '../EditablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
+  if (err) {
+    <Notice status="ERROR" />;
+  }
   const [blocks, setBlocks] = useRecoilState(blocksState);
   useEffect(() => {
     setBlocks(fetchedBlocks);
@@ -27,6 +26,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [currentBlockId, setCurrentBlockId] =
     useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
+  const router = useRouter();
 
   //block 변화시 put
   useEffect(() => {
@@ -72,10 +72,11 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   //   updatedBlocks.splice(destination.index, 0, removedBlocks[0]);
   //   setBlocks(updatedBlocks);
   // };
-
+  const isNewPage = router.query.public === 'true';
   console.log(blocks);
   return (
     <>
+      {isNewPage && <Notice status="SUCCESS" />}
       <DragDropContext onDragEnd={onDragEndHandler}>
         <Droppable key={id} droppableId={id}>
           {(provided) => (
