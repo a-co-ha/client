@@ -20,7 +20,7 @@ interface StateTypes {
 }
 
 export const EditableBlock = (props: editableBlock) => {
-  const contentEditable = useRef(null);
+  const contentEditable = useRef<HTMLDivElement>(null);
 
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
@@ -31,13 +31,16 @@ export const EditableBlock = (props: editableBlock) => {
     isTyping: false,
     placeholder: false,
   });
-  console.log(props);
-  console.log(state);
+  console.log('props', props);
+  console.log('state', state);
 
-  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
-    console.log(e);
-    setState({ ...state, html: e.target.innerText });
-  };
+  // const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+  // console.log(e);
+  // 입력 시 change event가 아니라 input event가 동작한다.
+  // 또한, input이 아니기 때문에 value 값이 없다.
+  // 이 때문에 제어 컴포넌트처럼 리액트가 DOM을 제어할 수가 없다.
+  //   setState({ ...state, html: e.target.innerText });
+  // };
 
   const handleFocus = () => {
     //placeholder state를 만들어야함
@@ -64,12 +67,37 @@ export const EditableBlock = (props: editableBlock) => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
       //html에 빈값이 처음부터 들어와서  placeholder가 나오지 않음
-      setState({ ...state, html: 'dsafa', placeholder: true });
+      setState({ ...state, html: '제목 없음', placeholder: true });
     }
     console.log(contentEditable);
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {};
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && state.previousKey === 'Shift') {
+      console.log('shift + enter');
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (contentEditable.current) {
+        setState({ ...state, html: contentEditable.current?.innerText });
+        props.addBlock({
+          id: props.id,
+          html: state.html,
+          tag: state.tag,
+          imageUrl: state.imageUrl,
+          ref: contentEditable.current,
+        });
+      }
+    } else if (e.key === 'Backspace' && !state.html) {
+      props.deleteBlock(props.id);
+    }
+    if (state.previousKey === 'Shift') return;
+
+    setState({ ...state, previousKey: e.key });
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === 'Shift') state.previousKey = null;
+  };
 
   return (
     <>
@@ -90,9 +118,10 @@ export const EditableBlock = (props: editableBlock) => {
                 css={block}
                 data-position={props.position}
                 data-tag={state.tag}
-                onChange={handleChange}
+                // onSubmit={handleChange}
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
+                onKeyUp={handleKeyUp}
               >
                 {state.html}
               </div>

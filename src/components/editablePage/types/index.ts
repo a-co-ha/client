@@ -53,5 +53,5 @@ export interface AddBlock {
   html: string;
   tag: string;
   imageUrl: string;
-  ref: React.MutableRefObject<null> | null;
+  ref: HTMLDivElement | null;
 }
