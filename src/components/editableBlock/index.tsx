@@ -7,7 +7,6 @@ import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editablePage/types';
-import { stat } from 'fs';
 
 interface StateTypes {
   htmlBackup: null | string;
@@ -43,7 +42,6 @@ export const EditableBlock = (props: editableBlock) => {
   // };
 
   const handleFocus = () => {
-    //placeholder state를 만들어야함
     if (state.placeholder) {
       setState({
         ...state,
@@ -70,6 +68,7 @@ export const EditableBlock = (props: editableBlock) => {
       setState({ ...state, html: '제목 없음', placeholder: true });
     }
     console.log(contentEditable);
+    contentEditable.current?.focus();
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -88,10 +87,20 @@ export const EditableBlock = (props: editableBlock) => {
         });
       }
     } else if (e.key === 'Backspace' && !state.html) {
+      // FIXME: state.html에 값이 업데이트되지 않아 이벤트 발생시 블럭 지워짐 istyping으로 해결하기
       props.deleteBlock(props.id);
     }
     if (state.previousKey === 'Shift') return;
 
+    // const auto = new KeyboardEvent('keypress', {
+    //   key: 'ArrowRight',
+    // });
+    // console.log(auto);
+    // console.log(e);
+    // contentEditable.current?.dispatchEvent(auto);
+    console.log('실행22222');
+
+    // contentEditable.current?.dispatchEvent(handleKeyDown);
     setState({ ...state, previousKey: e.key });
   };
 
