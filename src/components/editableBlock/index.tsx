@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
-import { CMD_KEY } from '@/utils/const';
 import * as styles from './styles';
+import { CMD_KEY } from '@/utils/const';
+import { getSelection } from '@/utils/getSelection';
 import DragHandleIcon from '@/images/draggable.svg';
-import type { editableBlock } from '../EditablePage/types';
+import type { editableBlock } from '../editablePage/types';
 interface StateTypes {
   htmlBackup: null | string;
   html: string;

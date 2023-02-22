@@ -10,9 +10,9 @@ import {
 } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
-import { EditableBlock } from '@/components/EditableBlock';
+import { EditableBlock } from '@/components/editableBlock';
 import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
-import { Notice } from '@/components/Notice';
+import { Notice } from '@/components/notice';
 import type { AddBlock, page, block } from '../EditablePage/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
