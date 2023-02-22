@@ -38,7 +38,7 @@ export const EditableBlock = (props: editableBlock) => {
   // 입력 시 change event가 아니라 input event가 동작한다.
   // 또한, input이 아니기 때문에 value 값이 없다.
   // 이 때문에 제어 컴포넌트처럼 리액트가 DOM을 제어할 수가 없다.
-  //   setState({ ...state, html: e.target.innerText });
+  // setState({ ...state, html: e.target.innerText });
   // };
 
   const handleFocus = () => {
@@ -61,6 +61,12 @@ export const EditableBlock = (props: editableBlock) => {
     return false;
   };
 
+  // const simulateEnterKey = () => {
+  //   const event = new KeyboardEvent('keypress', { key: 'Enter' });
+  //   console.log('simulateEnterKey', event);
+  //   contentEditable.current?.dispatchEvent(event);
+  // };
+
   useEffect(() => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
@@ -77,10 +83,17 @@ export const EditableBlock = (props: editableBlock) => {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (contentEditable.current) {
-        setState({ ...state, html: contentEditable.current?.innerText });
+        setState({ ...state, html: contentEditable.current.innerText });
+
+        const arrowRightEvent = new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+        });
+        contentEditable.current.dispatchEvent(arrowRightEvent);
+
         props.addBlock({
           id: props.id,
-          html: state.html,
+          html: contentEditable.current.innerText,
           tag: state.tag,
           imageUrl: state.imageUrl,
           ref: contentEditable.current,
@@ -92,15 +105,6 @@ export const EditableBlock = (props: editableBlock) => {
     }
     if (state.previousKey === 'Shift') return;
 
-    // const auto = new KeyboardEvent('keypress', {
-    //   key: 'ArrowRight',
-    // });
-    // console.log(auto);
-    // console.log(e);
-    // contentEditable.current?.dispatchEvent(auto);
-    console.log('실행22222');
-
-    // contentEditable.current?.dispatchEvent(handleKeyDown);
     setState({ ...state, previousKey: e.key });
   };
 
