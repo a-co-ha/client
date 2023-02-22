@@ -1,6 +1,6 @@
-import { page } from '@/components/editablePage/types';
+import { page } from '@/components/editable-page/types';
 import { GetServerSideProps } from 'next';
-import { EditablePage } from '@/components/editablePage';
+import { EditablePage } from '@/components/editable-page';
 import axios from 'axios';
 import { resetServerContext } from 'react-beautiful-dnd';
 
