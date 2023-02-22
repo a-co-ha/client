@@ -42,6 +42,7 @@ export const EditableBlock = (props: editableBlock) => {
         isTyping: true,
         placeholder: false,
       });
+      if (contentEditable.current) contentEditable.current.innerText = '';
     }
   };
 
@@ -64,7 +65,7 @@ export const EditableBlock = (props: editableBlock) => {
     // openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
   };
   const addPlaceholder = () => {
-    if (props.position === 0 && props.html === '') return true;
+    if (props.html === '') return true;
     return false;
   };
 
@@ -78,7 +79,8 @@ export const EditableBlock = (props: editableBlock) => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
       //html에 빈값이 처음부터 들어와서  placeholder가 나오지 않음
-      setState({ ...state, html: '제목 없음', placeholder: true });
+      setState({ ...state, placeholder: true });
+      if (contentEditable.current) contentEditable.current.innerText = 'dafs';
     }
 
     contentEditable.current?.focus();
@@ -110,7 +112,6 @@ export const EditableBlock = (props: editableBlock) => {
       });
       // }
     } else if (e.key === 'Backspace' && !state.html) {
-      // FIXME: state.html에 값이 업데이트되지 않아 이벤트 발생시 블럭 지워짐 istyping으로 해결하기
       props.deleteBlock(props.id);
     }
     if (state.previousKey === 'Shift') return;

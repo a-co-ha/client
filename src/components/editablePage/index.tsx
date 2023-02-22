@@ -50,7 +50,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
 
   const deleteBlockHandler = (currentBlockId: string) => {
     const updatedBlocks = deleteBlock(blocks, currentBlockId);
-    setBlocks(updatedBlocks);
+    updatedBlocks && setBlocks(updatedBlocks);
   };
 
   const onDragEndHandler = (result: DropResult) => {
