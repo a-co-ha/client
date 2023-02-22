@@ -7,6 +7,7 @@ import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editablePage/types';
+import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
 
 interface StateTypes {
   htmlBackup: null | string;
@@ -19,7 +20,7 @@ interface StateTypes {
 }
 
 export const EditableBlock = (props: editableBlock) => {
-  const contentEditable = useRef<HTMLDivElement>(null);
+  const contentEditable = useRef<HTMLDivElement | null>(null);
 
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
@@ -33,14 +34,6 @@ export const EditableBlock = (props: editableBlock) => {
   console.log('props', props);
   console.log('state', state);
 
-  // const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
-  // console.log(e);
-  // 입력 시 change event가 아니라 input event가 동작한다.
-  // 또한, input이 아니기 때문에 value 값이 없다.
-  // 이 때문에 제어 컴포넌트처럼 리액트가 DOM을 제어할 수가 없다.
-  // setState({ ...state, html: e.target.innerText });
-  // };
-
   const handleFocus = () => {
     if (state.placeholder) {
       setState({
@@ -50,6 +43,19 @@ export const EditableBlock = (props: editableBlock) => {
         placeholder: false,
       });
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+    console.log(e);
+    // 입력 시 change event가 아니라 input event가 동작한다.
+    // 또한, input이 아니기 때문에 value 값이 없다.
+    // 이 때문에 제어 컴포넌트처럼 리액트가 DOM을 제어할 수가 없다.
+    setState((prevState) => ({
+      ...prevState,
+      html: e.target.innerText,
+    }));
+    if (contentEditable.current)
+      focusContentEditableTextToEnd(contentEditable.current);
   };
 
   const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -73,7 +79,7 @@ export const EditableBlock = (props: editableBlock) => {
       //html에 빈값이 처음부터 들어와서  placeholder가 나오지 않음
       setState({ ...state, html: '제목 없음', placeholder: true });
     }
-    console.log(contentEditable);
+
     contentEditable.current?.focus();
   }, []);
 
@@ -85,15 +91,15 @@ export const EditableBlock = (props: editableBlock) => {
       if (contentEditable.current) {
         setState({ ...state, html: contentEditable.current.innerText });
 
-        const arrowRightEvent = new KeyboardEvent('keydown', {
-          key: 'ArrowRight',
-          bubbles: true,
-        });
-        contentEditable.current.dispatchEvent(arrowRightEvent);
+        // const arrowRightEvent = new KeyboardEvent('keydown', {
+        //   key: 'ArrowRight',
+        //   bubbles: true,
+        // });
+        // contentEditable.current.dispatchEvent(arrowRightEvent);
 
         props.addBlock({
           id: props.id,
-          html: contentEditable.current.innerText,
+          html: state.html,
           tag: state.tag,
           imageUrl: state.imageUrl,
           ref: contentEditable.current,
@@ -131,7 +137,7 @@ export const EditableBlock = (props: editableBlock) => {
                 css={block}
                 data-position={props.position}
                 data-tag={state.tag}
-                // onSubmit={handleChange}
+                onInput={handleChange}
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
