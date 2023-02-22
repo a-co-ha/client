@@ -5,7 +5,7 @@ import * as styles from './styles';
 import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
 import DragHandleIcon from '@/images/draggable.svg';
-import type { editableBlock } from '../editablePage/types';
+import type { editableBlock } from '../editable-page/types';
 interface StateTypes {
   htmlBackup: null | string;
   html: string;
