@@ -54,6 +54,7 @@ export const EditableBlock = (props: editableBlock) => {
       ...prevState,
       html: e.target.innerText,
     }));
+
     if (contentEditable.current)
       focusContentEditableTextToEnd(contentEditable.current);
   };
@@ -88,23 +89,26 @@ export const EditableBlock = (props: editableBlock) => {
       console.log('shift + enter');
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (contentEditable.current) {
-        setState({ ...state, html: contentEditable.current.innerText });
+      // if (contentEditable.current) {
+      //   setState({ ...state, html: contentEditable.current.innerText });
 
-        // const arrowRightEvent = new KeyboardEvent('keydown', {
-        //   key: 'ArrowRight',
-        //   bubbles: true,
-        // });
-        // contentEditable.current.dispatchEvent(arrowRightEvent);
-
-        props.addBlock({
-          id: props.id,
-          html: state.html,
-          tag: state.tag,
-          imageUrl: state.imageUrl,
-          ref: contentEditable.current,
-        });
+      if (e.nativeEvent.isComposing) {
+        return;
       }
+      // const arrowRightEvent = new KeyboardEvent('keydown', {
+      //   key: 'ArrowRight',
+      //   bubbles: true,
+      // });
+      // contentEditable.current.dispatchEvent(arrowRightEvent);
+
+      props.addBlock({
+        id: props.id,
+        html: state.html,
+        tag: state.tag,
+        imageUrl: state.imageUrl,
+        ref: contentEditable.current,
+      });
+      // }
     } else if (e.key === 'Backspace' && !state.html) {
       // FIXME: state.html에 값이 업데이트되지 않아 이벤트 발생시 블럭 지워짐 istyping으로 해결하기
       props.deleteBlock(props.id);
@@ -141,9 +145,7 @@ export const EditableBlock = (props: editableBlock) => {
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
-              >
-                {state.html}
-              </div>
+              />
               <span
                 css={dragHandle}
                 role="button"
