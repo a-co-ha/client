@@ -27,6 +27,8 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   const [currentBlockId, setCurrentBlockId] =
     useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
+  console.log(prevBlcoks);
+  console.log(blocks);
 
   //block 변화시 put
   useEffect(() => {

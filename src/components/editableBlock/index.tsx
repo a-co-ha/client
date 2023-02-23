@@ -47,10 +47,6 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
-    console.log(e);
-    // 입력 시 change event가 아니라 input event가 동작한다.
-    // 또한, input이 아니기 때문에 value 값이 없다.
-    // 이 때문에 제어 컴포넌트처럼 리액트가 DOM을 제어할 수가 없다.
     setState((prevState) => ({
       ...prevState,
       html: e.target.innerText,
@@ -69,21 +65,13 @@ export const EditableBlock = (props: editableBlock) => {
     return false;
   };
 
-  // const simulateEnterKey = () => {
-  //   const event = new KeyboardEvent('keypress', { key: 'Enter' });
-  //   console.log('simulateEnterKey', event);
-  //   contentEditable.current?.dispatchEvent(event);
-  // };
-
   useEffect(() => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
-      //html에 빈값이 처음부터 들어와서  placeholder가 나오지 않음
       setState({ ...state, placeholder: true });
-      if (contentEditable.current) contentEditable.current.innerText = 'dafs';
+      // if (contentEditable.current) contentEditable.current.innerText = 'dafs';
     }
-
-    contentEditable.current?.focus();
+    // contentEditable.current?.focus();
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -91,18 +79,9 @@ export const EditableBlock = (props: editableBlock) => {
       console.log('shift + enter');
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      // if (contentEditable.current) {
-      //   setState({ ...state, html: contentEditable.current.innerText });
-
       if (e.nativeEvent.isComposing) {
         return;
       }
-      // const arrowRightEvent = new KeyboardEvent('keydown', {
-      //   key: 'ArrowRight',
-      //   bubbles: true,
-      // });
-      // contentEditable.current.dispatchEvent(arrowRightEvent);
-
       props.addBlock({
         id: props.id,
         html: state.html,
@@ -110,7 +89,6 @@ export const EditableBlock = (props: editableBlock) => {
         imageUrl: state.imageUrl,
         ref: contentEditable.current,
       });
-      // }
     } else if (e.key === 'Backspace' && !state.html) {
       props.deleteBlock(props.id);
     }
@@ -146,6 +124,7 @@ export const EditableBlock = (props: editableBlock) => {
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
+                placeholder="가나다라마"
               />
               <span
                 css={dragHandle}
