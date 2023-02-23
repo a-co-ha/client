@@ -11,7 +11,6 @@ const flexCenterNavBar = css`
 export const navBar = css`
   display: flex;
   width: 100%;
-  height: 100px;
 `;
 
 export const profileBox = css`
