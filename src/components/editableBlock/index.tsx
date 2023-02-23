@@ -7,7 +7,6 @@ import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editablePage/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
-import setCaretToEnd from '@/utils/setCaretToEnd';
 
 interface StateTypes {
   htmlBackup: null | string;
@@ -107,9 +106,8 @@ export const EditableBlock = (props: editableBlock) => {
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
-          .previousElementSibling as HTMLDivElement;
-        const prevBlockEl = prevBlock?.firstElementChild as HTMLDivElement;
-        setCaretToEnd(prevBlockEl);
+          .previousElementSibling.firstElementChild as HTMLDivElement;
+        focusContentEditableTextToEnd(prevBlock);
       }
     }
     if (state.previousKey === 'Shift') return;
