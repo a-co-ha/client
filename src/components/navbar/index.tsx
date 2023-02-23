@@ -1,15 +1,14 @@
 import { LoginBtn } from './LoginBtn';
 import { Profile } from './Profile';
 import { Title } from './Title';
+import * as styles from './styles';
 
 export const NavBar = () => {
   return (
-    <>
-      <div css={{ display: 'flex', width: '100%', height: '100px' }}>
-        <Profile />
-        <Title />
-        <LoginBtn />
-      </div>
-    </>
+    <div css={styles.navBar}>
+      <Profile />
+      <Title />
+      <LoginBtn />
+    </div>
   );
 };

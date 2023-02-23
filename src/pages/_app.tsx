@@ -4,6 +4,7 @@ import theme from '@/styles/theme';
 import type { AppProps } from 'next/app';
 import { useState, useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
+import { Layout } from '@/components/layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -29,7 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </RecoilRoot>
   );
