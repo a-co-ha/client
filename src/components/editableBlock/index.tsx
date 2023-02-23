@@ -61,7 +61,13 @@ export const EditableBlock = (props: editableBlock) => {
     // openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
   };
   const addPlaceholder = () => {
-    if (props.html === '') return true;
+    if (contentEditable.current && contentEditable.current.parentElement) {
+      const hasOnlyBlock = !contentEditable.current.parentElement.nextSibling;
+      if (props.html === '' && props.position === 0 && hasOnlyBlock) {
+        contentEditable.current.innerText = `@는 태그, /는 명령`;
+        return true;
+      }
+    }
     return false;
   };
 
@@ -69,9 +75,8 @@ export const EditableBlock = (props: editableBlock) => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
       setState({ ...state, placeholder: true });
-      // if (contentEditable.current) contentEditable.current.innerText = 'dafs';
     }
-    // contentEditable.current?.focus();
+    contentEditable.current?.focus();
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -124,7 +129,6 @@ export const EditableBlock = (props: editableBlock) => {
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
-                placeholder="가나다라마"
               />
               <span
                 css={dragHandle}
