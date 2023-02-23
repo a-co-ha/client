@@ -76,7 +76,7 @@ export const EditableBlock = (props: editableBlock) => {
     if (hasPlaceholder) {
       setState({ ...state, placeholder: true });
     }
-    console.log(contentEditable.current?.parentElement);
+
     if (
       contentEditable.current &&
       contentEditable.current.parentElement?.previousElementSibling
@@ -101,7 +101,14 @@ export const EditableBlock = (props: editableBlock) => {
         ref: contentEditable.current,
       });
     } else if (e.key === 'Backspace' && !state.html) {
+      e.preventDefault();
       props.deleteBlock(props.id);
+      if (contentEditable.current && contentEditable.current.parentElement) {
+        const prevBlock = contentEditable.current.parentElement
+          .previousElementSibling as HTMLDivElement;
+        const prevBlockEl = prevBlock?.firstElementChild as HTMLDivElement;
+        focusContentEditableTextToEnd(prevBlockEl);
+      }
     }
     if (state.previousKey === 'Shift') return;
 
