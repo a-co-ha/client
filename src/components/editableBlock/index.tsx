@@ -7,6 +7,7 @@ import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editablePage/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
+import setCaretToEnd from '@/utils/setCaretToEnd';
 
 interface StateTypes {
   htmlBackup: null | string;
@@ -97,14 +98,18 @@ export const EditableBlock = (props: editableBlock) => {
         imageUrl: state.imageUrl,
         ref: contentEditable.current,
       });
-    } else if ((e.key === 'Backspace' && !state.html) || state.html === '\n') {
+    } else if (
+      (state.html === '\n' || state.html === '') &&
+      e.key === 'Backspace' &&
+      contentEditable.current?.parentElement?.previousElementSibling
+    ) {
       e.preventDefault();
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
           .previousElementSibling as HTMLDivElement;
         const prevBlockEl = prevBlock?.firstElementChild as HTMLDivElement;
-        focusContentEditableTextToEnd(prevBlockEl);
+        setCaretToEnd(prevBlockEl);
       }
     }
     if (state.previousKey === 'Shift') return;
