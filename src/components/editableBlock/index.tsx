@@ -14,7 +14,6 @@ interface StateTypes {
   tag: string;
   imageUrl: string;
   previousKey: null | string;
-  isTyping: boolean;
   placeholder: boolean;
 }
 
@@ -27,7 +26,6 @@ export const EditableBlock = (props: editableBlock) => {
     tag: 'p',
     imageUrl: '',
     previousKey: null,
-    isTyping: false,
     placeholder: false,
   });
   console.log('props', props);
@@ -38,7 +36,6 @@ export const EditableBlock = (props: editableBlock) => {
       setState({
         ...state,
         html: '',
-        isTyping: true,
         placeholder: false,
       });
       if (contentEditable.current) contentEditable.current.innerText = '';
@@ -100,13 +97,14 @@ export const EditableBlock = (props: editableBlock) => {
         imageUrl: state.imageUrl,
         ref: contentEditable.current,
       });
-    } else if (e.key === 'Backspace' && !state.html) {
+    } else if ((e.key === 'Backspace' && !state.html) || state.html === '\n') {
       e.preventDefault();
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
-          .previousElementSibling?.firstElementChild as HTMLDivElement;
-        focusContentEditableTextToEnd(prevBlock);
+          .previousElementSibling as HTMLDivElement;
+        const prevBlockEl = prevBlock?.firstElementChild as HTMLDivElement;
+        focusContentEditableTextToEnd(prevBlockEl);
       }
     }
     if (state.previousKey === 'Shift') return;
