@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
@@ -62,8 +61,9 @@ export const EditableBlock = (props: editableBlock) => {
   };
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
-      const hasOnlyBlock = !contentEditable.current.parentElement.nextSibling;
-      if (props.html === '' && props.position === 0 && hasOnlyBlock) {
+      const hasOnlyOneBlock =
+        !contentEditable.current.parentElement.nextSibling;
+      if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
         contentEditable.current.innerText = `@는 태그, /는 명령`;
         return true;
       }
@@ -76,7 +76,13 @@ export const EditableBlock = (props: editableBlock) => {
     if (hasPlaceholder) {
       setState({ ...state, placeholder: true });
     }
-    contentEditable.current?.focus();
+    console.log(contentEditable.current?.parentElement);
+    if (
+      contentEditable.current &&
+      contentEditable.current.parentElement?.previousElementSibling
+    ) {
+      contentEditable.current.focus();
+    }
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
