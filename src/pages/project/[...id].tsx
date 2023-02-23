@@ -1,18 +1,18 @@
-import { ProjectSideBar } from '@/components/project-sidebar';
-import { Guide } from '@/components/guide';
-import { UserList } from '@/components/project-userlist';
-import { CreateProject } from '@/components/project-create-page';
 import { css } from '@emotion/react';
+import { ProjectSideBar } from '@/components/project-sidebar';
+import { UserList } from '@/components/project-userlist';
+import { MainContent } from '@/components/project-main';
 import { useRecoilValue } from 'recoil';
 import { createState } from '@/recoil/project/atom';
+import { CreateProject } from '@/components/project-create-page';
 
-export default function Main() {
+export default function ProjectMain() {
   const isClickCreateBtn = useRecoilValue(createState);
 
   return (
     <div css={main}>
       <ProjectSideBar />
-      {isClickCreateBtn ? <CreateProject /> : <Guide />}
+      {isClickCreateBtn ? <CreateProject /> : <MainContent />}
       <UserList />
     </div>
   );
