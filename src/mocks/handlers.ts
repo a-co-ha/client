@@ -81,6 +81,17 @@ const handlers = [
       })
     );
   }),
+  rest.get(`http://localhost:3000/login`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        user: {
+          id: 'tangjin',
+          avatarUrl: '/public/images/githubLogo.png',
+        },
+      })
+    );
+  }),
 ];
 
 export default handlers;
