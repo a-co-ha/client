@@ -105,9 +105,8 @@ export const EditableBlock = (props: editableBlock) => {
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
-          .previousElementSibling as HTMLDivElement;
-        const prevBlockEl = prevBlock?.firstElementChild as HTMLDivElement;
-        focusContentEditableTextToEnd(prevBlockEl);
+          .previousElementSibling?.firstElementChild as HTMLDivElement;
+        focusContentEditableTextToEnd(prevBlock);
       }
     }
     if (state.previousKey === 'Shift') return;
