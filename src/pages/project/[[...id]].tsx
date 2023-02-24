@@ -7,12 +7,12 @@ import { createState } from '@/recoil/project/atom';
 import { CreateProject } from '@/components/project-create-page';
 
 export default function ProjectMain() {
-  const isClickCreateBtn = useRecoilValue(createState);
+  // const isClickCreateBtn = useRecoilValue(createState);
 
   return (
     <div css={main}>
       <ProjectSideBar />
-      {isClickCreateBtn ? <CreateProject /> : <MainContent />}
+      <MainContent />
       <UserList />
     </div>
   );

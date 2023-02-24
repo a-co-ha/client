@@ -1,17 +1,16 @@
 import { createState } from '@/recoil/project/atom';
-import { useSetRecoilState } from 'recoil';
-import axios from 'axios';
+import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
 
 export const CreateProject = () => {
   const router = useRouter();
-  const setCreateState = useSetRecoilState(createState);
+  const [isClickCreateBtn, setIsClickCreateBtn] = useRecoilState(createState);
   const createProjectHandler = async () => {
-    router.push('/project/1/main');
+    router.push('/project/1');
   };
   const cancelProjectHandler = () => {
-    setCreateState(false);
+    setIsClickCreateBtn(false);
   };
   return (
     <div css={styles.createProjectBox}>

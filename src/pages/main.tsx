@@ -12,7 +12,7 @@ export default function Main() {
   return (
     <div css={main}>
       <ProjectSideBar />
-      {isClickCreateBtn ? <CreateProject /> : <Guide />}
+      <Guide />
       <UserList />
     </div>
   );
