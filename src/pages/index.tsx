@@ -8,18 +8,13 @@ const IndexPage = ({ id, fetchedBlocks, err }: page) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const blocks = [{ tag: 'p', html: '', imageUrl: '' }];
   const res = context.res;
   try {
-    const response = await axios.post(
-      `http://localhost:3000/pages`,
-      { blocks },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await axios.post(`http://localhost:3000/pages`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     const pageId = response.data.pageId;
     const creator = response.data.creator;
     const query = !creator ? '?public=true' : '';
