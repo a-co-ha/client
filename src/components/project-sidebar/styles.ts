@@ -35,3 +35,13 @@ export const createBtn = css`
   border: 1px solid black;
   border-radius: 4px;
 `;
+
+export const inputForm = css`
+  width: 100%;
+  padding: 5px 13px 5px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  &:focus {
+    outline: none;
+  }
+`;

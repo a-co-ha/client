@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import { InputForm } from './inputForm';
 import * as styles from './styles';
 
 export const List = () => {
@@ -50,10 +51,7 @@ export const List = () => {
                     프로젝트 시작하기
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
+                    <InputForm />
                   </div>
 
                   <div className="mt-4">
