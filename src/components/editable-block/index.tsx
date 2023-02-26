@@ -83,7 +83,10 @@ export const EditableBlock = (props: editableBlock) => {
   }, []);
 
   const handleBlur = () => {
-    // TODO: 첫 블럭에만 placeholder 표시
+    if (!state.html) {
+      addPlaceholder();
+      setState({ ...state, placeholder: true });
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
