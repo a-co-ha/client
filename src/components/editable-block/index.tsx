@@ -6,243 +6,120 @@ import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editable-page/types';
+import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
+
 interface StateTypes {
   htmlBackup: null | string;
   html: string;
   tag: string;
   imageUrl: string;
-  placeholder: boolean;
   previousKey: null | string;
-  isTyping: boolean;
-  tagSelectorMenuOpen: boolean;
-  tagSelectorMenuPosition: {
-    x: null | number;
-    y: null | number;
-  };
-  actionMenuOpen: boolean;
-  actionMenuPosition: {
-    x: null | number;
-    y: null | number;
-  };
+  placeholder: boolean;
 }
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
+
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
     html: '',
     tag: 'p',
     imageUrl: '',
-    placeholder: false,
     previousKey: null,
-    isTyping: false,
-    tagSelectorMenuOpen: false,
-    tagSelectorMenuPosition: {
-      x: null,
-      y: null,
-    },
-    actionMenuOpen: false,
-    actionMenuPosition: {
-      x: null,
-      y: null,
-    },
+    placeholder: false,
   });
-  //
-  interface Placeholder {
-    block: any;
-    position: number;
-    content: string;
-  }
-
-  const addPlaceholder = ({ block, position, content }: Placeholder) => {
-    const isFirstBlockWithoutHtml = position === 1 && !content;
-    const isFirstBlockWithoutSibling = !block?.parentElement.nextElementSibling;
-    if (isFirstBlockWithoutHtml && isFirstBlockWithoutSibling) {
-      setState({
-        ...state,
-        html: 'Type a page title...',
-        tag: 'h1',
-        imageUrl: '',
-        placeholder: true,
-        isTyping: false,
-      });
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    // Add a placeholder if the first block has no sibling elements and no content
-    const hasPlaceholder = addPlaceholder({
-      block: contentEditable.current,
-      position: props.position,
-      content: props.html || props.imageUrl,
-    });
-    if (!hasPlaceholder) {
-      setState({
-        ...state,
-        html: props.html,
-        tag: props.tag,
-        imageUrl: props.imageUrl,
-      });
-    }
-  }, []);
-
-  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
-    console.log(state.html);
-    setState({ ...state, html: e.target.innerText });
-  };
-
-  // const handleFocus = () => {
-  //   // If a placeholder is set, we remove it when the block gets focused
-  //   if (state.placeholder) {
-  //     setState({
-  //       ...state,
-  //       html: '',
-  //       placeholder: false,
-  //       isTyping: true,
-  //     });
-  //   } else {
-  //     setState({ ...state, isTyping: true });
-  //   }
-  // };
-
-  // const handleBlur = (e: React.MouseEventHandler) => {
-  //   // Show placeholder if block is still the only one and empty
-  //   const hasPlaceholder = this.addPlaceholder({
-  //     block: contentEditable.current,
-  //     position: props.position,
-  //     content: state.html || state.imageUrl,
-  //   });
-  //   if (!hasPlaceholder) {
-  //     setState({ ...state, isTyping: false });
-  //   }
-  // };
-  /**
- * ref: any;
-        onInput: (originalEvt: React.SyntheticEvent<any, Event>) => void;
-        onBlur: React.FocusEventHandler<HTMLDivElement>;
-        onKeyUp: React.KeyboardEventHandler<HTMLDivElement>;
-        onKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
-        contentEditable: boolean;
-        dangerouslySetInnerHTML: {
-            __html: string;
-        };
- */
+  console.log('props', props);
+  console.log('state', state);
 
   const handleFocus = () => {
-    // If a placeholder is set, we remove it when the block gets focused
     if (state.placeholder) {
       setState({
         ...state,
         html: '',
         placeholder: false,
-        isTyping: true,
       });
-    } else {
-      setState({ ...state, isTyping: true });
+      if (contentEditable.current) contentEditable.current.innerText = '';
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    // Show placeholder if block is still the only one and empty
-    const hasPlaceholder = addPlaceholder({
-      block: contentEditable.current,
-      position: props.position,
-      content: state.html || state.imageUrl,
-    });
-    if (!hasPlaceholder) {
-      setState({ ...state, isTyping: false });
-    }
+  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+    setState((prevState) => ({
+      ...prevState,
+      html: e.target.innerText,
+    }));
+
+    if (contentEditable.current)
+      focusContentEditableTextToEnd(contentEditable.current);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === CMD_KEY) {
-      // If the user starts to enter a command, we store a backup copy of
-      // the html. We need this to restore a clean version of the content
-      // after the content type selection was finished.
-      setState({ ...state, htmlBackup: state.html });
-    } else if (e.key === 'Backspace' && !state.html) {
-      props.deleteBlock(props.id);
-    } else if (
-      e.key === 'Enter' &&
-      state.previousKey !== 'Shift' &&
-      !state.tagSelectorMenuOpen
+  const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    // const dragHandle = e.target;
+    // openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
+  };
+  const addPlaceholder = () => {
+    if (contentEditable.current && contentEditable.current.parentElement) {
+      const hasOnlyOneBlock =
+        !contentEditable.current.parentElement.nextSibling;
+      if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
+        contentEditable.current.innerText = `@는 태그, /는 명령`;
+        return true;
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    const hasPlaceholder = addPlaceholder();
+    if (hasPlaceholder) {
+      setState({ ...state, placeholder: true });
+    }
+
+    if (
+      contentEditable.current &&
+      contentEditable.current.parentElement?.previousElementSibling
     ) {
-      // If the user presses Enter, we want to add a new block
-      // Only the Shift-Enter-combination should add a new paragraph,
-      // i.e. Shift-Enter acts as the default enter behaviour
+      contentEditable.current.focus();
+    }
+  }, []);
+
+  const handleBlur = () => {
+    // TODO: 첫 블럭에만 placeholder 표시
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && state.previousKey === 'Shift') {
+      console.log('shift + enter');
+    } else if (e.key === 'Enter') {
       e.preventDefault();
-      contentEditable.current
-        ? props.addBlock({
-            id: props.id,
-            html: contentEditable.current.innerText,
-            tag: state.tag,
-            imageUrl: state.imageUrl,
-            ref: contentEditable.current,
-          })
-        : null;
+      if (e.nativeEvent.isComposing) {
+        return;
+      }
+      props.addBlock({
+        id: props.id,
+        html: state.html,
+        tag: state.tag,
+        imageUrl: state.imageUrl,
+        ref: contentEditable.current,
+      });
+    } else if (
+      (state.html === '\n' || state.html === '') &&
+      e.key === 'Backspace' &&
+      contentEditable.current?.parentElement?.previousElementSibling
+    ) {
+      e.preventDefault();
+      props.deleteBlock(props.id);
+      if (contentEditable.current && contentEditable.current.parentElement) {
+        const prevBlock = contentEditable.current.parentElement
+          .previousElementSibling.firstElementChild as HTMLDivElement;
+        focusContentEditableTextToEnd(prevBlock);
+      }
     }
-    // We need the previousKey to detect a Shift-Enter-combination
-    if (state.previousKey === 'Shift') {
-      return;
-    }
+    if (state.previousKey === 'Shift') return;
+
     setState({ ...state, previousKey: e.key });
   };
 
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === CMD_KEY) {
-    }
+  const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Shift') state.previousKey = null;
-  };
-
-  const handleMouseUp = () => {
-    const block = contentEditable.current;
-    getSelection(block);
-  };
-
-  // drag
-  const calculateActionMenuPosition = (parent: any, initiator: string) => {
-    switch (initiator) {
-      // case "TEXT_SELECTION":
-      //   const { x: endX, y: endY } = getCaretCoordinates(false); // fromEnd
-      //   const { x: startX, y: startY } = getCaretCoordinates(true); // fromStart
-      //   const middleX = startX + (endX - startX) / 2;
-      //   return { x: middleX, y: startY };
-      case 'DRAG_HANDLE_CLICK':
-        const x =
-          parent.offsetLeft - parent.scrollLeft + parent.clientLeft - 90;
-        const y = parent.offsetTop - parent.scrollTop + parent.clientTop + 35;
-        return { x: x, y: y };
-      default:
-        return { x: null, y: null };
-    }
-  };
-  const closeActionMenu = () => {
-    setState({
-      ...state,
-      actionMenuPosition: { x: null, y: null },
-      actionMenuOpen: false,
-    });
-    document.removeEventListener('click', closeActionMenu, false);
-  };
-
-  const openActionMenu = (parent: EventTarget, trigger: string) => {
-    const { x, y } = calculateActionMenuPosition(parent, trigger);
-    setState({
-      ...state,
-      actionMenuPosition: { x: x, y: y },
-      actionMenuOpen: true,
-    });
-    // Add listener asynchronously to avoid conflicts with
-    // the double click of the text selection
-    setTimeout(() => {
-      document.addEventListener('click', closeActionMenu, false);
-    }, 100);
-  };
-  const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-    const dragHandle = e.target;
-    openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
   };
 
   return (
@@ -274,15 +151,22 @@ export const EditableBlock = (props: editableBlock) => {
                 css={styles.block(snapshot.isDragging, snapshot.dropAnimation)}
                 data-position={props.position}
                 data-tag={state.tag}
-                onChange={handleChange}
+                onInput={handleChange}
                 onFocus={handleFocus}
-                onBlur={handleBlur}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
-                onMouseUp={handleMouseUp}
+                onBlur={handleBlur}
+              />
+              <span
+                // css={dragHandle}
+                role="button"
+                tabIndex={0}
+                onClick={handleDragHandleClick}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
               >
-                {state.html}
-              </div>
+                <Image src={DragHandleIcon} alt="Icon" />
+              </span>
             </div>
           )}
         </Draggable>
