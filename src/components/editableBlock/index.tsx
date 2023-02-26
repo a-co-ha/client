@@ -82,6 +82,10 @@ export const EditableBlock = (props: editableBlock) => {
     }
   }, []);
 
+  const handleBlur = () => {
+    // TODO: 첫 블럭에만 placeholder 표시
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
       console.log('shift + enter');
@@ -142,6 +146,7 @@ export const EditableBlock = (props: editableBlock) => {
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
+                onBlur={handleBlur}
               />
               <span
                 css={dragHandle}
