@@ -62,6 +62,62 @@ const handlers = [
       })
     );
   }),
+
+  rest.post(`http://localhost:3000/api/post/project`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: 1,
+        pageName: '아코하',
+      })
+    );
+  }),
+  rest.post(`http://localhost:3000/api/post`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        channelId: 1,
+        pageName: '제목 없음,no',
+        blocks: [
+          {
+            tag: 'p',
+            html: '',
+            imgUrl: '',
+            _id: '',
+          },
+        ],
+        type: 'normal',
+        _id: '63f8d17cd40953f24103bc44',
+        label: [],
+        createdAt: '2023-02-24T15:02:20.871Z',
+        updatedAt: '2023-02-24T15:02:20.871Z',
+        __v: 0,
+      })
+    );
+  }),
+  rest.post(`http://localhost:3000/api/post/socket`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        channelId: 1,
+        pageName: '제목 없음,so',
+        blocks: [
+          {
+            tag: 'p',
+            html: '',
+            imgUrl: '',
+            _id: 'socket',
+          },
+        ],
+        type: 'normal',
+        _id: '63f8d17cd40953f24103bc44',
+        label: [],
+        createdAt: '2023-02-24T15:02:20.871Z',
+        updatedAt: '2023-02-24T15:02:20.871Z',
+        __v: 0,
+      })
+    );
+  }),
 ];
 
 export default handlers;

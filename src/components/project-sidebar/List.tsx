@@ -1,15 +1,30 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import axios from 'axios';
 import { InputForm } from './inputForm';
+import { postEditablePage } from '@/pages/api/editable/postPage';
+import { postSocketPage } from '@/pages/api/socket/postPage';
+import { useRouter } from 'next/router';
 import * as styles from './styles';
 
 export const List = () => {
-  let [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
     setIsOpen(true);
+  };
+
+  const onClickHandler = async () => {
+    const res = await axios.post(`http://localhost:3000/api/post/project`);
+    await postEditablePage(res.data.id);
+    await postSocketPage(res.data.id);
+    const channelId = res.data.id;
+    closeModal();
+    router.push(`/project/${channelId}`);
+    return;
   };
 
   return (
@@ -58,7 +73,7 @@ export const List = () => {
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={onClickHandler}
                     >
                       생성
                     </button>
