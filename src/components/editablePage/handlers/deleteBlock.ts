@@ -7,12 +7,14 @@ import { block } from '../types';
  * 추가로 지운 블럭이 image를 가지고 있었다면, db에 deleteImageOnServer로 이미지도 지워줘야함
  */
 export const deleteBlock = (blocks: block[], currentBlockId: string) => {
-  const index = blocks.map((b) => b._id).indexOf(currentBlockId);
-  const deletedBlock = blocks[index];
-  const updatedBlocks = [...blocks];
-  updatedBlocks.splice(index, 1);
-  deletedBlock.tag === 'img' && deletedBlock.imageUrl
-    ? deleteImageOnServer(deletedBlock.imageUrl)
-    : null;
-  return updatedBlocks;
+  if (blocks.length > 1) {
+    const index = blocks.map((b) => b._id).indexOf(currentBlockId);
+    const deletedBlock = blocks[index];
+    const updatedBlocks = [...blocks];
+    updatedBlocks.splice(index, 1);
+    deletedBlock.tag === 'img' && deletedBlock.imageUrl
+      ? deleteImageOnServer(deletedBlock.imageUrl)
+      : null;
+    return updatedBlocks;
+  }
 };

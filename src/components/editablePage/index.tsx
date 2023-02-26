@@ -10,7 +10,7 @@ import {
 } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
-import { EditableBlock } from '@/components/EditableBlock';
+import { EditableBlock } from '@/components/editableBlock';
 import { blocksState, currentBlockIdState } from '@/recoil/editableBlock/atom';
 import { Notice } from '@/components/Notice';
 import type { AddBlock, page, block } from '../EditablePage/types';
@@ -50,7 +50,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
 
   const deleteBlockHandler = (currentBlockId: string) => {
     const updatedBlocks = deleteBlock(blocks, currentBlockId);
-    setBlocks(updatedBlocks);
+    updatedBlocks && setBlocks(updatedBlocks);
   };
 
   const onDragEndHandler = (result: DropResult) => {
