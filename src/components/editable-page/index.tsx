@@ -34,9 +34,6 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
     prevBlcoks && prevBlcoks !== blocks ? updatePageOnserver(blocks, id) : null;
   }, [blocks, prevBlcoks]);
 
-  //block 삭제시 커서를 전 블럭 끝으로 위치
-  // useEffect(() => {});
-
   const addBlockHandler = (currentBlock: AddBlock) => {
     setCurrentBlockId(currentBlock.id);
     const updatedBlocks = addBlock(blocks, currentBlock);
@@ -57,23 +54,8 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
     const updatedBlocks = onDragEnd(blocks, result);
     updatedBlocks && setBlocks(updatedBlocks);
   };
-
-  // const onDragEndHandler = (result: DropResult) => {
-  //   const { destination, source } = result;
-
-  //   // If we don't have a destination (due to dropping outside the droppable)
-  //   // or the destination hasn't changed, we change nothing
-  //   if (!destination || destination.index === source.index) {
-  //     return;
-  //   }
-
-  //   const updatedBlocks = [...blocks];
-  //   const removedBlocks = updatedBlocks.splice(source.index, 1);
-  //   updatedBlocks.splice(destination.index, 0, removedBlocks[0]);
-  //   setBlocks(updatedBlocks);
-  // };
   const isNewPage = router.query.public === 'true';
-  console.log(blocks);
+
   return (
     <>
       {isNewPage && <Notice status="SUCCESS" />}
