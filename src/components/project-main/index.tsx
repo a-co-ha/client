@@ -10,7 +10,7 @@ export const MainContent = () => {
   return (
     <div css={styles.flexColumnCenter}>
       <div>메인 컨텐츠</div>
-      <div css={styles.MainContentBox}>
+      <div css={styles.mainContentBox}>
         <Chart />
         <TroubleShooting />
         <Progress />

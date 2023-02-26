@@ -1,15 +1,12 @@
-import { css } from '@emotion/react';
+import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { MainContent } from '@/components/project-main';
-import { useRecoilValue } from 'recoil';
-import { createState } from '@/recoil/project/atom';
+import { GetServerSideProps } from 'next';
 
 export default function ProjectMain() {
-  // const isClickCreateBtn = useRecoilValue(createState);
-
   return (
-    <div css={main}>
+    <div css={styles.main}>
       <ProjectSideBar />
       <MainContent />
       <UserList />
@@ -17,6 +14,8 @@ export default function ProjectMain() {
   );
 }
 
-const main = css`
-  display: flex;
-`;
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   return(
+
+//   )
+// }

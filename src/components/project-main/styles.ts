@@ -17,17 +17,21 @@ export const contentBox = css`
   margin: 0 auto;
 `;
 
+export const contentBoxTitle = css`
+  text-align: left;
+`;
+
 export const content = css`
   height: 150px;
   border: 1.5px solid gray;
   border-radius: 4px;
 `;
 
-export const contentBoxTitle = css`
-  text-align: left;
+export const main = css`
+  display: flex;
 `;
 
-export const MainContentBox = css`
+export const mainContentBox = css`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
