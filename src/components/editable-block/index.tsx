@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
+import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
-import Image from 'next/image';
-import * as styles from './styles';
 import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
+import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editable-page/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
@@ -16,6 +16,7 @@ interface StateTypes {
   previousKey: null | string;
   placeholder: boolean;
 }
+
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
 
@@ -129,26 +130,16 @@ export const EditableBlock = (props: editableBlock) => {
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              css={styles.draggable}
+              css={draggable}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <span
-                css={styles.dragHandle}
-                role="button"
-                tabIndex={0}
-                onClick={handleDragHandleClick}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Image src={DragHandleIcon} alt="Icon" />
-              </span>
               <div
                 contentEditable
                 suppressContentEditableWarning
                 ref={contentEditable}
                 key={props.id}
-                css={styles.block(snapshot.isDragging, snapshot.dropAnimation)}
+                css={block}
                 data-position={props.position}
                 data-tag={state.tag}
                 onInput={handleChange}
@@ -158,7 +149,7 @@ export const EditableBlock = (props: editableBlock) => {
                 onBlur={handleBlur}
               />
               <span
-                // css={dragHandle}
+                css={dragHandle}
                 role="button"
                 tabIndex={0}
                 onClick={handleDragHandleClick}
@@ -174,3 +165,32 @@ export const EditableBlock = (props: editableBlock) => {
     </>
   );
 };
+
+const draggable = css`
+  display: block;
+  &:hover {
+    span {
+      opacity: 1;
+    }
+  }
+`;
+
+const dragHandle = css`
+  opacity: 0;
+  display: inline-block;
+  width: 1rem;
+  img {
+    display: block;
+    margin: auto;
+  }
+`;
+const block = css`
+  display: inline-block;
+  width: calc(100% - 1rem);
+  padding: 0.25rem;
+  -webkit-user-select: text;
+  user-select: text;
+  outline: 2px solid limegreen;
+  padding: 10px;
+  margin: 1px;
+`;
