@@ -72,7 +72,7 @@ const handlers = [
       })
     );
   }),
-  rest.post(`http://localhost:3000/api/post`, (_, res, ctx) => {
+  rest.post(`http://localhost:3000/api/post/editable`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -115,6 +115,42 @@ const handlers = [
         createdAt: '2023-02-24T15:02:20.871Z',
         updatedAt: '2023-02-24T15:02:20.871Z',
         __v: 0,
+      })
+    );
+  }),
+  rest.get(`http://localhost:3000/api/get`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        pageList: [
+          { pageId: 'editable1234', pageName: '제목 없음,no', type: 'normal' },
+          { pageId: 'socket5678', pageName: '제목 없음,so', type: 'socket' },
+        ],
+      })
+    );
+  }),
+  rest.get(`http://localhost:3000/api/get/editable`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        page: {
+          blocks: [
+            {
+              _id: '1',
+              tag: 'p',
+              html: '',
+              imageUrl: '',
+            },
+          ],
+        },
+      })
+    );
+  }),
+  rest.get(`http://localhost:3000/api/get/socket`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        page: [{ userId: 'tangjin', content: 'ha' }],
       })
     );
   }),

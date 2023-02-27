@@ -8,22 +8,22 @@ export interface editableBlock {
   pageId: string;
   addBlock: (currentBlock: AddBlock) => void;
   deleteBlock: (currentBlockId: string) => void;
-  updateBlock: (currentBlock: block) => void;
+  updateBlock: (currentBlock: Block) => void;
 }
 /**
  * interface block -> currentBlock에 할당했을 때 없는 속성때문에
  * 타입이 터지지않을까?
  */
-export interface block {
+export interface Block {
   _id: string;
   tag: string;
   html: string;
   imageUrl: string;
 }
 
-export interface page {
+export interface EditablePages {
   id: string;
-  fetchedBlocks: block[];
+  fetchedBlocks: Block[];
   err: string;
 }
 

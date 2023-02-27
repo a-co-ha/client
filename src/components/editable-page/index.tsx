@@ -13,9 +13,9 @@ import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editable-block';
 import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
 import { Notice } from '@/components/notice';
-import type { AddBlock, page, block } from '../editable-page/types';
+import type { AddBlock, EditablePages, Block } from '../editable-page/types';
 
-export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
+export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   if (err) {
     return <Notice status="ERROR" />;
   }
@@ -23,8 +23,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
   useEffect(() => {
     setBlocks(fetchedBlocks);
   }, []);
-  const [currentBlockId, setCurrentBlockId] =
-    useRecoilState(currentBlockIdState);
+  const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
 
@@ -40,7 +39,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
     setBlocks(updatedBlocks);
   };
 
-  const updateBlockHandler = (currentBlock: block) => {
+  const updateBlockHandler = (currentBlock: Block) => {
     const updatedBlocks = updateBlock(blocks, currentBlock);
     setBlocks(updatedBlocks);
   };
