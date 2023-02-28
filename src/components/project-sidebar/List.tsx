@@ -17,7 +17,8 @@ export const List = () => {
     setIsOpen(true);
   };
 
-  const onClickHandler = async () => {
+  const onClickHandler = async (e: any) => {
+    e.preventDefault();
     const res = await axios.post(`http://localhost:3000/api/post/project`);
     await postEditablePage(res.data.id);
     await postSocketPage(res.data.id);
@@ -66,17 +67,16 @@ export const List = () => {
                     프로젝트 시작하기
                   </Dialog.Title>
                   <div className="mt-2">
-                    <InputForm />
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={onClickHandler}
-                    >
-                      생성
-                    </button>
+                    <form>
+                      <InputForm />
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={onClickHandler}
+                      >
+                        생성
+                      </button>
+                    </form>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

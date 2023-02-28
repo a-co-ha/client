@@ -15,7 +15,7 @@ export interface editableBlock {
  * 타입이 터지지않을까?
  */
 export interface Block {
-  _id: string;
+  blockId: string;
   tag: string;
   html: string;
   imageUrl: string;

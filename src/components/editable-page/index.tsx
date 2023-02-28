@@ -20,6 +20,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
     return <Notice status="ERROR" />;
   }
   const [blocks, setBlocks] = useRecoilState(blocksState);
+  console.log(blocks);
   useEffect(() => {
     setBlocks(fetchedBlocks);
   }, []);
@@ -63,12 +64,14 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {blocks.map((block) => {
-                const position = blocks.map((b) => b._id).indexOf(block._id);
+                const position = blocks
+                  .map((b) => b.blockId)
+                  .indexOf(block.blockId);
                 return (
                   <EditableBlock
-                    key={block._id}
+                    key={block.blockId}
                     position={position}
-                    id={block._id}
+                    id={block.blockId}
                     tag={block.tag}
                     html={block.html}
                     imageUrl={block.imageUrl}

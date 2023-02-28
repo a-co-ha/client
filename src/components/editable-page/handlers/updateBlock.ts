@@ -1,4 +1,4 @@
-import { block } from '../types';
+import { Block } from '../types';
 import { deleteImageOnServer } from './deleteImageOnServer';
 
 /**
@@ -7,8 +7,8 @@ import { deleteImageOnServer } from './deleteImageOnServer';
  * updatedBlocks로 setBlocks함
  * 추가로 imageUrl가 변하면 oldBlock변수로 체크, 다를 시 deleteImageOnserver handler 실행
  */
-export const updateBlock = (blocks: block[], currentBlock: block) => {
-  const index = blocks.map((b) => b._id).indexOf(currentBlock._id);
+export const updateBlock = (blocks: Block[], currentBlock: Block) => {
+  const index = blocks.map((b) => b.blockId).indexOf(currentBlock.blockId);
   const oldBlock = blocks[index];
   const updatedBlocks = [...blocks];
   updatedBlocks[index] = {

@@ -1,4 +1,4 @@
-import type { block } from '../types';
+import type { Block } from '../types';
 import type { DropResult } from 'react-beautiful-dnd';
 /**
  *
@@ -9,7 +9,7 @@ import type { DropResult } from 'react-beautiful-dnd';
  * result.destination: Draggable이 끝난 위치(location).
  * 만약에 Draggable이 시작한 위치와 같은 위치로 돌아오면 이 destination값은 null이 될것입니다
  */
-export const onDragEnd = (blocks: block[], result: DropResult) => {
+export const onDragEnd = (blocks: Block[], result: DropResult) => {
   const { destination, source } = result;
   if (!destination || destination.index === source.index) {
     return;

@@ -8,7 +8,7 @@ export const blocksState = atom({
   key: 'editableBlock',
   default: [
     {
-      _id: '',
+      blockId: '',
       tag: 'p',
       html: '',
       imageUrl: '',

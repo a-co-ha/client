@@ -28,8 +28,8 @@ export const EditableBlock = (props: editableBlock) => {
     previousKey: null,
     placeholder: false,
   });
-  console.log('props', props);
-  console.log('state', state);
+  // console.log('props', props);
+  // console.log('state', state);
 
   const handleFocus = () => {
     if (state.placeholder) {

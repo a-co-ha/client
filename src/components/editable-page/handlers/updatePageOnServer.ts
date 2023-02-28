@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { block } from '../types';
+import { Block } from '../types';
 
-export const updatePageOnserver = async (blocks: block[], id: string) => {
+export const updatePageOnserver = async (blocks: Block[], id: string) => {
   try {
     const res = await axios.put(
       `http://localhost:3000/pages/${id}`,

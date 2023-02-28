@@ -15,15 +15,7 @@ interface Chat {
     }
   ];
 }
-
 export interface PageList {
-  pageList: [
-    {
-      pageId: string;
-      pageName: string;
-      type: string;
-    }
-  ];
   editablePage?: EditablePages;
   socketPage?: Chat;
   type: string;
@@ -35,6 +27,7 @@ export default function Page({ editablePage, socketPage, type }: PageList) {
     <div css={styles.main}>
       <ProjectSideBar />
       {type === 'normal' && editablePage ? (
+        //  템플릿 선택 컴포넌트 추가해야함
         <EditablePage
           id={editablePage.id}
           fetchedBlocks={editablePage.fetchedBlocks}
