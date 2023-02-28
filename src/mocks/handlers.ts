@@ -83,7 +83,7 @@ const handlers = [
             tag: 'p',
             html: '',
             imgUrl: '',
-            _id: '',
+            blockId: '',
           },
         ],
         type: 'normal',
@@ -106,7 +106,7 @@ const handlers = [
             tag: 'p',
             html: '',
             imgUrl: '',
-            _id: 'socket',
+            blockId: 'socket',
           },
         ],
         type: 'normal',
@@ -136,7 +136,7 @@ const handlers = [
         page: {
           blocks: [
             {
-              _id: '1',
+              blockId: '1',
               tag: 'p',
               html: '',
               imageUrl: '',

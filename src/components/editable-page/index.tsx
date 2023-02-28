@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import {
-  updatePageOnserver,
-  addBlock,
-  updateBlock,
-  deleteBlock,
-  onDragEnd,
-} from './handlers';
+import { handlers } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editable-block';
@@ -30,28 +24,30 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
 
   //block 변화시 put
   useEffect(() => {
-    updatePageOnserver(blocks, id);
-    prevBlcoks && prevBlcoks !== blocks ? updatePageOnserver(blocks, id) : null;
+    handlers.updatePageOnserver(blocks, id);
+    prevBlcoks && prevBlcoks !== blocks
+      ? handlers.updatePageOnserver(blocks, id)
+      : null;
   }, [blocks, prevBlcoks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
     setCurrentBlockId(currentBlock.id);
-    const updatedBlocks = addBlock(blocks, currentBlock);
+    const updatedBlocks = handlers.addBlock(blocks, currentBlock);
     setBlocks(updatedBlocks);
   };
 
   const updateBlockHandler = (currentBlock: Block) => {
-    const updatedBlocks = updateBlock(blocks, currentBlock);
+    const updatedBlocks = handlers.updateBlock(blocks, currentBlock);
     setBlocks(updatedBlocks);
   };
 
   const deleteBlockHandler = (currentBlockId: string) => {
-    const updatedBlocks = deleteBlock(blocks, currentBlockId);
+    const updatedBlocks = handlers.deleteBlock(blocks, currentBlockId);
     updatedBlocks && setBlocks(updatedBlocks);
   };
 
   const onDragEndHandler = (result: DropResult) => {
-    const updatedBlocks = onDragEnd(blocks, result);
+    const updatedBlocks = handlers.onDragEnd(blocks, result);
     updatedBlocks && setBlocks(updatedBlocks);
   };
   const isNewPage = router.query.public === 'true';
