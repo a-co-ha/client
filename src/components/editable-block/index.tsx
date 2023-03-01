@@ -11,8 +11,8 @@ import TagSelectorMenu from '../tag-selector-menu/index';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
 
 export interface ob {
-  x: number | undefined;
-  y: number | undefined;
+  x: number ;
+  y: number ;
 }
 interface StateTypes {
   htmlBackup: null | string;
