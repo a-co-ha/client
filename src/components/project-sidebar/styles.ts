@@ -45,6 +45,7 @@ export const pageCreateBtn = css`
 export const createBtn = css`
   width: 40px;
   height: 40px;
+  margin-top: 5px;
   border: 1px solid black;
   border-radius: 4px;
 `;

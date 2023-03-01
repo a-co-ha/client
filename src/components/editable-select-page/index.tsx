@@ -79,12 +79,3 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
     </div>
   );
 };
-
-// const pageData = await axios.get(
-//   `http://localhost:3000/api/post/${pageId}?channel=${channelId}`
-// );
-
-/**채널리스트의 버튼을 눌렀을 때
-*-> 1차 판별. 방금 생성된 것인지
-아니면 
-*/

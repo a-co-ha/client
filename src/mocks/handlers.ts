@@ -68,7 +68,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         id: 1,
-        pageName: '아코하',
+        channelName: '아코하',
       })
     );
   }),

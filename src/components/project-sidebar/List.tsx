@@ -1,5 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { channelListState } from '@/recoil/project/atom';
 import axios from 'axios';
 import { InputForm } from './inputForm';
 import { postEditablePage } from '@/pages/api/editable/postPage';
@@ -8,6 +10,7 @@ import { useRouter } from 'next/router';
 import * as styles from './styles';
 
 export const List = () => {
+  const channelList = useRecoilValue(channelListState);
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
@@ -20,17 +23,21 @@ export const List = () => {
   const onClickHandler = async (e: any) => {
     e.preventDefault();
     const res = await axios.post(`http://localhost:3000/api/channel/create`);
-    await postEditablePage(res.data.id);
-    await postSocketPage(res.data.id);
-    const channelId = res.data.id;
+    const { id: channelId, channelName } = res.data;
+    await postEditablePage(channelId);
+    await postSocketPage(channelId);
     closeModal();
-    router.push(`/project/${channelId}`);
-    return;
+    router.push(`/project/${channelId}?channelName=${channelName}`);
   };
-
+  // 사용자의 channel 목록 조회 API가 있어야 함
   return (
     <div css={styles.list}>
       <div>List</div>
+      {channelList?.map((channel, i) => (
+        <button key={i} css={styles.createBtn}>
+          {channel.channelName}
+        </button>
+      ))}
       <button type="button" onClick={openModal} css={styles.createBtn}>
         +
       </button>

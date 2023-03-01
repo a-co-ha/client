@@ -5,7 +5,7 @@ import { MainContent } from '@/components/project-main';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
-import { pageListState } from '@/recoil/project/atom';
+import { pageListState, channelListState } from '@/recoil/project/atom';
 import { useEffect } from 'react';
 
 export interface pageList {
@@ -14,16 +14,23 @@ export interface pageList {
       pageId: string;
       pageName: string;
       type: string;
-      initial: boolean;
+    }
+  ];
+  channelList: [
+    {
+      id: string;
+      channelName: string;
     }
   ];
 }
 
-export default function ProjectMain({ pageList }: pageList) {
+export default function ProjectMain({ pageList, channelList }: pageList) {
+  const setChannelList = useSetRecoilState(channelListState);
   const setPageList = useSetRecoilState(pageListState);
   useEffect(() => {
+    setChannelList(channelList);
     setPageList(pageList);
-    localStorage.setItem('pageList', JSON.stringify(pageList));
+    // localStorage.setItem('pageList', JSON.stringify(pageList));
   }, [pageList]);
   return (
     <div css={styles.main}>
@@ -37,16 +44,18 @@ export default function ProjectMain({ pageList }: pageList) {
  * params로 channelId 받아서 그걸로 프로젝트 조회 -> res = [ {pageId, pageName, type} ] 객체 배열
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const channelId = context.query.id;
+  const { id, channelName } = context.query;
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/pages?channel=${channelId}`
+      `http://localhost:3000/api/pages?channel=${id}`
     );
     const pageList = res.data.pageList;
+    const channelList = [{ id, channelName }];
+    console.log(channelList);
     return {
-      props: { pageList },
+      props: { pageList, channelList },
     };
   } catch (err) {
-    return { props: { pageList: null } };
+    return { props: { pageList: null, channelList: null } };
   }
 };
