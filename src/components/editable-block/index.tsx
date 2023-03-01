@@ -154,9 +154,8 @@ export const EditableBlock = (props: editableBlock) => {
     if (e.key === 'Shift') state.previousKey = null;
     else if (e.key === CMD_KEY) {
       setState({ ...state, openTagSelectorMenu: true });
-      //onInput 시마다 리랜더링이 일어나서 랜더링이 일어나기전 함수가 읽혀서 div가 없다
       const { x, y } = getCaretCoordinates(true);
-      console.log(y);
+      
       setState({
         ...state,
         tagSelectorMenuPosition: { x: x, y: y },
@@ -164,12 +163,6 @@ export const EditableBlock = (props: editableBlock) => {
       });
     }
   };
-  useEffect(() => {
-    window.addEventListener('keydown', () => handleKeyUp);
-    return () => {
-      window.removeEventListener('keydown', () => handleKeyUp);
-    };
-  }, [handleKeyUp]);
 
   return (
     <>
