@@ -11,8 +11,8 @@ import TagSelectorMenu from '../tag-selector-menu/index';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
 
 export interface ob {
-  x: number ;
-  y: number ;
+  x: number;
+  y: number;
 }
 interface StateTypes {
   htmlBackup: null | string;
@@ -119,7 +119,6 @@ export const EditableBlock = (props: editableBlock) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
       console.log('shift + enter');
     } else if (e.key === 'Enter') {
-      //TODO: 블럭 계속 생성하여 화면 전체 채울 시 밑에 있는 블럭들 tagselectmenu 사용 할 수 없으므로 화면 2/3지점에서 마진넣기
       e.preventDefault();
       if (e.nativeEvent.isComposing) {
         return;
@@ -155,7 +154,7 @@ export const EditableBlock = (props: editableBlock) => {
     else if (e.key === CMD_KEY) {
       setState({ ...state, openTagSelectorMenu: true });
       const { x, y } = getCaretCoordinates(true);
-      
+
       setState({
         ...state,
         tagSelectorMenuPosition: { x: x, y: y },
