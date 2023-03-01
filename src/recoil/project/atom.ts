@@ -7,6 +7,7 @@ export const pageListState = atom({
       pageId: '',
       pageName: '',
       type: '',
+      initial: true,
     },
   ],
 });

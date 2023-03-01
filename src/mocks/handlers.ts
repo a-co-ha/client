@@ -24,7 +24,7 @@ const handlers = [
         page: {
           blocks: [
             {
-              _id: '1',
+              blockId: '1',
               tag: 'p',
               html: '',
               imageUrl: '',
@@ -41,7 +41,7 @@ const handlers = [
         page: {
           blocks: [
             {
-              _id: '1',
+              blockId: '1',
               tag: 'p',
               html: 'testPage',
               imageUrl: '',
@@ -123,8 +123,18 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         pageList: [
-          { pageId: 'editable1234', pageName: '제목 없음,no', type: 'normal' },
-          { pageId: 'socket5678', pageName: '제목 없음,so', type: 'socket' },
+          {
+            pageId: 'editable1234',
+            pageName: '제목 없음,no',
+            type: 'normal',
+            initial: true,
+          },
+          {
+            pageId: 'socket5678',
+            pageName: '제목 없음,so',
+            type: 'socket',
+            initial: true,
+          },
         ],
       })
     );

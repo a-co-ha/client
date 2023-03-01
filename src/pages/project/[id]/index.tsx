@@ -14,6 +14,7 @@ export interface pageList {
       pageId: string;
       pageName: string;
       type: string;
+      initial: boolean;
     }
   ];
 }
@@ -37,11 +38,15 @@ export default function ProjectMain({ pageList }: pageList) {
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const channelId = context.query.id;
-  const res = await axios.get(
-    `http://localhost:3000/api/get?channel=${channelId}`
-  );
-  const pageList = res.data.pageList;
-  return {
-    props: { pageList },
-  };
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/api/get?channel=${channelId}`
+    );
+    const pageList = res.data.pageList;
+    return {
+      props: { pageList },
+    };
+  } catch (err) {
+    return { props: { pageList: null } };
+  }
 };

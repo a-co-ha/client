@@ -36,10 +36,11 @@ export const Channel = () => {
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {editablePageList.map((page) => {
+                    const initial = JSON.stringify(page.initial);
                     return (
                       <Link
                         key={page.pageId}
-                        href={`/project/${channelId}/${page.pageId}?type=${page.type}`}
+                        href={`/project/${channelId}/${page.pageId}?type=${page.type}&initial=${initial}`}
                       >
                         {page.pageName}
                       </Link>
@@ -62,10 +63,11 @@ export const Channel = () => {
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {socketPageList.map((page) => {
+                    const initial = JSON.stringify(page.initial);
                     return (
                       <Link
                         key={page.pageId}
-                        href={`/project/${channelId}/${page.pageId}?type=${page.type}`}
+                        href={`/project/${channelId}/${page.pageId}?type=${page.type}&initial=${initial}`}
                       >
                         {page.pageName}
                       </Link>
