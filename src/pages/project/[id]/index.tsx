@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const channelId = context.query.id;
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/get?channel=${channelId}`
+      `http://localhost:3000/api/pages?channel=${channelId}`
     );
     const pageList = res.data.pageList;
     return {

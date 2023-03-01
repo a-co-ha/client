@@ -17,7 +17,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3000/page/:pageId`, (_, res, ctx) => {
+  rest.get(`http://localhost:3000/api/post/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -34,7 +34,7 @@ const handlers = [
       })
     );
   }),
-  rest.put(`http://localhost:3000/pages/:id`, (_, res, ctx) => {
+  rest.put(`http://localhost:3000/api/post/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -63,7 +63,7 @@ const handlers = [
     );
   }),
 
-  rest.post(`http://localhost:3000/api/post/project`, (_, res, ctx) => {
+  rest.post(`http://localhost:3000/api/channel/create`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -118,7 +118,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3000/api/get`, (_, res, ctx) => {
+  rest.get(`http://localhost:3000/api/pages`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -161,6 +161,28 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         page: [{ userId: 'tangjin', content: 'ha' }],
+      })
+    );
+  }),
+
+  rest.put(`http://localhost:3000/api/post/:pageId`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        pageList: [
+          {
+            pageId: 'editable1234',
+            pageName: '제목 없음,no',
+            type: 'normal',
+            initial: true,
+          },
+          {
+            pageId: 'socket5678',
+            pageName: '제목 없음,so',
+            type: 'socket',
+            initial: true,
+          },
+        ],
       })
     );
   }),

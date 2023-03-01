@@ -19,7 +19,7 @@ export const List = () => {
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();
-    const res = await axios.post(`http://localhost:3000/api/post/project`);
+    const res = await axios.post(`http://localhost:3000/api/channel/create`);
     await postEditablePage(res.data.id);
     await postSocketPage(res.data.id);
     const channelId = res.data.id;

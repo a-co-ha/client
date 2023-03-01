@@ -3,10 +3,12 @@ import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { EditablePage } from '@/components/editable-page';
 import { SelectPage } from '@/components/editable-template-page';
+import { getEditablePage } from '@/pages/api/editable/getPage';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { resetServerContext } from 'react-beautiful-dnd';
 import type { EditablePages } from '@/components/editable-page/types';
+import { getSocketPage } from '../../api/socket/getPage';
 
 interface Chat {
   page: [
@@ -56,10 +58,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     //여기서 query parameter로 public=true면 selet컴포넌트 보여줌
     const { id: channelId, pageId, type, initial } = context.query;
     if (type === 'normal') {
-      const pageData = await axios.get(
-        `http://localhost:3000/api/get/editable?page=${pageId}?channel=${channelId}`
-      );
-      const blocks = pageData.data.page.blocks;
+      const pageData = await getEditablePage(channelId, pageId);
+      const blocks = pageData.page.blocks;
       return {
         props: {
           editablePage: { fetchedBlocks: blocks, id: pageId, err: false },
@@ -68,10 +68,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       };
     } else if (type === 'socket') {
-      const pageData = await axios.get(
-        `http://localhost:3000/api/get/socket?page=${pageId}?channel=${channelId}`
-      );
-      const socketPage = pageData.data.page;
+      const pageData = await getSocketPage(channelId, pageId);
+      const socketPage = pageData.page;
       return {
         props: { socketPage, type, initial },
       };

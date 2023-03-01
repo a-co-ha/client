@@ -101,10 +101,10 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
   return updatedBlocks;
 };
 
-const updatePageOnserver = async (blocks: Block[], id: string) => {
+const updatePageOnserver = async (blocks: Block[], pageId: string) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/pages/${id}`,
+      `http://localhost:3000/api/post/${pageId}`,
       {
         blocks,
       },

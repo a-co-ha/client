@@ -51,7 +51,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
     const updatedBlocks = handlers.onDragEnd(blocks, result);
     updatedBlocks && setBlocks(updatedBlocks);
   };
-  const isNewPage = router.query.public === 'true';
+  const isNewPage = router.query.initial === 'true';
 
   return (
     <div css={styles.contentBox}>
