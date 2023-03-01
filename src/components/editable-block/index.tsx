@@ -7,7 +7,13 @@ import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import type { editableBlock } from '../editable-page/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
+import TagSelectorMenu from '../tag-selector-menu/index';
+import getCaretCoordinates from '@/utils/getCaretCoordinates';
 
+export interface ob {
+  x: number | undefined;
+  y: number | undefined;
+}
 interface StateTypes {
   htmlBackup: null | string;
   html: string;
@@ -15,6 +21,8 @@ interface StateTypes {
   imageUrl: string;
   previousKey: null | string;
   placeholder: boolean;
+  openTagSelectorMenu: boolean;
+  tagSelectorMenuPosition: ob;
 }
 
 export const EditableBlock = (props: editableBlock) => {
@@ -27,6 +35,11 @@ export const EditableBlock = (props: editableBlock) => {
     imageUrl: '',
     previousKey: null,
     placeholder: false,
+    openTagSelectorMenu: false,
+    tagSelectorMenuPosition: {
+      x: 0,
+      y: 0,
+    },
   });
   console.log('props', props);
   console.log('state', state);
@@ -46,6 +59,7 @@ export const EditableBlock = (props: editableBlock) => {
     setState((prevState) => ({
       ...prevState,
       html: e.target.innerText,
+      openTagSelectorMenu: false,
     }));
 
     if (contentEditable.current)
@@ -80,6 +94,18 @@ export const EditableBlock = (props: editableBlock) => {
     ) {
       contentEditable.current.focus();
     }
+
+    const handleCMD = (event: any) => {
+      if (event.key === 'Enter') {
+        console.log('Enter key was pressed');
+      }
+    };
+
+    window.addEventListener('keydown', handleCMD);
+
+    return () => {
+      window.removeEventListener('keydown', handleCMD);
+    };
   }, []);
 
   const handleBlur = () => {
@@ -93,6 +119,7 @@ export const EditableBlock = (props: editableBlock) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
       console.log('shift + enter');
     } else if (e.key === 'Enter') {
+      //TODO: 블럭 계속 생성하여 화면 전체 채울 시 밑에 있는 블럭들 tagselectmenu 사용 할 수 없으므로 화면 2/3지점에서 마진넣기
       e.preventDefault();
       if (e.nativeEvent.isComposing) {
         return;
@@ -117,6 +144,7 @@ export const EditableBlock = (props: editableBlock) => {
         focusContentEditableTextToEnd(prevBlock);
       }
     }
+    //TODO: 태그 변경 후 html이 빈 상태로 backspace시 p태그로 되돌리기
     if (state.previousKey === 'Shift') return;
 
     setState({ ...state, previousKey: e.key });
@@ -124,10 +152,30 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Shift') state.previousKey = null;
+    else if (e.key === CMD_KEY) {
+      setState({ ...state, openTagSelectorMenu: true });
+      //onInput 시마다 리랜더링이 일어나서 랜더링이 일어나기전 함수가 읽혀서 div가 없다
+      const { x, y } = getCaretCoordinates(true);
+      console.log(y);
+      setState({
+        ...state,
+        tagSelectorMenuPosition: { x: x, y: y },
+        openTagSelectorMenu: true,
+      });
+    }
   };
+  useEffect(() => {
+    window.addEventListener('keydown', () => handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', () => handleKeyUp);
+    };
+  }, [handleKeyUp]);
 
   return (
     <>
+      {state.openTagSelectorMenu && (
+        <TagSelectorMenu position={state.tagSelectorMenuPosition} />
+      )}
       {props.id && (
         <Draggable key={props.id} draggableId={props.id} index={props.position}>
           {(provided, snapshot) => (
@@ -197,3 +245,29 @@ const block = css`
   padding: 10px;
   margin: 1px;
 `;
+
+// const blocks = css `{
+//   padding: 0. 25rem;
+//   // Better support for safari
+//   -webkit-user-select: text;
+//   user-select: text;
+// `
+
+// const blocks:focus,
+// const isDragging,
+// const blocksSelected = css `{
+//   background: $tertiary;
+//   outline-color: $tertiary;
+//   & ~ . dragHandle {
+//     opacity: 1;
+//   }
+// `
+
+// const placeholder = css `
+//   color: rgba(72, 72, 72, 0.25);
+// `
+
+// const draggable .blocks = css `
+//   display: inline-block;
+//   width: calc(100% - 1rem);
+// `
