@@ -152,7 +152,6 @@ export const EditableBlock = (props: editableBlock) => {
   const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Shift') state.previousKey = null;
     else if (e.key === CMD_KEY) {
-      setState({ ...state, openTagSelectorMenu: true });
       const { x, y } = getCaretCoordinates(true);
 
       setState({
