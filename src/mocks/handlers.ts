@@ -72,7 +72,7 @@ const handlers = [
       })
     );
   }),
-  rest.post(`http://localhost:3000/api/post/editable`, (_, res, ctx) => {
+  rest.post(`http://localhost:3000/api/post`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

@@ -24,7 +24,7 @@ export default function ProjectMain({ pageList }: pageList) {
   useEffect(() => {
     setPageList(pageList);
     localStorage.setItem('pageList', JSON.stringify(pageList));
-  }, []);
+  }, [pageList]);
   return (
     <div css={styles.main}>
       <ProjectSideBar />

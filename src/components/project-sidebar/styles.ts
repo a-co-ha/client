@@ -12,7 +12,7 @@ const flexRowCenter = css`
 
 export const projectSideBarBox = css`
   ${flexRowCenter}
-  width: 200px;
+  width: 250px;
   height: 100vh;
   outline: 1px solid limegreen;
 `;
@@ -27,6 +27,19 @@ export const channel = css`
   ${flexColumnCenter}
   flex-grow: 1;
   outline: 2px solid blue;
+`;
+
+export const pageCreateBtnBox = css`
+  display: flex;
+`;
+
+export const pageCreateBtn = css`
+  padding-inline: 12px;
+  color: purple;
+  &:hover {
+    background: gray;
+  }
+  border-radius: 8px;
 `;
 
 export const createBtn = css`

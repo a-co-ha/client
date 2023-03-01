@@ -2,10 +2,9 @@ import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { EditablePage } from '@/components/editable-page';
-import { SelectPage } from '@/components/editable-template-page';
+import { SelectPage } from '@/components/editable-select-page';
 import { getEditablePage } from '@/pages/api/editable/getPage';
 import { GetServerSideProps } from 'next';
-import axios from 'axios';
 import { resetServerContext } from 'react-beautiful-dnd';
 import type { EditablePages } from '@/components/editable-page/types';
 import { getSocketPage } from '../../api/socket/getPage';
@@ -22,28 +21,22 @@ export interface PageList {
   editablePage?: EditablePages;
   socketPage?: Chat;
   type: string;
-  initial: boolean | string;
 }
 
-export default function Page({
-  editablePage,
-  socketPage,
-  type,
-  initial,
-}: PageList) {
+export default function Page({ editablePage, socketPage, type }: PageList) {
   resetServerContext();
-  initial === 'true' ? (initial = true) : (initial = false);
   return (
+    /**
+     * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
+     */
     <div css={styles.main}>
       <ProjectSideBar />
-      {type === 'normal' && editablePage && !initial ? (
+      {type === 'normal' && editablePage ? (
         <EditablePage
           id={editablePage.id}
           fetchedBlocks={editablePage.fetchedBlocks}
           err={editablePage.err}
         />
-      ) : type === 'normal' && initial ? (
-        <SelectPage />
       ) : null}
       {type === 'socket' && socketPage ? <div>socket</div> : null}
       <UserList />
@@ -56,25 +49,23 @@ export default function Page({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     //여기서 query parameter로 public=true면 selet컴포넌트 보여줌
-    const { id: channelId, pageId, type, initial } = context.query;
+    const { id: channelId, pageId, type } = context.query;
     if (type === 'normal') {
-      const pageData = await getEditablePage(channelId, pageId);
-      const blocks = pageData.page.blocks;
+      const fetchedBlocks = await getEditablePage(channelId, pageId);
       return {
         props: {
-          editablePage: { fetchedBlocks: blocks, id: pageId, err: false },
+          editablePage: { fetchedBlocks, id: pageId, err: false },
           type,
-          initial,
         },
       };
     } else if (type === 'socket') {
       const pageData = await getSocketPage(channelId, pageId);
       const socketPage = pageData.page;
       return {
-        props: { socketPage, type, initial },
+        props: { socketPage, type },
       };
     } else {
-      return { props: { socketPage: null, type: null, initial: null } };
+      return { props: { socketPage: null, type: null } };
     }
   } catch (err) {
     return {
