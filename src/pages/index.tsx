@@ -1,7 +1,7 @@
 const IndexPage = () => {
   return (
     <div>
-      <div>ha</div>
+      <div>홍보페이지</div>
     </div>
   );
 };

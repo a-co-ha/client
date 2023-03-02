@@ -66,7 +66,7 @@ export const Channel = () => {
                     return (
                       <Link
                         key={page.pageId}
-                        href={`/project/${channelId}/${page.pageId}?type=${page.type}`}
+                        href={`/project/${channelId}/${page.pageId}?name=${page.pageName}&type=${page.type}`}
                       >
                         {page.pageName}
                       </Link>
@@ -97,7 +97,7 @@ export const Channel = () => {
                     return (
                       <Link
                         key={page.pageId}
-                        href={`/project/${channelId}/${page.pageId}?type=${page.type}`}
+                        href={`/project/${channelId}/${page.pageId}?name=${page.pageName}&type=${page.type}`}
                       >
                         {page.pageName}
                       </Link>
