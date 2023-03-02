@@ -4,3 +4,7 @@ export interface GetEditablePage {
     pageId: string | string[] | undefined
   ): Promise<any>;
 }
+
+export interface GetEditablePages {
+  (channelId: string | string[] | undefined): Promise<any>;
+}

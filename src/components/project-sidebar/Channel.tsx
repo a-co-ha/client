@@ -3,6 +3,7 @@ import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { Modal } from './modal';
+import { getEditablePages } from '@/pages/api/editable/getPages';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -25,10 +26,23 @@ export const Channel = () => {
   const router = useRouter();
   const setPageList = useSetRecoilState(pageListState);
   const channelId = router.query.id;
-  const savedPageList = localStorage.getItem('pageList');
+
   useEffect(() => {
-    savedPageList !== null ? setPageList(JSON.parse(savedPageList)) : null;
+    const getEditablePageList = async () => {
+      try {
+        const pageList = await getEditablePages(channelId);
+        setPageList(pageList);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getEditablePageList();
   }, []);
+
+  // const savedPageList = localStorage.getItem('pageList');
+  // useEffect(() => {
+  //   savedPageList !== null ? setPageList(JSON.parse(savedPageList)) : null;
+  // }, []);
   const pageList = useRecoilValue(pageListState);
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');

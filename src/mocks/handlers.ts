@@ -127,13 +127,11 @@ const handlers = [
             pageId: 'editable1234',
             pageName: '제목 없음,no',
             type: 'normal',
-            initial: true,
           },
           {
             pageId: 'socket5678',
             pageName: '제목 없음,so',
             type: 'socket',
-            initial: true,
           },
         ],
       })
