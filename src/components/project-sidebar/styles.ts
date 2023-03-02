@@ -54,6 +54,7 @@ export const createBtn = css`
 export const inputForm = (error: boolean) => css`
   width: 100%;
   padding: 5px 13px 5px;
+  margin-top: 1rem;
   font-size: 0.9rem;
   border: ${error ? `1px solid red` : `1px solid limegreen`};
   border-radius: 6px;

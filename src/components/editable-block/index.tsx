@@ -134,16 +134,6 @@ export const EditableBlock = (props: editableBlock) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <span
-                css={styles.dragHandle}
-                role="button"
-                tabIndex={0}
-                onClick={handleDragHandleClick}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Image src={DragHandleIcon} alt="Icon" />
-              </span>
               <div
                 contentEditable
                 suppressContentEditableWarning
@@ -159,6 +149,16 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
               />
+              <span
+                css={styles.dragHandle}
+                role="button"
+                tabIndex={0}
+                onClick={handleDragHandleClick}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Image src={DragHandleIcon} alt="Icon" />
+              </span>
             </div>
           )}
         </Draggable>
