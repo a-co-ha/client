@@ -10,10 +10,18 @@ const menuItemTag = [
   { tag: 'img', label: 'image' },
 ];
 
-const tagChangeHandler = () => {};
 
-export default function TagSelectorMenu({ position }: TagSelectorMenuProps) {
+
+export default function TagSelectorMenu({
+  position,
+  closeMenu,
+}: TagSelectorMenuProps) {
   console.log(position);
+
+  const tagChangeHandler = () => {
+    closeMenu()
+  };
+
   useEffect(() => {
     document.getElementById('menu-button')?.click();
     console.log(position);
@@ -27,7 +35,7 @@ export default function TagSelectorMenu({ position }: TagSelectorMenuProps) {
       }}
     >
       <Menu as="div" className="relative inline-block text-left">
-        <Menu.Button id="menu-button">dsafsda</Menu.Button>
+        <Menu.Button id="menu-button" />
         <Menu.Items
           className={
             'absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none' +

@@ -59,7 +59,6 @@ export const EditableBlock = (props: editableBlock) => {
     setState((prevState) => ({
       ...prevState,
       html: e.target.innerText,
-      openTagSelectorMenu: false,
     }));
 
     if (contentEditable.current)
@@ -95,17 +94,17 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current.focus();
     }
 
-    const handleCMD = (event: any) => {
-      if (event.key === 'Enter') {
-        console.log('Enter key was pressed');
-      }
-    };
+    // const handleCMD = (event: any) => {
+    //   if (event.key === 'Enter') {
+    //     console.log('Enter key was pressed');
+    //   }
+    // };
 
-    window.addEventListener('keydown', handleCMD);
+    // window.addEventListener('keydown', handleCMD);
 
-    return () => {
-      window.removeEventListener('keydown', handleCMD);
-    };
+    // return () => {
+    //   window.removeEventListener('keydown', handleCMD);
+    // };
   }, []);
 
   const handleBlur = () => {
@@ -147,7 +146,12 @@ export const EditableBlock = (props: editableBlock) => {
     //TODO: 태그 변경 후 html이 빈 상태로 backspace시 p태그로 되돌리기
     if (state.previousKey === 'Shift') return;
 
-    setState({ ...state, previousKey: e.key, openTagSelectorMenu: false });
+    setState({ ...state, previousKey: e.key });
+  };
+
+  const closeTagSelectorMenu = () => {
+    setState({ ...state, openTagSelectorMenu: false });
+    if (contentEditable.current) contentEditable.current.focus();
   };
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
@@ -160,14 +164,16 @@ export const EditableBlock = (props: editableBlock) => {
         tagSelectorMenuPosition: { x: x, y: y },
         openTagSelectorMenu: true,
       });
-      // window.getSelection()?.collapseToEnd();
     }
   };
 
   return (
     <>
       {state.openTagSelectorMenu && (
-        <TagSelectorMenu position={state.tagSelectorMenuPosition} />
+        <TagSelectorMenu
+          position={state.tagSelectorMenuPosition}
+          closeMenu={closeTagSelectorMenu}
+        />
       )}
       {props.id && (
         <Draggable key={props.id} draggableId={props.id} index={props.position}>
