@@ -136,17 +136,18 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current?.parentElement?.previousElementSibling
     ) {
       e.preventDefault();
+
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
-          .previousElementSibling.firstElementChild as HTMLDivElement;
+          .previousElementSibling.childNodes[1] as HTMLDivElement;
         focusContentEditableTextToEnd(prevBlock);
       }
     }
     //TODO: 태그 변경 후 html이 빈 상태로 backspace시 p태그로 되돌리기
     if (state.previousKey === 'Shift') return;
 
-    setState({ ...state, previousKey: e.key });
+    setState({ ...state, previousKey: e.key, openTagSelectorMenu: false });
   };
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
@@ -159,6 +160,7 @@ export const EditableBlock = (props: editableBlock) => {
         tagSelectorMenuPosition: { x: x, y: y },
         openTagSelectorMenu: true,
       });
+      // window.getSelection()?.collapseToEnd();
     }
   };
 
@@ -176,6 +178,16 @@ export const EditableBlock = (props: editableBlock) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
+              <span
+                css={dragHandle}
+                role="button"
+                tabIndex={0}
+                onClick={handleDragHandleClick}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Image src={DragHandleIcon} alt="Icon" />
+              </span>
               <div
                 contentEditable
                 suppressContentEditableWarning
@@ -190,16 +202,6 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
               />
-              <span
-                css={dragHandle}
-                role="button"
-                tabIndex={0}
-                onClick={handleDragHandleClick}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Image src={DragHandleIcon} alt="Icon" />
-              </span>
             </div>
           )}
         </Draggable>
