@@ -1,18 +1,20 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { Fragment, useState, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
 import axios from 'axios';
 import { InputForm } from './inputForm';
-import { postEditablePage } from '@/pages/api/editable/postPage';
+import { postEditablePage, getChannels } from '@/pages/api/editable/';
 import { postSocketPage } from '@/pages/api/socket/postPage';
+
 import { useRouter } from 'next/router';
 import * as styles from './styles';
 
 export const List = () => {
-  const channelList = useRecoilValue(channelListState);
-  const router = useRouter();
+  const setChannelList = useSetRecoilState(channelListState);
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const channelId = router.query.id;
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -29,6 +31,21 @@ export const List = () => {
     closeModal();
     router.push(`/project/${channelId}?channelName=${channelName}`);
   };
+
+  useEffect(() => {
+    const getChannelList = async () => {
+      try {
+        const channelList = await getChannels(channelId);
+        setChannelList(channelList);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getChannelList();
+  }, []);
+
+  const channelList = useRecoilValue(channelListState);
+
   // 사용자의 channel 목록 조회 API가 있어야 함
   return (
     <div css={styles.list}>

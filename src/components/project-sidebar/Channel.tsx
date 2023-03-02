@@ -12,21 +12,9 @@ import * as styles from './styles';
 /** 여기서 채널 간단목록 조회 api 쏨 */
 export const Channel = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const onClickHandler = () => {
-    openModal();
-  };
-
-  const router = useRouter();
   const setPageList = useSetRecoilState(pageListState);
+  const router = useRouter();
   const channelId = router.query.id;
-
   useEffect(() => {
     const getEditablePageList = async () => {
       try {
@@ -38,11 +26,16 @@ export const Channel = () => {
     };
     getEditablePageList();
   }, []);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const onClickHandler = () => {
+    openModal();
+  };
 
-  // const savedPageList = localStorage.getItem('pageList');
-  // useEffect(() => {
-  //   savedPageList !== null ? setPageList(JSON.parse(savedPageList)) : null;
-  // }, []);
   const pageList = useRecoilValue(pageListState);
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');

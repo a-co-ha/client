@@ -72,6 +72,20 @@ const handlers = [
       })
     );
   }),
+  rest.get(`http://localhost:3000/api/channel`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        channelList: [
+          {
+            id: 1,
+            channelName: '아코하',
+          },
+        ],
+      })
+    );
+  }),
+
   rest.post(`http://localhost:3000/api/post`, (_, res, ctx) => {
     return res(
       ctx.status(200),
