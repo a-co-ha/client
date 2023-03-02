@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
-import { css } from '@emotion/react';
+import * as styles from './styles';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY } from '@/utils/const';
 import { getSelection } from '@/utils/getSelection';
@@ -130,12 +130,12 @@ export const EditableBlock = (props: editableBlock) => {
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              css={draggable}
+              css={styles.draggable}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
               <span
-                css={dragHandle}
+                css={styles.dragHandle}
                 role="button"
                 tabIndex={0}
                 onClick={handleDragHandleClick}
@@ -147,9 +147,10 @@ export const EditableBlock = (props: editableBlock) => {
               <div
                 contentEditable
                 suppressContentEditableWarning
+                spellCheck={false}
                 ref={contentEditable}
                 key={props.id}
-                css={block}
+                css={styles.block(snapshot.isDragging, snapshot.dropAnimation)}
                 data-position={props.position}
                 data-tag={state.tag}
                 onInput={handleChange}
@@ -165,32 +166,3 @@ export const EditableBlock = (props: editableBlock) => {
     </>
   );
 };
-
-const draggable = css`
-  display: block;
-  &:hover {
-    span {
-      opacity: 1;
-    }
-  }
-`;
-
-const dragHandle = css`
-  opacity: 0;
-  display: inline-block;
-  width: 1rem;
-  img {
-    display: block;
-    margin: auto;
-  }
-`;
-const block = css`
-  display: inline-block;
-  width: calc(100% - 1rem - 11px);
-  padding: 0.25rem;
-  -webkit-user-select: text;
-  user-select: text;
-  outline: 2px solid limegreen;
-  padding: 10px;
-  margin: 1px;
-`;
