@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { FieldError } from 'react-hook-form';
 
 const flexColumnCenter = css`
   display: flex;
@@ -50,12 +51,29 @@ export const createBtn = css`
   border-radius: 4px;
 `;
 
-export const inputForm = css`
+export const inputForm = (error: boolean) => css`
   width: 100%;
   padding: 5px 13px 5px;
-  border: 1px solid gray;
+  font-size: 0.9rem;
+  border: ${error ? `1px solid red` : `1px solid limegreen`};
   border-radius: 6px;
   &:focus {
     outline: none;
   }
+`;
+
+export const validationMsg = css`
+  user-select: none;
+  padding: 5px;
+`;
+
+export const projectCreateBtn = css`
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  background: #dbe9fe;
+  &:hover {
+    background: #dbe9aa;
+  }
+  border-radius: 5px;
 `;

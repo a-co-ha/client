@@ -3,7 +3,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
 import axios from 'axios';
-import { InputForm } from './inputForm';
+import { ProjectCreateForm } from './inputForm';
 import { postEditablePage, getChannels } from '@/pages/api/editable/';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 
@@ -22,8 +22,7 @@ export const List = () => {
     setIsOpen(true);
   };
 
-  const onClickHandler = async (e: any) => {
-    e.preventDefault();
+  const onClickHandler = async () => {
     const res = await axios.post(`http://localhost:3000/api/channel/create`);
     const { id: channelId, channelName } = res.data;
     await postEditablePage(channelId);
@@ -91,16 +90,7 @@ export const List = () => {
                     프로젝트 시작하기
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form>
-                      <InputForm />
-                      <button
-                        type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        onClick={onClickHandler}
-                      >
-                        생성
-                      </button>
-                    </form>
+                    <ProjectCreateForm onClickHandler={onClickHandler} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
