@@ -110,7 +110,7 @@ export const EditableBlock = (props: editableBlock) => {
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
-          .previousElementSibling.firstElementChild as HTMLDivElement;
+          .previousElementSibling.childNodes[1] as HTMLDivElement;
         focusContentEditableTextToEnd(prevBlock);
       }
     }
@@ -134,6 +134,16 @@ export const EditableBlock = (props: editableBlock) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
+              <span
+                css={styles.dragHandle}
+                role="button"
+                tabIndex={0}
+                onClick={handleDragHandleClick}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Image src={DragHandleIcon} alt="Icon" />
+              </span>
               <div
                 contentEditable
                 suppressContentEditableWarning
@@ -149,16 +159,6 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
               />
-              <span
-                css={styles.dragHandle}
-                role="button"
-                tabIndex={0}
-                onClick={handleDragHandleClick}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Image src={DragHandleIcon} alt="Icon" />
-              </span>
             </div>
           )}
         </Draggable>
