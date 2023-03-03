@@ -3,6 +3,8 @@ import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { MainContent } from '@/components/project-main';
 import { GetServerSideProps } from 'next';
+import { useRecoilValue } from 'recoil';
+import { initialUserState } from '@/recoil/user/atom';
 
 export interface pageList {
   pageList: [
@@ -21,9 +23,10 @@ export interface pageList {
 }
 
 export default function ProjectMain({ pageList, channelList }: pageList) {
+  const initialUser = useRecoilValue(initialUserState);
   return (
     <div css={styles.main}>
-      <ProjectSideBar />
+      <ProjectSideBar initialUser={initialUser} />
       <MainContent />
       <UserList />
     </div>

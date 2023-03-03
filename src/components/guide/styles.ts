@@ -6,3 +6,8 @@ export const guidBox = css`
   outline: 1px solid red;
   background: yellowgreen;
 `;
+
+export const guideSidebar = css`
+  text-align: center;
+  width: 250px;
+`;

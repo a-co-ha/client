@@ -2,19 +2,21 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
-import axios from 'axios';
+import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './inputForm';
-import { postEditablePage, getChannels } from '@/pages/api/editable/';
+import { postProject } from '@/pages/api/project/postProject';
+import { postEditablePage } from '@/pages/api/editable/';
+import { getUser } from '@/pages/api/user/getUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
-
 import { useRouter } from 'next/router';
 import * as styles from './styles';
+import type { Channels } from './types';
 
 export const List = () => {
   const setChannelList = useSetRecoilState(channelListState);
+  const setInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const channelId = router.query.id;
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -23,10 +25,10 @@ export const List = () => {
   };
 
   const onClickHandler = async () => {
-    const res = await axios.post(`http://localhost:3000/api/channel/create`);
-    const { id: channelId, channelName } = res.data;
+    const { id: channelId, channelName } = await postProject();
     await postEditablePage(channelId);
     await postSocketPage(channelId);
+    setInitialUser(false);
     closeModal();
     router.push(`/project/${channelId}?channelName=${channelName}`);
   };
@@ -34,8 +36,12 @@ export const List = () => {
   useEffect(() => {
     const getChannelList = async () => {
       try {
-        const channelList = await getChannels(channelId);
-        setChannelList(channelList);
+        const channels: Channels[] = [];
+        const user = await getUser();
+        user.map((e) => {
+          channels.push({ id: e.channel_id, channelName: e.channel_name });
+        });
+        setChannelList(channels);
       } catch (err) {
         console.error(err);
       }
@@ -45,15 +51,15 @@ export const List = () => {
 
   const channelList = useRecoilValue(channelListState);
 
-  // 사용자의 channel 목록 조회 API가 있어야 함
   return (
     <div css={styles.list}>
       <div>List</div>
-      {channelList?.map((channel, i) => (
-        <button key={i} css={styles.createBtn}>
-          {channel.channelName}
-        </button>
-      ))}
+      {channelList[0].id &&
+        channelList.map((channel, i) => (
+          <button key={i} css={styles.createBtn}>
+            {channel.channelName}
+          </button>
+        ))}
       <button type="button" onClick={openModal} css={styles.createBtn}>
         +
       </button>

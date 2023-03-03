@@ -2,8 +2,24 @@ import { rest } from 'msw';
 import { testData } from './api/data/testData';
 
 const handlers = [
-  rest.get('/post/api/users', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(testData));
+  rest.get('http://localhost:3000/api/user', (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        user: [
+          {
+            github_id: 'tangjin',
+            github_url: 'https://github.com/tangjinlog',
+            img: '',
+            name: 'tangjin',
+            channel_id: '1',
+            channel_name: '아코하',
+            channel_admin: 'tangjin',
+            channel_img: '',
+          },
+        ],
+      })
+    );
   }),
   rest.post('post/api/register', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(res));

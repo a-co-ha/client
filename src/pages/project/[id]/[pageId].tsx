@@ -2,12 +2,14 @@ import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { EditablePage } from '@/components/editable-page';
-import { SelectPage } from '@/components/editable-select-page';
 import { getEditablePage } from '@/pages/api/editable/getPage';
 import { GetServerSideProps } from 'next';
 import { resetServerContext } from 'react-beautiful-dnd';
-import type { EditablePages } from '@/components/editable-page/types';
 import { getSocketPage } from '../../api/socket/getPage';
+import { ChatPage } from '@/components/chat-page';
+import { useRecoilValue } from 'recoil';
+import { initialUserState } from '@/recoil/user/atom';
+import type { EditablePages } from '@/components/editable-page/types';
 
 interface Chat {
   page: [
@@ -24,13 +26,14 @@ export interface PageList {
 }
 
 export default function Page({ editablePage, socketPage, type }: PageList) {
+  const initialUser = useRecoilValue(initialUserState);
   resetServerContext();
   return (
     /**
      * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
      */
     <div css={styles.main}>
-      <ProjectSideBar />
+      <ProjectSideBar initialUser={initialUser} />
       {type === 'normal' && editablePage ? (
         <EditablePage
           id={editablePage.id}
@@ -38,7 +41,7 @@ export default function Page({ editablePage, socketPage, type }: PageList) {
           err={editablePage.err}
         />
       ) : null}
-      {type === 'socket' && socketPage ? <div>socket</div> : null}
+      {type === 'socket' && socketPage ? <ChatPage /> : null}
       <UserList />
     </div>
   );
