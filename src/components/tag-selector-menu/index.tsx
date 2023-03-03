@@ -10,8 +10,6 @@ const menuItemTag = [
   { tag: 'img', label: 'image' },
 ];
 
-
-
 export default function TagSelectorMenu({
   position,
   closeMenu,
@@ -19,7 +17,7 @@ export default function TagSelectorMenu({
   console.log(position);
 
   const tagChangeHandler = () => {
-    closeMenu()
+    closeMenu();
   };
 
   useEffect(() => {
@@ -39,7 +37,8 @@ export default function TagSelectorMenu({
         <Menu.Items
           className={
             'absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none' +
-            (position.y > 500 ? ' bottom-full' : '')
+            (position.y > 500 ? ' -translate-y-full' : '') +
+            (position.x > 600 ? ' -translate-x-full' : '')
           }
         >
           <div className="px-1  py-1">
