@@ -7,8 +7,6 @@ import { GetServerSideProps } from 'next';
 import { resetServerContext } from 'react-beautiful-dnd';
 import { getSocketPage } from '../../api/socket/getPage';
 import { ChatPage } from '@/components/chat-page';
-import { useRecoilValue } from 'recoil';
-import { initialUserState } from '@/recoil/user/atom';
 import type { EditablePages } from '@/components/editable-page/types';
 
 interface Chat {
@@ -26,14 +24,13 @@ export interface PageList {
 }
 
 export default function Page({ editablePage, socketPage, type }: PageList) {
-  const initialUser = useRecoilValue(initialUserState);
   resetServerContext();
   return (
     /**
      * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
      */
     <div css={styles.main}>
-      <ProjectSideBar initialUser={initialUser} />
+      <ProjectSideBar />
       {type === 'normal' && editablePage ? (
         <EditablePage
           id={editablePage.id}

@@ -1,5 +1,4 @@
 import { rest } from 'msw';
-import { testData } from './api/data/testData';
 
 const handlers = [
   rest.get('http://localhost:3000/api/user', (_, res, ctx) => {

@@ -29,7 +29,6 @@ export const LoginBtn = () => {
     try {
       const userData = await getUser();
       const initialUser = !userData[0].channel_id;
-      console.log(initialUser);
       setUserData(userData);
       setInitialUser(initialUser);
       setIsLoggedIn(true);

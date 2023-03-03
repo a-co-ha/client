@@ -26,7 +26,7 @@ export default function ProjectMain({ pageList, channelList }: pageList) {
   const initialUser = useRecoilValue(initialUserState);
   return (
     <div css={styles.main}>
-      <ProjectSideBar initialUser={initialUser} />
+      <ProjectSideBar />
       <MainContent />
       <UserList />
     </div>
