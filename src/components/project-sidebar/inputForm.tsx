@@ -14,8 +14,7 @@ export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
     },
     mode: 'onChange',
   });
-
-  const { projectTitle, error } = useCreateProjectForm({
+  const { projectTitle, error, isSubmitting } = useCreateProjectForm({
     control: methods.control,
   });
   const onSubmit = (data: ProjectTitle) => {
@@ -33,7 +32,11 @@ export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
           placeholder={`프로젝트 이름을 입력해주세요. (2 ~ 10자)`}
         />
         <p css={styles.validationMsg}>{error ? error.message : 'ㅤ'}</p>
-        <button css={styles.projectCreateBtn} type="submit">
+        <button
+          css={styles.projectCreateBtn}
+          type="submit"
+          disabled={isSubmitting}
+        >
           생성
         </button>
       </form>

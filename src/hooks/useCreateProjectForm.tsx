@@ -9,6 +9,7 @@ export const useCreateProjectForm = ({
   const {
     field: projectTitle,
     fieldState: { error },
+    formState: { isSubmitting },
   } = useController({
     name: 'projectTitle',
     control,
@@ -18,5 +19,5 @@ export const useCreateProjectForm = ({
       maxLength: { value: 10, message: '너무 길어요' },
     },
   });
-  return { projectTitle, error };
+  return { projectTitle, error, isSubmitting };
 };

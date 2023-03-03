@@ -45,7 +45,7 @@ export const Channel = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} />
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
-          <Disclosure>
+          <Disclosure defaultOpen>
             {({ open }) => (
               <>
                 <div css={styles.pageCreateBtnBox}>
@@ -76,7 +76,7 @@ export const Channel = () => {
               </>
             )}
           </Disclosure>
-          <Disclosure as="div" className="mt-2">
+          <Disclosure as="div" className="mt-2" defaultOpen>
             {({ open }) => (
               <>
                 <div css={styles.pageCreateBtnBox}>
