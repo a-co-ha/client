@@ -9,6 +9,7 @@ import type { editableBlock } from '../editable-page/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
 import TagSelectorMenu from '../tag-selector-menu/index';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
+import ContentEditable from 'react-contenteditable';
 
 export interface ob {
   x: number;
@@ -27,6 +28,7 @@ interface StateTypes {
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
+  const text = useRef('');
 
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
@@ -55,14 +57,8 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
-    setState((prevState) => ({
-      ...prevState,
-      html: e.target.innerText,
-    }));
-
-    if (contentEditable.current)
-      focusContentEditableTextToEnd(contentEditable.current);
+  const handleChange = (e: any) => {
+    text.current = e.target.value;
   };
 
   const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -183,19 +179,20 @@ export const EditableBlock = (props: editableBlock) => {
               >
                 <Image src={DragHandleIcon} alt="Icon" />
               </span>
-              <div
+              <ContentEditable
                 contentEditable
                 suppressContentEditableWarning
-                ref={contentEditable}
+                innerRef={contentEditable}
                 key={props.id}
                 css={block}
                 data-position={props.position}
                 data-tag={state.tag}
-                onInput={handleChange}
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
+                html={text.current}
+                onChange={handleChange}
               />
             </div>
           )}
