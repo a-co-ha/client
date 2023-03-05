@@ -93,18 +93,6 @@ export const EditableBlock = (props: editableBlock) => {
     ) {
       contentEditable.current.focus();
     }
-
-    // const handleCMD = (event: any) => {
-    //   if (event.key === 'Enter') {
-    //     console.log('Enter key was pressed');
-    //   }
-    // };
-
-    // window.addEventListener('keydown', handleCMD);
-
-    // return () => {
-    //   window.removeEventListener('keydown', handleCMD);
-    // };
   }, []);
 
   const handleBlur = () => {
@@ -152,6 +140,7 @@ export const EditableBlock = (props: editableBlock) => {
   const closeTagSelectorMenu = () => {
     setState({ ...state, openTagSelectorMenu: false });
     if (contentEditable.current) contentEditable.current.focus();
+    console.log('실행');
   };
 
   const handleKeyUp = (e: React.KeyboardEvent) => {

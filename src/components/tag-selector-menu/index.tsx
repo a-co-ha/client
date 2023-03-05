@@ -16,7 +16,7 @@ export default function TagSelectorMenu({
 }: TagSelectorMenuProps) {
   console.log(position);
 
-  const tagChangeHandler = () => {
+  const tagChangeHandler = (tag: string) => {
     closeMenu();
   };
 
@@ -50,7 +50,7 @@ export default function TagSelectorMenu({
                       className={`${
                         active ? 'bg-violet-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      onClick={tagChangeHandler}
+                      onClick={() => tagChangeHandler(item.tag)}
                     >
                       {active ? (
                         <EditActiveIcon
