@@ -2,20 +2,13 @@ import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY } from '@/utils/const';
-import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
-import type { editableBlock } from '../editable-page/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
-
-interface StateTypes {
-  htmlBackup: null | string;
-  html: string;
-  tag: string;
-  imageUrl: string;
-  previousKey: null | string;
-  placeholder: boolean;
-}
+import TagSelectorMenu from '../tag-selector-menu/index';
+import getCaretCoordinates from '@/utils/getCaretCoordinates';
+import type { editableBlock } from '../editable-page/types';
+import type { StateTypes } from './type';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -27,6 +20,11 @@ export const EditableBlock = (props: editableBlock) => {
     imageUrl: '',
     previousKey: null,
     placeholder: false,
+    openTagSelectorMenu: false,
+    tagSelectorMenuPosition: {
+      x: 0,
+      y: 0,
+    },
   });
   console.log('props', props);
   console.log('state', state);
@@ -83,7 +81,10 @@ export const EditableBlock = (props: editableBlock) => {
   }, []);
 
   const handleBlur = () => {
-    // TODO: 첫 블럭에만 placeholder 표시
+    if (!state.html) {
+      addPlaceholder();
+      setState({ ...state, placeholder: true });
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -107,10 +108,11 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current?.parentElement?.previousElementSibling
     ) {
       e.preventDefault();
+
       props.deleteBlock(props.id);
       if (contentEditable.current && contentEditable.current.parentElement) {
         const prevBlock = contentEditable.current.parentElement
-          .previousElementSibling.firstElementChild as HTMLDivElement;
+          .previousElementSibling.childNodes[1] as HTMLDivElement;
         focusContentEditableTextToEnd(prevBlock);
       }
     }
@@ -121,10 +123,61 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Shift') state.previousKey = null;
+    else if (e.key === CMD_KEY) {
+      const { x, y } = getCaretCoordinates(true);
+
+      setState({
+        ...state,
+        tagSelectorMenuPosition: { x: x, y: y },
+        openTagSelectorMenu: true,
+      });
+    }
   };
+
+  const handleTagSelection = (tag: string) => {
+    if (tag === 'img') {
+      //TODO: 이미지 업로드
+    } else {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount !== 0) {
+        const range = selection.getRangeAt(0);
+        let newNode = document.createElement(tag);
+        if (contentEditable.current) {
+          newNode.textContent = contentEditable.current.innerText.replace(
+            /\/$/,
+            ''
+          );
+          contentEditable.current.innerText = '';
+        }
+        range.deleteContents();
+        range.insertNode(newNode);
+        const newRange = document.createRange();
+        newRange.setStartAfter(newNode);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+        setState({ ...state, tag: tag, openTagSelectorMenu: false });
+      }
+    }
+  };
+
+  useEffect(() => {
+    props.updateBlock({
+      _id: props.id,
+      html: state.html,
+      tag: state.tag,
+      imageUrl: state.imageUrl,
+    });
+  }, [state.tag]);
 
   return (
     <>
+      {state.openTagSelectorMenu && (
+        <TagSelectorMenu
+          position={state.tagSelectorMenuPosition}
+          handleTagSelection={handleTagSelection}
+        />
+      )}
       {props.id && (
         <Draggable key={props.id} draggableId={props.id} index={props.position}>
           {(provided, snapshot) => (
@@ -134,6 +187,16 @@ export const EditableBlock = (props: editableBlock) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
+              <span
+                css={dragHandle}
+                role="button"
+                tabIndex={0}
+                onClick={handleDragHandleClick}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Image src={DragHandleIcon} alt="Icon" />
+              </span>
               <div
                 contentEditable
                 suppressContentEditableWarning
@@ -148,16 +211,6 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
               />
-              <span
-                css={dragHandle}
-                role="button"
-                tabIndex={0}
-                onClick={handleDragHandleClick}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Image src={DragHandleIcon} alt="Icon" />
-              </span>
             </div>
           )}
         </Draggable>
@@ -194,3 +247,29 @@ const block = css`
   padding: 10px;
   margin: 1px;
 `;
+
+// const blocks = css `{
+//   padding: 0. 25rem;
+//   // Better support for safari
+//   -webkit-user-select: text;
+//   user-select: text;
+// `
+
+// const blocks:focus,
+// const isDragging,
+// const blocksSelected = css `{
+//   background: $tertiary;
+//   outline-color: $tertiary;
+//   & ~ . dragHandle {
+//     opacity: 1;
+//   }
+// `
+
+// const placeholder = css `
+//   color: rgba(72, 72, 72, 0.25);
+// `
+
+// const draggable .blocks = css `
+//   display: inline-block;
+//   width: calc(100% - 1rem);
+// `

@@ -4,7 +4,6 @@ import { UserList } from '@/components/project-userlist';
 import { css } from '@emotion/react';
 
 export default function Main() {
-
   return (
     <div css={main}>
       <ProjectSideBar />

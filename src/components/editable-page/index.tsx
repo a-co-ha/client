@@ -12,7 +12,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editable-block';
 import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
-import { Notice } from '@/components/notice';
+import { Notice } from '@/components/Notice';
 import type { AddBlock, page, block } from '../editable-page/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: page) => {
