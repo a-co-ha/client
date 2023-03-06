@@ -3,7 +3,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
-import { ProjectCreateForm } from './inputForm';
+import { ProjectCreateForm } from './CreateForm';
 import { postProject } from '@/pages/api/project/postProject';
 import { postEditablePage } from '@/pages/api/editable/';
 import { getUser } from '@/pages/api/user/getUser';

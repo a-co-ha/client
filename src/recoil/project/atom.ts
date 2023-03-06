@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 
 export const pageListState = atom({
   key: 'pageList',
@@ -9,6 +9,11 @@ export const pageListState = atom({
       type: '',
     },
   ],
+});
+
+export const pageNameState = atomFamily({
+  key: 'pageNameState',
+  default: '',
 });
 
 export const channelListState = atom({

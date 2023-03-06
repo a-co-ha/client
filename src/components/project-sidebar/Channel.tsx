@@ -1,12 +1,18 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { pageListState } from '@/recoil/project/atom';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+  selector,
+} from 'recoil';
+import { pageListState, pageNameState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { Modal } from './modal';
+import { PageNameForm } from './PageNameForm';
 import { getEditablePages } from '@/pages/api/editable/getPages';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import * as styles from './styles';
 
 /** 여기서 채널 간단목록 조회 api 쏨 */
@@ -37,8 +43,16 @@ export const Channel = () => {
   };
 
   const pageList = useRecoilValue(pageListState);
+  console.log(pageList);
+  pageNameState;
+  // const onChangeHandler = (e) => {
+
+  // };
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');
+  // pageList.map(e=>)
+  const [pageNames, setPageNames] = useRecoilState(pageNameState(1));
+
   return (
     <div css={styles.channel}>
       <div>channel</div>
@@ -100,6 +114,13 @@ export const Channel = () => {
                         href={`/project/${channelId}/${page.pageId}?name=${page.pageName}&type=${page.type}`}
                       >
                         {page.pageName}
+                        {/* <input
+                          css={{ border: '1px solid red', cursor: 'pointer' }}
+                          type="text"
+                          value={page.pageName}
+                          onChange={onChangeHandler}
+                        /> */}
+                        {/* <PageNameForm pageId={page.pageId} > */}
                       </Link>
                     );
                   })}
