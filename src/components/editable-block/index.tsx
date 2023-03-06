@@ -2,28 +2,13 @@ import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY } from '@/utils/const';
-import { getSelection } from '@/utils/getSelection';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
-import type { editableBlock } from '../editable-page/types';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
 import TagSelectorMenu from '../tag-selector-menu/index';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
-
-export interface ob {
-  x: number;
-  y: number;
-}
-interface StateTypes {
-  htmlBackup: null | string;
-  html: string;
-  tag: string;
-  imageUrl: string;
-  previousKey: null | string;
-  placeholder: boolean;
-  openTagSelectorMenu: boolean;
-  tagSelectorMenuPosition: ob;
-}
+import type { editableBlock } from '../editable-page/types';
+import type { StateTypes } from './type';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);

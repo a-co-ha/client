@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react';
 import { useEffect } from 'react';
-import { TagSelectorMenuProps } from '../editable-block/type';
+import type { TagSelectorMenuProps } from '../editable-block/type';
 
 const menuItemTag = [
   { tag: 'h1', label: 'h1' },
