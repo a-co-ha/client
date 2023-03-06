@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, []);
   if (!shouldRender) {
-    return null;
+    // return null;
   }
 
   return (

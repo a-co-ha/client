@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
-import { css } from '@emotion/react';
+import * as styles from './styles';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY } from '@/utils/const';
 import Image from 'next/image';
@@ -26,8 +26,8 @@ export const EditableBlock = (props: editableBlock) => {
       y: 0,
     },
   });
-  console.log('props', props);
-  console.log('state', state);
+  // console.log('props', props);
+  // console.log('state', state);
 
   const handleFocus = () => {
     if (state.placeholder) {
@@ -183,12 +183,12 @@ export const EditableBlock = (props: editableBlock) => {
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              css={draggable}
+              css={styles.draggable}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
               <span
-                css={dragHandle}
+                css={styles.dragHandle}
                 role="button"
                 tabIndex={0}
                 onClick={handleDragHandleClick}
@@ -200,9 +200,10 @@ export const EditableBlock = (props: editableBlock) => {
               <div
                 contentEditable
                 suppressContentEditableWarning
+                spellCheck={false}
                 ref={contentEditable}
                 key={props.id}
-                css={block}
+                css={styles.block(snapshot.isDragging, snapshot.dropAnimation)}
                 data-position={props.position}
                 data-tag={state.tag}
                 onInput={handleChange}
@@ -218,58 +219,3 @@ export const EditableBlock = (props: editableBlock) => {
     </>
   );
 };
-
-const draggable = css`
-  display: block;
-  &:hover {
-    span {
-      opacity: 1;
-    }
-  }
-`;
-
-const dragHandle = css`
-  opacity: 0;
-  display: inline-block;
-  width: 1rem;
-  img {
-    display: block;
-    margin: auto;
-  }
-`;
-const block = css`
-  display: inline-block;
-  width: calc(100% - 1rem);
-  padding: 0.25rem;
-  -webkit-user-select: text;
-  user-select: text;
-  outline: 2px solid limegreen;
-  padding: 10px;
-  margin: 1px;
-`;
-
-// const blocks = css `{
-//   padding: 0. 25rem;
-//   // Better support for safari
-//   -webkit-user-select: text;
-//   user-select: text;
-// `
-
-// const blocks:focus,
-// const isDragging,
-// const blocksSelected = css `{
-//   background: $tertiary;
-//   outline-color: $tertiary;
-//   & ~ . dragHandle {
-//     opacity: 1;
-//   }
-// `
-
-// const placeholder = css `
-//   color: rgba(72, 72, 72, 0.25);
-// `
-
-// const draggable .blocks = css `
-//   display: inline-block;
-//   width: calc(100% - 1rem);
-// `

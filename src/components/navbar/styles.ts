@@ -15,6 +15,7 @@ export const navBar = css`
 
 export const profileBox = css`
   ${flexCenterNavBar}
+  width: 250px;
   outline: 1px solid limegreen;
 `;
 

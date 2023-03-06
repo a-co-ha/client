@@ -1,32 +1,13 @@
-import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { EditablePage } from '@/components/editable-page';
-import { page } from '@/components/editable-page/types';
 
-const IndexPage = ({ id, fetchedBlocks, err }: page) => {
-  return <EditablePage id={id} fetchedBlocks={fetchedBlocks} err={err} />;
-};
+axios.defaults.baseURL = 'http://localhost:3001';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = context.res;
-  try {
-    const response = await axios.post(`http://localhost:3000/pages`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const pageId = response.data.pageId;
-    const creator = response.data.creator;
-    const query = !creator ? '?public=true' : '';
-    res.writeHead(302, { Location: `/page/${pageId}` });
-    res.end();
-    return { props: {} };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: { fetchedBlocks: null, id: null, err: true },
-    };
-  }
+const IndexPage = () => {
+  return (
+    <div>
+      <div>홍보페이지</div>
+    </div>
+  );
 };
 
 export default IndexPage;

@@ -6,15 +6,18 @@ export const useCreateProjectForm = ({
 }: {
   control: Control<ProjectTitle>;
 }) => {
-  const { field: projectTitle, fieldState } = useController({
+  const {
+    field: projectTitle,
+    fieldState: { error },
+    formState: { isSubmitting },
+  } = useController({
     name: 'projectTitle',
     control,
     rules: {
-      required: '반드시 입력해주세요',
-      min: { value: 2, message: '2글자 이상 입력해주세요.' },
-      max: { value: 10, message: '최대 10글자까지 입력이 가능해요.' },
+      required: '꼭 필요해요',
+      minLength: { value: 2, message: '너무 짧아요' },
+      maxLength: { value: 10, message: '너무 길어요' },
     },
   });
-  const { error } = fieldState;
-  return { projectTitle, error };
+  return { projectTitle, error, isSubmitting };
 };

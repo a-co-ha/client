@@ -1,10 +1,22 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import { InputForm } from './inputForm';
+import { Fragment, useState, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { channelListState } from '@/recoil/project/atom';
+import { initialUserState } from '@/recoil/user/atom';
+import { ProjectCreateForm } from './CreateForm';
+import { postProject } from '@/pages/api/project/postProject';
+import { postEditablePage } from '@/pages/api/editable/';
+import { getUser } from '@/pages/api/user/getUser';
+import { postSocketPage } from '@/pages/api/socket/postPage';
+import { useRouter } from 'next/router';
 import * as styles from './styles';
+import type { Channels } from './types';
 
 export const List = () => {
-  let [isOpen, setIsOpen] = useState(false);
+  const setChannelList = useSetRecoilState(channelListState);
+  const setInitialUser = useSetRecoilState(initialUserState);
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -12,9 +24,42 @@ export const List = () => {
     setIsOpen(true);
   };
 
+  const onClickHandler = async () => {
+    const { id: channelId, channelName } = await postProject();
+    await postEditablePage(channelId);
+    await postSocketPage(channelId);
+    setInitialUser(false);
+    closeModal();
+    router.push(`/project/${channelId}?channelName=${channelName}`);
+  };
+
+  useEffect(() => {
+    const getChannelList = async () => {
+      try {
+        const channels: Channels[] = [];
+        const user = await getUser();
+        user.map((e) => {
+          channels.push({ id: e.channel_id, channelName: e.channel_name });
+        });
+        setChannelList(channels);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getChannelList();
+  }, []);
+
+  const channelList = useRecoilValue(channelListState);
+
   return (
     <div css={styles.list}>
       <div>List</div>
+      {channelList[0].id &&
+        channelList.map((channel, i) => (
+          <button key={i} css={styles.createBtn}>
+            {channel.channelName}
+          </button>
+        ))}
       <button type="button" onClick={openModal} css={styles.createBtn}>
         +
       </button>
@@ -51,17 +96,7 @@ export const List = () => {
                     프로젝트 시작하기
                   </Dialog.Title>
                   <div className="mt-2">
-                    <InputForm />
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      생성
-                    </button>
+                    <ProjectCreateForm onClickHandler={onClickHandler} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
