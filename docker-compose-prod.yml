@@ -1,0 +1,31 @@
+# docker 컨테이너 버전을 명시
+version: '3.8'
+
+# services는 컨테이너
+services:
+  # nginx-proxy 80으로 들어오면 무조건 먼저 실행, 그다음 실행되는 컨테이너의
+  # VIRTUAL_HOST 로 명시된 도메인을 체크해서 해당 도메인의 포트로 포트포워딩 시켜줌
+  # https 이용하려면 VIRTUAL_PROTO=https 명시
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - '80:80'
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.local
+
+  acoha-next:
+    # 현재 경로에 이미지 빌드
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      # build시 환경 변수 참조가 안돼서 args로 전달하고, Dockerfile에서 변수로 사용한다.
+      args:
+        - NEXT_PUBLIC_API_MOCKING=disabled
+      # nginx-proxy image를 쓸거기때문에 3000:80으로 안함
+      ports:
+        - '3000:3000'
