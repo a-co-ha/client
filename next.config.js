@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: false,
   async rewrites() {
     return [
@@ -9,15 +10,6 @@ const nextConfig = {
       },
     ];
   },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/:path*',
-  //       destination:
-  //         '',
-  //     },
-  //   ];
-  // },
 };
 
 module.exports = nextConfig;
