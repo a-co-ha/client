@@ -131,16 +131,9 @@ export const EditableBlock = (props: editableBlock) => {
         focusContentEditableTextToEnd(prevBlock);
       }
     }
-    //TODO: 태그 변경 후 html이 빈 상태로 backspace시 p태그로 되돌리기
     if (state.previousKey === 'Shift') return;
 
     setState({ ...state, previousKey: e.key });
-  };
-
-  const closeTagSelectorMenu = () => {
-    setState({ ...state, openTagSelectorMenu: false });
-    if (contentEditable.current) contentEditable.current.focus();
-    console.log('실행');
   };
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
@@ -156,12 +149,48 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
+  const handleTagSelection = (tag: string) => {
+    if (tag === 'img') {
+      //TODO: 이미지 업로드
+    } else {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount !== 0) {
+        const range = selection.getRangeAt(0);
+        let newNode = document.createElement(tag);
+        if (contentEditable.current) {
+          newNode.textContent = contentEditable.current.innerText.replace(
+            /\/$/,
+            ''
+          );
+          contentEditable.current.innerText = '';
+        }
+        range.deleteContents();
+        range.insertNode(newNode);
+        const newRange = document.createRange();
+        newRange.setStartAfter(newNode);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+        setState({ ...state, tag: tag, openTagSelectorMenu: false });
+      }
+    }
+  };
+
+  useEffect(() => {
+    props.updateBlock({
+      _id: props.id,
+      html: state.html,
+      tag: state.tag,
+      imageUrl: state.imageUrl,
+    });
+  }, [state.tag]);
+
   return (
     <>
       {state.openTagSelectorMenu && (
         <TagSelectorMenu
           position={state.tagSelectorMenuPosition}
-          closeMenu={closeTagSelectorMenu}
+          handleTagSelection={handleTagSelection}
         />
       )}
       {props.id && (

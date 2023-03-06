@@ -12,18 +12,16 @@ const menuItemTag = [
 
 export default function TagSelectorMenu({
   position,
-  closeMenu,
+  handleTagSelection,
 }: TagSelectorMenuProps) {
-  console.log(position);
-
   const tagChangeHandler = (tag: string) => {
-    closeMenu();
+    handleTagSelection(tag);
   };
 
   useEffect(() => {
     document.getElementById('menu-button')?.click();
-    console.log(position);
   }, []);
+
   return (
     <div
       className="fixed top-16 w-56 text-right"
@@ -41,14 +39,14 @@ export default function TagSelectorMenu({
             (position.x > 600 ? ' -translate-x-full' : '')
           }
         >
-          <div className="px-1  py-1">
+          <div className="px-1  py-1 divide-y divide-dashed border-solid border-2 border-indigo-500/50 ">
             {menuItemTag.map((item) => {
               return (
                 <Menu.Item key={item.label}>
                   {({ active }) => (
                     <button
                       className={`${
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                        active ? 'bg-violet-500 text-white ' : 'text-gray-900 '
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                       onClick={() => tagChangeHandler(item.tag)}
                     >

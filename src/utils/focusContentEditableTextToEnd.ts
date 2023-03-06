@@ -1,5 +1,5 @@
 export const focusContentEditableTextToEnd = (element: HTMLElement) => {
-  if (element.innerText.length === 0) {
+  if (element?.innerText.length === 0) {
     element.focus();
     return;
   }
