@@ -163,7 +163,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   useEffect(() => {
     props.updateBlock({
-      _id: props.id,
+      blockId: props.id,
       html: state.html,
       tag: state.tag,
       imageUrl: state.imageUrl,
