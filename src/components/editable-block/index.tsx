@@ -45,9 +45,6 @@ export const EditableBlock = (props: editableBlock) => {
       ...prevState,
       html: e.target.innerText,
     }));
-
-    if (contentEditable.current)
-      focusContentEditableTextToEnd(contentEditable.current);
   };
 
   const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
