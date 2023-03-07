@@ -26,7 +26,6 @@ services:
       # build시 환경 변수 참조가 안돼서 args로 전달하고, Dockerfile에서 변수로 사용한다.
       args:
         - VIRTUAL_HOST=acoha.site
-        - NEXT_PUBLIC_API_MOCKING=disabled
       # nginx-proxy image를 쓸거기때문에 3000:80으로 안함
       ports:
         - '3000:3000'
