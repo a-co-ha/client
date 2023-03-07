@@ -168,7 +168,6 @@ export const EditableBlock = (props: editableBlock) => {
   }, [state.tag]);
 
   const closeMenu = () => {
-    console.log('실행2');
     setState({ ...state, openTagSelectorMenu: false });
   };
 

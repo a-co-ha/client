@@ -23,8 +23,12 @@ export default function TagSelectorMenu({
     document.getElementById('menu-button')?.click();
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') closeMenu();
+  const handleKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeMenu();
+    } else if (e.key === 'Enter') {
+      closeMenu();
+    }
   };
 
   return (
@@ -35,7 +39,7 @@ export default function TagSelectorMenu({
         left: position.x,
       }}
       onBlur={closeMenu}
-      onKeyUp={handleKeyDown}
+      onKeyUp={handleKeyUp}
     >
       <Menu as="div" className="relative inline-block text-left">
         <Menu.Button id="menu-button" />
