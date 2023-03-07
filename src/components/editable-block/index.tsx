@@ -29,28 +29,6 @@ export const EditableBlock = (props: editableBlock) => {
   console.log('props', props);
   console.log('state', state);
 
-  const handleFocus = () => {
-    if (state.placeholder) {
-      setState({
-        ...state,
-        html: '',
-        placeholder: false,
-      });
-      if (contentEditable.current) contentEditable.current.innerText = '';
-    }
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
-    setState((prevState) => ({
-      ...prevState,
-      html: e.target.innerText,
-    }));
-  };
-
-  const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-    // const dragHandle = e.target;
-    // openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
-  };
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
       const hasOnlyOneBlock =
@@ -77,11 +55,43 @@ export const EditableBlock = (props: editableBlock) => {
     }
   }, []);
 
+  useEffect(() => {
+    props.updateBlock({
+      _id: props.id,
+      html: state.html,
+      tag: state.tag,
+      imageUrl: state.imageUrl,
+    });
+  }, [state.tag]);
+
+  const handleFocus = () => {
+    if (state.placeholder) {
+      setState({
+        ...state,
+        html: '',
+        placeholder: false,
+      });
+      if (contentEditable.current) contentEditable.current.innerText = '';
+    }
+  };
+
   const handleBlur = () => {
     if (!state.html) {
       addPlaceholder();
       setState({ ...state, placeholder: true });
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
+    setState((prevState) => ({
+      ...prevState,
+      html: e.target.innerText,
+    }));
+  };
+
+  const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    // const dragHandle = e.target;
+    // openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -157,15 +167,6 @@ export const EditableBlock = (props: editableBlock) => {
       }
     }
   };
-
-  useEffect(() => {
-    props.updateBlock({
-      _id: props.id,
-      html: state.html,
-      tag: state.tag,
-      imageUrl: state.imageUrl,
-    });
-  }, [state.tag]);
 
   const closeMenu = () => {
     setState({ ...state, openTagSelectorMenu: false });
