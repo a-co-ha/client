@@ -13,6 +13,7 @@ const menuItemTag = [
 export default function TagSelectorMenu({
   position,
   handleTagSelection,
+  closeMenu,
 }: TagSelectorMenuProps) {
   const tagChangeHandler = (tag: string) => {
     handleTagSelection(tag);
@@ -22,6 +23,10 @@ export default function TagSelectorMenu({
     document.getElementById('menu-button')?.click();
   }, []);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') closeMenu();
+  };
+
   return (
     <div
       className="fixed top-16 w-56 text-right"
@@ -29,9 +34,12 @@ export default function TagSelectorMenu({
         top: position.y,
         left: position.x,
       }}
+      onBlur={closeMenu}
+      onKeyUp={handleKeyDown}
     >
       <Menu as="div" className="relative inline-block text-left">
         <Menu.Button id="menu-button" />
+        dsaf
         <Menu.Items
           className={
             'absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none' +

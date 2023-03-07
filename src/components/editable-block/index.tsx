@@ -167,12 +167,18 @@ export const EditableBlock = (props: editableBlock) => {
     });
   }, [state.tag]);
 
+  const closeMenu = () => {
+    console.log('실행2');
+    setState({ ...state, openTagSelectorMenu: false });
+  };
+
   return (
     <>
       {state.openTagSelectorMenu && (
         <TagSelectorMenu
           position={state.tagSelectorMenuPosition}
           handleTagSelection={handleTagSelection}
+          closeMenu={closeMenu}
         />
       )}
       {props.id && (

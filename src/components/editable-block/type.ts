@@ -5,6 +5,7 @@ interface Coordinates {
 export interface TagSelectorMenuProps {
   position: Coordinates;
   handleTagSelection: (tag: string) => void;
+  closeMenu: () => void;
 }
 
 export interface StateTypes {
