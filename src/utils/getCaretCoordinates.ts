@@ -1,6 +1,6 @@
 const getCaretCoordinates = (fromStart = true) => {
-  let x = 16,
-    y = 60;
+  let x = 0,
+    y = 0;
   const isSupported = typeof window.getSelection !== 'undefined';
   if (isSupported) {
     const selection = window.getSelection();
@@ -16,7 +16,6 @@ const getCaretCoordinates = (fromStart = true) => {
       }
     }
   }
-  console.log(x, y);
   return { x, y };
 };
 

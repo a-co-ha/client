@@ -196,6 +196,7 @@ export const EditableBlock = (props: editableBlock) => {
           formData,
         }
       );
+
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);
@@ -212,7 +213,6 @@ export const EditableBlock = (props: editableBlock) => {
         selection.removeAllRanges();
         selection.addRange(newRange);
       }
-
       setState({
         ...state,
         imageUrl: reader.result,

@@ -40,16 +40,16 @@ export default function TagSelectorMenu({
         top: position.y,
         left: position.x,
       }}
-      onBlur={closeMenu}
+      // onBlur={closeMenu}
       onKeyUp={handleKeyUp}
     >
       <Menu as="div" className="relative inline-block text-left">
         <Menu.Button id="menu-button" />
         <Menu.Items
           className={
-            'absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none' +
-            (position.y > 500 ? ' -translate-y-full' : '') +
-            (position.x > 600 ? ' -translate-x-full' : '')
+            'absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ' +
+            (position.y > 500 ? ' bottom-full' : '') +
+            (position.x > 600 ? 'right-full' : '')
           }
         >
           <div className="px-1  py-1 divide-y divide-dashed border-solid border-2 border-indigo-500/50 ">
