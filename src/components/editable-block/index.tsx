@@ -164,7 +164,13 @@ export const EditableBlock = (props: editableBlock) => {
         newRange.collapse(true);
         selection.removeAllRanges();
         selection.addRange(newRange);
-        setState({ ...state, tag: tag, openTagSelectorMenu: false });
+
+        setState({
+          ...state,
+          html: state.html.replace(/\/$/, ''),
+          tag: tag,
+          openTagSelectorMenu: false,
+        });
       }
     }
   };
@@ -191,7 +197,6 @@ export const EditableBlock = (props: editableBlock) => {
         }
       );
       console.dir(data);
-      // <img width={'50%'} src={state.imageUrl} />
 
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
