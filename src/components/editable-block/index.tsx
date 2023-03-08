@@ -173,6 +173,8 @@ export const EditableBlock = (props: editableBlock) => {
     setState({ ...state, openTagSelectorMenu: false });
   };
 
+  const a = () => {};
+
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     const imageFile = e.target.files[0];
@@ -183,17 +185,36 @@ export const EditableBlock = (props: editableBlock) => {
     formData.append('image', imageFile);
     try {
       const data = await axios.post(
-        `http://localhost:3000/post/images?pageId=${pageId}`,
+        `http://localhost:3000/post/images/${pageId}?channel=1`,
         {
           formData,
         }
       );
       console.dir(data);
-      /**
-       * TODO: 쿼리스트링으로 pageId 를 담아보내고 바디에 formData를 보내면 imageUrl을 주는 api 필요
-       *
-       */
-      setState({ ...state, imageUrl: reader.result });
+      // <img width={'50%'} src={state.imageUrl} />
+
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount !== 0) {
+        const range = selection.getRangeAt(0);
+        let newNode = document.createElement('img');
+        newNode.setAttribute('width', '50%');
+        const url = reader.result as string;
+        newNode.setAttribute('src', url);
+        range.deleteContents();
+        range.insertNode(newNode);
+        const newRange = document.createRange();
+        newRange.setStartAfter(newNode);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      }
+
+      setState({
+        ...state,
+        imageUrl: reader.result,
+        tag: 'img',
+        openTagSelectorMenu: false,
+      });
     } catch {
       console.log('에러');
     }
@@ -249,7 +270,6 @@ export const EditableBlock = (props: editableBlock) => {
                 style={{ display: 'none' }}
                 onChange={onImageChage}
               />
-              <img width={'50%'} src={state.imageUrl} />
             </div>
           )}
         </Draggable>
