@@ -172,6 +172,8 @@ export const EditableBlock = (props: editableBlock) => {
     setState({ ...state, openTagSelectorMenu: false });
   };
 
+  const onImageChage = () => {};
+
   return (
     <>
       {state.openTagSelectorMenu && (
@@ -218,6 +220,7 @@ export const EditableBlock = (props: editableBlock) => {
           )}
         </Draggable>
       )}
+      {/* <input type="file" multiple accept="image/*" onChange={onImageChage} /> */}
     </>
   );
 };

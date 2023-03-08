@@ -9,6 +9,8 @@ const menuItemTag = [
   { tag: 'h2', label: 'h2' },
   { tag: 'h3', label: 'h3' },
   { tag: 'b', label: 'bold' },
+  { tag: 'i', label: 'i' },
+  { tag: 'code', label: 'code' },
   { tag: 'img', label: 'image' },
 ];
 
@@ -26,9 +28,7 @@ export default function TagSelectorMenu({
   }, []);
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      closeMenu();
-    } else if (e.key === 'Enter') {
+    if (e.key === 'Escape' || e.key === 'Enter') {
       closeMenu();
     }
   };
