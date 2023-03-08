@@ -62,6 +62,15 @@ const handlers = [
       })
     );
   }),
+  rest.post('http://localhost:3000/post/images', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        message: 'Image uploaded successfully!',
+        imageUrl: 'dsafa',
+      })
+    );
+  }),
 ];
 
 export default handlers;

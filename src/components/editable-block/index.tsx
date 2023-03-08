@@ -9,15 +9,16 @@ import TagSelectorMenu from '../tag-selector-menu/index';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
 import type { editableBlock } from '../editable-page/types';
 import type { StateTypes } from './type';
+import axios from 'axios';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
-
+  const fileInput = useRef<HTMLInputElement | null>(null);
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
     html: '',
     tag: 'p',
-    imageUrl: '',
+    imageUrl: null,
     previousKey: null,
     placeholder: false,
     openTagSelectorMenu: false,
@@ -141,9 +142,9 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
-  const handleTagSelection = (tag: string) => {
+  const handleTagSelection = async (tag: string) => {
     if (tag === 'img') {
-      //TODO: 이미지 업로드
+      fileInput.current?.click();
     } else {
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
@@ -172,7 +173,31 @@ export const EditableBlock = (props: editableBlock) => {
     setState({ ...state, openTagSelectorMenu: false });
   };
 
-  const onImageChage = () => {};
+  const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files === null) return;
+    const imageFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    const pageId = props.pageId;
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    try {
+      const data = await axios.post(
+        `http://localhost:3000/post/images?pageId=${pageId}`,
+        {
+          formData,
+        }
+      );
+      console.dir(data);
+      /**
+       * TODO: 쿼리스트링으로 pageId 를 담아보내고 바디에 formData를 보내면 imageUrl을 주는 api 필요
+       *
+       */
+      setState({ ...state, imageUrl: reader.result });
+    } catch {
+      console.log('에러');
+    }
+  };
 
   return (
     <>
@@ -216,11 +241,19 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
               />
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                ref={fileInput}
+                style={{ display: 'none' }}
+                onChange={onImageChage}
+              />
+              <img width={'50%'} src={state.imageUrl} />
             </div>
           )}
         </Draggable>
       )}
-      {/* <input type="file" multiple accept="image/*" onChange={onImageChage} /> */}
     </>
   );
 };

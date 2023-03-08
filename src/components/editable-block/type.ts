@@ -12,7 +12,7 @@ export interface StateTypes {
   htmlBackup: null | string;
   html: string;
   tag: string;
-  imageUrl: string;
+  imageUrl: any;
   previousKey: null | string;
   placeholder: boolean;
   openTagSelectorMenu: boolean;
