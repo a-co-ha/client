@@ -8,9 +8,6 @@ const getCaretCoordinates = (fromStart = true) => {
     if (selection && selection.rangeCount !== 0) {
       const range = selection.getRangeAt(0).cloneRange();
       range.collapse(fromStart ? true : false);
-      let newNode = document.createElement('u');
-      newNode.innerHTML = '';
-      range.insertNode(newNode);
       const rect = range.getClientRects()[0];
 
       if (rect) {
@@ -19,6 +16,7 @@ const getCaretCoordinates = (fromStart = true) => {
       }
     }
   }
+  console.log(x, y);
   return { x, y };
 };
 

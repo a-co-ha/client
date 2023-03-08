@@ -61,7 +61,7 @@ export const EditableBlock = (props: editableBlock) => {
       _id: props.id,
       html: state.html,
       tag: state.tag,
-      imageUrl: state.imageUrl,
+      imageUrl: state.imageUrl, //FIXME: 태그가 img가 아니면 빈값으로 변경
     });
   }, [state.tag]);
 
@@ -196,14 +196,13 @@ export const EditableBlock = (props: editableBlock) => {
           formData,
         }
       );
-      console.dir(data);
-
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
         newNode.setAttribute('width', '50%');
         const url = reader.result as string;
+        //FIXME: / 제거해주기 및 노드에서 이미지 사라지면 img에 '' 넣고 tag바꿔주기
         newNode.setAttribute('src', url);
         range.deleteContents();
         range.insertNode(newNode);
@@ -218,6 +217,7 @@ export const EditableBlock = (props: editableBlock) => {
         ...state,
         imageUrl: reader.result,
         tag: 'img',
+        html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,
       });
     } catch {
