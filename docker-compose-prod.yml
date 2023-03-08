@@ -6,6 +6,7 @@ services:
   # nginx-proxy 80으로 들어오면 무조건 먼저 실행, 그다음 실행되는 컨테이너의
   # VIRTUAL_HOST 로 명시된 도메인을 체크해서 해당 도메인의 포트로 포트포워딩 시켜줌
   # https 이용하려면 VIRTUAL_PROTO=https 명시
+  container_name: nginx-proxy
   nginx-proxy:
     image: jwilder/nginx-proxy
     ports:
