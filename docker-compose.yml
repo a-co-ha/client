@@ -4,6 +4,7 @@ version: '3.8'
 
 # services는 컨테이너
 services:
+  container_name: acoha-container
   acoha-next:
     # -it 옵션을 위해 사용됨 (표준입출력)
     stdin_open: true
