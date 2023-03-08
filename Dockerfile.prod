@@ -22,9 +22,9 @@ RUN adduser --system --uid 1001 nextjs
 
 # nginx
 FROM nginx
-COPY --from=builder /app/next.config.js ./
+# COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next /usr/share/nginx/html
+COPY --from=builder /app/.next/server/pages /usr/share/nginx/html
 # nextjs를 docker에 올리기위해 필요
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 # nextjs 정적 파일의 output을 자동으로 추적해서 이미지 사이즈 감소
