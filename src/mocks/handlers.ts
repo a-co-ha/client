@@ -32,7 +32,9 @@ const handlers = [
       })
     );
   }),
+  // progress-normal
   rest.get(`http://localhost:3000/api/post/:pageId`, (_, res, ctx) => {
+    // rest.get(`http://localhost:3000/api/progress/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -153,7 +155,7 @@ const handlers = [
       ctx.json({
         pageList: [
           {
-            pageId: 'editable1234',
+            _id: 'editable1234',
             pageName: '제목 없음,no',
             type: 'normal',
           },
