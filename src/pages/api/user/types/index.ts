@@ -7,8 +7,14 @@ export interface User {
   channel_name: string;
   channel_admin: string;
   channel_img: string;
+  accessToken?: string;
+  refreshToken?: string;
 }
 
 export interface GetUser {
   (): Promise<User[]>;
+}
+
+export interface OauthResponse {
+  (authCode: string | string[] | undefined): Promise<User[]>;
 }

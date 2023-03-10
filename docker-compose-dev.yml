@@ -13,5 +13,6 @@ services:
       - '3001:3001'
     volumes:
       - ./src:/app/src:ro
-    env_file:
-      - .env
+      - ./.env.development:/app/.env.development:ro
+      - ./.env:/app/.env:ro
+      - ./next.config.js:/app/next.config.js:ro

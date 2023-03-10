@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 const handlers = [
-  rest.get('http://localhost:3001/api/user', (_, res, ctx) => {
+  rest.get('/api/user', (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -23,7 +23,7 @@ const handlers = [
   rest.post('post/api/register', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(res));
   }),
-  rest.post('http://localhost:3001/pages', (_, res, ctx) => {
+  rest.post('/pages', (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -33,7 +33,7 @@ const handlers = [
     );
   }),
   // progress-normal
-  rest.get(`http://localhost:3001/api/post/:pageId`, (_, res, ctx) => {
+  rest.get(`/api/post/:pageId`, (_, res, ctx) => {
     // rest.get(`http://localhost:3000/api/progress/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
@@ -68,7 +68,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/login`, (_, res, ctx) => {
+  rest.get(`/login`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -80,7 +80,7 @@ const handlers = [
     );
   }),
 
-  rest.post(`http://localhost:3001/api/channel/create`, (_, res, ctx) => {
+  rest.post(`/api/channel/create`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -89,7 +89,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/api/channel`, (_, res, ctx) => {
+  rest.get(`/api/channel`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -103,7 +103,7 @@ const handlers = [
     );
   }),
 
-  rest.post(`http://localhost:3001/api/post`, (_, res, ctx) => {
+  rest.post(`/api/post`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -126,7 +126,7 @@ const handlers = [
       })
     );
   }),
-  rest.post(`http://localhost:3001/api/post/socket`, (_, res, ctx) => {
+  rest.post(`/api/post/socket`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -149,7 +149,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/api/pages`, (_, res, ctx) => {
+  rest.get(`/api/pages`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -168,7 +168,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/api/get/editable`, (_, res, ctx) => {
+  rest.get(`/api/get/editable`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -185,7 +185,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/api/get/socket`, (_, res, ctx) => {
+  rest.get(`/api/get/socket`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -194,7 +194,7 @@ const handlers = [
     );
   }),
 
-  rest.put(`http://localhost:3000/api/post/:pageId`, (_, res, ctx) => {
+  rest.put(`/api/post/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -215,11 +215,24 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/oauth/github`, (_, res, ctx) => {
+  rest.get(`/oauth/github`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        page: [{ userId: 'tangjin', content: 'ha' }],
+        user: [
+          {
+            github_id: 'tangjin',
+            github_url: 'https://github.com/tangjinlog',
+            img: '',
+            name: 'tangjin',
+            channel_id: '1',
+            channel_name: '아코하',
+            channel_admin: 'tangjin',
+            channel_img: '',
+            accessToken: '12321',
+            refreshToken: '12321',
+          },
+        ],
       })
     );
   }),

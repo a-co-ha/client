@@ -37,6 +37,7 @@ export default function ProjectMain({ pageList, channelList }: pageList) {
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
+    console.log('server');
     // const res = await axios.get(
     //   `http://localhost:3000/api/pages?channel=${id}`
     // );
