@@ -2,15 +2,15 @@
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: false,
-  async rewrites() {
-    return [
-      {
-        source: `/:path*`,
-        destination:
-          'https://port-0-acoha-server-r8xoo2mles75ad6.sel3.cloudtype.app/:path*',
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: `/:path*`,
+  //       destination:
+  //         'https://port-0-acoha-server-r8xoo2mles75ad6.sel3.cloudtype.app/:path*',
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;

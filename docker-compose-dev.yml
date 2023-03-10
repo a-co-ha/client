@@ -4,6 +4,7 @@ version: '3.8'
 # services는 컨테이너
 services:
   acoha-next:
+    container_name: acoha-next
     # 현재 경로에 이미지 빌드
     build:
       context: .
@@ -12,3 +13,5 @@ services:
       - '3001:3001'
     volumes:
       - ./src:/app/src:ro
+    env_file:
+      - .env
