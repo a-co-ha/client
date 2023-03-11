@@ -22,9 +22,7 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
             onClick={async () => {
               const [pageId, type] = await postEditablePage(channelId);
               closeModal();
-              router.push(
-                `http://localhost:3000/project/${channelId}/${pageId}?type=${type}`
-              );
+              router.push(`/project/${channelId}/${pageId}?type=${type}`);
             }}
           >
             normal
@@ -37,9 +35,7 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
             onClick={async () => {
               const [pageId, type] = await postEditablePage(channelId);
               closeModal();
-              router.push(
-                `http://localhost:3000/project/${channelId}/${pageId}?type=${type}`
-              );
+              router.push(`/project/${channelId}/${pageId}?type=${type}`);
             }}
           >
             progress

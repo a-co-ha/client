@@ -51,7 +51,7 @@ const handlers = [
       })
     );
   }),
-  rest.put(`http://localhost:3000/api/post/:pageId`, (_, res, ctx) => {
+  rest.put(`/api/post/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -215,7 +215,7 @@ const handlers = [
       })
     );
   }),
-  rest.get(`/oauth/github`, (_, res, ctx) => {
+  rest.post(`/oauth/github`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

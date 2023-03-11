@@ -56,6 +56,7 @@ export const Channel = () => {
   return (
     <div css={styles.channel}>
       <div>channel</div>
+      {/* 템플릿 선택 모달 */}
       <Modal isOpen={isOpen} closeModal={closeModal} />
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">

@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { FieldError } from 'react-hook-form';
 
 const flexColumnCenter = css`
   display: flex;

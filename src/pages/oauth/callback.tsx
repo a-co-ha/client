@@ -31,7 +31,7 @@ const Callback = () => {
         console.error(err);
       }
     };
-    authCode && getUserData();
+    getUserData();
   }, [authCode]);
   return (
     <div>

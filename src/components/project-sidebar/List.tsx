@@ -30,9 +30,7 @@ export const List = () => {
     await postSocketPage(channelId);
     setInitialUser(false);
     closeModal();
-    router.push(
-      `http://localhost:3001/project/${channelId}?channelName=${channelName}`
-    );
+    router.push(`/project/${channelId}?channelName=${channelName}`);
   };
 
   useEffect(() => {
