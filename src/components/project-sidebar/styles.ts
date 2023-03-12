@@ -51,6 +51,7 @@ export const createBtn = css`
 `;
 
 export const inputForm = (error: boolean) => css`
+  box-sizing: border-box;
   width: 100%;
   padding: 5px 13px 5px;
   margin-top: 1rem;
@@ -63,6 +64,7 @@ export const inputForm = (error: boolean) => css`
 `;
 
 export const validationMsg = css`
+  color: red;
   user-select: none;
   padding: 5px;
 `;

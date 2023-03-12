@@ -50,6 +50,7 @@ export const Channel = () => {
   // };
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');
+  console.log(editablePageList);
   // pageList.map(e=>)
   const [pageNames, setPageNames] = useRecoilState(pageNameState(1));
 
@@ -78,6 +79,7 @@ export const Channel = () => {
                 </div>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {editablePageList.map((page) => {
+                    console.log(page.pageId);
                     return (
                       <Link
                         key={page.pageId}

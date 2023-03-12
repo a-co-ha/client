@@ -155,7 +155,7 @@ const handlers = [
       ctx.json({
         pageList: [
           {
-            _id: 'editable1234',
+            pageId: 'editable1234',
             pageName: '제목 없음,no',
             type: 'normal',
           },

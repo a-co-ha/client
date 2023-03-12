@@ -90,6 +90,7 @@ export const List = () => {
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-center align-middle shadow-xl transition-all">
                   <Dialog.Title
+                    css={{ boxSizing: 'border-box' }}
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >

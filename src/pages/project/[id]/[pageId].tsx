@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     //여기서 query parameter로 public=true면 selet컴포넌트 보여줌
     const { id: channelId, pageId, type } = context.query;
+    console.log(context.query);
     if (type === 'normal') {
       const fetchedBlocks = await getEditablePage(channelId, pageId);
       return {
