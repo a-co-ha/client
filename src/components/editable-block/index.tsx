@@ -77,7 +77,7 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleBlur = () => {
-    if (!state.html) {
+    if (!state.html && !state.imageUrl) {
       addPlaceholder();
       setState({ ...state, placeholder: true });
     }
@@ -145,6 +145,7 @@ export const EditableBlock = (props: editableBlock) => {
   const handleTagSelection = async (tag: string) => {
     if (tag === 'img') {
       fileInput.current?.click();
+      contentEditable.current?.toggleAttribute('contenteditable');
     } else {
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
@@ -179,8 +180,16 @@ export const EditableBlock = (props: editableBlock) => {
     setState({ ...state, openTagSelectorMenu: false });
   };
 
-  const a = () => {};
-
+  const handleImageDeleteButtonActive = () => {
+    console.log('image');
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount !== 0) {
+      selection.anchorNode?.firstChild?.remove();
+      // TODO: 이미지 서버에서 지워주는 api
+      contentEditable.current?.toggleAttribute('contenteditable');
+    }
+  };
+  ``;
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     const imageFile = e.target.files[0];
@@ -201,10 +210,15 @@ export const EditableBlock = (props: editableBlock) => {
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
-        newNode.setAttribute('width', '50%');
+        newNode.setAttribute('width', '70%');
         const url = reader.result as string;
-        //FIXME: / 제거해주기 및 노드에서 이미지 사라지면 img에 '' 넣고 tag바꿔주기
+        //TODO: 블럭에 사진만 넣을 수 있고 backspace를 제외한 입력은 불가능하게 하기..!//
+        // backspace 시 바로 블럭 지워버리기
+        // 전에 있던 html 과 input text 도지워주기
+        // img url 에 값이 있따면 => 이벤트막기
+        if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
+        newNode.addEventListener('click', handleImageDeleteButtonActive);
         range.deleteContents();
         range.insertNode(newNode);
         const newRange = document.createRange();
