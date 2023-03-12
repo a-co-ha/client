@@ -9,6 +9,7 @@ const menuItemTag = [
   { tag: 'h2', label: 'h2' },
   { tag: 'h3', label: 'h3' },
   { tag: 'b', label: 'bold' },
+  { tag: 'p', label: 'p' },
   { tag: 'i', label: 'i' },
   { tag: 'code', label: 'code' },
   { tag: 'img', label: 'image' },

@@ -113,8 +113,11 @@ export const EditableBlock = (props: editableBlock) => {
     } else if (
       (state.html === '\n' || state.html === '') &&
       e.key === 'Backspace' &&
+      contentEditable.current?.parentElement?.previousElementSibling &&
       contentEditable.current?.parentElement?.previousElementSibling
+        .childNodes[1].firstChild?.nodeName !== 'IMG'
     ) {
+      console.log();
       e.preventDefault();
 
       props.deleteBlock(props.id);
@@ -180,16 +183,19 @@ export const EditableBlock = (props: editableBlock) => {
     setState({ ...state, openTagSelectorMenu: false });
   };
 
-  const handleImageDeleteButtonActive = () => {
-    console.log('image');
+  const handleImageDelete = () => {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
     const selection = window.getSelection();
     if (selection && selection.rangeCount !== 0) {
       selection.anchorNode?.firstChild?.remove();
       // TODO: 이미지 서버에서 지워주는 api
       contentEditable.current?.toggleAttribute('contenteditable');
+      setState({ ...state, tag: 'p', imageUrl: null });
     }
   };
-  ``;
+
+  const WarningOnHover = () => {};
+
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     const imageFile = e.target.files[0];
@@ -212,13 +218,10 @@ export const EditableBlock = (props: editableBlock) => {
         let newNode = document.createElement('img');
         newNode.setAttribute('width', '70%');
         const url = reader.result as string;
-        //TODO: 블럭에 사진만 넣을 수 있고 backspace를 제외한 입력은 불가능하게 하기..!//
-        // backspace 시 바로 블럭 지워버리기
-        // 전에 있던 html 과 input text 도지워주기
-        // img url 에 값이 있따면 => 이벤트막기
         if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
-        newNode.addEventListener('click', handleImageDeleteButtonActive);
+        newNode.addEventListener('click', handleImageDelete);
+        newNode.addEventListener('mouseenter', WarningOnHover);
         range.deleteContents();
         range.insertNode(newNode);
         const newRange = document.createRange();
@@ -233,6 +236,13 @@ export const EditableBlock = (props: editableBlock) => {
         tag: 'img',
         html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,
+      });
+      props.addBlock({
+        id: props.id,
+        html: state.html,
+        tag: state.tag,
+        imageUrl: state.imageUrl,
+        ref: contentEditable.current,
       });
     } catch {
       console.log('에러');
