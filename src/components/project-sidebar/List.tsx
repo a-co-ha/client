@@ -10,7 +10,7 @@ import { getUser } from '@/pages/api/user/getUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
-import type { Channels } from './types';
+import type { Channels, ProjectTitle } from './types';
 
 export const List = () => {
   const setChannelList = useSetRecoilState(channelListState);
@@ -24,8 +24,8 @@ export const List = () => {
     setIsOpen(true);
   };
 
-  const onClickHandler = async () => {
-    const { id: channelId, channelName } = await postProject();
+  const onClickHandler = async (projectTitle: ProjectTitle) => {
+    const { id: channelId, channelName } = await postProject(projectTitle);
     await postEditablePage(channelId);
     await postSocketPage(channelId);
     setInitialUser(false);

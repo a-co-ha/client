@@ -4,7 +4,7 @@ import * as styles from './styles';
 import type { ProjectTitle } from './types';
 
 interface onClickHandler {
-  onClickHandler: () => Promise<void>;
+  onClickHandler: (projectTitle: ProjectTitle) => Promise<void>;
 }
 
 export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
@@ -19,7 +19,7 @@ export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
   });
   const onSubmit = (data: ProjectTitle) => {
     console.log(data);
-    onClickHandler();
+    onClickHandler(data);
   };
   return (
     <div>
