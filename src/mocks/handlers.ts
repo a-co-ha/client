@@ -219,20 +219,18 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        user: [
-          {
-            github_id: 'tangjin',
-            github_url: 'https://github.com/tangjinlog',
-            img: '',
-            name: 'tangjin',
-            channel_id: '1',
-            channel_name: '아코하',
-            channel_admin: 'tangjin',
-            channel_img: '',
-            accessToken: '12321',
-            refreshToken: '12321',
-          },
-        ],
+        user: {
+          github_id: 'tangjin',
+          github_url: 'https://github.com/tangjinlog',
+          img: '',
+          name: 'tangjin',
+          channel_id: '1',
+          channel_name: '아코하',
+          channel_admin: 'tangjin',
+          channel_img: '',
+          accessToken: '12321',
+          refreshToken: '12321',
+        },
       })
     );
   }),

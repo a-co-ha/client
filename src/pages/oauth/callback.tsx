@@ -8,6 +8,7 @@ import {
 } from '@/recoil/user/atom';
 
 import { oauthLogin } from '../api/user/oauthLogin';
+import { getUser } from '../api/user/getUser';
 
 const Callback = () => {
   const setUserData = useSetRecoilState(userDataState);
@@ -19,8 +20,11 @@ const Callback = () => {
     const getUserData = async () => {
       try {
         console.log(authCode);
-        const userData = await oauthLogin(authCode);
+        const token = await oauthLogin(authCode);
+        // 토큰 저장 해야함
+        const userData = await getUser();
         const initialUser = !userData[0].channel_id;
+        console.log(initialUser);
         setUserData(userData);
         setInitialUser(initialUser);
         setIsLoggedIn(true);
