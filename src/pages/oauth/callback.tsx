@@ -35,7 +35,7 @@ const Callback = () => {
   }, [authCode]);
   return (
     <div>
-      <div>oauth 성공</div>
+      <div>oauth 로그인중</div>
     </div>
   );
 };
