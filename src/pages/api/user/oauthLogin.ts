@@ -3,7 +3,9 @@ import type { OauthResponse } from './types';
 
 export const oauthLogin: OauthResponse = async (authCode = '') => {
   if (authCode !== '') {
-    const res = await axios.post(`/oauth/github`, { authCode, name: '' });
+    const res = await axios.post(`/oauth/github/callback?code=${authCode}`, {
+      name: '',
+    });
     console.log(res);
     const user = res.data.user;
     return user;
