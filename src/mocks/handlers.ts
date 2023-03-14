@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { testData } from './api/data/testData';
+import { nanoId } from '@/utils/nanoId';
 
 const handlers = [
   rest.get('/post/api/users', (req, res, ctx) => {
@@ -68,6 +69,31 @@ const handlers = [
       ctx.json({
         message: 'Image uploaded successfully!',
         imageUrl: 'url',
+      })
+    );
+  }),
+  rest.get(`http://localhost:3000/channel/users`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        user: [
+          {
+            name: '상진',
+            _id: nanoId(),
+          },
+          {
+            name: '승하',
+            _id: nanoId(),
+          },
+          {
+            name: '수호',
+            _id: nanoId(),
+          },
+          {
+            name: '정현',
+            _id: nanoId(),
+          },
+        ],
       })
     );
   }),

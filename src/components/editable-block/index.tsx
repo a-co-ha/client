@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
-import { CMD_KEY } from '@/utils/const';
+import { CMD_KEY, CMD_NAME_KEY } from '@/utils/const';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
-import TagSelectorMenu from '../tag-selector-menu/index';
+import TagSelectorMenu from '../selector-menu/selector-tag-menu';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
+
 import type { editableBlock } from '../editable-page/types';
 import type { StateTypes } from './type';
-import axios from 'axios';
+import NameSelectorMenu from '../selector-menu/selector-name-menu';
+import { api } from '@/api/api-config';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -26,6 +28,7 @@ export const EditableBlock = (props: editableBlock) => {
       x: 0,
       y: 0,
     },
+    openNameSelectorMenu: false,
   });
   console.log('props', props);
   console.log('state', state);
@@ -136,11 +139,18 @@ export const EditableBlock = (props: editableBlock) => {
     if (e.key === 'Shift') state.previousKey = null;
     else if (e.key === CMD_KEY) {
       const { x, y } = getCaretCoordinates(true);
-
       setState({
         ...state,
         tagSelectorMenuPosition: { x: x, y: y },
         openTagSelectorMenu: true,
+      });
+    } else if (e.key === CMD_NAME_KEY) {
+      const { x, y } = getCaretCoordinates(true);
+
+      setState({
+        ...state,
+        tagSelectorMenuPosition: { x: x, y: y },
+        openNameSelectorMenu: true,
       });
     }
   };
@@ -179,8 +189,16 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
+  const handleNameSelector = (name: string) => {
+    console.log(name);
+  };
+
   const closeMenu = () => {
-    setState({ ...state, openTagSelectorMenu: false });
+    setState({
+      ...state,
+      openTagSelectorMenu: false,
+      openNameSelectorMenu: false,
+    });
   };
 
   const handleImageDelete = () => {
@@ -194,7 +212,9 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
-  const WarningOnHover = () => {};
+  const WarningOnHover = () => {
+    console.log('클릭 시 이미지가 삭제됩니다');
+  };
 
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
@@ -205,12 +225,9 @@ export const EditableBlock = (props: editableBlock) => {
     const formData = new FormData();
     formData.append('image', imageFile);
     try {
-      const data = await axios.post(
-        `http://localhost:3000/post/images/${pageId}?channel=1`,
-        {
-          formData,
-        }
-      );
+      const data = await api.post(`/post/images/${pageId}?channel=1`, {
+        formData,
+      });
 
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
@@ -255,6 +272,13 @@ export const EditableBlock = (props: editableBlock) => {
         <TagSelectorMenu
           position={state.tagSelectorMenuPosition}
           handleTagSelection={handleTagSelection}
+          closeMenu={closeMenu}
+        />
+      )}
+      {state.openNameSelectorMenu && (
+        <NameSelectorMenu
+          position={state.tagSelectorMenuPosition}
+          handleNameSelector={handleNameSelector}
           closeMenu={closeMenu}
         />
       )}
