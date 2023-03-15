@@ -5,7 +5,7 @@ import {
   pageTitleEditToggle,
   pageTitleShare,
 } from '@/recoil/project/atom';
-import { FormState, SubmitErrorHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { PageTitle } from './types/index';
 import { usePageTitleForm } from '../../hooks/usePageTitleForm';
 import { toast } from 'react-toastify';

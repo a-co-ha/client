@@ -15,5 +15,6 @@ const nextConfig = {
 module.exports = nextConfig;
 
 /**
-  destination: `https://port-0-acoha-server-r8xoo2mles75ad6.sel3.cloudtype.app/:path*`,
+ * source: `/api/:path*`,
+  destination: `https://port-0-acoha-server-r8xoo2mles75ad6.sel3.cloudtype.app/api/:path*`,
  */
