@@ -5,14 +5,14 @@ export const pageListState = atom({
   default: [
     {
       pageId: '',
-      pageName: '',
+      pageTitle: '',
       type: '',
     },
   ],
 });
 
-export const pageNameState = atomFamily({
-  key: 'pageNameState',
+export const pageTitleState = atomFamily({
+  key: 'pageTitleState',
   default: '',
 });
 
@@ -24,4 +24,14 @@ export const channelListState = atom({
       channelName: '',
     },
   ],
+});
+
+export const pageTitleEditToggle = atomFamily({
+  key: 'pageTitleEditToggle',
+  default: false,
+});
+
+export const pageTitleShare = atomFamily({
+  key: 'pageTitleShare',
+  default: '',
 });

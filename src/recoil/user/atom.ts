@@ -10,18 +10,23 @@ export const userProfile = atom({
 
 export const userDataState = atom({
   key: 'userData',
-  default: [
-    {
-      github_id: '',
-      github_url: '',
-      img: '',
-      name: '',
-      channel_id: '',
-      channel_name: '',
-      channel_admin: '',
-      channel_img: '',
-    },
-  ],
+  default: {
+    github_id: '',
+    github_url: '',
+    img: '',
+    name: '',
+    // userHasChannels: [
+    //   {
+    //     channel_id: '',
+    //     channel: {
+    //       id: 0,
+    //       admin: '',
+    //       channelName: '',
+    //       channelImg: '',
+    //     },
+    //   },
+    // ],
+  },
 });
 
 export const initialUserState = atom({

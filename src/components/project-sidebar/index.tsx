@@ -14,7 +14,8 @@ export const ProjectSideBar = () => {
       try {
         const userData = await getUser();
         console.log(userData);
-        const initialUser = !userData[0].channel_id;
+        const initialUser =
+          userData.userHasChannels.length === 0 ? true : false;
         setInitialUser(initialUser);
       } catch (err) {
         console.error(err);

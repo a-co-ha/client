@@ -5,16 +5,19 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        user: [
+        github_id: 'tangjin',
+        github_url: 'http://locla',
+        img: '',
+        name: 'tangjin',
+        userHasChannels: [
           {
-            github_id: 'tangjin',
-            github_url: 'https://github.com/tangjinlog',
-            img: '',
-            name: 'tangjin',
             channel_id: '1',
-            channel_name: '아코하',
-            channel_admin: 'tangjin',
-            channel_img: '',
+            channel: {
+              id: 0,
+              admin: '',
+              channelName: '',
+              channelImg: '',
+            },
           },
         ],
       })
@@ -108,7 +111,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         channelId: 1,
-        pageName: '제목 없음,no',
+        pageTitle: '제목 없음,no',
         blocks: [
           {
             tag: 'p',
@@ -131,7 +134,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         channelId: 1,
-        pageName: '제목 없음,so',
+        pageTitle: '제목 없음,so',
         blocks: [
           {
             tag: 'p',
@@ -156,12 +159,17 @@ const handlers = [
         pageList: [
           {
             pageId: 'editable1234',
-            pageName: '제목 없음,no',
+            pageTitle: '제목 없음,no',
+            type: 'normal',
+          },
+          {
+            pageId: 'editable5678',
+            pageTitle: '제목 없음,no2',
             type: 'normal',
           },
           {
             pageId: 'socket5678',
-            pageName: '제목 없음,so',
+            pageTitle: '제목 없음,so',
             type: 'socket',
           },
         ],
@@ -201,13 +209,13 @@ const handlers = [
         pageList: [
           {
             pageId: 'editable1234',
-            pageName: '제목 없음,no',
+            pageTitle: '제목 없음,no',
             type: 'normal',
             initial: true,
           },
           {
             pageId: 'socket5678',
-            pageName: '제목 없음,so',
+            pageTitle: '제목 없음,so',
             type: 'socket',
             initial: true,
           },
@@ -215,7 +223,7 @@ const handlers = [
       })
     );
   }),
-  rest.post(`http://localhost:3001/oauth/github/callback`, (_, res, ctx) => {
+  rest.post(`http://localhost:3001/oauth/callback`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

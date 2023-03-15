@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import {
   userDataState,
   initialUserState,
@@ -14,6 +14,7 @@ const Callback = () => {
   const setUserData = useSetRecoilState(userDataState);
   const setInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
+  const userInfo = useRecoilValue(userDataState);
   const router = useRouter();
   const authCode = router.query.code;
   useEffect(() => {
@@ -23,14 +24,17 @@ const Callback = () => {
         const token = await oauthLogin(authCode);
         // 토큰 저장 해야함
         const userData = await getUser();
-        const initialUser = !userData[0].channel_id;
+        console.log(userData);
+        const initialUser =
+          userData.userHasChannels.length === 0 ? true : false;
+
         console.log(initialUser);
         setUserData(userData);
         setInitialUser(initialUser);
         setIsLoggedIn(true);
         initialUser
           ? router.push(`/main`)
-          : router.push(`/project/${userData[0].channel_id}`);
+          : router.push(`/project/${userData.userHasChannels[0].channel_id}`);
       } catch (err) {
         console.error(err);
       }

@@ -4,11 +4,16 @@ import {
   useSetRecoilState,
   selector,
 } from 'recoil';
-import { pageListState, pageNameState } from '@/recoil/project/atom';
+import {
+  pageListState,
+  pageTitleState,
+  pageTitleEditToggle,
+} from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { Modal } from './modal';
-import { PageNameForm } from './PageNameForm';
+import { PageTitleForm } from './PageTitleForm';
+import { PageTitleLink } from './PageTitleLink';
 import { getEditablePages } from '@/pages/api/editable/getPages';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -21,6 +26,14 @@ export const Channel = () => {
   const setPageList = useSetRecoilState(pageListState);
   const router = useRouter();
   const channelId = router.query.id;
+  const pageList = useRecoilValue(pageListState);
+  const editablePageList = pageList.filter((page) => page.type === 'normal');
+  const socketPageList = pageList.filter((page) => page.type === 'socket');
+  pageList.map((e) => {
+    // if (e.pageId) {
+    //   const setIsEditing = useRecoilState(pageTitleEditToggle(e.pageId));
+    // }
+  });
   useEffect(() => {
     const getEditablePageList = async () => {
       try {
@@ -42,17 +55,16 @@ export const Channel = () => {
     openModal();
   };
 
-  const pageList = useRecoilValue(pageListState);
-  console.log(pageList);
-  pageNameState;
-  // const onChangeHandler = (e) => {
-
-  // };
-  const editablePageList = pageList.filter((page) => page.type === 'normal');
-  const socketPageList = pageList.filter((page) => page.type === 'socket');
+  const pageTitleEditHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const event = e.target as HTMLButtonElement;
+    event.previousSibling;
+  };
   console.log(editablePageList);
-  // pageList.map(e=>)
-  const [pageNames, setPageNames] = useRecoilState(pageNameState(1));
+  // pageList.map(e=>e.pageId)
+  // const [pageNames, setPageNames] = useRecoilState(pageTitleState());
+  useEffect(() => {
+    pageList.map((e) => {});
+  }, [pageList]);
 
   return (
     <div css={styles.channel}>
@@ -77,16 +89,22 @@ export const Channel = () => {
                     +
                   </button>
                 </div>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                <Disclosure.Panel className="flex-col items-between px-4 pt-4 pb-2 text-sm text-gray-500">
                   {editablePageList.map((page) => {
-                    console.log(page.pageId);
                     return (
-                      <Link
-                        key={page.pageId}
-                        href={`/project/${channelId}/${page.pageId}?name=${page.pageName}&type=${page.type}`}
-                      >
-                        {page.pageName}
-                      </Link>
+                      <div key={page.pageId}>
+                        <PageTitleForm
+                          key={page.pageId}
+                          pageId={page.pageId}
+                          pageTitle={page.pageTitle}
+                        />
+                        <PageTitleLink
+                          channelId={channelId}
+                          pageId={page.pageId}
+                          pageTitle={page.pageTitle}
+                          type={page.type}
+                        />
+                      </div>
                     );
                   })}
                 </Disclosure.Panel>
@@ -112,19 +130,19 @@ export const Channel = () => {
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {socketPageList.map((page) => {
                     return (
-                      <Link
-                        key={page.pageId}
-                        href={`/project/${channelId}/${page.pageId}?name=${page.pageName}&type=${page.type}`}
-                      >
-                        {page.pageName}
-                        {/* <input
-                          css={{ border: '1px solid red', cursor: 'pointer' }}
-                          type="text"
-                          value={page.pageName}
-                          onChange={onChangeHandler}
-                        /> */}
-                        {/* <PageNameForm pageId={page.pageId} > */}
-                      </Link>
+                      <div key={page.pageId}>
+                        <PageTitleForm
+                          key={page.pageId}
+                          pageId={page.pageId}
+                          pageTitle={page.pageTitle}
+                        />
+                        <PageTitleLink
+                          channelId={channelId}
+                          pageId={page.pageId}
+                          pageTitle={page.pageTitle}
+                          type={page.type}
+                        />
+                      </div>
                     );
                   })}
                 </Disclosure.Panel>

@@ -25,7 +25,8 @@ export const list = css`
 
 export const channel = css`
   ${flexColumnCenter}
-  flex-grow: 1;
+  width: 250px;
+  // flex-grow: 1;
   outline: 2px solid blue;
 `;
 
@@ -42,7 +43,7 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const createBtn = css`
+export const ProjectCreate = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
@@ -50,7 +51,7 @@ export const createBtn = css`
   border-radius: 4px;
 `;
 
-export const inputForm = (error: boolean) => css`
+export const projectTitleInput = (error: boolean) => css`
   box-sizing: border-box;
   width: 100%;
   padding: 5px 13px 5px;
@@ -78,4 +79,28 @@ export const projectCreateBtn = css`
     background: #dbe9aa;
   }
   border-radius: 5px;
+`;
+
+export const pageTitleInput = css`
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 0.5rem;
+`;
+
+export const pageTitleLink = css`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  // outline: 1px solid limegreen;
+  &:hover {
+    & > button {
+      display: block;
+    }
+  }
+`;
+
+export const pageTitleEditBtn = css`
+  display: none;
+  padding: 0;
+  // outline: 1px solid red;
 `;

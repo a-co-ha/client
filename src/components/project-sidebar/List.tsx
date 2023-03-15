@@ -38,8 +38,11 @@ export const List = () => {
       try {
         const channels: Channels[] = [];
         const user = await getUser();
-        user.map((e) => {
-          channels.push({ id: e.channel_id, channelName: e.channel_name });
+        user.userHasChannels.map((e) => {
+          channels.push({
+            id: e.channel_id,
+            channelName: e.channel.channelName,
+          });
         });
         setChannelList(channels);
       } catch (err) {
@@ -56,11 +59,11 @@ export const List = () => {
       <div>List</div>
       {channelList[0].id &&
         channelList.map((channel, i) => (
-          <button key={i} css={styles.createBtn}>
+          <button key={i} css={styles.ProjectCreate}>
             {channel.channelName}
           </button>
         ))}
-      <button type="button" onClick={openModal} css={styles.createBtn}>
+      <button type="button" onClick={openModal} css={styles.ProjectCreate}>
         +
       </button>
       <Transition appear show={isOpen} as={Fragment}>

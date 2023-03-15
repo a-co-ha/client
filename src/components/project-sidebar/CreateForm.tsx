@@ -25,7 +25,7 @@ export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
     <div>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <input
-          css={styles.inputForm(!!error)}
+          css={styles.projectTitleInput(!!error)}
           value={projectTitle.value}
           onChange={projectTitle.onChange}
           name={projectTitle.name}

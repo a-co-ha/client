@@ -7,17 +7,50 @@ export interface OauthResponseData {
   refreshToken: string;
 }
 
-type UserType = Omit<OauthResponseData, 'accessToken' | 'refreshToken'>;
+// type UserType = Omit<OauthResponseData, 'accessToken' | 'refreshToken'>;
 
-export interface User extends UserType {
-  channel_id: string;
-  channel_name: string;
-  channel_admin: string;
-  channel_img: string;
+export interface User {
+  github_id: string;
+  github_url: string;
+  img: string;
+  name: string;
+  userHasChannels: ChannelList[];
 }
 
+export interface ChannelList {
+  channel_id: string;
+  channel: {
+    id: number;
+    admin: string;
+    channelName: string;
+    channelImg: string;
+  };
+}
+
+// interface UserType {
+//   channel_id: string;
+//   channel: {
+//     id: number;
+//     admin: string;
+//     channelName: string;
+//     channelImg: string;
+//   };
+// }
+
+// userHasChannels: [
+//     {
+//       channel_id: string;
+//       channel: {
+//         id: number;
+//         admin: string;
+//         channelName: string;
+//         channelImg: string;
+//       };
+//     }
+//   ];
+
 export interface GetUser {
-  (): Promise<User[]>;
+  (): Promise<User>;
 }
 
 export interface OauthResponse {
