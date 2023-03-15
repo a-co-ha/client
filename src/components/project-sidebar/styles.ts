@@ -85,13 +85,13 @@ export const pageTitleInput = css`
   box-sizing: border-box;
   width: 100%;
   margin-bottom: 0.5rem;
+  color: red;
 `;
 
 export const pageTitleLink = css`
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.5rem;
-  // outline: 1px solid limegreen;
   &:hover {
     & > button {
       display: block;
@@ -102,5 +102,4 @@ export const pageTitleLink = css`
 export const pageTitleEditBtn = css`
   display: none;
   padding: 0;
-  // outline: 1px solid red;
 `;

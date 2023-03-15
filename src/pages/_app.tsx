@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Layout } from '@/components/layout';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_ENV_URL}`;
 console.log(process.env.NEXT_PUBLIC_ENV_URL);
@@ -36,6 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <Layout>
           <Component {...pageProps} />
+          <ToastContainer autoClose={2000} pauseOnHover />
         </Layout>
       </ThemeProvider>
     </RecoilRoot>
