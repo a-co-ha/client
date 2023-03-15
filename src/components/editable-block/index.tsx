@@ -233,7 +233,7 @@ export const EditableBlock = (props: editableBlock) => {
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
-        newNode.setAttribute('width', '70%');
+        newNode.setAttribute('width', '50%');
         const url = reader.result as string;
         if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
@@ -253,13 +253,6 @@ export const EditableBlock = (props: editableBlock) => {
         tag: 'img',
         html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,
-      });
-      props.addBlock({
-        id: props.id,
-        html: state.html,
-        tag: state.tag,
-        imageUrl: state.imageUrl,
-        ref: contentEditable.current,
       });
     } catch {
       console.log('에러');
