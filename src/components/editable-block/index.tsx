@@ -201,15 +201,12 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  const handleImageDelete = () => {
+  const handleImageDelete = (e: React.MouseEvent) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount !== 0) {
-      selection.anchorNode?.firstChild?.remove();
-      // TODO: 이미지 서버에서 지워주는 api
-      contentEditable.current?.toggleAttribute('contenteditable');
-      setState({ ...state, tag: 'p', imageUrl: null });
-    }
+    e.currentTarget.remove();
+    // TODO: 이미지 서버에서 지워주는 api
+    contentEditable.current?.toggleAttribute('contenteditable');
+    setState({ ...state, tag: 'p', imageUrl: null });
   };
 
   const WarningOnHover = () => {
@@ -237,7 +234,10 @@ export const EditableBlock = (props: editableBlock) => {
         const url = reader.result as string;
         if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
-        newNode.addEventListener('click', handleImageDelete);
+        newNode.addEventListener(
+          'click',
+          (e: React.MouseEvent<HTMLImageElement>) => handleImageDelete(e)
+        );
         newNode.addEventListener('mouseenter', WarningOnHover);
         range.deleteContents();
         range.insertNode(newNode);
@@ -253,6 +253,13 @@ export const EditableBlock = (props: editableBlock) => {
         tag: 'img',
         html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,
+      });
+      props.addBlock({
+        id: props.id,
+        html: state.html,
+        tag: state.tag,
+        imageUrl: state.imageUrl,
+        ref: contentEditable.current,
       });
     } catch {
       console.log('에러');
