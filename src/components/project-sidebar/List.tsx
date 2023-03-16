@@ -10,7 +10,7 @@ import { getUser } from '@/pages/api/user/getUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
-import type { Channels, ProjectTitle } from './types';
+import type { Channels, ProjectName } from './types';
 
 export const List = () => {
   const setChannelList = useSetRecoilState(channelListState);
@@ -24,10 +24,10 @@ export const List = () => {
     setIsOpen(true);
   };
 
-  const onClickHandler = async (projectTitle: ProjectTitle) => {
-    const { id: channelId, channelName } = await postProject(projectTitle);
+  const onClickHandler = async (projectName: ProjectName) => {
+    const { id: channelId, channelName } = await postProject(projectName);
     await postEditablePage(channelId);
-    await postSocketPage(channelId);
+    // await postSocketPage(channelId);
     setInitialUser(false);
     closeModal();
     router.push(`/project/${channelId}?channelName=${channelName}`);
@@ -38,12 +38,14 @@ export const List = () => {
       try {
         const channels: Channels[] = [];
         const user = await getUser();
-        user.userHasChannels.map((e) => {
-          channels.push({
-            id: e.channel_id,
-            channelName: e.channel.channelName,
+        if (user.userHasChannels.length !== 0) {
+          user.userHasChannels.map((e) => {
+            channels.push({
+              id: e.channel_id,
+              channelName: e.channel.channelName,
+            });
           });
-        });
+        }
         setChannelList(channels);
       } catch (err) {
         console.error(err);
@@ -53,16 +55,15 @@ export const List = () => {
   }, []);
 
   const channelList = useRecoilValue(channelListState);
-
+  console.log('채널리스트 ', channelList);
   return (
     <div css={styles.list}>
       <div>List</div>
-      {channelList[0].id &&
-        channelList.map((channel, i) => (
-          <button key={i} css={styles.ProjectCreate}>
-            {channel.channelName}
-          </button>
-        ))}
+      {channelList.map((channel, i) => (
+        <button key={i} css={styles.ProjectCreate}>
+          {channel.channelName}
+        </button>
+      ))}
       <button type="button" onClick={openModal} css={styles.ProjectCreate}>
         +
       </button>

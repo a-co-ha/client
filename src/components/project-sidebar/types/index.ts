@@ -1,5 +1,5 @@
-export interface ProjectTitle {
-  projectTitle: string;
+export interface ProjectName {
+  projectName: string;
 }
 
 export interface Channels {
@@ -7,13 +7,13 @@ export interface Channels {
   channelName: string;
 }
 
-export interface PageTitle {
-  pageTitle: string;
+export interface PageName {
+  pageName: string;
 }
 
-export interface PageTitleLinkProps {
+export interface PageNameLinkProps {
   channelId: string | string[] | undefined;
   pageId: string;
-  pageTitle: string;
+  pageName: string;
   type: string;
 }

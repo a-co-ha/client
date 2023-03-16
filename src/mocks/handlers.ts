@@ -36,38 +36,35 @@ const handlers = [
     );
   }),
   // progress-normal
-  rest.get(`http://localhost:3001/api/post/:pageId`, (_, res, ctx) => {
+  rest.get(`http://localhost:3001/api/page/:pageId`, (_, res, ctx) => {
     // rest.get(`http://localhost:3000/api/progress/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        page: {
-          blocks: [
-            {
-              blockId: '1',
-              tag: 'p',
-              html: '',
-              imageUrl: '',
-            },
-          ],
-        },
+        pageName: '제목없음',
+        blocks: [
+          {
+            blockId: '1',
+            tag: 'p',
+            html: '',
+            imageUrl: '',
+          },
+        ],
       })
     );
   }),
-  rest.put(`http://localhost:3001/api/post/:pageId`, (_, res, ctx) => {
+  rest.put(`http://localhost:3001/api/page/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        page: {
-          blocks: [
-            {
-              blockId: '1',
-              tag: 'p',
-              html: 'testPage',
-              imageUrl: '',
-            },
-          ],
-        },
+        blocks: [
+          {
+            blockId: '1',
+            tag: 'p',
+            html: 'testPage',
+            imageUrl: '',
+          },
+        ],
       })
     );
   }),
@@ -106,12 +103,12 @@ const handlers = [
     );
   }),
 
-  rest.post(`http://localhost:3001/api/post`, (_, res, ctx) => {
+  rest.post(`http://localhost:3001/api/page`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
         channelId: 1,
-        pageTitle: '제목 없음,no',
+        pageName: '제목 없음,no',
         blocks: [
           {
             tag: 'p',
@@ -129,12 +126,12 @@ const handlers = [
       })
     );
   }),
-  rest.post(`http://localhost:3001/api/post/socket`, (_, res, ctx) => {
+  rest.post(`http://localhost:3001/api/page/socket`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
         channelId: 1,
-        pageTitle: '제목 없음,so',
+        pageName: '제목 없음,so',
         blocks: [
           {
             tag: 'p',
@@ -152,24 +149,24 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/api/pages`, (_, res, ctx) => {
+  rest.get(`http://localhost:3001/api/page`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        pageList: [
+        List: [
           {
             pageId: 'editable1234',
-            pageTitle: '제목 없음,no',
+            pageName: '제목 없음,no',
             type: 'normal',
           },
           {
             pageId: 'editable5678',
-            pageTitle: '제목 없음,no2',
+            pageName: '제목 없음,no2',
             type: 'normal',
           },
           {
             pageId: 'socket5678',
-            pageTitle: '제목 없음,so',
+            pageName: '제목 없음,so',
             type: 'socket',
           },
         ],
@@ -202,20 +199,20 @@ const handlers = [
     );
   }),
 
-  rest.put(`http://localhost:3001/api/post/:pageId`, (_, res, ctx) => {
+  rest.put(`http://localhost:3001/api/page/:pageId`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        pageList: [
+        List: [
           {
             pageId: 'editable1234',
-            pageTitle: '제목 없음,no',
+            pageName: '제목 없음,no',
             type: 'normal',
             initial: true,
           },
           {
             pageId: 'socket5678',
-            pageTitle: '제목 없음,so',
+            pageName: '제목 없음,so',
             type: 'socket',
             initial: true,
           },
@@ -227,17 +224,8 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        user: {
-          github_id: 'tangjin',
-          github_url: 'https://github.com/tangjinlog',
-          img: '',
-          name: 'tangjin',
-          channel_id: '1',
-          channel_name: '아코하',
-          channel_admin: 'tangjin',
-          channel_img: '',
-          accessToken: '12321',
-          refreshToken: '12321',
+        token: {
+          accessToken: '12345',
         },
       })
     );

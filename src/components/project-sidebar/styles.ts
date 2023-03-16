@@ -51,7 +51,7 @@ export const ProjectCreate = css`
   border-radius: 4px;
 `;
 
-export const projectTitleInput = (error: boolean) => css`
+export const projectNameInput = (error: boolean) => css`
   box-sizing: border-box;
   width: 100%;
   padding: 5px 13px 5px;
@@ -81,14 +81,14 @@ export const projectCreateBtn = css`
   border-radius: 5px;
 `;
 
-export const pageTitleInput = css`
+export const pageNameInput = css`
   box-sizing: border-box;
   width: 100%;
   margin-bottom: 0.5rem;
   color: red;
 `;
 
-export const pageTitleLink = css`
+export const pageNameLink = css`
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.5rem;
@@ -99,7 +99,7 @@ export const pageTitleLink = css`
   }
 `;
 
-export const pageTitleEditBtn = css`
+export const pageNameEditBtn = css`
   display: none;
   padding: 0;
 `;

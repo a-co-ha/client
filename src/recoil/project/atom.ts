@@ -5,15 +5,10 @@ export const pageListState = atom({
   default: [
     {
       pageId: '',
-      pageTitle: '',
+      pageName: '',
       type: '',
     },
   ],
-});
-
-export const pageTitleState = atomFamily({
-  key: 'pageTitleState',
-  default: '',
 });
 
 export const channelListState = atom({
@@ -26,12 +21,12 @@ export const channelListState = atom({
   ],
 });
 
-export const pageTitleEditToggle = atomFamily({
-  key: 'pageTitleEditToggle',
+export const pageNameEditToggle = atomFamily({
+  key: 'pageNameEditToggle',
   default: false,
 });
 
-export const pageTitleShare = atomFamily({
-  key: 'pageTitleShare',
+export const pageNameShare = atomFamily({
+  key: 'pageNameShare',
   default: '',
 });

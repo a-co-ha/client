@@ -21,8 +21,7 @@ const Callback = () => {
     const getUserData = async () => {
       try {
         console.log(authCode);
-        const user = await oauthLogin(authCode);
-        setToken(user.accessToken);
+        await oauthLogin(authCode);
         // 토큰 저장 해야함
         const userData = await getUser();
         console.log(userData);

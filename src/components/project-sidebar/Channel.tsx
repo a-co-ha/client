@@ -1,23 +1,13 @@
-import {
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-  selector,
-} from 'recoil';
-import {
-  pageListState,
-  pageTitleState,
-  pageTitleEditToggle,
-} from '@/recoil/project/atom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { Modal } from './modal';
-import { PageTitleForm } from './PageTitleForm';
-import { PageTitleLink } from './PageTitleLink';
+import { PageNameForm } from './PageNameForm';
+import { PageNameLink } from './PageNameLink';
 import { getEditablePages } from '@/pages/api/editable/getPages';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import * as styles from './styles';
 
 /** 여기서 채널 간단목록 조회 api 쏨 */
@@ -29,11 +19,6 @@ export const Channel = () => {
   const pageList = useRecoilValue(pageListState);
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');
-  pageList.map((e) => {
-    // if (e.pageId) {
-    //   const setIsEditing = useRecoilState(pageTitleEditToggle(e.pageId));
-    // }
-  });
   useEffect(() => {
     const getEditablePageList = async () => {
       try {
@@ -54,17 +39,6 @@ export const Channel = () => {
   const onClickHandler = () => {
     openModal();
   };
-
-  const pageTitleEditHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const event = e.target as HTMLButtonElement;
-    event.previousSibling;
-  };
-  console.log(editablePageList);
-  // pageList.map(e=>e.pageId)
-  // const [pageNames, setPageNames] = useRecoilState(pageTitleState());
-  useEffect(() => {
-    pageList.map((e) => {});
-  }, [pageList]);
 
   return (
     <div css={styles.channel}>
@@ -93,15 +67,15 @@ export const Channel = () => {
                   {editablePageList.map((page) => {
                     return (
                       <div key={page.pageId}>
-                        <PageTitleForm
+                        <PageNameForm
                           key={page.pageId}
                           pageId={page.pageId}
-                          pageTitle={page.pageTitle}
+                          pageName={page.pageName}
                         />
-                        <PageTitleLink
+                        <PageNameLink
                           channelId={channelId}
                           pageId={page.pageId}
-                          pageTitle={page.pageTitle}
+                          pageName={page.pageName}
                           type={page.type}
                         />
                       </div>
@@ -131,15 +105,15 @@ export const Channel = () => {
                   {socketPageList.map((page) => {
                     return (
                       <div key={page.pageId}>
-                        <PageTitleForm
+                        <PageNameForm
                           key={page.pageId}
                           pageId={page.pageId}
-                          pageTitle={page.pageTitle}
+                          pageName={page.pageName}
                         />
-                        <PageTitleLink
+                        <PageNameLink
                           channelId={channelId}
                           pageId={page.pageId}
-                          pageTitle={page.pageTitle}
+                          pageName={page.pageName}
                           type={page.type}
                         />
                       </div>

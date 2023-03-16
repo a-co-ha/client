@@ -1,22 +1,22 @@
 import { Control, useController } from 'react-hook-form';
-import type { PageTitle } from '@/components/project-sidebar/types';
+import type { PageName } from '@/components/project-sidebar/types';
 
-export const usePageTitleForm = ({
+export const usePageNameForm = ({
   control,
 }: {
-  control: Control<PageTitle>;
+  control: Control<PageName>;
 }) => {
   const {
-    field: pageTitleField,
+    field: pageNameField,
     formState: { errors },
   } = useController({
-    name: 'pageTitle',
+    name: 'pageName',
     control,
     rules: {
-      required: true,
+      required: '꼭 필요해요',
       minLength: { value: 2, message: '너무짧아요' },
       maxLength: { value: 10, message: '너무길어요' },
     },
   });
-  return { pageTitleField, errors };
+  return { pageNameField, errors };
 };
