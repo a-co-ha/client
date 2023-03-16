@@ -23,7 +23,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
 
-  //block 변화시 put
+  //block 변화시 put -- channelId 쿼리로
   useEffect(() => {
     handlers.updatePageOnserver(blocks, id);
     prevBlcoks && prevBlcoks !== blocks

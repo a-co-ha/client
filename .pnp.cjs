@@ -603,6 +603,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:0.4.2"\
       ],\
       [\
+        "cookies-next",\
+        "npm:2.1.1"\
+      ],\
+      [\
         "cosmiconfig",\
         "npm:7.1.0"\
       ],\
@@ -2160,6 +2164,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/sharp", "npm:0.31.1"],\
             ["autoprefixer", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:10.4.13"],\
             ["axios", "npm:1.3.2"],\
+            ["cookies-next", "npm:2.1.1"],\
             ["eslint", "npm:8.31.0"],\
             ["eslint-config-next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
             ["eslint-config-prettier", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:8.6.0"],\
@@ -2910,6 +2915,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
+        ["npm:16.18.16", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.16-6c9b6afe54-69c422450f.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:16.18.16"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:18.11.18", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-18.11.18-d61e8a4a20-03f17f9480.zip/node_modules/@types/node/",\
           "packageDependencies": [\
@@ -3153,6 +3165,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/sharp", "npm:0.31.1"],\
             ["autoprefixer", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:10.4.13"],\
             ["axios", "npm:1.3.2"],\
+            ["cookies-next", "npm:2.1.1"],\
             ["eslint", "npm:8.31.0"],\
             ["eslint-config-next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
             ["eslint-config-prettier", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:8.6.0"],\
@@ -3957,6 +3970,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["npm:0.4.2", {\
           "packageLocation": "./.yarn/cache/cookie-npm-0.4.2-7761894d5f-a00833c998.zip/node_modules/cookie/",\
           "packageDependencies": [\
+            ["cookie", "npm:0.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cookies-next", [\
+        ["npm:2.1.1", {\
+          "packageLocation": "./.yarn/cache/cookies-next-npm-2.1.1-b220fa0499-c5fc2c72cf.zip/node_modules/cookies-next/",\
+          "packageDependencies": [\
+            ["cookies-next", "npm:2.1.1"],\
+            ["@types/cookie", "npm:0.4.1"],\
+            ["@types/node", "npm:16.18.16"],\
             ["cookie", "npm:0.4.2"]\
           ],\
           "linkType": "HARD"\

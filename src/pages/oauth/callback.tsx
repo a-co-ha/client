@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import {
   userDataState,
   initialUserState,
@@ -9,19 +9,20 @@ import {
 
 import { oauthLogin } from '../api/user/oauthLogin';
 import { getUser } from '../api/user/getUser';
+import { setToken } from '../api/user/setToken';
 
 const Callback = () => {
   const setUserData = useSetRecoilState(userDataState);
   const setInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
-  const userInfo = useRecoilValue(userDataState);
   const router = useRouter();
   const authCode = router.query.code;
   useEffect(() => {
     const getUserData = async () => {
       try {
         console.log(authCode);
-        const token = await oauthLogin(authCode);
+        const user = await oauthLogin(authCode);
+        setToken(user.accessToken);
         // 토큰 저장 해야함
         const userData = await getUser();
         console.log(userData);

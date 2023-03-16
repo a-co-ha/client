@@ -223,7 +223,7 @@ const handlers = [
       })
     );
   }),
-  rest.post(`http://localhost:3001/oauth/callback`, (_, res, ctx) => {
+  rest.get(`http://localhost:3001/api/oauth/github/callback`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

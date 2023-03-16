@@ -609,6 +609,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^16.10.2":
+  version: 16.18.16
+  resolution: "@types/node@npm:16.18.16"
+  checksum: 69c422450f046fbdf1904c4fdb9fbc80fda379768f6e5402ac1434fb5955b7b3d0082f02fb9bcd4979f57649ecd9a934277492d757c6ea88d080ba101c1ced48
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -795,6 +802,7 @@ __metadata:
     "@types/sharp": ^0
     autoprefixer: ^10.4.13
     axios: ^1.3.2
+    cookies-next: ^2.1.1
     eslint: 8.31.0
     eslint-config-next: 13.1.2
     eslint-config-prettier: ^8.6.0
@@ -1495,10 +1503,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.2":
+"cookie@npm:^0.4.0, cookie@npm:^0.4.2":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
   checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "cookies-next@npm:2.1.1"
+  dependencies:
+    "@types/cookie": ^0.4.1
+    "@types/node": ^16.10.2
+    cookie: ^0.4.0
+  checksum: c5fc2c72cf2d46d6fa804e5690b5038bab3d5c7e741a8472079bfbd6920010802962f7512d999ea430ebcbfc7c89c38e16f423479e4df7cb0bb782cc1a7f9004
   languageName: node
   linkType: hard
 

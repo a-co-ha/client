@@ -104,7 +104,7 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
 const updatePageOnserver = async (blocks: Block[], pageId: string) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/post/${pageId}`,
+      `http://localhost:3000/api/page/${pageId}`, //channelId 쿼리
       {
         blocks,
       },
