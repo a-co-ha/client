@@ -10,15 +10,15 @@ const handlers = [
         img: '',
         name: 'tangjin',
         userHasChannels: [
-          {
-            channel_id: '1',
-            channel: {
-              id: 0,
-              admin: '',
-              channelName: '',
-              channelImg: '',
-            },
-          },
+          // {
+          //   channel_id: '1',
+          //   channel: {
+          //     id: 0,
+          //     admin: '',
+          //     channelName: '',
+          //     channelImg: '',
+          //   },
+          // },
         ],
       })
     );

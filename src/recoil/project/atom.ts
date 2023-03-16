@@ -12,13 +12,8 @@ export const pageListState = atom({
 });
 
 export const channelListState = atom({
-  key: 'channelList',
-  default: [
-    {
-      id: '',
-      channelName: '',
-    },
-  ],
+  key: 'channelListState',
+  default: [],
 });
 
 export const pageNameEditToggle = atomFamily({
