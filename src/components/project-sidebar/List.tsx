@@ -45,8 +45,10 @@ export const List = () => {
               channelName: e.channel.channelName,
             });
           });
+          setChannelList(channels);
+        } else {
+          setChannelList([]);
         }
-        setChannelList(channels);
       } catch (err) {
         console.error(err);
       }
