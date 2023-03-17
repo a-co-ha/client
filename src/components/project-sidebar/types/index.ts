@@ -3,7 +3,7 @@ export interface ProjectName {
 }
 
 export interface Channels {
-  id: string;
+  id: number;
   channelName: string;
 }
 

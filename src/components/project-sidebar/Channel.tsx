@@ -66,15 +66,15 @@ export const Channel = () => {
                 <Disclosure.Panel className="flex-col items-between px-4 pt-4 pb-2 text-sm text-gray-500">
                   {editablePageList.map((page) => {
                     return (
-                      <div key={page.pageId}>
+                      <div key={page._id}>
                         <PageNameForm
-                          key={page.pageId}
-                          pageId={page.pageId}
+                          key={page._id}
+                          pageId={page._id}
                           pageName={page.pageName}
                         />
                         <PageNameLink
                           channelId={channelId}
-                          pageId={page.pageId}
+                          pageId={page._id}
                           pageName={page.pageName}
                           type={page.type}
                         />
@@ -104,15 +104,15 @@ export const Channel = () => {
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {socketPageList.map((page) => {
                     return (
-                      <div key={page.pageId}>
+                      <div key={page._id}>
                         <PageNameForm
-                          key={page.pageId}
-                          pageId={page.pageId}
+                          key={page._id}
+                          pageId={page._id}
                           pageName={page.pageName}
                         />
                         <PageNameLink
                           channelId={channelId}
-                          pageId={page.pageId}
+                          pageId={page._id}
                           pageName={page.pageName}
                           type={page.type}
                         />

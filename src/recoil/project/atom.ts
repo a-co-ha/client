@@ -4,7 +4,7 @@ export const pageListState = atom({
   key: 'pageList',
   default: [
     {
-      pageId: '',
+      _id: '',
       pageName: '',
       type: '',
     },
@@ -15,7 +15,7 @@ export const channelListState = atom({
   key: 'channelListState',
   default: [
     {
-      id: '',
+      id: 0,
       channelName: '',
     },
   ],

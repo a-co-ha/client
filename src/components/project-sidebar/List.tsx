@@ -38,11 +38,11 @@ export const List = () => {
       try {
         const channels: Channels[] = [];
         const user = await getUser();
-        if (user.userHasChannels.length !== 0) {
-          user.userHasChannels.map((e) => {
+        if (user.channels.length !== 0) {
+          user.channels.map((e) => {
             channels.push({
-              id: e.channel_id,
-              channelName: e.channel.channelName,
+              id: e.id,
+              channelName: e.channelName,
             });
           });
           setChannelList(channels);

@@ -25,8 +25,7 @@ const Callback = () => {
         // 토큰 저장 해야함
         const userData = await getUser();
         console.log(userData);
-        const initialUser =
-          userData.userHasChannels.length === 0 ? true : false;
+        const initialUser = userData.channels.length === 0 ? true : false;
 
         console.log(initialUser);
         setUserData(userData);
@@ -34,7 +33,7 @@ const Callback = () => {
         setIsLoggedIn(true);
         initialUser
           ? router.push(`/main`)
-          : router.push(`/project/${userData.userHasChannels[0].channel_id}`);
+          : router.push(`/project/${userData.channels[0].id}`);
       } catch (err) {
         console.error(err);
       }
