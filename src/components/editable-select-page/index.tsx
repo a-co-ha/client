@@ -20,9 +20,13 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
             css={styles.button}
             type="button"
             onClick={async () => {
-              const [pageId, type] = await postEditablePage(channelId);
+              const [pageId, pageName, type] = await postEditablePage(
+                channelId
+              );
               closeModal();
-              router.push(`/project/${channelId}/${pageId}?type=${type}`);
+              router.push(
+                `/project/${channelId}/${pageId}?name=${pageName}&type=${type}`
+              );
             }}
           >
             normal

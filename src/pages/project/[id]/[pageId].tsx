@@ -24,6 +24,7 @@ export interface PageList {
 }
 
 export default function Page({ editablePage, socketPage, type }: PageList) {
+  console.log('editable', editablePage);
   resetServerContext();
   return (
     /**
@@ -52,7 +53,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id: channelId, pageId, type } = context.query;
     console.log(context.query);
     if (type === 'normal') {
-      const fetchedBlocks = await getEditablePage(channelId, pageId);
+      const fetchedBlocks = await getEditablePage(channelId, pageId, type);
+      console.log('fetchedblock', fetchedBlocks);
       return {
         props: {
           editablePage: { fetchedBlocks, id: pageId, err: false },
@@ -66,11 +68,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: { socketPage, type },
       };
     } else {
-      return { props: { socketPage: null, type: null } };
+      return { props: { editablePage: null, socketPage: null, type: null } };
     }
   } catch (err) {
     return {
-      props: {},
+      props: { editablePage: null, socketPage: null, type: null },
     };
   }
 };

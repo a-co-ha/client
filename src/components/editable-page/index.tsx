@@ -22,12 +22,11 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
-
-  //block 변화시 put -- channelId 쿼리로
+  const channelId = router.query.id;
   useEffect(() => {
-    handlers.updatePageOnserver(blocks, id);
+    handlers.updatePageOnserver(blocks, id, channelId);
     prevBlcoks && prevBlcoks !== blocks
-      ? handlers.updatePageOnserver(blocks, id)
+      ? handlers.updatePageOnserver(blocks, id, channelId)
       : null;
   }, [blocks, prevBlcoks]);
 
@@ -71,7 +70,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
                     id={block.blockId}
                     tag={block.tag}
                     html={block.html}
-                    imageUrl={block.imageUrl}
+                    imageUrl={block.imgUrl}
                     pageId={id}
                     addBlock={addBlockHandler}
                     updateBlock={updateBlockHandler}

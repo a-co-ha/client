@@ -5,20 +5,18 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
+        id: 0,
         github_id: 'tangjin',
         github_url: 'http://locla',
         img: '',
         name: 'tangjin',
-        userHasChannels: [
-          // {
-          //   channel_id: '1',
-          //   channel: {
-          //     id: 0,
-          //     admin: '',
-          //     channelName: '',
-          //     channelImg: '',
-          //   },
-          // },
+        channels: [
+          {
+            id: 45,
+            admin: 'tangjin',
+            channelName: 'dns',
+            channelImg: 'null',
+          },
         ],
       })
     );
@@ -155,17 +153,17 @@ const handlers = [
       ctx.json({
         List: [
           {
-            pageId: 'editable1234',
+            _id: 'editable1234',
             pageName: '제목 없음,no',
             type: 'normal',
           },
           {
-            pageId: 'editable5678',
+            _id: 'editable5678',
             pageName: '제목 없음,no2',
             type: 'normal',
           },
           {
-            pageId: 'socket5678',
+            _id: 'socket5678',
             pageName: '제목 없음,so',
             type: 'socket',
           },

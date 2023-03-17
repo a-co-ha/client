@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
@@ -13,10 +13,9 @@ import * as styles from './styles';
 /** 여기서 채널 간단목록 조회 api 쏨 */
 export const Channel = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const setPageList = useSetRecoilState(pageListState);
+  const [pageList, setPageList] = useRecoilState(pageListState);
   const router = useRouter();
   const channelId = router.query.id;
-  const pageList = useRecoilValue(pageListState);
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');
   useEffect(() => {

@@ -18,7 +18,7 @@ export interface Block {
   blockId: string;
   tag: string;
   html: string;
-  imageUrl: string;
+  imgUrl: string;
 }
 
 export interface EditablePages {

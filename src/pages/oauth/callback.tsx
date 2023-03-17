@@ -17,7 +17,12 @@ const Callback = () => {
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
   const authCode = router.query.code;
+  console.log('authcode', authCode);
   useEffect(() => {
+    router.prefetch(`/project/[id]`);
+  });
+  useEffect(() => {
+    if (!router.isReady) return;
     const getUserData = async () => {
       try {
         console.log(authCode);
@@ -39,7 +44,7 @@ const Callback = () => {
       }
     };
     getUserData();
-  }, [authCode]);
+  }, [router.isReady]);
   return (
     <div>
       <div>oauth 로그인중</div>

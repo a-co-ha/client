@@ -11,8 +11,8 @@ import { setToken } from './api/user/setToken';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_ENV_URL}`;
-// console.log(process.env.NEXT_PUBLIC_ENV_URL);
+axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_ENV_URL}`;
+console.log(process.env.NEXT_PUBLIC_ENV_URL);
 
 export default function App({ Component, pageProps }: AppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -48,16 +48,16 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    console.log('cookie!!!!!', context.req.cookies);
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   try {
+//     console.log('cookie!!!!!', context.req.cookies);
 
-    return {
-      props: {},
-    };
-  } catch (err) {
-    return {
-      props: {},
-    };
-  }
-};
+//     return {
+//       props: {},
+//     };
+//   } catch (err) {
+//     return {
+//       props: {},
+//     };
+//   }
+// };

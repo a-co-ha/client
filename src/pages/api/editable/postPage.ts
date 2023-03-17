@@ -8,5 +8,5 @@ export const postEditablePage = async (
     blockId: nanoId(),
   });
   console.log('postPage', res.data);
-  return [res.data._id, res.data.type];
+  return [res.data._id, res.data.pageName, res.data.type];
 };

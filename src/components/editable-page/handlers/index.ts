@@ -6,13 +6,13 @@ import { Block, AddBlock } from '../types';
 const addBlock = (blocks: Block[], currentBlock: AddBlock) => {
   const index = blocks.map((b) => b.blockId).indexOf(currentBlock.id);
   const updatedBlocks = [...blocks];
-  const newBlock = { blockId: nanoId(), tag: 'p', html: '', imageUrl: '' };
+  const newBlock = { blockId: nanoId(), tag: 'p', html: '', imgUrl: '' };
   updatedBlocks.splice(index + 1, 0, newBlock);
   updatedBlocks[index] = {
     ...updatedBlocks[index],
     tag: currentBlock.tag,
     html: currentBlock.html,
-    imageUrl: currentBlock.imageUrl,
+    imgUrl: currentBlock.imageUrl,
   };
   return updatedBlocks;
 };
@@ -28,8 +28,8 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
     const deletedBlock = blocks[index];
     const updatedBlocks = [...blocks];
     updatedBlocks.splice(index, 1);
-    deletedBlock.tag === 'img' && deletedBlock.imageUrl
-      ? deleteImageOnServer(deletedBlock.imageUrl)
+    deletedBlock.tag === 'img' && deletedBlock.imgUrl
+      ? deleteImageOnServer(deletedBlock.imgUrl)
       : null;
     return updatedBlocks;
   }
@@ -42,7 +42,7 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  */
 const deleteImageOnServer = async (imageUrl: string) => {
   try {
-    const res = await axios.delete(`http://localhost:3000/pages/${imageUrl}`, {
+    const res = await axios.delete(`/pages/${imageUrl}`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -93,18 +93,22 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
     ...updatedBlocks[index],
     tag: currentBlock.tag,
     html: currentBlock.html,
-    imageUrl: currentBlock.imageUrl,
+    imgUrl: currentBlock.imgUrl,
   };
-  oldBlock.imageUrl !== currentBlock.imageUrl
-    ? deleteImageOnServer(oldBlock.imageUrl)
+  oldBlock.imgUrl !== currentBlock.imgUrl
+    ? deleteImageOnServer(oldBlock.imgUrl)
     : null;
   return updatedBlocks;
 };
 
-const updatePageOnserver = async (blocks: Block[], pageId: string) => {
+const updatePageOnserver = async (
+  blocks: Block[],
+  pageId: string,
+  channelId: string | string[] | undefined
+) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/page/${pageId}`, //channelId 쿼리
+      `/api/page/${pageId}?channel=${channelId}`, //channelId 쿼리
       {
         blocks,
       },
