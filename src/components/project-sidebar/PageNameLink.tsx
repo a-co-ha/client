@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { useRecoilState } from 'recoil';
-import { pageNameEditToggle } from '@/recoil/project/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './types';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
+  const pageName = useRecoilValue(pageNameShare(props.pageId));
   const [isEditing, setIsEditing] = useRecoilState(
     pageNameEditToggle(props.pageId)
   );
@@ -19,7 +20,7 @@ export const PageNameLink = (props: PageNameLinkProps) => {
           <Link
             href={`/project/${props.channelId}/${props.pageId}?name=${props.pageName}&type=${props.type}`}
           >
-            {props.pageName}
+            {pageName}
           </Link>
           <button css={styles.pageNameEditBtn} onClick={onClickHandler}>
             ✏️

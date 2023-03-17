@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import type { GetEditablePage } from './types';
 
 export const getEditablePage: GetEditablePage = async (
@@ -15,6 +16,7 @@ export const getEditablePage: GetEditablePage = async (
     const fetchedBlocks = res.data.blocks;
     return fetchedBlocks;
   } catch (err) {
+    toast.error(`예기치못한 에러가 발생했어요!`);
     console.log(err);
     return null;
   }

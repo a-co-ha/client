@@ -38,7 +38,7 @@ export const Channel = () => {
   const onClickHandler = () => {
     openModal();
   };
-
+  console.log(pageList);
   return (
     <div css={styles.channel}>
       <div>channel</div>
@@ -67,7 +67,8 @@ export const Channel = () => {
                     return (
                       <div key={page._id}>
                         <PageNameForm
-                          key={page._id}
+                          // key={page._id}
+                          channelId={channelId}
                           pageId={page._id}
                           pageName={page.pageName}
                         />
@@ -105,7 +106,8 @@ export const Channel = () => {
                     return (
                       <div key={page._id}>
                         <PageNameForm
-                          key={page._id}
+                          // key={page._id}
+                          channelId={channelId}
                           pageId={page._id}
                           pageName={page.pageName}
                         />

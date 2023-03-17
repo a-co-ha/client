@@ -6,13 +6,16 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editable-block';
 import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
+import { toast } from 'react-toastify';
 import { Notice } from '@/components/notice';
 import * as styles from './styles';
 import type { AddBlock, EditablePages, Block } from '../editable-page/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   if (err) {
-    return <Notice status="ERROR" />;
+    toast.error(`예기치못한 에러가 발생했어요!`);
+    return null;
+    // return <Notice status="ERROR" />;
   }
   const [blocks, setBlocks] = useRecoilState(blocksState);
   console.log(blocks);

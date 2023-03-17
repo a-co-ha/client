@@ -55,9 +55,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (type === 'normal') {
       const fetchedBlocks = await getEditablePage(channelId, pageId, type);
       console.log('fetchedblock', fetchedBlocks);
+      const err = fetchedBlocks === null ? true : false;
       return {
         props: {
-          editablePage: { fetchedBlocks, id: pageId, err: false },
+          editablePage: { fetchedBlocks, id: pageId, err },
           type,
         },
       };

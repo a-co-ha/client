@@ -62,7 +62,11 @@ export const List = () => {
     <div css={styles.list}>
       <div>List</div>
       {channelList.map((channel, i) => (
-        <button key={i} css={styles.ProjectCreate}>
+        <button
+          key={channel.id}
+          css={styles.ProjectCreate}
+          onClick={() => router.push(`/project/${channel.id}`)}
+        >
           {channel.channelName}
         </button>
       ))}
