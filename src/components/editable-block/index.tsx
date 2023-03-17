@@ -13,11 +13,17 @@ import type { StateTypes } from './type';
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    if (contentEditable.current) {
+      contentEditable.current.innerText = props.html;
+    }
+  }, []);
+
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
     html: '',
     tag: 'p',
-    imageUrl: '',
+    imgUrl: '',
     previousKey: null,
     placeholder: false,
     openTagSelectorMenu: false,
@@ -99,7 +105,7 @@ export const EditableBlock = (props: editableBlock) => {
         id: props.id,
         html: state.html,
         tag: state.tag,
-        imageUrl: state.imageUrl,
+        imgUrl: state.imgUrl,
         ref: contentEditable.current,
       });
     } else if (
@@ -166,7 +172,7 @@ export const EditableBlock = (props: editableBlock) => {
       blockId: props.id,
       html: state.html,
       tag: state.tag,
-      imageUrl: state.imageUrl,
+      imgUrl: state.imgUrl,
     });
   }, [state.tag]);
 

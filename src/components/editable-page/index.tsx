@@ -18,7 +18,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
     // return <Notice status="ERROR" />;
   }
   const [blocks, setBlocks] = useRecoilState(blocksState);
-  console.log(blocks);
+  console.log('블락스', blocks);
   useEffect(() => {
     setBlocks(fetchedBlocks);
   }, []);
@@ -31,6 +31,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
     prevBlcoks && prevBlcoks !== blocks
       ? handlers.updatePageOnserver(blocks, id, channelId)
       : null;
+    return;
   }, [blocks, prevBlcoks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
@@ -73,7 +74,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
                     id={block.blockId}
                     tag={block.tag}
                     html={block.html}
-                    imageUrl={block.imgUrl}
+                    imgUrl={block.imgUrl}
                     pageId={id}
                     addBlock={addBlockHandler}
                     updateBlock={updateBlockHandler}

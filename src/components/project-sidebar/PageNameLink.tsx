@@ -9,7 +9,7 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   const [isEditing, setIsEditing] = useRecoilState(
     pageNameEditToggle(props.pageId)
   );
-  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickHandler = () => {
     setIsEditing(true);
   };
 

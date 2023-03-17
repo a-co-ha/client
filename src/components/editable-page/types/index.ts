@@ -4,7 +4,7 @@ export interface editableBlock {
   id: string;
   tag: string;
   html: string;
-  imageUrl: string;
+  imgUrl: string;
   pageId: string;
   addBlock: (currentBlock: AddBlock) => void;
   deleteBlock: (currentBlockId: string) => void;
@@ -52,6 +52,6 @@ export interface AddBlock {
   id: string;
   html: string;
   tag: string;
-  imageUrl: string;
+  imgUrl: string;
   ref: HTMLDivElement | null;
 }
