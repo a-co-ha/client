@@ -93,6 +93,12 @@ const handlers = [
             name: '정현',
             _id: nanoId(),
           },
+          { name: 'Wade Cooper', _id: nanoId() },
+          { name: 'Arlene Mccoy', _id: nanoId() },
+          { name: 'Devon Webb', _id: nanoId() },
+          { name: 'Tom Cook', _id: nanoId() },
+          { name: 'Tanya Fox', _id: nanoId() },
+          { name: 'Hellen Schmidt', _id: nanoId() },
         ],
       })
     );

@@ -8,12 +8,6 @@ export interface TagSelectorMenuProps {
   closeMenu: () => void;
 }
 
-export interface NameSelectorMenuProps {
-  position: Coordinates;
-  handleNameSelector: (tag: string) => void;
-  closeMenu: () => void;
-}
-
 export interface StateTypes {
   htmlBackup: null | string;
   html: string;

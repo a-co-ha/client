@@ -53,7 +53,7 @@ export default function TagSelectorMenu({
             (position.x > 600 ? 'right-full' : '')
           }
         >
-          <div className="px-1  py-1 divide-y divide-dashed border-solid border-2 border-indigo-500/50 ">
+          <div className="px-1  py-1">
             {menuItemTag.map((item) => {
               return (
                 <Menu.Item key={item.label}>

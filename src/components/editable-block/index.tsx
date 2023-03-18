@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  ChangeEvent,
+  MouseEvent,
+} from 'react';
 import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY, CMD_NAME_KEY } from '@/utils/const';
@@ -7,10 +13,8 @@ import DragHandleIcon from '@/images/draggable.svg';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
 import TagSelectorMenu from '../selector-menu/selector-tag-menu';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
-
 import type { editableBlock } from '../editable-page/types';
 import type { StateTypes } from './type';
-import NameSelectorMenu from '../selector-menu/selector-name-menu';
 import { api } from '@/api/api-config';
 
 export const EditableBlock = (props: editableBlock) => {
@@ -28,7 +32,6 @@ export const EditableBlock = (props: editableBlock) => {
       x: 0,
       y: 0,
     },
-    openNameSelectorMenu: false,
   });
   console.log('props', props);
   console.log('state', state);
@@ -120,7 +123,6 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current?.parentElement?.previousElementSibling
         .childNodes[1].firstChild?.nodeName !== 'IMG'
     ) {
-      console.log();
       e.preventDefault();
 
       props.deleteBlock(props.id);
@@ -131,7 +133,7 @@ export const EditableBlock = (props: editableBlock) => {
       }
     }
     if (state.previousKey === 'Shift') return;
-
+    console.log('실행');
     setState({ ...state, previousKey: e.key });
   };
 
@@ -171,6 +173,7 @@ export const EditableBlock = (props: editableBlock) => {
           );
           contentEditable.current.innerText = '';
         }
+
         range.deleteContents();
         range.insertNode(newNode);
         const newRange = document.createRange();
@@ -189,10 +192,6 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
-  const handleNameSelector = (name: string) => {
-    console.log(name);
-  };
-
   const closeMenu = () => {
     setState({
       ...state,
@@ -201,7 +200,7 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  const handleImageDelete = (e: React.MouseEvent) => {
+  const handleImageDelete = (e: React.MouseEvent): void => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
     e.currentTarget.remove();
     // TODO: 이미지 서버에서 지워주는 api
@@ -234,10 +233,7 @@ export const EditableBlock = (props: editableBlock) => {
         const url = reader.result as string;
         if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
-        newNode.addEventListener(
-          'click',
-          (e: React.MouseEvent<HTMLImageElement>) => handleImageDelete(e)
-        );
+        newNode.addEventListener('contextmenu', handleImageDelete);
         newNode.addEventListener('mouseenter', WarningOnHover);
         range.deleteContents();
         range.insertNode(newNode);
@@ -272,13 +268,6 @@ export const EditableBlock = (props: editableBlock) => {
         <TagSelectorMenu
           position={state.tagSelectorMenuPosition}
           handleTagSelection={handleTagSelection}
-          closeMenu={closeMenu}
-        />
-      )}
-      {state.openNameSelectorMenu && (
-        <NameSelectorMenu
-          position={state.tagSelectorMenuPosition}
-          handleNameSelector={handleNameSelector}
           closeMenu={closeMenu}
         />
       )}
