@@ -1,11 +1,12 @@
 import { atom } from 'recoil';
+import { nanoId } from '@/utils/nanoId';
 
 /**
  * getServerSideProps에서 쓰려고 했으나 보류
  * https://github.com/a-co-ha/client/issues/2
  */
 export const blocksState = atom({
-  key: 'editableBlock',
+  key: `editableBlock/${nanoId()}`,
   default: [
     {
       blockId: '',
@@ -17,6 +18,6 @@ export const blocksState = atom({
 });
 
 export const currentBlockIdState = atom({
-  key: 'currentBlockId',
+  key: `currentBlockId/${nanoId()}`,
   default: '',
 });

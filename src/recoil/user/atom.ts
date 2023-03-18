@@ -1,7 +1,8 @@
 import { atom } from 'recoil';
+import { nanoId } from '@/utils/nanoId';
 
 export const userProfile = atom({
-  key: 'userProfile',
+  key: `userProfile/${nanoId()}`,
   default: {
     id: '',
     avartarUrl: '',
@@ -9,7 +10,7 @@ export const userProfile = atom({
 });
 
 export const userDataState = atom({
-  key: 'userData',
+  key: `userData/${nanoId()}`,
   default: {
     github_id: '',
     github_url: '',
@@ -30,11 +31,11 @@ export const userDataState = atom({
 });
 
 export const initialUserState = atom({
-  key: 'initialUserState',
+  key: `initialUserState/${nanoId()}`,
   default: true,
 });
 
 export const loginState = atom({
-  key: 'loginState',
+  key: `loginState/${nanoId()}`,
   default: false,
 });
