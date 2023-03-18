@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { FieldError } from 'react-hook-form';
 
 const flexColumnCenter = css`
   display: flex;
@@ -26,7 +25,8 @@ export const list = css`
 
 export const channel = css`
   ${flexColumnCenter}
-  flex-grow: 1;
+  width: 250px;
+  // flex-grow: 1;
   outline: 2px solid blue;
 `;
 
@@ -43,7 +43,7 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const createBtn = css`
+export const ProjectCreate = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
@@ -51,7 +51,8 @@ export const createBtn = css`
   border-radius: 4px;
 `;
 
-export const inputForm = (error: boolean) => css`
+export const projectNameInput = (error: boolean) => css`
+  box-sizing: border-box;
   width: 100%;
   padding: 5px 13px 5px;
   margin-top: 1rem;
@@ -64,6 +65,7 @@ export const inputForm = (error: boolean) => css`
 `;
 
 export const validationMsg = css`
+  color: red;
   user-select: none;
   padding: 5px;
 `;
@@ -77,4 +79,27 @@ export const projectCreateBtn = css`
     background: #dbe9aa;
   }
   border-radius: 5px;
+`;
+
+export const pageNameInput = css`
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  color: red;
+`;
+
+export const pageNameLink = css`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  &:hover {
+    & > button {
+      display: block;
+    }
+  }
+`;
+
+export const pageNameEditBtn = css`
+  display: none;
+  padding: 0;
 `;

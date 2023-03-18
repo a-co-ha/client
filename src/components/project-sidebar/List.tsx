@@ -10,7 +10,7 @@ import { getUser } from '@/pages/api/user/getUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
-import type { Channels } from './types';
+import type { Channels, ProjectName } from './types';
 
 export const List = () => {
   const setChannelList = useSetRecoilState(channelListState);
@@ -24,10 +24,10 @@ export const List = () => {
     setIsOpen(true);
   };
 
-  const onClickHandler = async () => {
-    const { id: channelId, channelName } = await postProject();
+  const onClickHandler = async (projectName: ProjectName) => {
+    const { id: channelId, channelName } = await postProject(projectName);
     await postEditablePage(channelId);
-    await postSocketPage(channelId);
+    // await postSocketPage(channelId);
     setInitialUser(false);
     closeModal();
     router.push(`/project/${channelId}?channelName=${channelName}`);
@@ -38,10 +38,17 @@ export const List = () => {
       try {
         const channels: Channels[] = [];
         const user = await getUser();
-        user.map((e) => {
-          channels.push({ id: e.channel_id, channelName: e.channel_name });
-        });
-        setChannelList(channels);
+        if (user.channels.length !== 0) {
+          user.channels.map((e) => {
+            channels.push({
+              id: e.id,
+              channelName: e.channelName,
+            });
+          });
+          setChannelList(channels);
+        } else {
+          setChannelList([]);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -50,17 +57,20 @@ export const List = () => {
   }, []);
 
   const channelList = useRecoilValue(channelListState);
-
+  console.log('채널리스트 ', channelList);
   return (
     <div css={styles.list}>
       <div>List</div>
-      {channelList[0].id &&
-        channelList.map((channel, i) => (
-          <button key={i} css={styles.createBtn}>
-            {channel.channelName}
-          </button>
-        ))}
-      <button type="button" onClick={openModal} css={styles.createBtn}>
+      {channelList.map((channel, i) => (
+        <button
+          key={channel.id}
+          css={styles.ProjectCreate}
+          onClick={() => router.push(`/project/${channel.id}`)}
+        >
+          {channel.channelName}
+        </button>
+      ))}
+      <button type="button" onClick={openModal} css={styles.ProjectCreate}>
         +
       </button>
       <Transition appear show={isOpen} as={Fragment}>
@@ -90,6 +100,7 @@ export const List = () => {
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-center align-middle shadow-xl transition-all">
                   <Dialog.Title
+                    css={{ boxSizing: 'border-box' }}
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >

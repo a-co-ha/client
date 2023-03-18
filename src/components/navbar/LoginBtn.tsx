@@ -1,44 +1,17 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
-import {
-  userDataState,
-  initialUserState,
-  loginState,
-} from '@/recoil/user/atom';
-import { useSetRecoilState } from 'recoil';
-import { getUser } from '@/pages/api/user/getUser';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 import * as styles from './styles';
 import githubLogo from '@/images/githubLogo.png';
 
 export const LoginBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const setUserData = useSetRecoilState(userDataState);
-  const setIsLoggedIn = useSetRecoilState(loginState);
-  const setInitialUser = useSetRecoilState(initialUserState);
   const closeModal = () => {
     setIsOpen(false);
   };
   const openModal = () => {
     setIsOpen(true);
-  };
-
-  const githubLoginHandler = async () => {
-    try {
-      const userData = await getUser();
-      const initialUser = !userData[0].channel_id;
-      setUserData(userData);
-      setInitialUser(initialUser);
-      setIsLoggedIn(true);
-      closeModal();
-      initialUser
-        ? router.push(`/main`)
-        : router.push(`/project/${userData[0].channel_id}`);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   return (
@@ -101,14 +74,14 @@ export const LoginBtn = () => {
                     </p>
                   </div>
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={githubLoginHandler}
+                  <div className="mt-2">
+                    <Link
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 no-underline text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      href={`${process.env.NEXT_PUBLIC_OAUTH_URL}`}
+                      onClick={() => closeModal()}
                     >
                       Github 로그인
-                    </button>
+                    </Link>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

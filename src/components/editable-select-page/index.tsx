@@ -20,10 +20,12 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
             css={styles.button}
             type="button"
             onClick={async () => {
-              const [pageId, type] = await postEditablePage(channelId);
+              const [pageId, pageName, type] = await postEditablePage(
+                channelId
+              );
               closeModal();
               router.push(
-                `http://localhost:3000/project/${channelId}/${pageId}?type=${type}`
+                `/project/${channelId}/${pageId}?name=${pageName}&type=${type}`
               );
             }}
           >
@@ -37,9 +39,7 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
             onClick={async () => {
               const [pageId, type] = await postEditablePage(channelId);
               closeModal();
-              router.push(
-                `http://localhost:3000/project/${channelId}/${pageId}?type=${type}`
-              );
+              router.push(`/project/${channelId}/${pageId}?type=${type}`);
             }}
           >
             progress

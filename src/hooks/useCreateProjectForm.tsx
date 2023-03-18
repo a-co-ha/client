@@ -1,17 +1,17 @@
 import { Control, useController } from 'react-hook-form';
-import type { ProjectTitle } from '@/components/project-sidebar/types';
+import type { ProjectName } from '@/components/project-sidebar/types';
 
 export const useCreateProjectForm = ({
   control,
 }: {
-  control: Control<ProjectTitle>;
+  control: Control<ProjectName>;
 }) => {
   const {
-    field: projectTitle,
+    field: projectName,
     fieldState: { error },
     formState: { isSubmitting },
   } = useController({
-    name: 'projectTitle',
+    name: 'projectName',
     control,
     rules: {
       required: '꼭 필요해요',
@@ -19,5 +19,5 @@ export const useCreateProjectForm = ({
       maxLength: { value: 10, message: '너무 길어요' },
     },
   });
-  return { projectTitle, error, isSubmitting };
+  return { projectName, error, isSubmitting };
 };

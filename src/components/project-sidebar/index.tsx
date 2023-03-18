@@ -13,7 +13,8 @@ export const ProjectSideBar = () => {
     const getInitialState = async () => {
       try {
         const userData = await getUser();
-        const initialUser = !userData[0].channel_id;
+        console.log(userData);
+        const initialUser = userData.channels.length === 0 ? true : false;
         setInitialUser(initialUser);
       } catch (err) {
         console.error(err);
@@ -21,8 +22,8 @@ export const ProjectSideBar = () => {
     };
     getInitialState();
   }, []);
-
   const initialUser = useRecoilValue(initialUserState);
+  console.log(initialUser);
 
   return (
     <div css={projectSideBarBox}>

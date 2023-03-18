@@ -4,24 +4,29 @@ export const pageListState = atom({
   key: 'pageList',
   default: [
     {
-      pageId: '',
+      _id: '',
       pageName: '',
       type: '',
     },
   ],
 });
 
-export const pageNameState = atomFamily({
-  key: 'pageNameState',
-  default: '',
-});
-
 export const channelListState = atom({
-  key: 'channelList',
+  key: 'channelListState',
   default: [
     {
-      id: '',
+      id: 0,
       channelName: '',
     },
   ],
+});
+
+export const pageNameEditToggle = atomFamily({
+  key: 'pageNameEditToggle',
+  default: false,
+});
+
+export const pageNameShare = atomFamily({
+  key: 'pageNameShare',
+  default: '',
 });

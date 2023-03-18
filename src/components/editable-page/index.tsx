@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { usePrevious } from '@/hooks/usePrevious';
 import { EditableBlock } from '@/components/editable-block';
 import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
+import { toast } from 'react-toastify';
 import { Notice } from '@/components/notice';
 import * as styles from './styles';
 import Label from '../editable-block/Label';
@@ -13,23 +14,25 @@ import type { AddBlock, EditablePages, Block } from '../editable-page/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   if (err) {
-    return <Notice status="ERROR" />;
+    toast.error(`예기치못한 에러가 발생했어요!`);
+    return null;
+    // return <Notice status="ERROR" />;
   }
   const [blocks, setBlocks] = useRecoilState(blocksState);
-  console.log(blocks);
+  console.log('블락스', blocks);
   useEffect(() => {
     setBlocks(fetchedBlocks);
   }, []);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
-
-  //block 변화시 put
+  const channelId = router.query.id;
   useEffect(() => {
-    handlers.updatePageOnserver(blocks, id);
+    handlers.updatePageOnserver(blocks, id, channelId);
     prevBlcoks && prevBlcoks !== blocks
-      ? handlers.updatePageOnserver(blocks, id)
+      ? handlers.updatePageOnserver(blocks, id, channelId)
       : null;
+    return;
   }, [blocks, prevBlcoks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
@@ -73,7 +76,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
                     id={block.blockId}
                     tag={block.tag}
                     html={block.html}
-                    imageUrl={block.imageUrl}
+                    imgUrl={block.imgUrl}
                     pageId={id}
                     addBlock={addBlockHandler}
                     updateBlock={updateBlockHandler}

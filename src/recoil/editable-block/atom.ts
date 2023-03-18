@@ -11,7 +11,7 @@ export const blocksState = atom({
       blockId: '',
       tag: 'p',
       html: '',
-      imageUrl: '',
+      imgUrl: '',
     },
   ],
 });
