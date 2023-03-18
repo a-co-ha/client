@@ -19,26 +19,18 @@ import { api } from '@/api/api-config';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
-<<<<<<< HEAD
   const fileInput = useRef<HTMLInputElement | null>(null);
-=======
-
   useEffect(() => {
     if (contentEditable.current) {
       contentEditable.current.innerText = props.html;
     }
   }, []);
 
->>>>>>> feature-socket
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
     html: '',
     tag: 'p',
-<<<<<<< HEAD
-    imageUrl: null,
-=======
-    imgUrl: '',
->>>>>>> feature-socket
+    imgUrl: null,
     previousKey: null,
     placeholder: false,
     openTagSelectorMenu: false,
@@ -205,19 +197,10 @@ export const EditableBlock = (props: editableBlock) => {
     }
   };
 
-<<<<<<< HEAD
   const closeMenu = () => {
     setState({
       ...state,
       openTagSelectorMenu: false,
-=======
-  useEffect(() => {
-    props.updateBlock({
-      blockId: props.id,
-      html: state.html,
-      tag: state.tag,
-      imgUrl: state.imgUrl,
->>>>>>> feature-socket
     });
   };
 
@@ -275,7 +258,7 @@ export const EditableBlock = (props: editableBlock) => {
         id: props.id,
         html: state.html,
         tag: state.tag,
-        imageUrl: state.imageUrl,
+        imgUrl: state.imgUrl,
         ref: contentEditable.current,
       });
     } catch {

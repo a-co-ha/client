@@ -54,9 +54,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <QueryClientProvider client={queryClient}>
+          {/* <Hydrate state={pageProps.dehydratedState}> /} */}
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          {/* {/ </Hydrate> */}
+        </QueryClientProvider>
       </ThemeProvider>
     </RecoilRoot>
   );
