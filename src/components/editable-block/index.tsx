@@ -152,7 +152,6 @@ export const EditableBlock = (props: editableBlock) => {
       setState({
         ...state,
         tagSelectorMenuPosition: { x: x, y: y },
-        openNameSelectorMenu: true,
       });
     }
   };
@@ -196,7 +195,6 @@ export const EditableBlock = (props: editableBlock) => {
     setState({
       ...state,
       openTagSelectorMenu: false,
-      openNameSelectorMenu: false,
     });
   };
 

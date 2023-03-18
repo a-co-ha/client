@@ -17,5 +17,4 @@ export interface StateTypes {
   placeholder: boolean;
   openTagSelectorMenu: boolean;
   tagSelectorMenuPosition: Coordinates;
-  openNameSelectorMenu: boolean;
 }
