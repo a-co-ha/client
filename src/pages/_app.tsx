@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Layout } from '@/components/layout';
 import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
-import axios from 'axios';
 import { setToken } from './api/user/setToken';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

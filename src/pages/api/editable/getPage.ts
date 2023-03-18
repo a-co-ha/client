@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../config/api-config';
 import { toast } from 'react-toastify';
 import type { GetEditablePage } from './types';
 
@@ -9,7 +9,7 @@ export const getEditablePage: GetEditablePage = async (
 ) => {
   try {
     console.log(`여기 api`, channelId, pageId, type);
-    const res = await axios.get(
+    const res = await api.get(
       `/api/page/${pageId}?channel=${channelId}&type=${type}`
     );
     console.log('getPage', res.data);
