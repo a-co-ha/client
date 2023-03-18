@@ -205,9 +205,10 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  const handleImageDelete = (e: React.MouseEvent): void => {
+  const handleImageDelete = (e: globalThis.MouseEvent) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    e.currentTarget.remove();
+    const target = e.currentTarget as HTMLImageElement;
+    target.remove();
     // TODO: 이미지 서버에서 지워주는 api
     contentEditable.current?.toggleAttribute('contenteditable');
     setState({ ...state, tag: 'p', imgUrl: '' });
@@ -219,12 +220,12 @@ export const EditableBlock = (props: editableBlock) => {
 
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
-    // const imageFile = e.target.files[0];
-    // const reader = new FileReader();
-    // reader.readAsDataURL(imageFile);
+    const imageFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
     const pageId = props.pageId;
     const formData = new FormData();
-    // formData.append('image', imageFile);
+    formData.append('image', imageFile);
     try {
       const data = await api.post(`/post/images/${pageId}?channel=1`, {
         formData,
@@ -235,7 +236,7 @@ export const EditableBlock = (props: editableBlock) => {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
         newNode.setAttribute('width', '50%');
-        // const url = reader.result as string;
+        const url = reader.result as string;
         if (contentEditable.current) contentEditable.current.innerText = '';
         // newNode.setAttribute('src', data);
         newNode.addEventListener('contextmenu', handleImageDelete);
@@ -250,8 +251,8 @@ export const EditableBlock = (props: editableBlock) => {
       }
       setState({
         ...state,
-        // imgUrl: reader.result,
-        imgUrl: '',
+        imgUrl: reader.result,
+        // imgUrl: '',
         tag: 'img',
         html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,
