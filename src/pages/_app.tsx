@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { useState, useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Layout } from '@/components/layout';
+import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
 
 export default function App({ Component, pageProps }: AppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -27,12 +28,30 @@ export default function App({ Component, pageProps }: AppProps) {
     // return null;
   }
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 0,
+        useErrorBoundary: true,
+        notifyOnChangeProps: 'tracked',
+        suspense: false,
+      },
+      mutations: {
+        useErrorBoundary: true,
+      },
+    },
+  });
+
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <QueryClientProvider client={queryClient}>
+          {/* <Hydrate state={pageProps.dehydratedState}> */}
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          {/* </Hydrate> */}
+        </QueryClientProvider>
       </ThemeProvider>
     </RecoilRoot>
   );

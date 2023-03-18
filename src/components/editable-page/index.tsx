@@ -8,6 +8,7 @@ import { EditableBlock } from '@/components/editable-block';
 import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
 import { Notice } from '@/components/notice';
 import * as styles from './styles';
+import Label from '../editable-block/Label';
 import type { AddBlock, EditablePages, Block } from '../editable-page/types';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
@@ -56,6 +57,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   return (
     <div css={styles.contentBox}>
       {isNewPage && <Notice status="SUCCESS" />}
+      <Label />
       <DragDropContext onDragEnd={onDragEndHandler}>
         <Droppable key={id} droppableId={id}>
           {(provided) => (
