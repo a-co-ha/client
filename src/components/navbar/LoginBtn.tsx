@@ -77,7 +77,11 @@ export const LoginBtn = () => {
                   <div className="mt-2">
                     <Link
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 no-underline text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      href={`${process.env.NEXT_PUBLIC_OAUTH_URL}`}
+                      href={`${
+                        process.env.NEXT_PUBLIC_API_MOCKING === 'enabled'
+                          ? process.env.NEXT_PUBLIC_DEV_OAUTH_URL
+                          : process.env.NEXT_PUBLIC_OAUTH_URL
+                      }`}
                       onClick={() => closeModal()}
                     >
                       Github 로그인

@@ -13,9 +13,10 @@ import DragHandleIcon from '@/images/draggable.svg';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
 import TagSelectorMenu from '../selector-menu/selector-tag-menu';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
-import type { editableBlock } from '../editable-page/types';
+import * as styles from './styles';
+import { api } from '@/pages/api/config/api-config';
 import type { StateTypes } from './type';
-import { api } from '@/api/api-config';
+import type { editableBlock } from '../editable-page/types';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -30,7 +31,7 @@ export const EditableBlock = (props: editableBlock) => {
     htmlBackup: null,
     html: '',
     tag: 'p',
-    imgUrl: null,
+    imgUrl: '',
     previousKey: null,
     placeholder: false,
     openTagSelectorMenu: false,
@@ -73,7 +74,7 @@ export const EditableBlock = (props: editableBlock) => {
       blockId: props.id,
       html: state.html,
       tag: state.tag,
-      imageUrl: state.imageUrl, //FIXME: 태그가 img가 아니면 빈값으로 변경
+      imgUrl: state.imgUrl, //FIXME: 태그가 img가 아니면 빈값으로 변경
     });
   }, [state.tag]);
 
@@ -89,7 +90,7 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleBlur = () => {
-    if (!state.html && !state.imageUrl) {
+    if (!state.html && !state.imgUrl) {
       addPlaceholder();
       setState({ ...state, placeholder: true });
     }
@@ -209,7 +210,7 @@ export const EditableBlock = (props: editableBlock) => {
     e.currentTarget.remove();
     // TODO: 이미지 서버에서 지워주는 api
     contentEditable.current?.toggleAttribute('contenteditable');
-    setState({ ...state, tag: 'p', imageUrl: null });
+    setState({ ...state, tag: 'p', imgUrl: '' });
   };
 
   const WarningOnHover = () => {
@@ -218,12 +219,12 @@ export const EditableBlock = (props: editableBlock) => {
 
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
-    const imageFile = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(imageFile);
+    // const imageFile = e.target.files[0];
+    // const reader = new FileReader();
+    // reader.readAsDataURL(imageFile);
     const pageId = props.pageId;
     const formData = new FormData();
-    formData.append('image', imageFile);
+    // formData.append('image', imageFile);
     try {
       const data = await api.post(`/post/images/${pageId}?channel=1`, {
         formData,
@@ -234,9 +235,9 @@ export const EditableBlock = (props: editableBlock) => {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
         newNode.setAttribute('width', '50%');
-        const url = reader.result as string;
+        // const url = reader.result as string;
         if (contentEditable.current) contentEditable.current.innerText = '';
-        newNode.setAttribute('src', url);
+        // newNode.setAttribute('src', data);
         newNode.addEventListener('contextmenu', handleImageDelete);
         newNode.addEventListener('mouseenter', WarningOnHover);
         range.deleteContents();
@@ -249,7 +250,8 @@ export const EditableBlock = (props: editableBlock) => {
       }
       setState({
         ...state,
-        imageUrl: reader.result,
+        // imgUrl: reader.result,
+        imgUrl: '',
         tag: 'img',
         html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,

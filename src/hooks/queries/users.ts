@@ -1,4 +1,4 @@
-import { getChannelUsers } from '@/api/users';
+import { getChannelUsers } from '@/pages/api/common/users';
 import { useQuery } from 'react-query';
 
 export const useUsersQuery = () => {

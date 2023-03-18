@@ -12,9 +12,6 @@ import { setToken } from './api/user/setToken';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_ENV_URL}`;
-console.log(process.env.NEXT_PUBLIC_ENV_URL);
-
 export default function App({ Component, pageProps }: AppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     import('../mocks');
@@ -58,6 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* <Hydrate state={pageProps.dehydratedState}> /} */}
           <Layout>
             <Component {...pageProps} />
+            <ToastContainer autoClose={2000} pauseOnHover />
           </Layout>
           {/* {/ </Hydrate> */}
         </QueryClientProvider>
