@@ -7,6 +7,8 @@ import { GetServerSideProps } from 'next';
 import { resetServerContext } from 'react-beautiful-dnd';
 import { getSocketPage } from '../../api/socket/getPage';
 import { ChatPage } from '@/components/chat-page';
+import { Suspense } from 'react';
+import { Loading } from '@/components/loading/Loading';
 import type { EditablePages } from '@/components/editable-page/types';
 
 interface Chat {
@@ -31,16 +33,18 @@ export default function Page({ editablePage, socketPage, type }: PageList) {
      * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
      */
     <div css={styles.main}>
-      <ProjectSideBar />
-      {type === 'normal' && editablePage ? (
-        <EditablePage
-          id={editablePage.id}
-          fetchedBlocks={editablePage.fetchedBlocks}
-          err={editablePage.err}
-        />
-      ) : null}
-      {type === 'socket' && socketPage ? <ChatPage /> : null}
-      <UserList />
+      <Suspense fallback={<Loading />}>
+        <ProjectSideBar />
+        {type === 'normal' && editablePage ? (
+          <EditablePage
+            id={editablePage.id}
+            fetchedBlocks={editablePage.fetchedBlocks}
+            err={editablePage.err}
+          />
+        ) : null}
+        {type === 'socket' && socketPage ? <ChatPage /> : null}
+        <UserList />
+      </Suspense>
     </div>
   );
 }
