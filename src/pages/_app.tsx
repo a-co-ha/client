@@ -6,9 +6,16 @@ import { GetServerSideProps } from 'next';
 import { useState, useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Layout } from '@/components/layout';
-import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
 import { setToken } from './api/user/setToken';
-import { ToastContainer } from 'react-toastify';
+import {
+  QueryClient,
+  QueryClientProvider,
+  Hydrate,
+  QueryCache,
+} from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -34,12 +41,22 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   const queryClient = new QueryClient({
+    queryCache: new QueryCache({
+      onError: (error, query) => {
+        console.log(error, query);
+        //🎉 이미 캐시에 데이터가 있는 경우에만 오류 알림을 표시합니다.
+        // 이는 백그라운드 업데이트가 실패했음을 의미합니다.
+        if (query.state.data !== undefined) {
+          toast.error(`에러가 났어요!! : ${(error as any).message}`);
+        }
+      },
+    }),
     defaultOptions: {
       queries: {
         retry: 0,
         useErrorBoundary: true,
         notifyOnChangeProps: 'tracked',
-        suspense: false,
+        suspense: true,
       },
       mutations: {
         useErrorBoundary: true,
@@ -54,6 +71,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* <Hydrate state={pageProps.dehydratedState}> /} */}
           <Layout>
             <Component {...pageProps} />
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
             <ToastContainer autoClose={2000} pauseOnHover />
           </Layout>
           {/* {/ </Hydrate> */}
@@ -76,3 +94,8 @@ export default function App({ Component, pageProps }: AppProps) {
 //     };
 //   }
 // };
+
+// useEffect(() => {
+//   console.log(result)
+//   const loadingFinishAll = result.some(result => result.isLoading)
+// },[result])
