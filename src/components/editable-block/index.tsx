@@ -198,9 +198,10 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  const handleImageDelete = (e: React.MouseEvent): void => {
+  const handleImageDelete = (e: globalThis.MouseEvent): void => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    e.currentTarget.remove();
+    const target = e.currentTarget as HTMLImageElement;
+    target.remove();
     // TODO: 이미지 서버에서 지워주는 api
     contentEditable.current?.toggleAttribute('contenteditable');
     setState({ ...state, tag: 'p', imageUrl: null });
