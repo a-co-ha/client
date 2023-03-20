@@ -7,7 +7,9 @@ export interface GetEditablePage {
 }
 
 export interface GetEditablePages {
-  (channelId: string | string[] | undefined): Promise<any>;
+  _id: string;
+  pageName: string;
+  type: string;
 }
 
 export interface GetChannels {

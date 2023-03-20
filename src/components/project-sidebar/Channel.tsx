@@ -1,13 +1,13 @@
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { Modal } from './modal';
 import { PageNameForm } from './PageNameForm';
 import { PageNameLink } from './PageNameLink';
-import { getEditablePages } from '@/pages/api/editable/getPages';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useGetEditablePages } from '@/hooks/queries/useGetEditablePages';
 import * as styles from './styles';
 
 /** 여기서 채널 간단목록 조회 api 쏨 */
@@ -18,16 +18,15 @@ export const Channel = () => {
   const channelId = router.query.id;
   const editablePageList = pageList.filter((page) => page.type === 'normal');
   const socketPageList = pageList.filter((page) => page.type === 'socket');
+  const { data: pages } = useGetEditablePages(channelId);
   useEffect(() => {
-    const getEditablePageList = async () => {
-      try {
-        const pageList = await getEditablePages(channelId);
-        setPageList(pageList);
-      } catch (err) {
-        console.error(err);
+    try {
+      if (pages !== undefined) {
+        setPageList(pages);
       }
-    };
-    getEditablePageList();
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
   const closeModal = () => {
     setIsOpen(false);

@@ -2,28 +2,12 @@ import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { MainContent } from '@/components/project-main';
-import { GetServerSideProps } from 'next';
-import { useRecoilValue } from 'recoil';
-import { initialUserState } from '@/recoil/user/atom';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import type { GetServerSideProps } from 'next';
+import { getUser } from '@/pages/api/user/getUser';
+import { getEditablePages } from '@/pages/api/editable/getPages';
 
-export interface pageList {
-  pageList: [
-    {
-      pageId: string;
-      pageName: string;
-      type: string;
-    }
-  ];
-  channelList: [
-    {
-      id: string;
-      channelName: string;
-    }
-  ];
-}
-
-export default function ProjectMain({ pageList, channelList }: pageList) {
-  const initialUser = useRecoilValue(initialUserState);
+export default function ProjectMain() {
   return (
     <div css={styles.main}>
       <ProjectSideBar />
@@ -32,22 +16,30 @@ export default function ProjectMain({ pageList, channelList }: pageList) {
     </div>
   );
 }
+
 /**
- * params로 channelId 받아서 그걸로 프로젝트 조회 -> res = [ {pageId, pageName, type} ] 객체 배열
+ * 나중에 main content가 많아지면 추가 요청할 여지가 있음
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  const channelId = context.query.id;
   try {
-    console.log('server');
-    // const res = await axios.get(
-    //   `http://localhost:3000/api/pages?channel=${id}`
-    // );
-    // const pageList = res.data.pageList;
-    // const channelList = [{ id, channelName }];
-    // console.log(channelList);
+    await Promise.all([
+      queryClient.prefetchQuery([`user`], getUser),
+      queryClient.prefetchQuery([`editablePage`, channelId], () =>
+        getEditablePages(channelId)
+      ),
+    ]);
     return {
-      props: {},
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     };
   } catch (err) {
-    return { props: { pageList: null, channelList: null } };
+    return {
+      notFound: true,
+    };
+  } finally {
+    queryClient.clear();
   }
 };

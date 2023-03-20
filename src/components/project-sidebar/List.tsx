@@ -1,22 +1,23 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { postProject } from '@/pages/api/project/postProject';
 import { postEditablePage } from '@/pages/api/editable/';
-import { getUser } from '@/pages/api/user/getUser';
+import { useGetUser } from '@/hooks/queries/useGetUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
 import type { Channels, ProjectName } from './types';
 
 export const List = () => {
-  const setChannelList = useSetRecoilState(channelListState);
+  const [channelList, setChannelList] = useRecoilState(channelListState);
   const setInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { data: userData } = useGetUser();
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -37,9 +38,8 @@ export const List = () => {
     const getChannelList = async () => {
       try {
         const channels: Channels[] = [];
-        const user = await getUser();
-        if (user.channels.length !== 0) {
-          user.channels.map((e) => {
+        if (userData !== undefined && userData.channels.length !== 0) {
+          userData.channels.map((e: Channels) => {
             channels.push({
               id: e.id,
               channelName: e.channelName,
@@ -56,7 +56,6 @@ export const List = () => {
     getChannelList();
   }, []);
 
-  const channelList = useRecoilValue(channelListState);
   console.log('채널리스트 ', channelList);
   return (
     <div css={styles.list}>

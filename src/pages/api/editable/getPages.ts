@@ -1,9 +1,8 @@
-import axios from 'axios';
-import type { GetEditablePages } from './types';
+import { api } from '../config/api-config';
 
-export const getEditablePages: GetEditablePages = async (channelId) => {
-  const res = await axios.get(`/api/page?channel=${channelId}`);
-  console.log('getPages', res.data);
-  const pageList = res.data.List;
-  return pageList;
+export const getEditablePages = async (
+  channelId: string | string[] | undefined
+) => {
+  const res = await api.get(`/api/page?channel=${channelId}`);
+  return res.data.List;
 };
