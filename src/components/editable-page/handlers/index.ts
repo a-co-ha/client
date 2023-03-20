@@ -40,7 +40,7 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  * backend/controllers/pages.js/deleteImage 참조
  *
  */
-const deleteImageOnServer = async (imgUrl: string) => {
+const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
   try {
     const res = await axios.delete(`/pages/${imgUrl}`, {
       headers: {

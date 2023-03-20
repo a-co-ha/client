@@ -12,8 +12,8 @@ import {
   QueryClientProvider,
   Hydrate,
   QueryCache,
-} from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+} from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -55,7 +55,6 @@ export default function App({ Component, pageProps }: AppProps) {
       queries: {
         retry: 0,
         useErrorBoundary: true,
-        notifyOnChangeProps: 'tracked',
         suspense: true,
       },
       mutations: {
