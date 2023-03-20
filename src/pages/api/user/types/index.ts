@@ -24,33 +24,3 @@ export interface ChannelList {
   channelName: string;
   channelImg: string;
 }
-
-// interface UserType {
-//   channel_id: string;
-//   channel: {
-//     id: number;
-//     admin: string;
-//     channelName: string;
-//     channelImg: string;
-//   };
-// }
-
-// userHasChannels: [
-//     {
-//       channel_id: string;
-//       channel: {
-//         id: number;
-//         admin: string;
-//         channelName: string;
-//         channelImg: string;
-//       };
-//     }
-//   ];
-
-export interface GetUser {
-  (): Promise<User>;
-}
-
-export interface OauthResponse {
-  (authCode: string | string[] | undefined): Promise<OauthResponseData>;
-}

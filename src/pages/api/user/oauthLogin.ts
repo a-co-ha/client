@@ -1,13 +1,15 @@
-import axios from 'axios';
+import { api } from '../config/api-config';
 import { setToken } from './setToken';
-import type { OauthResponse } from './types';
+import { GetServerSidePropsContext } from 'next';
 
-export const oauthLogin: OauthResponse = async (authCode = '') => {
+export const oauthLogin = async (
+  authCode: string | string[] | undefined = '',
+  context: GetServerSidePropsContext
+) => {
   if (authCode !== '') {
-    const res = await axios.get(`/api/oauth/github/callback?code=${authCode}`);
-    await setToken(res.data.token.accessToken);
-    console.log(res);
-    const user = res.data;
-    return user;
+    const res = await api.get(`/api/oauth/github/callback?code=${authCode}`);
+    const authToken = res.data.token.accessToken;
+    await setToken(authToken, context);
+    return res.data;
   } else return null;
 };

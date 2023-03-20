@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
+import type { User } from '@/pages/api/user/types';
 
 export const userProfile = atom({
   key: `userProfile/${nanoId()}`,
@@ -9,24 +10,22 @@ export const userProfile = atom({
   },
 });
 
-export const userDataState = atom({
+export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,
   default: {
+    id: 0,
     github_id: '',
     github_url: '',
     img: '',
     name: '',
-    // userHasChannels: [
-    //   {
-    //     channel_id: '',
-    //     channel: {
-    //       id: 0,
-    //       admin: '',
-    //       channelName: '',
-    //       channelImg: '',
-    //     },
-    //   },
-    // ],
+    channels: [
+      {
+        id: 0,
+        admin: '',
+        channelName: '',
+        channelImg: '',
+      },
+    ],
   },
 });
 

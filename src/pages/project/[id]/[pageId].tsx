@@ -48,12 +48,8 @@ export default function Page({ editablePage, socketPage, type }: PageList) {
     </div>
   );
 }
-/**
- * params로 channelId 받아서 그걸로 프로젝트 조회 -> res = [ {pageId, pageName, type} ] 객체 배열
- */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    //여기서 query parameter로 public=true면 selet컴포넌트 보여줌
     const { id: channelId, pageId, type } = context.query;
     console.log(context.query);
     if (type === 'normal') {
