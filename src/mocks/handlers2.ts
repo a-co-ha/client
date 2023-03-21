@@ -106,21 +106,25 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        channelId: 1,
+        channelId: 4,
         pageName: '제목 없음,no',
+        initial: true,
         blocks: [
           {
+            blockId: 'dsajfafs73',
             tag: 'p',
             html: '',
             imgUrl: '',
-            blockId: '',
+            _id: '6417259dbf5edcb10422e5e4',
           },
         ],
         type: 'normal',
-        _id: '63f8d17cd40953f24103bc44',
+        progressStatus: 'null',
+        categories: 'page',
+        _id: '6417259dbf5edcb10422e5e3',
         label: [],
-        createdAt: '2023-02-24T15:02:20.871Z',
-        updatedAt: '2023-02-24T15:02:20.871Z',
+        createdAt: '2023-03-19T15:09:17.162Z',
+        updatedAt: '2023-03-19T15:09:17.162Z',
         __v: 0,
       })
     );

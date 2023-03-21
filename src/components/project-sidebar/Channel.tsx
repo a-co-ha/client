@@ -34,9 +34,6 @@ export const Channel = () => {
   const openModal = () => {
     setIsOpen(true);
   };
-  const onClickHandler = () => {
-    openModal();
-  };
   console.log(pageList);
   return (
     <div css={styles.channel}>
@@ -57,7 +54,10 @@ export const Channel = () => {
                       } h-5 w-5 text-purple-500`}
                     />
                   </Disclosure.Button>
-                  <button css={styles.pageCreateBtn} onClick={onClickHandler}>
+                  <button
+                    css={styles.pageCreateBtn}
+                    onClick={() => openModal()}
+                  >
                     +
                   </button>
                 </div>
@@ -96,7 +96,10 @@ export const Channel = () => {
                       } h-5 w-5 text-purple-500`}
                     />
                   </Disclosure.Button>
-                  <button css={styles.pageCreateBtn} onClick={onClickHandler}>
+                  <button
+                    css={styles.pageCreateBtn}
+                    onClick={() => openModal()}
+                  >
                     +
                   </button>
                 </div>
