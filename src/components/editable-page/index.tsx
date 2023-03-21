@@ -11,6 +11,8 @@ import { Notice } from '@/components/notice';
 import * as styles from './styles';
 import Label from '../editable-block/Label';
 import type { AddBlock, EditablePages, Block } from '../editable-page/types';
+import { ErrorBoundary } from '../error-boundary/index';
+import { Error } from '../error-boundary/Error';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   if (err) {
@@ -58,37 +60,39 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   const isNewPage = router.query.initial === 'true';
 
   return (
-    <div css={styles.contentBox}>
-      {isNewPage && <Notice status="SUCCESS" />}
-      <Label />
-      <DragDropContext onDragEnd={onDragEndHandler}>
-        <Droppable key={id} droppableId={id}>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {blocks.map((block) => {
-                const position = blocks
-                  .map((b) => b.blockId)
-                  .indexOf(block.blockId);
-                return (
-                  <EditableBlock
-                    key={block.blockId}
-                    position={position}
-                    id={block.blockId}
-                    tag={block.tag}
-                    html={block.html}
-                    imgUrl={block.imgUrl}
-                    pageId={id}
-                    addBlock={addBlockHandler}
-                    updateBlock={updateBlockHandler}
-                    deleteBlock={deleteBlockHandler}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+    <ErrorBoundary fallback={Error}>
+      <div css={styles.contentBox}>
+        {isNewPage && <Notice status="SUCCESS" />}
+        <Label />
+        <DragDropContext onDragEnd={onDragEndHandler}>
+          <Droppable key={id} droppableId={id}>
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {blocks.map((block) => {
+                  const position = blocks
+                    .map((b) => b.blockId)
+                    .indexOf(block.blockId);
+                  return (
+                    <EditableBlock
+                      key={block.blockId}
+                      position={position}
+                      id={block.blockId}
+                      tag={block.tag}
+                      html={block.html}
+                      imgUrl={block.imgUrl}
+                      pageId={id}
+                      addBlock={addBlockHandler}
+                      updateBlock={updateBlockHandler}
+                      deleteBlock={deleteBlockHandler}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </ErrorBoundary>
   );
 };
