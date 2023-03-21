@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useCreateProjectForm } from '@/hooks/useCreateProjectForm';
 import * as styles from './styles';
-import type { ProjectName } from './types';
+import type { ProjectName } from './type';
 
 interface onClickHandler {
   onClickHandler: (projectName: ProjectName) => Promise<void>;

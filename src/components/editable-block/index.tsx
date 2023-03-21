@@ -5,7 +5,6 @@ import React, {
   ChangeEvent,
   MouseEvent,
 } from 'react';
-import { css } from '@emotion/react';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY, CMD_NAME_KEY } from '@/utils/const';
 import Image from 'next/image';
@@ -16,7 +15,7 @@ import getCaretCoordinates from '@/utils/getCaretCoordinates';
 import * as styles from './styles';
 import { api } from '@/pages/api/config/api-config';
 import type { StateTypes } from './type';
-import type { editableBlock } from '../editable-page';
+import type { editableBlock } from '../editable-page/type';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);

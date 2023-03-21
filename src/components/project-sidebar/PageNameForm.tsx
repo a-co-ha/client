@@ -1,12 +1,12 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useEffect } from 'react';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { usePageNameForm } from '../../hooks/usePageNameForm';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import * as styles from './styles';
-import type { PageName } from './types';
+import type { PageName } from './type';
 
 export const PageNameForm = ({
   pageId,

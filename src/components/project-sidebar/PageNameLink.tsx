@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
 import * as styles from './styles';
-import type { PageNameLinkProps } from './types';
+import type { PageNameLinkProps } from './type';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
   const pageName = useRecoilValue(pageNameShare(props.pageId));

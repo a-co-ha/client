@@ -1,5 +1,5 @@
 import { Control, useController } from 'react-hook-form';
-import type { PageName } from '@/components/project-sidebar/types';
+import type { PageName } from '@/components/project-sidebar/type';
 
 export const usePageNameForm = ({
   control,

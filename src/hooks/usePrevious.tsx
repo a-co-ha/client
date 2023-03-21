@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Block } from '@/components/editable-page';
+import { Block } from '@/components/editable-page/type';
 
 export const usePrevious = (value: Block[]) => {
   const ref = useRef<null | Block[]>(null);

@@ -10,7 +10,7 @@ import { useGetUser } from '@/hooks/queries/user/getUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
-import type { Channels, ProjectName } from './types';
+import type { Channels, ProjectName } from './type';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
