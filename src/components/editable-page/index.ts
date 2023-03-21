@@ -24,7 +24,7 @@ export interface Block {
 export interface EditablePages {
   id: string;
   fetchedBlocks: Block[];
-  err: string;
+  err: boolean;
 }
 
 // react-beautiful-dnd

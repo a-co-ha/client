@@ -7,7 +7,7 @@ import { PageNameForm } from './PageNameForm';
 import { PageNameLink } from './PageNameLink';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useGetEditablePages } from '@/hooks/queries/useGetEditablePages';
+import { useGetEditablePages } from '@/hooks/queries/editable/getPages';
 import * as styles from './styles';
 
 /** 여기서 채널 간단목록 조회 api 쏨 */

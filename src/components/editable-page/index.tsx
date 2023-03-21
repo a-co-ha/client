@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { usePrevious } from '@/hooks/usePrevious';
-import { EditableBlock } from '@/components/editable-block';
-import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
 import { toast } from 'react-toastify';
-import { Notice } from '@/components/notice';
 import * as styles from './styles';
 import Label from '../editable-block/Label';
-import type { AddBlock, EditablePages, Block } from '../editable-page/types';
+// import type { AddBlock, EditablePages, Block } from '';
+import { Notice } from '../notice/index';
+import { usePrevious } from '../../hooks/usePrevious';
+// import { EditableBlock } from '@/';
 
 export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   if (err) {

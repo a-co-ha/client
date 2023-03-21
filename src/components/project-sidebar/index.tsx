@@ -4,7 +4,7 @@ import { GuideSidebar } from '../guide/GuideSidebar';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { initialUserState } from '@/recoil/user/atom';
-import { useGetUser } from '@/hooks/queries/useGetUser';
+import { useGetUser } from '@/hooks/queries/user/getUser';
 import { projectSideBarBox } from './styles';
 
 export const ProjectSideBar = () => {

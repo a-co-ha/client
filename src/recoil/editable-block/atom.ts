@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import { Block } from '@/components/editable-page/types';
+import { Block } from '@/components/editable-page';
 
 /**
  * getServerSideProps에서 쓰려고 했으나 보류

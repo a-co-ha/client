@@ -1,7 +1,7 @@
 import { nanoId } from '@/utils/nanoId';
 import type { DropResult } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Block, AddBlock } from '../types';
+import { Block, AddBlock } from '..';
 
 const addBlock = (blocks: Block[], currentBlock: AddBlock) => {
   const index = blocks.map((b) => b.blockId).indexOf(currentBlock.id);
@@ -103,7 +103,7 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
 
 const updatePageOnserver = async (
   blocks: Block[],
-  pageId: string,
+  pageId: string | string[] | undefined,
   channelId: string | string[] | undefined
 ) => {
   try {

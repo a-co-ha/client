@@ -56,7 +56,6 @@ export default function App({ Component, pageProps }: AppProps) {
         defaultOptions: {
           queries: {
             retry: 0,
-            useErrorBoundary: true,
             suspense: true,
           },
           mutations: {

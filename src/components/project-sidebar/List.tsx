@@ -6,7 +6,7 @@ import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { postProject } from '@/pages/api/project/postProject';
 import { postEditablePage } from '@/pages/api/editable/';
-import { useGetUser } from '@/hooks/queries/useGetUser';
+import { useGetUser } from '@/hooks/queries/user/getUser';
 import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
@@ -60,7 +60,7 @@ export const List = () => {
   return (
     <div css={styles.list}>
       <div>List</div>
-      {channelList.map((channel, i) => (
+      {channelList.map((channel) => (
         <button
           key={channel.id}
           css={styles.ProjectCreate}

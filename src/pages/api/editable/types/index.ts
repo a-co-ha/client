@@ -1,9 +1,7 @@
 export interface GetEditablePage {
-  (
-    channelId: string | string[] | undefined,
-    pageId: string | string[] | undefined,
-    type: string | string[] | undefined
-  ): Promise<any>;
+  channelId: string | string[] | undefined;
+  pageId: string | string[] | undefined;
+  type: string | string[] | undefined;
 }
 
 export interface GetEditablePages {

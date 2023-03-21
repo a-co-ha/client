@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import { EditablePage } from '@/components/editable-page';
 import axios from 'axios';
 import { resetServerContext } from 'react-beautiful-dnd';
-import type { EditablePages } from '@/components/editable-page/types';
+import type { EditablePages } from '@/components/editable-page';
 
 const Page = ({ id, fetchedBlocks, err }: EditablePages) => {
   return <EditablePage id={id} fetchedBlocks={fetchedBlocks} err={err} />;

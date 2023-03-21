@@ -6,7 +6,7 @@ import {
   initialUserState,
   loginState,
 } from '@/recoil/user/atom';
-import { useGetUser } from '@/hooks/queries/useGetUser';
+import { useGetUser } from '@/hooks/queries/user/getUser';
 import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';

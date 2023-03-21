@@ -16,7 +16,7 @@ import getCaretCoordinates from '@/utils/getCaretCoordinates';
 import * as styles from './styles';
 import { api } from '@/pages/api/config/api-config';
 import type { StateTypes } from './type';
-import type { editableBlock } from '../editable-page/types';
+import type { editableBlock } from '../editable-page';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
