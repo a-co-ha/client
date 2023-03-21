@@ -56,6 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
         defaultOptions: {
           queries: {
             retry: 0,
+            refetchOnWindowFocus: false,
             suspense: true,
           },
           mutations: {

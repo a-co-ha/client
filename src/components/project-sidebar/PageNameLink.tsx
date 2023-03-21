@@ -9,9 +9,6 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   const [isEditing, setIsEditing] = useRecoilState(
     pageNameEditToggle(props.pageId)
   );
-  const onClickHandler = () => {
-    setIsEditing(true);
-  };
 
   return (
     <div>
@@ -22,7 +19,10 @@ export const PageNameLink = (props: PageNameLinkProps) => {
           >
             {pageName}
           </Link>
-          <button css={styles.pageNameEditBtn} onClick={onClickHandler}>
+          <button
+            css={styles.pageNameEditBtn}
+            onClick={() => setIsEditing(true)}
+          >
             ✏️
           </button>
         </div>
