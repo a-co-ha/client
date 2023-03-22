@@ -1,20 +1,15 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
-import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
-import { postProject } from '@/pages/api/project/postProject';
-import { postEditablePage } from '@/pages/api/editable/';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { postSocketPage } from '@/pages/api/socket/postPage';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
-import type { Channels, ProjectName } from './type';
+import type { Channels } from './type';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
-  const setInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { data: userData } = useGetUser();
@@ -23,15 +18,6 @@ export const List = () => {
   };
   const openModal = () => {
     setIsOpen(true);
-  };
-
-  const onClickHandler = async (projectName: ProjectName) => {
-    const { id: channelId, channelName } = await postProject(projectName);
-    await postEditablePage(channelId);
-    // await postSocketPage(channelId);
-    setInitialUser(false);
-    closeModal();
-    router.push(`/project/${channelId}?channelName=${channelName}`);
   };
 
   useEffect(() => {
@@ -106,7 +92,7 @@ export const List = () => {
                     프로젝트 시작하기
                   </Dialog.Title>
                   <div className="mt-2">
-                    <ProjectCreateForm onClickHandler={onClickHandler} />
+                    <ProjectCreateForm closeModal={closeModal} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

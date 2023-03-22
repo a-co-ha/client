@@ -84,6 +84,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         id: 1,
+        admin: 'admin',
         channelName: '아코하',
       })
     );

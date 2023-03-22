@@ -7,7 +7,7 @@ import {
   loginState,
 } from '@/recoil/user/atom';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
 import { getUser } from '@/pages/api/user/getUser';
@@ -20,9 +20,7 @@ export default function Callback() {
   useEffect(() => {
     router.prefetch(`/project/[id]`);
   });
-  // const { data: loginData } = useOauthLogin(authCode);
   const { data: userData } = useGetUser();
-  console.log(userData);
   useEffect(() => {
     if (userData !== undefined) {
       const initialUser = userData.channels.length === 0 ? true : false;

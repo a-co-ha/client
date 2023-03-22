@@ -1,10 +1,11 @@
-import axios from 'axios';
-import type { ProjectName } from '@/components/project-sidebar/types';
+import { api } from '../config/api-config';
+import { nanoId } from '@/utils/nanoId';
+import type { ProjectName } from '@/components/project-sidebar/type';
 
 export const postProject = async (inputData: ProjectName) => {
-  const res = await axios.post(`/api/channel/create`, {
+  const res = await api.post(`/api/channel/create`, {
     channelName: inputData.projectName,
+    blockId: nanoId(),
   });
-  console.log('여기는 postProject안', res.data);
-  return { id: res.data.id, channelName: res.data.channelName };
+  return res.data;
 };

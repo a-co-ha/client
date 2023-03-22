@@ -13,7 +13,7 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
   const postEditablePage = usePostEditablePage(channelId);
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.innerText === 'normal') {
-      postEditablePage.mutate();
+      postEditablePage.mutate(Number(channelId));
       const pageData = postEditablePage.data;
       closeModal();
       if (pageData !== undefined) {

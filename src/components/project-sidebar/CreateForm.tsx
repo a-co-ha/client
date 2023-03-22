@@ -1,13 +1,23 @@
 import { useForm } from 'react-hook-form';
 import { useCreateProjectForm } from '@/hooks/useCreateProjectForm';
+import { initialUserState } from '@/recoil/user/atom';
+import { useSetRecoilState } from 'recoil';
+import { useRouter } from 'next/router';
+import { usePostProject } from '@/hooks/queries/project/usePostProject';
+import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 import * as styles from './styles';
 import type { ProjectName } from './type';
 
-interface onClickHandler {
-  onClickHandler: (projectName: ProjectName) => Promise<void>;
-}
+export const ProjectCreateForm = ({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) => {
+  const setInitialUser = useSetRecoilState(initialUserState);
+  const router = useRouter();
+  const postProject = usePostProject();
+  const postEditablePage = usePostEditablePage();
 
-export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
   const methods = useForm<ProjectName>({
     defaultValues: {
       projectName: '',
@@ -17,9 +27,19 @@ export const ProjectCreateForm = ({ onClickHandler }: onClickHandler) => {
   const { projectName, error, isSubmitting } = useCreateProjectForm({
     control: methods.control,
   });
-  const onSubmit = async (data: ProjectName) => {
-    console.log(data);
-    await onClickHandler(data);
+
+  const onSubmit = async (channelName: ProjectName) => {
+    console.log(channelName);
+    postProject.mutate(channelName);
+    if (postProject.data !== undefined) {
+      console.log('postProject', postProject.data.id);
+      postEditablePage.mutate(postProject.data.id);
+      // router.push(
+      //   `/project/${postProject.data.id}?channelName=${postProject.data.channelName}`
+      // );
+    }
+    closeModal();
+    setInitialUser(false);
   };
   return (
     <div>
