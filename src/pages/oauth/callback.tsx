@@ -7,26 +7,28 @@ import {
   loginState,
 } from '@/recoil/user/atom';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { QueryClient, dehydrate } from '@tanstack/react-query';
-import type { GetServerSideProps } from 'next';
+import { useQuery } from '@tanstack/react-query';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
-import { getUser } from '@/pages/api/user/getUser';
 
 export default function Callback() {
   const setUserData = useSetRecoilState(userDataState);
   const setInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
+  const authCode = router.query.code;
+  console.log('authCode 입니다', authCode);
   useEffect(() => {
     router.prefetch(`/project/[id]`);
-  });
-  const { data: userData } = useGetUser();
+  }, []);
+
+  const tokenReady = useQuery([`oauthLogin`, authCode], () =>
+    oauthLogin(authCode)
+  );
+  const { data: userData } = useGetUser({ enabled: !!tokenReady });
   useEffect(() => {
     if (userData !== undefined) {
       const initialUser = userData.channels.length === 0 ? true : false;
-      setUserData(userData);
       setInitialUser(initialUser);
-      setIsLoggedIn(true);
       initialUser
         ? router.push(`/main`)
         : router.push(`/project/${userData.channels[0].id}`);
@@ -38,26 +40,3 @@ export default function Callback() {
     </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const queryClient = new QueryClient();
-  const authCode = context.query.code;
-  console.log('server', authCode);
-  try {
-    await queryClient.prefetchQuery([`oauthLogin`, authCode], () =>
-      oauthLogin(authCode, context)
-    );
-    await queryClient.prefetchQuery([`user`], getUser);
-    return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-      },
-    };
-  } catch (err) {
-    return {
-      notFound: true,
-    };
-  } finally {
-    queryClient.clear();
-  }
-};

@@ -1,14 +1,14 @@
 import { atom } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import type { User } from '@/pages/api/user/types';
+import type { User } from '@/pages/api/user/type';
 
-export const userProfile = atom({
-  key: `userProfile/${nanoId()}`,
-  default: {
-    id: '',
-    avartarUrl: '',
-  },
-});
+// export const userProfile = atom({
+//   key: `userProfile/${nanoId()}`,
+//   default: {
+//     id: '',
+//     avartarUrl: '',
+//   },
+// });
 
 export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,

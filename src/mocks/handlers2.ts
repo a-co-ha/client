@@ -6,17 +6,17 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        id: 0,
-        github_id: 'tangjin',
-        github_url: 'http://locla',
-        img: '',
-        name: 'tangjin',
+        id: 69295153,
+        name: 'seungha-o',
+        githubID: 'AhGnuesHo',
+        githubURL: 'https://github.com/AhGnuesHo',
+        img: 'https://avatars.githubusercontent.com/u/69295153?v=4',
         channels: [
           {
             id: 45,
-            admin: 'tangjin',
-            channelName: 'dns',
-            channelImg: 'null',
+            admin: 69295153,
+            channelName: '1240',
+            channelImg: null,
           },
         ],
       })

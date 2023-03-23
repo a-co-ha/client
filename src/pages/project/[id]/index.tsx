@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     await Promise.all([
       queryClient.prefetchQuery([`user`], getUser),
-      queryClient.prefetchQuery([`editablePage`, channelId], () =>
+      queryClient.prefetchQuery([`editablePages`, channelId], () =>
         getEditablePages(channelId)
       ),
     ]);

@@ -14,7 +14,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie, getCookies, setCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import type { AppProps } from 'next/app';
 
@@ -39,6 +40,15 @@ export default function App({ Component, pageProps }: AppProps) {
   if (!shouldRender) {
     // return null;
   }
+  useEffect(() => {
+    console.log('window?', typeof window !== 'undefined');
+    const token = getCookie('accessToken');
+    if (token === undefined) {
+      toast.error(`accessToken 없음!!`);
+    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log(`accessToken`, token);
+  }, []);
 
   const [queryClient] = useState(
     () =>
