@@ -1,7 +1,7 @@
 import { nanoId } from '@/utils/nanoId';
 import type { DropResult } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Block, AddBlock } from '..';
+import { Block, AddBlock } from '../type';
 
 const addBlock = (blocks: Block[], currentBlock: AddBlock) => {
   const index = blocks.map((b) => b.blockId).indexOf(currentBlock.id);

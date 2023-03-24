@@ -19,7 +19,16 @@ import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import type { AppProps } from 'next/app';
 
-export default function App({ Component, pageProps }: AppProps) {
+interface Token {
+  accessToken: string;
+}
+
+export default function App({
+  Component,
+  pageProps,
+  accessToken,
+}: Token & AppProps) {
+  console.log('액토', accessToken);
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     import('../mocks');
   }
@@ -40,19 +49,19 @@ export default function App({ Component, pageProps }: AppProps) {
   if (!shouldRender) {
     // return null;
   }
-  useEffect(() => {
-    console.log('window?', typeof window !== 'undefined');
-    const token = getCookie('accessToken');
-    if (token === undefined) {
-      toast.error(`accessToken 없음!!`);
-    }
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    console.log(`accessToken`, token);
-  }, []);
-
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
+  // useEffect(() => {
+  //   console.log('window?', typeof window !== 'undefined');
+  //   const token = getCookie('accessToken');
+  //   if (token === undefined) {
+  //     // toast.error(`accessToken 없음!!`);
+  //   }
+  //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  //   console.log(`accessToken`, token);
+  // }, []);
+  axios.defaults.baseURL = `http://ec2-3-36-123-5.ap-northeast-2.compute.amazonaws.com`;
+  const [queryClient] = useState(() => new QueryClient());
+  /**
+ * {
         queryCache: new QueryCache({
           onError: (error, query) => {
             console.log(error, query);
@@ -67,15 +76,15 @@ export default function App({ Component, pageProps }: AppProps) {
           queries: {
             retry: 0,
             refetchOnWindowFocus: false,
+            refetchOnMount: false,
             suspense: true,
           },
           mutations: {
             useErrorBoundary: true,
           },
         },
-      })
-  );
-
+      }
+ */
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
@@ -104,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
     return {
-      props: {},
+      props: { accessToken },
     };
   } catch (err) {
     return {
