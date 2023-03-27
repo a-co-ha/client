@@ -7,16 +7,19 @@ import { setToken } from '../api/user/setToken';
 import { setCookie } from 'cookies-next';
 import { api } from '../api/config/api-config';
 import type { GetServerSideProps } from 'next';
+import { oauthLogin } from '@/pages/api/user/oauthLogin';
 
-export default function Callback({ cookies }: { cookies: any }) {
+export default function Callback({
+  accessToken,
+  refreshToken,
+}: {
+  accessToken: string;
+  refreshToken: string;
+}) {
   const setInitialUser = useSetRecoilState(initialUserState);
   const router = useRouter();
-  console.log(cookies);
-  setCookie('accessToken', cookies.accessToken);
-  setCookie('refreshToken', cookies.refreshToken);
-  api.defaults.headers.common[
-    'Authorization'
-  ] = `access ${cookies.accessToken}`;
+  setToken(accessToken, refreshToken);
+  api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   const { data: userData } = useGetUser();
   useEffect(() => {
     router.prefetch(`/project`);
@@ -40,10 +43,8 @@ export default function Callback({ cookies }: { cookies: any }) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const authCode = context.query.code;
-  const response = await api.get(`/api/oauth/github/callback?code=${authCode}`);
-  const { accessToken, refreshToken } = response.data.token;
-  const cookies = await setToken(accessToken, refreshToken, context);
+  const { accessToken, refreshToken } = await oauthLogin(authCode);
   return {
-    props: { cookies },
+    props: { accessToken, refreshToken },
   };
 };
