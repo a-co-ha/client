@@ -1,22 +1,27 @@
-import axios from 'axios';
-import { setCookie, getCookie } from 'cookies-next';
+import { setCookie, getCookies } from 'cookies-next';
 import type { GetServerSidePropsContext } from 'next';
 
 export const setToken = async (
   accessToken: string,
-  context?: GetServerSidePropsContext
+  refreshToken: string,
+  context: GetServerSidePropsContext
 ) => {
   console.log('httpOnly', process.env.NEXT_PUBLIC_HTTP_ONLY);
-  if (accessToken !== undefined && context !== undefined) {
+  if (accessToken !== undefined && refreshToken !== undefined) {
     const { req, res } = context;
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-    console.log(`client save token!!!`, accessToken);
     setCookie('accessToken', accessToken, {
       req,
       res,
-      maxAge: 60 * 60 * 24,
-      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24,
       sameSite: 'lax',
     });
+    setCookie('refreshToken', refreshToken, {
+      req,
+      res,
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: 'lax',
+    });
+    const cookies = getCookies({ req, res });
+    return cookies;
   } else return null;
 };

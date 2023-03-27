@@ -5,9 +5,12 @@ export interface GetEditablePage {
 }
 
 export interface GetEditablePages {
-  _id: string;
-  pageName: string;
-  type: string;
+  page: {
+    _id: string;
+    pageName: string;
+    type: string;
+    categories: string;
+  };
 }
 
 export interface GetChannels {

@@ -17,18 +17,11 @@ import axios from 'axios';
 import { getCookie, getCookies, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
-import type { AppProps } from 'next/app';
+import type { AppContext, AppProps } from 'next/app';
+import { NextPageContext } from 'next';
+import { api } from './api/config/api-config';
 
-interface Token {
-  accessToken: string;
-}
-
-export default function App({
-  Component,
-  pageProps,
-  accessToken,
-}: Token & AppProps) {
-  console.log('액토', accessToken);
+export default function App({ Component, pageProps }: AppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     import('../mocks');
   }
@@ -49,42 +42,33 @@ export default function App({
   if (!shouldRender) {
     // return null;
   }
-  // useEffect(() => {
-  //   console.log('window?', typeof window !== 'undefined');
-  //   const token = getCookie('accessToken');
-  //   if (token === undefined) {
-  //     // toast.error(`accessToken 없음!!`);
-  //   }
-  //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  //   console.log(`accessToken`, token);
-  // }, []);
-  axios.defaults.baseURL = `http://ec2-3-36-123-5.ap-northeast-2.compute.amazonaws.com`;
-  const [queryClient] = useState(() => new QueryClient());
-  /**
- * {
-        queryCache: new QueryCache({
-          onError: (error, query) => {
-            console.log(error, query);
-            //🎉 이미 캐시에 데이터가 있는 경우에만 오류 알림을 표시합니다.
-            // 이는 백그라운드 업데이트가 실패했음을 의미합니다.
-            if (query.state.data !== undefined) {
-              toast.error(`에러가 났어요!! : ${(error as any).message}`);
-            }
-          },
-        }),
+  useEffect(() => {
+    console.log('window?', typeof window !== 'undefined');
+    const token = getCookie('accessToken');
+    if (token === undefined) {
+      console.log('토큰없음');
+    }
+    api.defaults.headers.common['Authorization'] = `access ${token}`;
+    console.log(`accessToken`, token);
+  }, []);
+
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
         defaultOptions: {
           queries: {
             retry: 0,
-            refetchOnWindowFocus: false,
             refetchOnMount: false,
-            suspense: true,
+            refetchOnWindowFocus: false,
+            // suspense: true,
           },
           mutations: {
             useErrorBoundary: true,
           },
         },
-      }
- */
+      })
+  );
+
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
@@ -104,25 +88,3 @@ export default function App({
     </RecoilRoot>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  console.log('@@@@@@@@@@@@@@@');
-  try {
-    const accessToken = getCookie('accessToken', { req, res });
-    console.log('cookie!!!!!', req.cookies);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
-    return {
-      props: { accessToken },
-    };
-  } catch (err) {
-    return {
-      props: {},
-    };
-  }
-};
-
-// useEffect(() => {
-//   console.log(result)
-//   const loadingFinishAll = result.some(result => result.isLoading)
-// },[result])

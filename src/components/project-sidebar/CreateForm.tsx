@@ -33,7 +33,7 @@ export const ProjectCreateForm = ({
     postProject.mutate(channelName);
     if (postProject.data !== undefined) {
       console.log('postProject', postProject.data.id);
-      postEditablePage.mutate(postProject.data.id);
+      // postEditablePage.mutate(postProject.data.id);
       // router.push(
       //   `/project/${postProject.data.id}?channelName=${postProject.data.channelName}`
       // );

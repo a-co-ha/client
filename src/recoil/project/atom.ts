@@ -5,9 +5,12 @@ export const pageListState = atom({
   key: `pageList/${nanoId()}`,
   default: [
     {
-      _id: '',
-      pageName: '',
-      type: '',
+      page: {
+        _id: '',
+        pageName: '',
+        type: '',
+        categories: '',
+      },
     },
   ],
 });

@@ -16,18 +16,21 @@ export const Channel = () => {
   const [pageList, setPageList] = useRecoilState(pageListState);
   const router = useRouter();
   const channelId = router.query.id;
-  const editablePageList = pageList.filter((page) => page.type === 'normal');
-  const socketPageList = pageList.filter((page) => page.type === 'socket');
+
+  const socketPageList = pageList.filter(
+    (pageList) => pageList.page.categories === 'socket'
+  );
   const { data: pages } = useGetEditablePages(channelId);
   useEffect(() => {
     try {
+      console.log(pages);
       if (pages !== undefined) {
         setPageList(pages);
       }
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [pageList]);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -35,6 +38,11 @@ export const Channel = () => {
     setIsOpen(true);
   };
   console.log(pageList);
+  const editablePageList = pageList.filter(
+    (pageList) => pageList.page.categories === 'page'
+  );
+  console.log(editablePageList);
+
   return (
     <div css={styles.channel}>
       <div>channel</div>
@@ -62,20 +70,20 @@ export const Channel = () => {
                   </button>
                 </div>
                 <Disclosure.Panel className="flex-col items-between px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {editablePageList.map((page) => {
+                  {editablePageList.map((pageList) => {
                     return (
-                      <div key={page._id}>
+                      <div key={pageList.page._id}>
                         <PageNameForm
-                          // key={page._id}
+                          // key={page.page._id}
                           channelId={channelId}
-                          pageId={page._id}
-                          pageName={page.pageName}
+                          pageId={pageList.page._id}
+                          pageName={pageList.page.pageName}
                         />
                         <PageNameLink
                           channelId={channelId}
-                          pageId={page._id}
-                          pageName={page.pageName}
-                          type={page.type}
+                          pageId={pageList.page._id}
+                          pageName={pageList.page.pageName}
+                          type={pageList.page.type}
                         />
                       </div>
                     );
@@ -104,20 +112,20 @@ export const Channel = () => {
                   </button>
                 </div>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {socketPageList.map((page) => {
+                  {socketPageList.map((pageList) => {
                     return (
-                      <div key={page._id}>
+                      <div key={pageList.page._id}>
                         <PageNameForm
                           // key={page._id}
                           channelId={channelId}
-                          pageId={page._id}
-                          pageName={page.pageName}
+                          pageId={pageList.page._id}
+                          pageName={pageList.page.pageName}
                         />
                         <PageNameLink
                           channelId={channelId}
-                          pageId={page._id}
-                          pageName={page.pageName}
-                          type={page.type}
+                          pageId={pageList.page._id}
+                          pageName={pageList.page.pageName}
+                          type={pageList.page.type}
                         />
                       </div>
                     );
