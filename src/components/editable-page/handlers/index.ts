@@ -1,6 +1,6 @@
 import { nanoId } from '@/utils/nanoId';
 import type { DropResult } from 'react-beautiful-dnd';
-import axios from 'axios';
+import { api } from '@/pages/api/config/api-config';
 import { Block, AddBlock } from '../type';
 
 const addBlock = (blocks: Block[], currentBlock: AddBlock) => {
@@ -42,7 +42,7 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  */
 const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
   try {
-    const res = await axios.delete(`/pages/${imgUrl}`, {
+    const res = await api.delete(`/pages/${imgUrl}`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -107,7 +107,8 @@ const updatePageOnserver = async (
   channelId: string | string[] | undefined
 ) => {
   try {
-    const res = await axios.put(
+    console.log('여기 풋');
+    const res = await api.put(
       `/api/page/${pageId}?channel=${channelId}`, //channelId 쿼리
       {
         blocks,

@@ -18,28 +18,16 @@ export const Profile = () => {
       }
     }
     const token = getCookie('accessToken');
-    token ? setIsLoggedIn(true) : null;
+    // token ? setIsLoggedIn(true) : null;
   }, []);
   console.log(`profile 유저데이타@!@`, userData);
   return (
     <div css={styles.profileBox}>
-      <div>
-        {/* {isLoggedIn ? ( */}
-        <div>
-          {user ? (
-            <div>
-              <button>{userData.name}</button>
-              <Image src={userData.img} alt="" width={100} height={100} />{' '}
-            </div>
-          ) : null}
+      <div css={styles.profileInnerBox}>
+        <div css={styles.profileImageBox}>
+          <Image src={userData.img} alt="" width={100} height={100} />{' '}
         </div>
-        {/* ) : ( */}
-        {/* <div>
-            <button>{3}</button>
-            <span>{4}</span>
-          </div>
-        )}
-      </div> */}
+        <button>{userData.name}</button>
       </div>
     </div>
   );

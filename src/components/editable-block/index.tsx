@@ -167,6 +167,7 @@ export const EditableBlock = (props: editableBlock) => {
       fileInput.current?.click();
       contentEditable.current?.toggleAttribute('contenteditable');
     } else {
+      console.log('태그', tag);
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);

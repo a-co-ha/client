@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
-import { UserList } from './UserList';
+import { Profile } from './Profile';
 import { getCookies } from 'cookies-next';
 import * as styles from './styles';
 import githubLogo from '@/images/githubLogo.png';
@@ -14,7 +14,7 @@ export const LoginBtn = () => {
   useEffect(() => {
     const token = getCookies();
     console.log(`로그인 버튼 토큰!@`, token);
-    // token ? setIsLoggedIn(true) : null;
+    token ? setIsLoggedIn(true) : null;
   }, []);
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
@@ -27,7 +27,7 @@ export const LoginBtn = () => {
   return (
     <>
       {isLoggedIn ? (
-        <UserList />
+        <Profile />
       ) : (
         <div>
           <div css={styles.loginBox}>

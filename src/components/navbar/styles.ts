@@ -15,7 +15,7 @@ export const navBar = css`
 
 export const profileBox = css`
   ${flexCenterNavBar}
-  width: 250px;
+  width: 200px;
   outline: 1px solid limegreen;
 `;
 
@@ -41,4 +41,15 @@ export const loginLogo = css`
   height: 30px;
 `;
 
-export const profileImage = css``;
+export const profileInnerBox = css`
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+`;
+
+export const profileImageBox = css`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+`;

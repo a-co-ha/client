@@ -41,7 +41,7 @@ export default function TagSelectorMenu({
         top: position.y,
         left: position.x,
       }}
-      onBlur={closeMenu}
+      onBlur={() => closeMenu}
       onKeyUp={handleKeyUp}
     >
       <Menu as="div" className="relative inline-block text-left">

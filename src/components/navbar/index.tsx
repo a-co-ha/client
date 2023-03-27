@@ -19,7 +19,9 @@ export const NavBar = () => {
         <ErrorBoundary fallback={Error} onReset={reset}>
           {/* <Suspense fallback={<Loading />}> */}
           <div css={styles.navBar}>
-            <Profile />
+            <div css={{ width: '250px', outline: '1px solid limegreen' }}>
+              이자리 뭐넣을지 고민중
+            </div>
             <Title />
             <LoginBtn />
           </div>
