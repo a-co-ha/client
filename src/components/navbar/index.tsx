@@ -17,13 +17,13 @@ export const NavBar = () => {
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <Suspense fallback={<Loading />}>
-            <div css={styles.navBar}>
-              <Profile />
-              <Title />
-              <LoginBtn />;
-            </div>
-          </Suspense>
+          {/* <Suspense fallback={<Loading />}> */}
+          <div css={styles.navBar}>
+            <Profile />
+            <Title />
+            <LoginBtn />
+          </div>
+          {/* </Suspense> */}
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

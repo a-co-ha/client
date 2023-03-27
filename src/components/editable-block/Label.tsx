@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import { useUsersQuery } from '@/hooks/queries/user/users';
+import { useGetUsers } from '@/hooks/queries/user/getUsers';
 
 interface Person {
   name: string;
@@ -11,7 +11,7 @@ interface Person {
 export default function Label() {
   const [selected, setSelected] = useState<Person[]>([]);
   const [query, setQuery] = useState('');
-  const { isLoading, error, data } = useUsersQuery();
+  const { isLoading, error, data } = useGetUsers();
 
   const filteredPeople =
     query === ''

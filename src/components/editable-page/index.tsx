@@ -66,7 +66,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
         <ErrorBoundary fallback={Error} onReset={reset}>
           <div css={styles.contentBox}>
             {isNewPage && <Notice status="SUCCESS" />}
-            <Label />
+            {/* <Label /> */}
             <DragDropContext onDragEnd={onDragEndHandler}>
               <Droppable key={id} droppableId={id}>
                 {(provided) => (
