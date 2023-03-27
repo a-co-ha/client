@@ -40,3 +40,5 @@ export const loginLogo = css`
   width: 60px;
   height: 30px;
 `;
+
+export const profileImage = css``;

@@ -6,17 +6,17 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        id: 0,
-        github_id: 'tangjin',
-        github_url: 'http://locla',
-        img: '',
-        name: 'tangjin',
+        id: 69295153,
+        name: 'seungha-o',
+        githubID: 'AhGnuesHo',
+        githubURL: 'https://github.com/AhGnuesHo',
+        img: 'https://avatars.githubusercontent.com/u/69295153?v=4',
         channels: [
           {
             id: 45,
-            admin: 'tangjin',
-            channelName: 'dns',
-            channelImg: 'null',
+            admin: 69295153,
+            channelName: '1240',
+            channelImg: null,
           },
         ],
       })
@@ -84,6 +84,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         id: 1,
+        admin: 'admin',
         channelName: '아코하',
       })
     );
@@ -106,21 +107,25 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        channelId: 1,
+        channelId: 4,
         pageName: '제목 없음,no',
+        initial: true,
         blocks: [
           {
+            blockId: 'dsajfafs73',
             tag: 'p',
             html: '',
             imgUrl: '',
-            blockId: '',
+            _id: '6417259dbf5edcb10422e5e4',
           },
         ],
         type: 'normal',
-        _id: '63f8d17cd40953f24103bc44',
+        progressStatus: 'null',
+        categories: 'page',
+        _id: '6417259dbf5edcb10422e5e3',
         label: [],
-        createdAt: '2023-02-24T15:02:20.871Z',
-        updatedAt: '2023-02-24T15:02:20.871Z',
+        createdAt: '2023-03-19T15:09:17.162Z',
+        updatedAt: '2023-03-19T15:09:17.162Z',
         __v: 0,
       })
     );

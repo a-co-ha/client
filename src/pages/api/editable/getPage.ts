@@ -1,23 +1,18 @@
 import { api } from '../config/api-config';
-import { toast } from 'react-toastify';
-import type { GetEditablePage } from './types';
-
-export const getEditablePage: GetEditablePage = async (
-  channelId,
-  pageId,
-  type
+export const getEditablePage = async (
+  channelId: string | string[] | undefined,
+  pageId: string | string[] | undefined,
+  type: string | string[] | undefined
 ) => {
   try {
     console.log(`여기 api`, channelId, pageId, type);
     const res = await api.get(
-      `/api/page/${pageId}?channel=${channelId}&type=${type}`
+      `/api/page/641ebf9a9cd1f46e9bea0120?type=normal&channel=113`
     );
-    console.log('getPage', res.data);
-    const fetchedBlocks = res.data.blocks;
-    return fetchedBlocks;
+    console.log(`page 하나 조회입니다`, res.data);
+    return res.data.blocks;
   } catch (err) {
-    toast.error(`예기치못한 에러가 발생했어요!`);
-    console.log(err);
+    console.error(err);
     return null;
   }
 };

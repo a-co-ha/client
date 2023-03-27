@@ -2,17 +2,17 @@ import { LoginBtn } from './LoginBtn';
 import { Profile } from './Profile';
 import { Title } from './Title';
 import { UserList } from './UserList';
-import * as styles from './styles';
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { loginState } from '@/recoil/user/atom';
+import { initialUserState } from '@/recoil/user/atom';
+import * as styles from './styles';
 
 export const NavBar = () => {
-  const isLoggedIn = useRecoilValue(loginState);
   return (
     <div css={styles.navBar}>
       <Profile />
       <Title />
-      {!isLoggedIn ? <LoginBtn /> : <UserList />}
+      <LoginBtn />;
     </div>
   );
 };

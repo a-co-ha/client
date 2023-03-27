@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import CloseIcon from '@/images/close.svg';
 import * as styles from './styles';
-import type { NoticeStatus } from './types';
+import type { NoticeStatus } from './type';
 
 export const Notice = ({ status }: NoticeStatus) => {
   const [isOpen, setIsOpen] = useState(true);

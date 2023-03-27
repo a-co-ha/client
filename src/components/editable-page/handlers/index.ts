@@ -1,7 +1,7 @@
 import { nanoId } from '@/utils/nanoId';
 import type { DropResult } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Block, AddBlock } from '../types';
+import { Block, AddBlock } from '../type';
 
 const addBlock = (blocks: Block[], currentBlock: AddBlock) => {
   const index = blocks.map((b) => b.blockId).indexOf(currentBlock.id);
@@ -40,7 +40,7 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  * backend/controllers/pages.js/deleteImage 참조
  *
  */
-const deleteImageOnServer = async (imgUrl: string) => {
+const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
   try {
     const res = await axios.delete(`/pages/${imgUrl}`, {
       headers: {
@@ -103,7 +103,7 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
 
 const updatePageOnserver = async (
   blocks: Block[],
-  pageId: string,
+  pageId: string | string[] | undefined,
   channelId: string | string[] | undefined
 ) => {
   try {

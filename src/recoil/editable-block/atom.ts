@@ -1,11 +1,13 @@
 import { atom } from 'recoil';
+import { nanoId } from '@/utils/nanoId';
+import type { Block } from '@/components/editable-page/type';
 
 /**
  * getServerSideProps에서 쓰려고 했으나 보류
  * https://github.com/a-co-ha/client/issues/2
  */
-export const blocksState = atom({
-  key: 'editableBlock',
+export const blocksState = atom<Block[]>({
+  key: `editableBlock/${nanoId()}`,
   default: [
     {
       blockId: '',
@@ -17,6 +19,6 @@ export const blocksState = atom({
 });
 
 export const currentBlockIdState = atom({
-  key: 'currentBlockId',
+  key: `currentBlockId/${nanoId()}`,
   default: '',
 });

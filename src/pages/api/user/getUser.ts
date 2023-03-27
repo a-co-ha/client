@@ -1,10 +1,7 @@
-import axios from 'axios';
-import type { GetUser } from './types';
+import { api } from '../config/api-config';
+import { getCookie } from 'cookies-next';
 
-export const getUser: GetUser = async () => {
-  const res = await axios.get(`/api/user`);
-  console.log(res);
-  const user = res.data;
-  // console.log(user);
-  return user;
+export const getUser = async () => {
+  const res = await api.get(`/api/user`);
+  return res.data;
 };

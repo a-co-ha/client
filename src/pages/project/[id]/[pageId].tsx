@@ -2,78 +2,75 @@ import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { EditablePage } from '@/components/editable-page';
-import { getEditablePage } from '@/pages/api/editable/getPage';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { resetServerContext } from 'react-beautiful-dnd';
-import { getSocketPage } from '../../api/socket/getPage';
 import { ChatPage } from '@/components/chat-page';
-import type { EditablePages } from '@/components/editable-page/types';
+import { Suspense, useEffect } from 'react';
+import { Loading } from '@/components/loading/Loading';
+import { QueryClient, dehydrate, hydrate } from '@tanstack/react-query';
+import { getEditablePage } from '@/pages/api/editable/getPage';
+import { useGetEditablePage } from '../../../hooks/queries/editable/getPage';
 
-interface Chat {
-  page: [
-    {
-      userId: string;
-      content: string;
-    }
-  ];
-}
-export interface PageList {
-  editablePage?: EditablePages;
-  socketPage?: Chat;
-  type: string;
-}
-
-export default function Page({ editablePage, socketPage, type }: PageList) {
-  console.log('editable', editablePage);
+export default function Page() {
+  const router = useRouter();
+  useEffect(() => {
+    if (!router.isReady) return;
+  }, [router.isReady]);
+  const { id: channelId, pageId, type } = router.query;
+  const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
+  const err = fetchedBlocks === null ? true : false;
+  console.log('editable', fetchedBlocks);
   resetServerContext();
   return (
     /**
      * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
      */
     <div css={styles.main}>
-      <ProjectSideBar />
-      {type === 'normal' && editablePage ? (
-        <EditablePage
-          id={editablePage.id}
-          fetchedBlocks={editablePage.fetchedBlocks}
-          err={editablePage.err}
-        />
-      ) : null}
-      {type === 'socket' && socketPage ? <ChatPage /> : null}
-      <UserList />
+      <Suspense fallback={<Loading />}>
+        <ProjectSideBar />
+        {type === 'normal' && fetchedBlocks ? (
+          <EditablePage
+            id={pageId as string}
+            fetchedBlocks={fetchedBlocks}
+            err={err}
+          />
+        ) : null}
+        {/* {type === 'socket' && socketPage ? <ChatPage /> : null} */}
+        <UserList />
+      </Suspense>
     </div>
   );
 }
-/**
- * params로 channelId 받아서 그걸로 프로젝트 조회 -> res = [ {pageId, pageName, type} ] 객체 배열
- */
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  const { id: channelId, pageId, type } = context.query;
+
   try {
-    //여기서 query parameter로 public=true면 selet컴포넌트 보여줌
-    const { id: channelId, pageId, type } = context.query;
     console.log(context.query);
-    if (type === 'normal') {
-      const fetchedBlocks = await getEditablePage(channelId, pageId, type);
-      console.log('fetchedblock', fetchedBlocks);
-      const err = fetchedBlocks === null ? true : false;
-      return {
-        props: {
-          editablePage: { fetchedBlocks, id: pageId, err },
-          type,
-        },
-      };
-    } else if (type === 'socket') {
-      const pageData = await getSocketPage(channelId, pageId);
-      const socketPage = pageData.page;
-      return {
-        props: { socketPage, type },
-      };
-    } else {
-      return { props: { editablePage: null, socketPage: null, type: null } };
-    }
+    // if (type === 'normal') {
+    await queryClient.prefetchQuery([`editablePage`, channelId], () =>
+      getEditablePage(channelId, pageId, type)
+    );
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+    // } else if (type === 'socket') {
+    //   const pageData = await getSocketPage(channelId, pageId);
+    //   const socketPage = pageData.page;
+    //   return {
+    //     props: { socketPage, type },
+    //   };
+    // } else {
+    //   return { props: { editablePage: null, socketPage: null, type: null } };
+    // }
   } catch (err) {
     return {
-      props: { editablePage: null, socketPage: null, type: null },
+      notFound: true,
     };
+  } finally {
+    queryClient.clear();
   }
 };

@@ -1,18 +1,22 @@
 import { atom, atomFamily } from 'recoil';
+import { nanoId } from '@/utils/nanoId';
 
 export const pageListState = atom({
-  key: 'pageList',
+  key: `pageList/${nanoId()}`,
   default: [
     {
-      _id: '',
-      pageName: '',
-      type: '',
+      page: {
+        _id: '',
+        pageName: '',
+        type: '',
+        categories: '',
+      },
     },
   ],
 });
 
 export const channelListState = atom({
-  key: 'channelListState',
+  key: `channelListState/${nanoId()}`,
   default: [
     {
       id: 0,
@@ -22,11 +26,11 @@ export const channelListState = atom({
 });
 
 export const pageNameEditToggle = atomFamily({
-  key: 'pageNameEditToggle',
+  key: `pageNameEditToggle/${nanoId()}`,
   default: false,
 });
 
 export const pageNameShare = atomFamily({
-  key: 'pageNameShare',
+  key: `pageNameShare/${nanoId()}`,
   default: '',
 });

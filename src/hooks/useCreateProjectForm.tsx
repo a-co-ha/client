@@ -1,5 +1,5 @@
 import { Control, useController } from 'react-hook-form';
-import type { ProjectName } from '@/components/project-sidebar/types';
+import type { ProjectName } from '@/components/project-sidebar/type';
 
 export const useCreateProjectForm = ({
   control,

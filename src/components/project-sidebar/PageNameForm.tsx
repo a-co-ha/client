@@ -1,12 +1,13 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useEffect } from 'react';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { usePageNameForm } from '../../hooks/usePageNameForm';
-import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
+import { api } from '@/pages/api/config/api-config';
 import { toast } from 'react-toastify';
 import * as styles from './styles';
-import type { PageName } from './types';
+import type { PageName } from './type';
 
 export const PageNameForm = ({
   pageId,
@@ -19,7 +20,11 @@ export const PageNameForm = ({
 }) => {
   const [isEditing, setIsEditing] = useRecoilState(pageNameEditToggle(pageId));
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
-
+  const putPageName = useMutation((data: PageName) =>
+    api.put(`/api/page/${pageId}?channel=${channelId}`, {
+      pageName: data,
+    })
+  );
   const methods = useForm<PageName>({
     defaultValues: { pageName },
     mode: 'onSubmit',
@@ -34,9 +39,7 @@ export const PageNameForm = ({
   const onSubmit = async (data: PageName) => {
     try {
       console.log(data);
-      await axios.put(`/api/page/${pageId}?channel=${channelId}`, {
-        pageName: data.pageName,
-      });
+      putPageName.mutate(data);
       toast.success('페이지 이름을 바꿨어요');
       setIsEditing(false);
     } catch (error) {
@@ -60,7 +63,6 @@ export const PageNameForm = ({
           />
         </form>
       ) : null}
-      {/* {error ? error.message : null} */}
     </div>
   );
 };
