@@ -29,17 +29,16 @@ export const EditableBlock = (props: editableBlock) => {
     },
   });
 
-  console.log(state);
-  console.log(props);
+  console.log('state', state);
+  console.log('props', props);
   //FIXME: 태그가 p가아니면 하위에 해당태그 노드 추가
 
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
       const hasOnlyOneBlock =
-        !contentEditable.current.parentElement.nextSibling &&
-        !contentEditable.current.parentElement.previousSibling;
+        !contentEditable.current.parentElement.nextSibling;
       if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
-        contentEditable.current.innerText = `/는 명령`;
+        contentEditable.current.innerText = `/ 명령`;
         return true;
       }
     }
@@ -73,8 +72,19 @@ export const EditableBlock = (props: editableBlock) => {
     });
   }, [state.tag]);
 
+  useEffect(() => {
+    debugger;
+    setState({
+      ...state,
+      html: props.html,
+      tag: props.tag,
+      imgUrl: props.imgUrl,
+    });
+  }, [props]);
+
   const handleFocus = () => {
     if (state.placeholder) {
+      console.log('focus');
       setState({
         ...state,
         html: '',
