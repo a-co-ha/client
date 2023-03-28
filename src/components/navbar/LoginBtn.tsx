@@ -14,7 +14,7 @@ export const LoginBtn = () => {
   useEffect(() => {
     const token = getCookies();
     console.log(`로그인 버튼 토큰!@`, token);
-    token ? setIsLoggedIn(true) : null;
+    token.access ? setIsLoggedIn(true) : null;
   }, []);
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {

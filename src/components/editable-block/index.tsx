@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  ChangeEvent,
-  MouseEvent,
-} from 'react';
+import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { CMD_KEY, CMD_NAME_KEY } from '@/utils/const';
 import Image from 'next/image';
@@ -20,11 +14,6 @@ import type { editableBlock } from '../editable-page/type';
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
-  useEffect(() => {
-    if (contentEditable.current) {
-      contentEditable.current.innerText = props.html;
-    }
-  }, []);
 
   const [state, setState] = useState<StateTypes>({
     htmlBackup: null,
@@ -39,15 +28,18 @@ export const EditableBlock = (props: editableBlock) => {
       y: 0,
     },
   });
-  // console.log('props', props);
-  // console.log('state', state);
+
+  console.log(state);
+  console.log(props);
+  //FIXME: 태그가 p가아니면 하위에 해당태그 노드 추가
 
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
       const hasOnlyOneBlock =
-        !contentEditable.current.parentElement.nextSibling;
+        !contentEditable.current.parentElement.nextSibling &&
+        !contentEditable.current.parentElement.previousSibling;
       if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
-        contentEditable.current.innerText = `@는 태그, /는 명령`;
+        contentEditable.current.innerText = `/는 명령`;
         return true;
       }
     }
@@ -65,6 +57,10 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current.parentElement?.previousElementSibling
     ) {
       contentEditable.current.focus();
+    }
+
+    if (contentEditable.current) {
+      contentEditable.current.innerText = props.html;
     }
   }, []);
 
@@ -102,11 +98,6 @@ export const EditableBlock = (props: editableBlock) => {
     }));
   };
 
-  const handleDragHandleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-    // const dragHandle = e.target;
-    // openActionMenu(dragHandle, 'DRAG_HANDLE_CLICK');
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
       console.log('shift + enter');
@@ -139,7 +130,6 @@ export const EditableBlock = (props: editableBlock) => {
       }
     }
     if (state.previousKey === 'Shift') return;
-    console.log('실행');
     setState({ ...state, previousKey: e.key });
   };
 
@@ -220,14 +210,11 @@ export const EditableBlock = (props: editableBlock) => {
 
   const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
-    const imageFile = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(imageFile);
-    const pageId = props.pageId;
-    const formData = new FormData();
-    formData.append('image', imageFile);
     try {
-      const data = await api.post(`/post/images/${pageId}?channel=1`, {
+      const imageFile = e.target.files[0];
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      const data = await api.post(`/api/page/images`, {
         formData,
       });
 
@@ -236,9 +223,9 @@ export const EditableBlock = (props: editableBlock) => {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
         newNode.setAttribute('width', '50%');
-        const url = reader.result as string;
+        const url = data.data.filePath;
         if (contentEditable.current) contentEditable.current.innerText = '';
-        // newNode.setAttribute('src', data);
+        newNode.setAttribute('src', url);
         newNode.addEventListener('contextmenu', handleImageDelete);
         newNode.addEventListener('mouseenter', WarningOnHover);
         range.deleteContents();
@@ -248,15 +235,16 @@ export const EditableBlock = (props: editableBlock) => {
         newRange.collapse(true);
         selection.removeAllRanges();
         selection.addRange(newRange);
+        setState({
+          ...state,
+          imgUrl: url,
+          // imgUrl: '',
+          tag: 'img',
+          html: state.html.replace(/\/$/, ''),
+          openTagSelectorMenu: false,
+        });
       }
-      setState({
-        ...state,
-        imgUrl: reader.result,
-        // imgUrl: '',
-        tag: 'img',
-        html: state.html.replace(/\/$/, ''),
-        openTagSelectorMenu: false,
-      });
+
       props.addBlock({
         id: props.id,
         html: state.html,
@@ -291,7 +279,6 @@ export const EditableBlock = (props: editableBlock) => {
                 css={styles.dragHandle}
                 role="button"
                 tabIndex={0}
-                onClick={handleDragHandleClick}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
               >
