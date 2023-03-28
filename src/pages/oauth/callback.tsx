@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { initialUserState } from '@/recoil/user/atom';
+import { initialUserState, loginState } from '@/recoil/user/atom';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { setToken } from '../api/user/setToken';
 import { setCookie } from 'cookies-next';
@@ -17,6 +17,7 @@ export default function Callback({
   refreshToken: string;
 }) {
   const setInitialUser = useSetRecoilState(initialUserState);
+  const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
   setToken(accessToken, refreshToken);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
@@ -28,6 +29,7 @@ export default function Callback({
     if (userData !== undefined && userData !== null) {
       const initialUser = userData.channels.length === 0 ? true : false;
       setInitialUser(initialUser);
+      setIsLoggedIn(true);
       initialUser
         ? router.push(`/main`)
         : router.push(`/project/${userData.channels[0].id}`);
