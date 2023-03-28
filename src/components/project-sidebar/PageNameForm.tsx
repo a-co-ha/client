@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { usePageNameForm } from '../../hooks/usePageNameForm';
 import { useMutation } from '@tanstack/react-query';
+import { usePutEditablePage } from '@/hooks/queries/editable/putPage';
 import { api } from '@/pages/api/config/api-config';
 import { toast } from 'react-toastify';
 import * as styles from './styles';
@@ -21,11 +22,7 @@ export const PageNameForm = ({
   const [isEditing, setIsEditing] = useRecoilState(pageNameEditToggle(pageId));
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
   console.log(`채널 아이디입니다`, channelId);
-  const putPageName = useMutation((data: PageName) =>
-    api.put(`/api/page/${pageId}?channel=${channelId}`, {
-      pageName: data.pageName,
-    })
-  );
+  const putPageName = usePutEditablePage(channelId, pageId);
 
   const methods = useForm<PageName>({
     defaultValues: { pageName },
@@ -40,8 +37,8 @@ export const PageNameForm = ({
 
   const onSubmit = async (data: PageName) => {
     try {
-      console.log(data);
-      putPageName.mutate(data);
+      console.log(pageName);
+      putPageName.mutate(data.pageName);
       toast.success('페이지 이름을 바꿨어요');
       setIsEditing(false);
     } catch (error) {
