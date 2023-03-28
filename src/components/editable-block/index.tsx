@@ -61,6 +61,13 @@ export const EditableBlock = (props: editableBlock) => {
     if (contentEditable.current) {
       contentEditable.current.innerText = props.html;
     }
+    console.log('setState');
+    setState({
+      ...state,
+      html: props.html,
+      tag: props.tag,
+      imgUrl: props.imgUrl,
+    });
   }, []);
 
   useEffect(() => {
@@ -72,19 +79,9 @@ export const EditableBlock = (props: editableBlock) => {
     });
   }, [state.tag]);
 
-  useEffect(() => {
-    debugger;
-    setState({
-      ...state,
-      html: props.html,
-      tag: props.tag,
-      imgUrl: props.imgUrl,
-    });
-  }, [props]);
-
   const handleFocus = () => {
+    console.log('focus', state);
     if (state.placeholder) {
-      console.log('focus');
       setState({
         ...state,
         html: '',
