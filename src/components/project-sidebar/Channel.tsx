@@ -16,11 +16,11 @@ export const Channel = () => {
   const [pageList, setPageList] = useRecoilState(pageListState);
   const router = useRouter();
   const channelId = router.query.id;
+  const { data: pages } = useGetEditablePages(channelId);
 
   const socketPageList = pageList.filter(
     (pageList) => pageList.page.categories === 'socket'
   );
-  const { data: pages } = useGetEditablePages(channelId);
   useEffect(() => {
     try {
       console.log(pages);
@@ -30,7 +30,7 @@ export const Channel = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [pageList]);
+  }, [pages]);
   const closeModal = () => {
     setIsOpen(false);
   };

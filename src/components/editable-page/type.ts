@@ -27,6 +27,11 @@ export interface EditablePages {
   err: boolean;
 }
 
+export interface DeletePageResponse {
+  acknowledged: boolean;
+  deletedCount: number;
+}
+
 // react-beautiful-dnd
 // onDragStart
 interface DraggableLocation {

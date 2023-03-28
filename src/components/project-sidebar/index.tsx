@@ -19,8 +19,8 @@ export const ProjectSideBar = () => {
     } catch (err) {
       console.error(err);
     }
-  }, []);
-
+  }, [initialUser]);
+  console.log(`이니셜 유저`, initialUser);
   return (
     <div css={projectSideBarBox}>
       <List />

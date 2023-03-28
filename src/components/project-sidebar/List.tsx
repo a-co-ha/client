@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { channelListState } from '@/recoil/project/atom';
+import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useRouter } from 'next/router';
@@ -10,6 +11,7 @@ import type { Channels } from './type';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
+  const setInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { data: userData } = useGetUser();
@@ -21,26 +23,24 @@ export const List = () => {
   };
 
   useEffect(() => {
-    const getChannelList = async () => {
-      try {
-        const channels: Channels[] = [];
-        if (userData !== undefined && userData.channels.length !== 0) {
-          userData.channels.map((e: Channels) => {
-            channels.push({
-              id: e.id,
-              channelName: e.channelName,
-            });
+    try {
+      const channels: Channels[] = [];
+      if (userData !== undefined && userData.channels.length !== 0) {
+        userData.channels.map((e: Channels) => {
+          channels.push({
+            id: e.id,
+            channelName: e.channelName,
           });
-          setChannelList(channels);
-        } else {
-          setChannelList([]);
-        }
-      } catch (err) {
-        console.error(err);
+        });
+        setChannelList(channels);
+        setInitialUser(false);
+      } else {
+        setChannelList([]);
       }
-    };
-    getChannelList();
-  }, []);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [userData]);
 
   console.log('채널리스트 ', channelList);
   return (

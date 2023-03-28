@@ -20,11 +20,13 @@ export const PageNameForm = ({
 }) => {
   const [isEditing, setIsEditing] = useRecoilState(pageNameEditToggle(pageId));
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
+  console.log(`채널 아이디입니다`, channelId);
   const putPageName = useMutation((data: PageName) =>
     api.put(`/api/page/${pageId}?channel=${channelId}`, {
-      pageName: data,
+      pageName: data.pageName,
     })
   );
+
   const methods = useForm<PageName>({
     defaultValues: { pageName },
     mode: 'onSubmit',
