@@ -24,12 +24,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const channelId = context.query.id;
   try {
-    await Promise.all([
-      queryClient.prefetchQuery([`user`], getUser),
-      queryClient.prefetchQuery([`editablePages`, channelId], () =>
-        getEditablePages(channelId)
-      ),
-    ]);
+    if (channelId) {
+      await Promise.all([
+        queryClient.prefetchQuery([`user`], getUser),
+        queryClient.prefetchQuery([`editablePages`, channelId], () =>
+          getEditablePages(channelId)
+        ),
+      ]);
+    }
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
