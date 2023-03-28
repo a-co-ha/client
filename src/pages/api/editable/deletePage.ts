@@ -6,7 +6,7 @@ export const deleteEditablePage = async (
 ) => {
   try {
     const res = await api.delete(
-      `/api/page/${pageId}?channel=${channelId}&type=${type}`
+      `/api/list/${pageId}?channel=${channelId}&type=${type}`
     );
     return res.data;
   } catch (err) {
