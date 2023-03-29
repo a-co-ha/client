@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { channelListState } from '@/recoil/project/atom';
+import { channelListState, channelNameState } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
@@ -11,6 +11,7 @@ import type { Channels } from './type';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
+  const setChannelName = useSetRecoilState(channelNameState);
   const setInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -43,6 +44,17 @@ export const List = () => {
   }, [userData]);
 
   console.log('채널리스트 ', channelList);
+
+  const onClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    channelId: number
+  ) => {
+    const channelName = e.currentTarget.innerText;
+    setChannelName(channelName);
+    console.log(channelName)
+    router.push(`/project/${channelId}`);
+  };
+
   return (
     <div css={styles.list}>
       <div>List</div>
@@ -50,7 +62,7 @@ export const List = () => {
         <button
           key={channel.id}
           css={styles.ProjectCreate}
-          onClick={() => router.push(`/project/${channel.id}`)}
+          onClick={(e) => onClickHandler(e, channel.id)}
         >
           {channel.channelName}
         </button>

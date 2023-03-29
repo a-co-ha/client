@@ -35,7 +35,7 @@ api.interceptors.response.use(
   async (error) => {
     console.log(`이거에러`, error);
     if (error.response.status === 403) {
-      deleteCookie(`refreshToken`);
+      // deleteCookie(`refreshToken`);
       // api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
       // setCookie(`accessToken`, accessToken);
       // console.log(`new accessToken`, accessToken);

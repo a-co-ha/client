@@ -25,6 +25,11 @@ export const channelListState = atom({
   ],
 });
 
+export const channelNameState = atom({
+  key: 'channelNameState',
+  default: '',
+});
+
 export const pageNameEditToggle = atomFamily({
   key: `pageNameEditToggle/${nanoId()}`,
   default: false,

@@ -19,6 +19,7 @@ export default function Page() {
   }, [router.isReady]);
   const { id: channelId, pageId, type } = router.query;
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
+  console.log('여기는 캐싱된 데이터', pageId);
   const err = fetchedBlocks === null ? true : false;
   console.log('editable', fetchedBlocks);
   resetServerContext();
@@ -46,9 +47,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const { id: channelId, pageId, type } = context.query;
   try {
-    console.log(context.query);
+    console.log(`컨텍스트트트트트`, context.query);
     // if (type === 'normal') {
-    await queryClient.prefetchQuery([`editablePage`, channelId], () =>
+    await queryClient.prefetchQuery([`editablePage`, pageId], () =>
       getEditablePage(channelId, pageId, type)
     );
     return {

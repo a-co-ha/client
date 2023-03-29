@@ -13,11 +13,8 @@ export const ProjectCreateForm = ({
 }: {
   closeModal: () => void;
 }) => {
-  const setInitialUser = useSetRecoilState(initialUserState);
-  const router = useRouter();
   const postProject = usePostProject();
-  // const postEditablePage = usePostEditablePage();
-
+  const setInitialUser = useSetRecoilState(initialUserState);
   const methods = useForm<ProjectName>({
     defaultValues: {
       projectName: '',
@@ -31,13 +28,6 @@ export const ProjectCreateForm = ({
   const onSubmit = async (channelName: ProjectName) => {
     console.log(channelName);
     postProject.mutate(channelName);
-    if (postProject.data !== undefined) {
-      console.log('postProject', postProject.data.id);
-      // postEditablePage.mutate(postProject.data.id);
-      // router.push(
-      //   `/project/${postProject.data.id}?channelName=${postProject.data.channelName}`
-      // );
-    }
     closeModal();
     setInitialUser(false);
   };
