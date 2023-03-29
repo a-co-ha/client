@@ -27,7 +27,7 @@ export const channelListState = atom({
 
 export const channelNameState = atom({
   key: 'channelNameState',
-  default: '',
+  default: 'A - COHA',
 });
 
 export const pageNameEditToggle = atomFamily({

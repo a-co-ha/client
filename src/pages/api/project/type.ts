@@ -3,3 +3,8 @@ export interface PostProject {
   admin: string;
   channelName: string;
 }
+
+export interface DeleteProject {
+  channelId: number;
+  status: string;
+}

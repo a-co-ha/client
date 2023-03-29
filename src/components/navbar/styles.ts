@@ -30,8 +30,9 @@ export const loginBox = css`
   outline: 1px solid limegreen;
 `;
 
-export const userListBox = css`
+export const projectNameBox = css`
   ${flexCenterNavBar}
+  width: 250px;
   outline: 1px solid limegreen;
 `;
 
