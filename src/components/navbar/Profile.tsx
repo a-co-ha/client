@@ -1,25 +1,23 @@
 import * as styles from './styles';
-import { userDataState } from '@/recoil/user/atom';
-import { useRecoilState } from 'recoil';
-import { loginState } from '@/recoil/user/atom';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { useEffect } from 'react';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+import { useResetRecoilState } from 'recoil';
+import { loginState } from '@/recoil/user/atom';
 import Image from 'next/image';
-import { getCookie } from 'cookies-next';
 
 export const Profile = () => {
-  const [userData, setUserData] = useRecoilState(userDataState);
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
+  const router = useRouter();
   const { data: user } = useGetUser();
+  const resetProfile = useResetRecoilState(loginState);
+  const onClickHandler = () => {
+    deleteCookie(`refreshToken`);
+    deleteCookie(`accessToken`);
+    resetProfile();
+    router.replace(`/`);
+  };
+
   console.log(user);
-  // useEffect(() => {
-  //   if (user !== undefined) {
-  //     setUserData(user);
-  //   }
-  //   const token = getCookie('accessToken');
-  //   // token ? setIsLoggedIn(true) : null;
-  // }, []);
-  console.log(`profile 유저데이타@!@`, userData);
   return (
     <div css={styles.profileBox}>
       {user && (
@@ -27,7 +25,10 @@ export const Profile = () => {
           <div css={styles.profileImageBox}>
             <Image src={user.img} alt="" width={100} height={100} />{' '}
           </div>
-          <button>{user.name}</button>
+          <button css={{ fontSize: '12px' }}>{user.name}</button>
+          <button css={{ marginLeft: '4px' }} onClick={onClickHandler}>
+            🚪
+          </button>
         </div>
       )}
     </div>
