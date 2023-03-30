@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import routeChangeStart from 'next/router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { toast } from 'react-toastify';
@@ -9,11 +8,7 @@ import Label from '../editable-block/Label';
 import { EditableBlock } from '@/components/editable-block';
 import { Notice } from '../notice/index';
 import { usePrevious } from '../../hooks/usePrevious';
-import {
-  blocksState,
-  currentBlockIdState,
-  currentUrlState,
-} from '@/recoil/editable-block/atom';
+import { blocksState, currentBlockIdState } from '@/recoil/editable-block/atom';
 import * as styles from './styles';
 import type { AddBlock, EditablePages, Block } from './type';
 import { ErrorBoundary } from '../error-boundary/index';
@@ -26,19 +21,31 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
     return null;
     // return <Notice status="ERROR" />;
   }
-  console.log(`펫취드 블락스`, fetchedBlocks);
-  const [blocks, setBlocks] = useRecoilState(blocksState(id));
-
-  console.log('블락스', blocks);
-  useEffect(() => {
-    setBlocks(fetchedBlocks);
-  }, [setBlocks]);
+  const [blocks, setBlocks] = useState<Block[]>([]);
+  // const [blocks, setBlocks] = useState<Block[]>(() => {
+  //   console.log('블락스 초기값');
+  //   return fetchedBlocks;
+  // });
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
+  // const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
   const channelId = router.query.id;
+
+  console.log('블락스', blocks);
+  console.log('서버에서 넘어온 블락스', fetchedBlocks);
+
+  useLayoutEffect(() => {
+    console.log('블락스 서버블락스로 변경');
+    setBlocks(fetchedBlocks);
+  }, [router.query.pageId]);
+
   useEffect(() => {
-    console.log(`리턴 직후`);
+    console.log('서버 블락스 업데이트');
     handlers.updatePageOnserver(blocks, id, channelId);
+    // prevBlcoks && prevBlcoks !== blocks
+    //   ? handlers.updatePageOnserver(blocks, id, channelId)
+    //   : null;
+    // return;
   }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {

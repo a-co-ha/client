@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState, useLayoutEffect } from 'react';
+import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { channelListState, channelNameState } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
@@ -44,6 +44,18 @@ export const List = () => {
       console.error(err);
     }
   }, [userData]);
+
+  // useLayoutEffect(() => {
+  //   try {
+  //     if (channelList.length === 1) {
+  //       router.push(`/project/${channelList[0].id}`);
+  //     } else {
+  //       return;
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, [channelList]);
 
   console.log('채널리스트 ', channelList);
 
