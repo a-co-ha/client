@@ -8,7 +8,7 @@ import { useGetUser } from '@/hooks/queries/user/getUser';
 import { projectSideBarBox } from './styles';
 
 export const ProjectSideBar = () => {
-  const [initialUser, setInitialUser] = useRecoilState(initialUserState);
+  const [IsinitialUser, setIsInitialUser] = useRecoilState(initialUserState);
   // const { data: userData } = useGetUser();
   useEffect(() => {
     try {
@@ -19,12 +19,12 @@ export const ProjectSideBar = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [initialUser]);
-  console.log(`이니셜 유저`, initialUser);
+  }, [IsinitialUser]);
+  console.log(`이니셜 유저`, IsinitialUser);
   return (
     <div css={projectSideBarBox}>
       <List />
-      {initialUser ? <GuideSidebar /> : <Channel />}
+      {IsinitialUser ? <GuideSidebar /> : <Channel />}
     </div>
   );
 };

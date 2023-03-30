@@ -12,7 +12,7 @@ import type { Channels } from './type';
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
   const setChannelName = useSetRecoilState(channelNameState);
-  const setInitialUser = useSetRecoilState(initialUserState);
+  const setIsInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { data: userData } = useGetUser();
@@ -34,10 +34,10 @@ export const List = () => {
           });
         });
         setChannelList(channels);
-        setInitialUser(false);
+        setIsInitialUser(false);
       } else {
         setChannelList([]);
-        setInitialUser(true);
+        setIsInitialUser(true);
         router.push(`/main`);
       }
     } catch (err) {

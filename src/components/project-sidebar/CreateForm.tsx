@@ -14,7 +14,7 @@ export const ProjectCreateForm = ({
   closeModal: () => void;
 }) => {
   const postProject = usePostProject();
-  const setInitialUser = useSetRecoilState(initialUserState);
+  const setIsInitialUser = useSetRecoilState(initialUserState);
   const methods = useForm<ProjectName>({
     defaultValues: {
       projectName: '',
@@ -29,7 +29,7 @@ export const ProjectCreateForm = ({
     console.log(channelName);
     postProject.mutate(channelName);
     closeModal();
-    setInitialUser(false);
+    setIsInitialUser(false);
   };
   return (
     <div>

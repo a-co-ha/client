@@ -3,7 +3,6 @@ import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { EditablePage } from '@/components/editable-page';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import { resetServerContext } from 'react-beautiful-dnd';
 import { ChatPage } from '@/components/chat-page';
 import { Suspense, useEffect } from 'react';
@@ -11,17 +10,11 @@ import { Loading } from '@/components/loading/Loading';
 import { QueryClient, dehydrate, hydrate } from '@tanstack/react-query';
 import { getEditablePage } from '@/pages/api/editable/getPage';
 import { useGetEditablePage } from '../../../hooks/queries/editable/getPage';
+import type { pageProps } from '@/pages/api/editable/type';
 
-export default function Page() {
-  const router = useRouter();
-  useEffect(() => {
-    if (!router.isReady) return;
-  }, [router.isReady]);
-  const { id: channelId, pageId, type } = router.query;
+export default function Page({ channelId, pageId, type }: pageProps) {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
-  console.log('여기는 캐싱된 데이터', pageId);
   const err = fetchedBlocks === null ? true : false;
-  console.log('editable', fetchedBlocks);
   resetServerContext();
   return (
     /**
@@ -47,14 +40,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const { id: channelId, pageId, type } = context.query;
   try {
-    console.log(`컨텍스트트트트트`, context.query);
     // if (type === 'normal') {
-    await queryClient.prefetchQuery([`editablePage`, pageId], () =>
-      getEditablePage(channelId, pageId, type)
-    );
+    if (channelId) {
+      await queryClient.prefetchQuery([`editablePage`, pageId], () =>
+        getEditablePage(channelId, pageId, type)
+      );
+    }
+
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
+        channelId,
+        pageId,
+        type,
       },
     };
     // } else if (type === 'socket') {

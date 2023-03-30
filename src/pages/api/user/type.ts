@@ -11,6 +11,7 @@ export interface OauthResponseData {
 
 export interface User {
   id: number;
+  userId: number;
   github_id: string;
   github_url: string;
   img: string;
@@ -23,4 +24,11 @@ export interface ChannelList {
   admin: string;
   channelName: string;
   channelImg: string;
+}
+
+export interface ChannelUser {
+  id: number;
+  admin: boolean;
+  userId: number;
+  name: string;
 }

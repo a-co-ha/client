@@ -39,3 +39,9 @@ export interface PostEditablePage {
   updatedAt: string;
   __v: number;
 }
+
+export interface pageProps {
+  channelId: string;
+  pageId: string;
+  type: string;
+}

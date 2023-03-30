@@ -32,6 +32,7 @@ export const loginBox = css`
 
 export const projectNameBox = css`
   ${flexCenterNavBar}
+  justify-content: flex-end;
   width: 250px;
   outline: 1px solid limegreen;
 `;

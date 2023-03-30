@@ -11,17 +11,11 @@ import {
   Hydrate,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-import { getCookie, getCookies, setCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
-import type { GetServerSideProps } from 'next';
+import { getCookie, setCookie } from 'cookies-next';
 import type { AppContext, AppProps, AppInitialProps } from 'next/app';
-import { NextPageContext } from 'next';
-import { api } from './api/config/api-config';
 import { getToken } from './api/user/getToken';
-import { setInterceptor } from './api/config/setInterceptor';
 
 interface MyAppProps extends AppProps {
   authState: boolean;
