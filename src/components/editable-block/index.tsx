@@ -12,14 +12,6 @@ import type { editableBlock } from '../editable-page/type';
 import { postImage } from '@/pages/api/editable/postImage';
 import { deleteImage } from '@/pages/api/editable/deleteImage';
 
-/**
- * get
- * 체널에 속한 유저 목록을 불러오는 api => label에서 유저 태그
- * res 유저이름
- *
- * post
- * 알림 api => label에서 태그한 유저에게 알림
- */
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
@@ -48,6 +40,7 @@ export const EditableBlock = (props: editableBlock) => {
       const hasOnlyOneBlock =
         !contentEditable.current.parentElement.nextSibling;
       if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
+        console.log('플레이스홀더 함수 실행');
         contentEditable.current.innerText = `/ 명령`;
         return true;
       }
@@ -59,26 +52,27 @@ export const EditableBlock = (props: editableBlock) => {
     const hasPlaceholder = addPlaceholder();
 
     if (hasPlaceholder) {
-      setState({ ...state, placeholder: true });
-    }
+      console.log('플레이스홀더 true로 상태 변경');
+      setState({ ...state, placeholder: true }); // 상태값 변경이지만 리랜더링 일어나지 않음 밑에 있는 set state가 실행되면서 리랜더되지않는듯
+    } else {
+      if (
+        contentEditable.current &&
+        contentEditable.current.parentElement?.previousElementSibling
+      ) {
+        contentEditable.current.focus();
+      }
 
-    if (
-      contentEditable.current &&
-      contentEditable.current.parentElement?.previousElementSibling
-    ) {
-      contentEditable.current.focus();
-    }
+      if (contentEditable.current) {
+        contentEditable.current.innerText = props.html;
+      }
 
-    if (contentEditable.current) {
-      contentEditable.current.innerText = props.html;
+      setState({
+        ...state,
+        html: props.html,
+        tag: props.tag,
+        imgUrl: props.imgUrl,
+      });
     }
-
-    setState({
-      ...state,
-      html: props.html,
-      tag: props.tag,
-      imgUrl: props.imgUrl,
-    });
   }, []);
 
   useEffect(() => {
@@ -91,22 +85,22 @@ export const EditableBlock = (props: editableBlock) => {
   }, [state.tag]);
 
   const handleFocus = () => {
+    console.log(state);
     if (state.placeholder) {
+      if (contentEditable.current) contentEditable.current.innerText = '';
       setState({
         ...state,
         html: '',
         placeholder: false,
       });
-      if (contentEditable.current) contentEditable.current.innerText = '';
     }
   };
 
   const handleBlur = () => {
     // FIXME: 새로고침시 state에 값들어가지않는 이유 이 로직
-    // if (!state.html && !state.imgUrl) {
-    //   addPlaceholder();
-    //   setState({ ...state, placeholder: true });
-    // }
+    if (state.html === '' && state.imgUrl === '') {
+      addPlaceholder();
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
@@ -214,16 +208,15 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleImageDelete = async (e: globalThis.MouseEvent) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    try{
+    try {
       const target = e.currentTarget as HTMLImageElement;
       target.remove();
       await deleteImage(props.imgUrl);
       contentEditable.current?.toggleAttribute('contenteditable');
       setState({ ...state, tag: 'p', imgUrl: '' });
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-    
   };
 
   const WarningOnHover = () => {
