@@ -24,3 +24,10 @@ export interface ChannelList {
   channelName: string;
   channelImg: string;
 }
+
+export interface ChannelUser {
+  id: number;
+  admin: boolean;
+  userId: number;
+  name: string;
+}

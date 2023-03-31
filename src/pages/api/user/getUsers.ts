@@ -1,5 +1,5 @@
 import { api } from '../config/api-config';
 
-export const getUsers = () => {
-  return api.get('/channel/users').then((data) => data.data.user);
+export const getUsers = (channelId: string) => {
+  return api.get(`api/channel/users?channel=${channelId}`).then((data) => data.data);
 };

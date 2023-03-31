@@ -1,6 +1,10 @@
 import { getUsers } from '@/pages/api/user/getUsers';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
 export const useGetUsers = () => {
-  return useQuery(['users'], getUsers);
+  const router = useRouter();
+  const channelId = router.query.id as string;
+
+  return useQuery(['users', channelId], () => getUsers(channelId));
 };

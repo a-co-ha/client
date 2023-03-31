@@ -10,7 +10,17 @@ import * as styles from './styles';
 import { api } from '@/pages/api/config/api-config';
 import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
+import { postImage } from '@/pages/api/editable/postImage';
+import { deleteImage } from '@/pages/api/editable/deleteImage';
 
+/**
+ * get
+ * 체널에 속한 유저 목록을 불러오는 api => label에서 유저 태그
+ * res 유저이름
+ *
+ * post
+ * 알림 api => label에서 태그한 유저에게 알림
+ */
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
@@ -34,6 +44,7 @@ export const EditableBlock = (props: editableBlock) => {
   //FIXME: 태그가 p가아니면 하위에 해당태그 노드 추가
 
   const addPlaceholder = () => {
+    // 첫번쨰 블럭이 비어있고 다음 블럭이 없을때만 placeholder
     if (contentEditable.current && contentEditable.current.parentElement) {
       const hasOnlyOneBlock =
         !contentEditable.current.parentElement.nextSibling;
@@ -47,6 +58,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   useEffect(() => {
     const hasPlaceholder = addPlaceholder();
+
     if (hasPlaceholder) {
       setState({ ...state, placeholder: true });
     }
@@ -61,7 +73,7 @@ export const EditableBlock = (props: editableBlock) => {
     if (contentEditable.current) {
       contentEditable.current.innerText = props.html;
     }
-    console.log('setState');
+
     setState({
       ...state,
       html: props.html,
@@ -92,10 +104,11 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleBlur = () => {
-    if (!state.html && !state.imgUrl) {
-      addPlaceholder();
-      setState({ ...state, placeholder: true });
-    }
+    // FIXME: 새로고침시 state에 값들어가지않는 이유 이 로직
+    // if (!state.html && !state.imgUrl) {
+    //   addPlaceholder();
+    //   setState({ ...state, placeholder: true });
+    // }
   };
 
   const handleChange = (e: ChangeEvent<HTMLDivElement>) => {
@@ -202,11 +215,11 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  const handleImageDelete = (e: globalThis.MouseEvent) => {
+  const handleImageDelete = async (e: globalThis.MouseEvent) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
     const target = e.currentTarget as HTMLImageElement;
     target.remove();
-    // TODO: 이미지 서버에서 지워주는 api
+    await deleteImage(props.imgUrl);
     contentEditable.current?.toggleAttribute('contenteditable');
     setState({ ...state, tag: 'p', imgUrl: '' });
   };
@@ -215,22 +228,19 @@ export const EditableBlock = (props: editableBlock) => {
     console.log('클릭 시 이미지가 삭제됩니다');
   };
 
-  const onImageChage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     try {
       const imageFile = e.target.files[0];
       const formData = new FormData();
       formData.append('image', imageFile);
-      const data = await api.post(`/api/page/images`, {
-        formData,
-      });
-
+      const data = await postImage(formData);
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);
         let newNode = document.createElement('img');
         newNode.setAttribute('width', '50%');
-        const url = data.data.filePath;
+        const url = data?.data.filePath;
         if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
         newNode.addEventListener('contextmenu', handleImageDelete);
@@ -259,8 +269,8 @@ export const EditableBlock = (props: editableBlock) => {
         imgUrl: state.imgUrl,
         ref: contentEditable.current,
       });
-    } catch {
-      console.log('에러');
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -312,7 +322,7 @@ export const EditableBlock = (props: editableBlock) => {
                 accept="image/*"
                 ref={fileInput}
                 style={{ display: 'none' }}
-                onChange={onImageChage}
+                onChange={imageUpload}
               />
             </div>
           )}

@@ -21,6 +21,8 @@ export default function Page() {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   const err = fetchedBlocks === null ? true : false;
   console.log('editable', fetchedBlocks);
+  console.log('여기 페이지아이디@@@@@@@@@@@@@@2', pageId);
+  console.log('서버사이드 블락스');
   resetServerContext();
   return (
     /**
@@ -44,11 +46,12 @@ export default function Page() {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
+
   const { id: channelId, pageId, type } = context.query;
   try {
     console.log(context.query);
     // if (type === 'normal') {
-    await queryClient.prefetchQuery([`editablePage`, channelId], () =>
+    await queryClient.prefetchQuery([`editablePage`, pageId], () =>
       getEditablePage(channelId, pageId, type)
     );
     return {

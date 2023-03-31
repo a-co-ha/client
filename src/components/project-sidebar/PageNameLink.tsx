@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
 import { useMutation } from '@tanstack/react-query';
-import { useDeleteEditablePage } from '@/hooks/queries/editable/deletePage';
+import { useDeleteEditablePage } from '@/hooks/queries/editable/postImage';
 import { api } from '@/pages/api/config/api-config';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';
