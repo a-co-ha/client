@@ -7,7 +7,6 @@ import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextT
 import TagSelectorMenu from '../selector-menu/selector-tag-menu';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
 import * as styles from './styles';
-import { api } from '@/pages/api/config/api-config';
 import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
 import { postImage } from '@/pages/api/editable/postImage';
@@ -92,7 +91,6 @@ export const EditableBlock = (props: editableBlock) => {
   }, [state.tag]);
 
   const handleFocus = () => {
-    console.log('focus', state);
     if (state.placeholder) {
       setState({
         ...state,
@@ -177,7 +175,6 @@ export const EditableBlock = (props: editableBlock) => {
       fileInput.current?.click();
       contentEditable.current?.toggleAttribute('contenteditable');
     } else {
-      console.log('태그', tag);
       const selection = window.getSelection();
       if (selection && selection.rangeCount !== 0) {
         const range = selection.getRangeAt(0);
@@ -217,11 +214,16 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleImageDelete = async (e: globalThis.MouseEvent) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    const target = e.currentTarget as HTMLImageElement;
-    target.remove();
-    await deleteImage(props.imgUrl);
-    contentEditable.current?.toggleAttribute('contenteditable');
-    setState({ ...state, tag: 'p', imgUrl: '' });
+    try{
+      const target = e.currentTarget as HTMLImageElement;
+      target.remove();
+      await deleteImage(props.imgUrl);
+      contentEditable.current?.toggleAttribute('contenteditable');
+      setState({ ...state, tag: 'p', imgUrl: '' });
+    }catch(err){
+      console.log(err)
+    }
+    
   };
 
   const WarningOnHover = () => {
