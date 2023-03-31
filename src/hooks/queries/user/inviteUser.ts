@@ -11,7 +11,12 @@ export const useInviteUser = (
   const queryClient = useQueryClient();
   const router = useRouter();
   console.log(`인바이트`);
-  return useMutation<InviteUser, AxiosError>(() =>
-    inviteUser(adminCode, channelName)
+  return useMutation<InviteUser, AxiosError>(
+    () => inviteUser(adminCode, channelName),
+    {
+      onSuccess: (data) => {
+        router.push(`/project/${data.channelId}`);
+      },
+    }
   );
 };

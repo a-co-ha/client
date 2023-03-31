@@ -37,6 +37,51 @@ export const projectNameBox = css`
   outline: 1px solid limegreen;
 `;
 
+export const modalBackground = (isOpen: boolean) => css`
+  position: fixed;
+  display: ${isOpen ? `block` : `none`};
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.2;
+`;
+
+export const projectNambeBoxTransition = (isOpen: boolean) => css`
+  transition: 0.1s ease-out;
+  transform-origin: top;
+  transform: scale(${isOpen ? `1` : `0.5`});
+  transform-duration: ${isOpen ? `0.1s` : `0.25s`};
+  opacity: ${isOpen ? `1` : `0`};
+  & > * {
+    display: ${isOpen ? `block` : `none`};
+  }
+`;
+
+export const projectInviteBox = (isOpen: boolean) => css`
+  position: fixed;
+  display: ${isOpen ? `flex` : `none`};
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  outline: 2px solid green;
+`;
+
+export const inviteModalBackground = (isOpen: boolean) => css`
+  position: fixed;
+  top: 50px;
+  left: 0;
+  display: ${isOpen ? `block` : `none`};
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  opacity: 0.25;
+`;
+
 export const loginLogo = css`
   display: inline-block;
   width: 60px;

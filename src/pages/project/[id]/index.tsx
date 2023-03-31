@@ -13,6 +13,7 @@ import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
 
 export default function ProjectMain({ channelId }: { channelId: string }) {
+  console.log(`채널@@@`, channelId);
   const setIsAdmin = useSetRecoilState(adminState(channelId));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
   const { data: userData } = useGetUser();

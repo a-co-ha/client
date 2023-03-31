@@ -52,3 +52,8 @@ export const inviteChannelState = atom({
     channelName: '',
   },
 });
+
+export const inviteModalState = atom({
+  key: 'inviteModalState',
+  default: false,
+});

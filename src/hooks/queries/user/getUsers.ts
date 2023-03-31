@@ -4,5 +4,5 @@ import type { ChannelUser } from '@/pages/api/user/type';
 import { AxiosError } from 'axios';
 
 export const useGetUsers = (channelId: string | string[] | undefined) => {
-  return useQuery(['users'], () => getUsers(channelId));
+  return useQuery(['users', channelId], () => getUsers(channelId));
 };
