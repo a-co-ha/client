@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
@@ -21,22 +21,32 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
     return null;
     // return <Notice status="ERROR" />;
   }
-  const [blocks, setBlocks] = useRecoilState(blocksState);
-  console.log('블락스', blocks);
-  useEffect(() => {
-    setBlocks(fetchedBlocks);
-  }, []);
+  const [blocks, setBlocks] = useState<Block[]>([]);
+  // const [blocks, setBlocks] = useState<Block[]>(() => {
+  //   console.log('블락스 초기값');
+  //   return fetchedBlocks;
+  // });
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
-  const prevBlcoks = usePrevious(blocks);
+  // const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
   const channelId = router.query.id;
+
+  console.log('블락스', blocks);
+  console.log('서버에서 넘어온 블락스', fetchedBlocks);
+
+  useLayoutEffect(() => {
+    console.log('블락스 서버블락스로 변경');
+    setBlocks(fetchedBlocks);
+  }, [router.query.pageId]);
+
   useEffect(() => {
+    console.log('서버 블락스 업데이트');
     handlers.updatePageOnserver(blocks, id, channelId);
-    prevBlcoks && prevBlcoks !== blocks
-      ? handlers.updatePageOnserver(blocks, id, channelId)
-      : null;
-    return;
-  }, [blocks, prevBlcoks]);
+    // prevBlcoks && prevBlcoks !== blocks
+    //   ? handlers.updatePageOnserver(blocks, id, channelId)
+    //   : null;
+    // return;
+  }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
     setCurrentBlockId(currentBlock.id);
@@ -66,7 +76,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
         <ErrorBoundary fallback={Error} onReset={reset}>
           <div css={styles.contentBox}>
             {isNewPage && <Notice status="SUCCESS" />}
-            {/* <Label /> */}
+            <Label />
             <DragDropContext onDragEnd={onDragEndHandler}>
               <Droppable key={id} droppableId={id}>
                 {(provided) => (

@@ -28,9 +28,9 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
     const deletedBlock = blocks[index];
     const updatedBlocks = [...blocks];
     updatedBlocks.splice(index, 1);
-    deletedBlock.tag === 'img' && deletedBlock.imgUrl
-      ? deleteImageOnServer(deletedBlock.imgUrl)
-      : null;
+    // deletedBlock.tag === 'img' && deletedBlock.imgUrl
+    //   ? deleteImageOnServer(deletedBlock.imgUrl)
+    //   : null;
     return updatedBlocks;
   }
 };
@@ -40,18 +40,18 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  * backend/controllers/pages.js/deleteImage 참조
  *
  */
-const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
-  try {
-    const res = await api.delete(`/pages/${imgUrl}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log(res);
-  } catch (err) {
-    return console.log(err);
-  }
-};
+// const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
+//   try {
+//     const res = await api.delete(`/pages/${imgUrl}`, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     console.log(res);
+//   } catch (err) {
+//     return console.log(err);
+//   }
+// };
 
 /**
  *
@@ -95,9 +95,9 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
     html: currentBlock.html,
     imgUrl: currentBlock.imgUrl,
   };
-  oldBlock.imgUrl !== currentBlock.imgUrl
-    ? deleteImageOnServer(oldBlock.imgUrl)
-    : null;
+  // oldBlock.imgUrl !== currentBlock.imgUrl
+  //   ? deleteImageOnServer(oldBlock.imgUrl)
+  //   : null;
   return updatedBlocks;
 };
 
@@ -107,7 +107,7 @@ const updatePageOnserver = async (
   channelId: string | string[] | undefined
 ) => {
   try {
-    console.log('여기 풋');
+    console.log('여기 풋', pageId);
     await api.put(
       `/api/page/${pageId}?channel=${channelId}`, //channelId 쿼리
       {
