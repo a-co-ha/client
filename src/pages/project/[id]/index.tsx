@@ -8,21 +8,26 @@ import { getEditablePages } from '@/pages/api/editable/getPages';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
-import { adminState } from '@/recoil/user/atom';
+import { adminState, inviteChannelState } from '@/recoil/user/atom';
 import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
 
 export default function ProjectMain({ channelId }: { channelId: string }) {
   const setIsAdmin = useSetRecoilState(adminState(channelId));
+  const setInviteChannelData = useSetRecoilState(inviteChannelState);
   const { data: userData } = useGetUser();
   const { data: channelUsers } = useGetUsers(channelId);
   if (userData !== undefined && channelUsers !== undefined) {
     console.log(`채널 유저스`, channelUsers);
-    const myUserData = channelUsers.filter(
+    const isAdmin = channelUsers.filter(
       (user: ChannelUser) => user.userId === userData.userId
-    );
-    const isAdmin = myUserData[0].admin;
+    )[0].admin;
     setIsAdmin(isAdmin);
+    const { userId, channelName } = channelUsers.filter(
+      (user: ChannelUser) => user.admin === true
+    )[0];
+    setInviteChannelData({ userId, channelName });
+    console.log(`인바이트 인포`, userId, channelName);
   }
 
   return (

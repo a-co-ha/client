@@ -7,6 +7,7 @@ import { adminState } from '@/recoil/user/atom';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { InviteModal } from './inviteModal';
 
 export const ProjectMenu = () => {
   const router = useRouter();
@@ -15,6 +16,9 @@ export const ProjectMenu = () => {
   const channelList = useRecoilValue(channelListState);
   const isAdmin = useRecoilValue(adminState(channelId));
   const deleteProject = useDeleteProject(channelId, channelList);
+
+  const onClickHandler = () => {};
+
   return (
     <div css={styles.projectNameBox}>
       <Menu as="div" className="relative inline-block text-left w-[200px] z-50">
@@ -77,16 +81,7 @@ export const ProjectMenu = () => {
                 )}
               </Menu.Item>
               <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? null : null}
-                    Move
-                  </button>
-                )}
+                <InviteModal />
               </Menu.Item>
             </div>
             <div className="px-1 py-1">

@@ -41,6 +41,14 @@ export const loginState = atom({
 });
 
 export const adminState = atomFamily({
-  key: 'adminState',
+  key: `adminState/${nanoId()}`,
   default: false,
+});
+
+export const inviteChannelState = atom({
+  key: `inviteChannelState/${nanoId()}`,
+  default: {
+    userId: 0,
+    channelName: '',
+  },
 });

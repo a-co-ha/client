@@ -4,16 +4,19 @@ import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { useResetRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
+import { channelNameState } from '@/recoil/project/atom';
 import Image from 'next/image';
 
 export const Profile = () => {
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
+  const resetChannelName = useResetRecoilState(channelNameState);
   const onClickHandler = () => {
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     resetProfile();
+    resetChannelName();
     router.replace(`/`);
   };
 

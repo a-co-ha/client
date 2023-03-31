@@ -32,3 +32,8 @@ export interface ChannelUser {
   userId: number;
   name: string;
 }
+
+export interface InviteUser {
+  userId: string;
+  channelName: string;
+}
