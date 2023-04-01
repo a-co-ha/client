@@ -39,12 +39,10 @@ export const EditableBlock = (props: editableBlock) => {
    */
 
   const addPlaceholder = () => {
-    // 첫번쨰 블럭이 비어있고 다음 블럭이 없을때만 placeholder
     if (contentEditable.current && contentEditable.current.parentElement) {
       const hasOnlyOneBlock =
         !contentEditable.current.parentElement.nextSibling;
       if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
-        console.log('플레이스홀더 함수 실행');
         contentEditable.current.innerText = `/ 명령`;
         setState({ ...state, placeholder: true });
         return true;
@@ -56,20 +54,37 @@ export const EditableBlock = (props: editableBlock) => {
   useEffect(() => {
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
-      console.log('플레이스홀더 true로 상태 변경');
       return;
     } else {
-      if (
-        contentEditable.current &&
-        contentEditable.current.parentElement?.previousElementSibling
-      ) {
-        contentEditable.current.focus();
-      }
-
       if (contentEditable.current) {
         contentEditable.current.innerText = props.html;
+        if (contentEditable.current.parentElement?.previousElementSibling) {
+          contentEditable.current.focus();
+        }
       }
 
+      if (props.tag !== 'p' && !props.imgUrl) {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount !== 0) {
+          const range = selection.getRangeAt(0);
+          let newNode = document.createElement(props.tag);
+          if (contentEditable.current) {
+            newNode.textContent = contentEditable.current.innerText.replace(
+              /\/$/,
+              ''
+            );
+            contentEditable.current.innerText = '';
+          }
+
+          range.deleteContents();
+          range.insertNode(newNode);
+          const newRange = document.createRange();
+          newRange.setStartAfter(newNode);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+        }
+      }
       setState({
         ...state,
         html: props.html,
@@ -101,7 +116,7 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleBlur = () => {
-    if (state.html === '' && state.imgUrl === '') {
+    if (!state.html && !state.imgUrl) {
       addPlaceholder();
     }
   };
