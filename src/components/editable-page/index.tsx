@@ -40,7 +40,6 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
   }, [router.query.pageId]);
 
   useEffect(() => {
-    console.log('서버 블락스 업데이트');
     handlers.updatePageOnserver(blocks, id, channelId);
     // prevBlcoks && prevBlcoks !== blocks
     //   ? handlers.updatePageOnserver(blocks, id, channelId)
@@ -56,6 +55,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
 
   const updateBlockHandler = (currentBlock: Block) => {
     const updatedBlocks = handlers.updateBlock(blocks, currentBlock);
+    console.log('update', updatedBlocks); //여기까지 imgurl있음
     setBlocks(updatedBlocks);
   };
 

@@ -12,6 +12,7 @@ import { deleteImage } from '@/pages/api/editable/deleteImage';
 import { createNode } from '@/utils/createNode';
 import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
+import { handlers } from '../editable-page/handlers';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -60,6 +61,26 @@ export const EditableBlock = (props: editableBlock) => {
 
       if (props.tag !== 'p' && !props.imgUrl) {
         createNode(contentEditable, props.tag);
+      } else if (props.imgUrl) {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount !== 0) {
+          const range = selection.getRangeAt(0);
+          let newNode = document.createElement('img');
+          newNode.setAttribute('width', '50%');
+          const url = props.imgUrl;
+          if (contentEditable.current) contentEditable.current.innerText = '';
+          newNode.setAttribute('src', url);
+          newNode.addEventListener('contextmenu', handleImageDelete);
+          newNode.addEventListener('mouseenter', WarningOnHover);
+          range.deleteContents();
+          range.insertNode(newNode);
+          const newRange = document.createRange();
+          newRange.setStartAfter(newNode);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+          // contentEditable.current?.toggleAttribute('contenteditable');
+        }
       }
       setState({
         ...state,
@@ -71,6 +92,8 @@ export const EditableBlock = (props: editableBlock) => {
   }, []);
 
   useEffect(() => {
+    console.log('업데이트');
+    console.log('update from block', state);
     props.updateBlock({
       blockId: props.id,
       html: state.html,
@@ -161,7 +184,6 @@ export const EditableBlock = (props: editableBlock) => {
   const handleTagSelection = async (tag: string) => {
     if (tag === 'img') {
       fileInput.current?.click();
-      contentEditable.current?.toggleAttribute('contenteditable');
     } else {
       createNode(contentEditable, tag);
 
@@ -187,7 +209,7 @@ export const EditableBlock = (props: editableBlock) => {
     try {
       const target = e.currentTarget as HTMLImageElement;
       target.remove();
-      await deleteImage(props.imgUrl);
+      await handlers.deleteImageOnServer(props.imgUrl);
       contentEditable.current?.toggleAttribute('contenteditable');
       setState({ ...state, tag: 'p', imgUrl: '' });
     } catch (err) {
@@ -199,7 +221,6 @@ export const EditableBlock = (props: editableBlock) => {
     console.log('클릭 시 이미지가 삭제됩니다');
   };
 
-  //FIXME: 이미지 및 태그 변경 후 새로고침 시 사라짐
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     try {
@@ -224,7 +245,7 @@ export const EditableBlock = (props: editableBlock) => {
         newRange.collapse(true);
         selection.removeAllRanges();
         selection.addRange(newRange);
-        console.log('setstea');
+        // contentEditable.current?.toggleAttribute('contenteditable');
         setState({
           ...state,
           imgUrl: url,
@@ -234,13 +255,13 @@ export const EditableBlock = (props: editableBlock) => {
         });
       }
 
-      props.addBlock({
-        id: props.id,
-        html: state.html,
-        tag: state.tag,
-        imgUrl: state.imgUrl,
-        ref: contentEditable.current,
-      });
+      // props.addBlock({
+      //   id: props.id,
+      //   html: state.html,
+      //   tag: state.tag,
+      //   imgUrl: state.imgUrl,
+      //   ref: contentEditable.current,
+      // });
     } catch (err) {
       console.log(err);
     }

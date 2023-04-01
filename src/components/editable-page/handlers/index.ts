@@ -28,9 +28,9 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
     const deletedBlock = blocks[index];
     const updatedBlocks = [...blocks];
     updatedBlocks.splice(index, 1);
-    // deletedBlock.tag === 'img' && deletedBlock.imgUrl
-    //   ? deleteImageOnServer(deletedBlock.imgUrl)
-    //   : null;
+    deletedBlock.tag === 'img' && deletedBlock.imgUrl
+      ? deleteImageOnServer(deletedBlock.imgUrl)
+      : null;
     return updatedBlocks;
   }
 };
@@ -40,18 +40,16 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  * backend/controllers/pages.js/deleteImage 참조
  *
  */
-// const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
-//   try {
-//     const res = await api.delete(`/pages/${imgUrl}`, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     console.log(res);
-//   } catch (err) {
-//     return console.log(err);
-//   }
-// };
+const deleteImageOnServer = async (imgUrl: string) => {
+  try {
+    const res = await api.post(`/api/page/images/delete`, {
+      imgKey: imgUrl,
+    });
+    console.log(res);
+  } catch (err) {
+    return console.log(err);
+  }
+};
 
 /**
  *
@@ -86,6 +84,7 @@ const onDragEnd = (blocks: Block[], result: DropResult) => {
  * 추가로 imgUrl가 변하면 oldBlock변수로 체크, 다를 시 deleteImageOnserver handler 실행
  */
 const updateBlock = (blocks: Block[], currentBlock: Block) => {
+  console.log('update block', blocks, currentBlock);
   const index = blocks.map((b) => b.blockId).indexOf(currentBlock.blockId);
   const oldBlock = blocks[index];
   const updatedBlocks = [...blocks];
@@ -95,6 +94,7 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
     html: currentBlock.html,
     imgUrl: currentBlock.imgUrl,
   };
+  console.log('updateblocks', updatedBlocks);
   // oldBlock.imgUrl !== currentBlock.imgUrl
   //   ? deleteImageOnServer(oldBlock.imgUrl)
   //   : null;
@@ -130,4 +130,5 @@ export const handlers = {
   onDragEnd,
   updateBlock,
   updatePageOnserver,
+  deleteImageOnServer,
 };

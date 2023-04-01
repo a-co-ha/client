@@ -7,10 +7,10 @@ export const createNode = (
     const range = selection.getRangeAt(0);
     let newNode = document.createElement(tag);
     if (contentEditable.current) {
-      newNode.textContent = contentEditable.current.innerText.replace(
-        /\/$/,
-        ''
-      );
+        newNode.textContent = contentEditable.current.innerText.replace(
+          /\/$/,
+          ''
+        );
       contentEditable.current.innerText = '';
     }
 
