@@ -13,6 +13,7 @@ import { createNode } from '@/utils/createNode';
 import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
 import { handlers } from '../editable-page/handlers';
+import { createImageNode } from '@/utils/createImageNode';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -62,23 +63,7 @@ export const EditableBlock = (props: editableBlock) => {
       if (props.tag !== 'p' && !props.imgUrl) {
         createNode(contentEditable, props.tag);
       } else if (props.imgUrl) {
-        const selection = window.getSelection();
-        if (selection && selection.rangeCount !== 0) {
-          const range = selection.getRangeAt(0);
-          let newNode = document.createElement('img');
-          newNode.setAttribute('width', '50%');
-          const url = props.imgUrl;
-          if (contentEditable.current) contentEditable.current.innerText = '';
-          newNode.setAttribute('src', url);
-          range.deleteContents();
-          range.insertNode(newNode);
-          const newRange = document.createRange();
-          newRange.setStartAfter(newNode);
-          newRange.collapse(true);
-          selection.removeAllRanges();
-          selection.addRange(newRange);
-          // contentEditable.current?.toggleAttribute('contenteditable');
-        }
+        createImageNode(contentEditable, props.imgUrl);
       }
       setState({
         ...state,
@@ -206,31 +191,15 @@ export const EditableBlock = (props: editableBlock) => {
       const imageFile = e.target.files[0];
       const formData = new FormData();
       formData.append('image', imageFile);
-      const data = await postImage(formData);
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount !== 0) {
-        const range = selection.getRangeAt(0);
-        let newNode = document.createElement('img');
-        newNode.setAttribute('width', '50%');
-        const url = data?.data.filePath;
-        if (contentEditable.current) contentEditable.current.innerText = '';
-        newNode.setAttribute('src', url);
-        range.deleteContents();
-        range.insertNode(newNode);
-        const newRange = document.createRange();
-        newRange.setStartAfter(newNode);
-        newRange.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(newRange);
-        // contentEditable.current?.toggleAttribute('contenteditable');
-        setState({
-          ...state,
-          imgUrl: url,
-          tag: 'img',
-          html: state.html.replace(/\/$/, ''),
-          openTagSelectorMenu: false,
-        });
-      }
+      const filePath = await postImage(formData);
+      createImageNode(contentEditable, filePath);
+      setState({
+        ...state,
+        imgUrl: filePath,
+        tag: 'img',
+        html: state.html.replace(/\/$/, ''),
+        openTagSelectorMenu: false,
+      });
     } catch (err) {
       console.log(err);
     }
