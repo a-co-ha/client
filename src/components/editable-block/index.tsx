@@ -70,8 +70,6 @@ export const EditableBlock = (props: editableBlock) => {
           const url = props.imgUrl;
           if (contentEditable.current) contentEditable.current.innerText = '';
           newNode.setAttribute('src', url);
-          newNode.addEventListener('contextmenu', handleImageDelete);
-          newNode.addEventListener('mouseenter', WarningOnHover);
           range.deleteContents();
           range.insertNode(newNode);
           const newRange = document.createRange();
@@ -145,9 +143,7 @@ export const EditableBlock = (props: editableBlock) => {
     } else if (
       (state.html === '\n' || state.html === '') &&
       e.key === 'Backspace' &&
-      contentEditable.current?.parentElement?.previousElementSibling &&
       contentEditable.current?.parentElement?.previousElementSibling
-        .childNodes[1].firstChild?.nodeName !== 'IMG'
     ) {
       e.preventDefault();
 
@@ -204,23 +200,6 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  const handleImageDelete = async (e: globalThis.MouseEvent) => {
-    if (!confirm('정말 삭제하시겠습니까?')) return;
-    try {
-      const target = e.currentTarget as HTMLImageElement;
-      target.remove();
-      await handlers.deleteImageOnServer(props.imgUrl);
-      contentEditable.current?.toggleAttribute('contenteditable');
-      setState({ ...state, tag: 'p', imgUrl: '' });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const WarningOnHover = () => {
-    console.log('클릭 시 이미지가 삭제됩니다');
-  };
-
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     try {
@@ -236,8 +215,6 @@ export const EditableBlock = (props: editableBlock) => {
         const url = data?.data.filePath;
         if (contentEditable.current) contentEditable.current.innerText = '';
         newNode.setAttribute('src', url);
-        newNode.addEventListener('contextmenu', handleImageDelete);
-        newNode.addEventListener('mouseenter', WarningOnHover);
         range.deleteContents();
         range.insertNode(newNode);
         const newRange = document.createRange();
@@ -254,14 +231,6 @@ export const EditableBlock = (props: editableBlock) => {
           openTagSelectorMenu: false,
         });
       }
-
-      // props.addBlock({
-      //   id: props.id,
-      //   html: state.html,
-      //   tag: state.tag,
-      //   imgUrl: state.imgUrl,
-      //   ref: contentEditable.current,
-      // });
     } catch (err) {
       console.log(err);
     }

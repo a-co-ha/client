@@ -1,9 +1,4 @@
 export const focusContentEditableTextToEnd = (element: HTMLElement) => {
-  if (element?.innerText.length === 0) {
-    element.focus();
-    return;
-  }
-
   const selection = window.getSelection();
   const newRange = document.createRange();
   console.log(newRange);
