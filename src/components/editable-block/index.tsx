@@ -11,6 +11,7 @@ import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
 import { postImage } from '@/pages/api/editable/postImage';
 import { deleteImage } from '@/pages/api/editable/deleteImage';
+import { createNode } from '@/utils/createNode';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -32,11 +33,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   console.log('state', state);
   console.log('props', props);
-  //FIXME:
-  /**
-   * 태그가 p가아니면 하위에 해당태그 노드 추가
-   * 이미지 및 태그 변경 후 새로고침 시 사라짐
-   */
+  
 
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
@@ -64,26 +61,7 @@ export const EditableBlock = (props: editableBlock) => {
       }
 
       if (props.tag !== 'p' && !props.imgUrl) {
-        const selection = window.getSelection();
-        if (selection && selection.rangeCount !== 0) {
-          const range = selection.getRangeAt(0);
-          let newNode = document.createElement(props.tag);
-          if (contentEditable.current) {
-            newNode.textContent = contentEditable.current.innerText.replace(
-              /\/$/,
-              ''
-            );
-            contentEditable.current.innerText = '';
-          }
-
-          range.deleteContents();
-          range.insertNode(newNode);
-          const newRange = document.createRange();
-          newRange.setStartAfter(newNode);
-          newRange.collapse(true);
-          selection.removeAllRanges();
-          selection.addRange(newRange);
-        }
+        createNode(contentEditable, props.tag);
       }
       setState({
         ...state,
@@ -187,33 +165,14 @@ export const EditableBlock = (props: editableBlock) => {
       fileInput.current?.click();
       contentEditable.current?.toggleAttribute('contenteditable');
     } else {
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount !== 0) {
-        const range = selection.getRangeAt(0);
-        let newNode = document.createElement(tag);
-        if (contentEditable.current) {
-          newNode.textContent = contentEditable.current.innerText.replace(
-            /\/$/,
-            ''
-          );
-          contentEditable.current.innerText = '';
-        }
+      createNode(contentEditable, tag);
 
-        range.deleteContents();
-        range.insertNode(newNode);
-        const newRange = document.createRange();
-        newRange.setStartAfter(newNode);
-        newRange.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(newRange);
-
-        setState({
-          ...state,
-          html: state.html.replace(/\/$/, ''),
-          tag: tag,
-          openTagSelectorMenu: false,
-        });
-      }
+      setState({
+        ...state,
+        html: state.html.replace(/\/$/, ''),
+        tag: tag,
+        openTagSelectorMenu: false,
+      });
     }
   };
 
@@ -240,7 +199,8 @@ export const EditableBlock = (props: editableBlock) => {
   const WarningOnHover = () => {
     console.log('클릭 시 이미지가 삭제됩니다');
   };
-
+  
+  //FIXME: 이미지 및 태그 변경 후 새로고침 시 사라짐
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     try {
@@ -268,7 +228,6 @@ export const EditableBlock = (props: editableBlock) => {
         setState({
           ...state,
           imgUrl: url,
-          // imgUrl: '',
           tag: 'img',
           html: state.html.replace(/\/$/, ''),
           openTagSelectorMenu: false,
