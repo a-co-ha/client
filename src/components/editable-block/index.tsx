@@ -18,7 +18,6 @@ export const EditableBlock = (props: editableBlock) => {
   const fileInput = useRef<HTMLInputElement | null>(null);
 
   const [state, setState] = useState<StateTypes>({
-    htmlBackup: null,
     html: '',
     tag: 'p',
     imgUrl: '',
@@ -33,7 +32,6 @@ export const EditableBlock = (props: editableBlock) => {
 
   console.log('state', state);
   console.log('props', props);
-  
 
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
@@ -199,7 +197,7 @@ export const EditableBlock = (props: editableBlock) => {
   const WarningOnHover = () => {
     console.log('클릭 시 이미지가 삭제됩니다');
   };
-  
+
   //FIXME: 이미지 및 태그 변경 후 새로고침 시 사라짐
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
@@ -225,6 +223,7 @@ export const EditableBlock = (props: editableBlock) => {
         newRange.collapse(true);
         selection.removeAllRanges();
         selection.addRange(newRange);
+        console.log('setstea');
         setState({
           ...state,
           imgUrl: url,

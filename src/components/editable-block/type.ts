@@ -9,7 +9,6 @@ export interface TagSelectorMenuProps {
 }
 
 export interface StateTypes {
-  htmlBackup: null | string;
   html: string;
   tag: string;
   imgUrl: string;
