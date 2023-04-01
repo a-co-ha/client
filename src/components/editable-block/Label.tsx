@@ -4,6 +4,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { ChannelUser } from '@/pages/api/user/type';
 
+//TODO: CRUD 해야함
 export default function Label() {
   const [selected, setSelected] = useState<ChannelUser[]>([]);
   const [query, setQuery] = useState('');

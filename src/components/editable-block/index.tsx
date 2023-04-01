@@ -38,7 +38,7 @@ export const EditableBlock = (props: editableBlock) => {
       const hasOnlyOneBlock =
         !contentEditable.current.parentElement.nextSibling;
       if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
-        contentEditable.current.innerText = `/ 명령`;
+        contentEditable.current.innerText = `/ 명령메뉴 열기`;
         setState({ ...state, placeholder: true });
         return true;
       }
@@ -235,6 +235,7 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
+                style={{ opacity: state.placeholder ? '0.5' : '' }}
               />
               <input
                 type="file"
