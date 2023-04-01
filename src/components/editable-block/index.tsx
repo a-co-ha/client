@@ -32,7 +32,11 @@ export const EditableBlock = (props: editableBlock) => {
 
   console.log('state', state);
   console.log('props', props);
-  //FIXME: 태그가 p가아니면 하위에 해당태그 노드 추가
+  //FIXME:
+  /**
+   * 태그가 p가아니면 하위에 해당태그 노드 추가
+   * 이미지 및 태그 변경 후 새로고침 시 사라짐
+   */
 
   const addPlaceholder = () => {
     // 첫번쨰 블럭이 비어있고 다음 블럭이 없을때만 placeholder
@@ -42,6 +46,7 @@ export const EditableBlock = (props: editableBlock) => {
       if (props.html === '' && props.position === 0 && hasOnlyOneBlock) {
         console.log('플레이스홀더 함수 실행');
         contentEditable.current.innerText = `/ 명령`;
+        setState({ ...state, placeholder: true });
         return true;
       }
     }
@@ -50,10 +55,9 @@ export const EditableBlock = (props: editableBlock) => {
 
   useEffect(() => {
     const hasPlaceholder = addPlaceholder();
-
     if (hasPlaceholder) {
       console.log('플레이스홀더 true로 상태 변경');
-      setState({ ...state, placeholder: true }); // 상태값 변경이지만 리랜더링 일어나지 않음 밑에 있는 set state가 실행되면서 리랜더되지않는듯
+      return;
     } else {
       if (
         contentEditable.current &&
@@ -97,7 +101,6 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const handleBlur = () => {
-    // FIXME: 새로고침시 state에 값들어가지않는 이유 이 로직
     if (state.html === '' && state.imgUrl === '') {
       addPlaceholder();
     }
