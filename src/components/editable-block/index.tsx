@@ -7,11 +7,11 @@ import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextT
 import TagSelectorMenu from '../selector-menu/selector-tag-menu';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
 import * as styles from './styles';
-import type { StateTypes } from './type';
-import type { editableBlock } from '../editable-page/type';
 import { postImage } from '@/pages/api/editable/postImage';
 import { deleteImage } from '@/pages/api/editable/deleteImage';
 import { createNode } from '@/utils/createNode';
+import type { StateTypes } from './type';
+import type { editableBlock } from '../editable-page/type';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -175,6 +175,7 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   const closeMenu = () => {
+    contentEditable.current?.focus();
     setState({
       ...state,
       openTagSelectorMenu: false,

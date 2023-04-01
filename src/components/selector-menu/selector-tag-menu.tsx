@@ -20,7 +20,6 @@ export default function TagSelectorMenu({
   handleTagSelection,
   closeMenu,
 }: TagSelectorMenuProps) {
-
   useEffect(() => {
     document.getElementById('menu-button')?.click();
   }, []);
