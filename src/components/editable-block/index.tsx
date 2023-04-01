@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { CMD_KEY, CMD_NAME_KEY } from '@/utils/const';
+import { CMD_KEY } from '@/utils/const';
 import Image from 'next/image';
 import DragHandleIcon from '@/images/draggable.svg';
 import { focusContentEditableTextToEnd } from '@/utils/focusContentEditableTextToEnd';
@@ -8,12 +8,10 @@ import TagSelectorMenu from '../selector-menu/selector-tag-menu';
 import getCaretCoordinates from '@/utils/getCaretCoordinates';
 import * as styles from './styles';
 import { postImage } from '@/pages/api/editable/postImage';
-import { deleteImage } from '@/pages/api/editable/deleteImage';
 import { createNode } from '@/utils/createNode';
+import { createImageNode } from '@/utils/createImageNode';
 import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
-import { handlers } from '../editable-page/handlers';
-import { createImageNode } from '@/utils/createImageNode';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
@@ -75,13 +73,11 @@ export const EditableBlock = (props: editableBlock) => {
   }, []);
 
   useEffect(() => {
-    console.log('업데이트');
-    console.log('update from block', state);
     props.updateBlock({
       blockId: props.id,
       html: state.html,
       tag: state.tag,
-      imgUrl: state.imgUrl, //FIXME: 태그가 img가 아니면 빈값으로 변경
+      imgUrl: state.imgUrl,
     });
   }, [state.tag]);
 
@@ -151,13 +147,6 @@ export const EditableBlock = (props: editableBlock) => {
         ...state,
         tagSelectorMenuPosition: { x: x, y: y },
         openTagSelectorMenu: true,
-      });
-    } else if (e.key === CMD_NAME_KEY) {
-      const { x, y } = getCaretCoordinates(true);
-
-      setState({
-        ...state,
-        tagSelectorMenuPosition: { x: x, y: y },
       });
     }
   };
