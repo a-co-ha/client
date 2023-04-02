@@ -41,12 +41,10 @@ export const projectNameBox = css`
 export const modalBackground = (isOpen: boolean) => css`
   position: fixed;
   display: ${isOpen ? `block` : `none`};
-  top: 50px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: black;
-  opacity: 0.2;
 `;
 
 export const projectNambeBoxTransition = (isOpen: boolean) => css`
@@ -59,10 +57,11 @@ export const projectNambeBoxTransition = (isOpen: boolean) => css`
     display: ${isOpen ? `block` : `none`};
   }
   user-select: none;
+  cursor: pointer;
   position: absolute;
   right: 0;
   margin-top: 0.75rem;
-  width: 192px;
+  width: 224px;
   border-top-width: 1px;
   border-bottom-width: 0px;
   border-color: rgb(243 244 246);
@@ -76,9 +75,7 @@ export const projectNambeBoxTransition = (isOpen: boolean) => css`
 
 export const projectInviteBox = (isOpen: boolean) => css`
   position: fixed;
-  display: ${isOpen ? `flex` : `none`};
-  justify-content: center;
-  align-items: center;
+  display: ${isOpen ? `block` : `none`};
   top: 0;
   left: 0;
   width: 100vw;
@@ -88,15 +85,31 @@ export const projectInviteBox = (isOpen: boolean) => css`
   outline: 2px solid green;
 `;
 
+export const projectInviteBoxTransition = (isOpen: boolean) => css`
+  position: absolute;
+  & > * {
+    display: ${isOpen ? `block` : `none`};
+  }
+  top: 50%;
+  left: 50%;
+  z-index: 12;
+  transform: translate3d(-50%, -50%, 0) scale(${isOpen ? `1` : `0.5`});
+  transform-origin: center;
+  transform-duration: ${isOpen ? `0.1s` : `0.25s`};
+  opacity: ${isOpen ? `1` : `0.5`};
+  transition: 0.1s ease-out;
+`;
+
 export const inviteModalBackground = (isOpen: boolean) => css`
   position: fixed;
-  top: 50px;
+  top: 0;
   left: 0;
   display: ${isOpen ? `block` : `none`};
   width: 100vw;
   height: 100vh;
   background: black;
-  opacity: 0.25;
+  opacity: 0.2;
+  z-index: 11;
 `;
 
 export const inviteModalCopyBtn = (isCopied: boolean) => css`

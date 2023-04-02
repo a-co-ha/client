@@ -21,13 +21,13 @@ export const InviteModal = () => {
     setIsCopied(true);
   };
   return (
-    <div>
-      <div css={styles.projectInviteBox(isInviteModal)}>
-        <div
-          onClick={onClickHandler}
-          css={styles.inviteModalBackground(isInviteModal)}
-        ></div>
-        <div className="relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+    <div css={styles.projectInviteBox(isInviteModal)}>
+      <div
+        onClick={onClickHandler}
+        css={styles.inviteModalBackground(isInviteModal)}
+      ></div>
+      <div css={styles.projectInviteBoxTransition(isInviteModal)}>
+        <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
           <h3 className="mt-2">프로젝트 초대코드</h3>
           <div className="mt-2">
             <p className="text-sm text-gray-500 select-text">{inviteUrl}</p>
@@ -37,7 +37,7 @@ export const InviteModal = () => {
               css={styles.inviteModalCopyBtn(isCopied)}
               onClick={() => codeCopyHandler(inviteUrl)}
             >
-              {isCopied ? `Copied` : `Copy`}
+              {isCopied ? `Copied ✔️` : `Copy`}
             </button>
           </div>
         </div>

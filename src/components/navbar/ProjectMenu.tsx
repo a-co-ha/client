@@ -3,6 +3,7 @@ import * as styles from './styles';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { channelNameState, channelListState } from '@/recoil/project/atom';
 import { useDeleteProject } from '@/hooks/queries/project/deleteProject';
+import { useExitProject } from '@/hooks/queries/project/exitProject';
 import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { InviteModal } from './inviteModal';
@@ -17,6 +18,7 @@ export const ProjectMenu = () => {
   const isAdmin = useRecoilValue(adminState(channelId));
   const setIsInviteModal = useSetRecoilState(inviteModalState);
   const deleteProject = useDeleteProject(channelId, channelList);
+  const exitProject = useExitProject(channelId, channelList);
   let [isOpen, setIsOpen] = useState(false);
   const inviteOpenHandler = (e: React.MouseEvent) => {
     setIsInviteModal(true);
@@ -30,10 +32,10 @@ export const ProjectMenu = () => {
       <InviteModal />
       <div
         onClick={onClickHandler}
-        className="relative inline-block text-left w-[200px] z-50"
+        className="relative inline-block text-left w-[200px] z-10"
       >
         <div css={styles.modalBackground(isOpen)}></div>
-        <div className="group inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+        <div className="group inline-flex w-full justify-center cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           <p>{channelName}</p>
           <ChevronDownIcon
             className="ml-auto -mr-1 h-5 w-5 text-black-200 group-hover:text-violet-100 text-right"
@@ -67,14 +69,20 @@ export const ProjectMenu = () => {
               >
                 <button>프로젝트 삭제하기</button>
               </div>
-            ) : null}
+            ) : (
+              <div
+                onClick={() => exitProject.mutate()}
+                className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-red-600"
+              >
+                <button>프로젝트 나가기</button>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 {
   /* <Menu as="div" className="relative inline-block text-left w-[200px] z-50">
   <div>
