@@ -4,8 +4,8 @@ const flexCenterNavBar = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
   height: 50px;
+  user-select: none;
 `;
 
 export const navBar = css`
@@ -27,6 +27,7 @@ export const titleBox = css`
 
 export const loginBox = css`
   ${flexCenterNavBar}
+  width: 200px;
   outline: 1px solid limegreen;
 `;
 
@@ -57,6 +58,20 @@ export const projectNambeBoxTransition = (isOpen: boolean) => css`
   & > * {
     display: ${isOpen ? `block` : `none`};
   }
+  user-select: none;
+  position: absolute;
+  right: 0;
+  margin-top: 0.75rem;
+  width: 192px;
+  border-top-width: 1px;
+  border-bottom-width: 0px;
+  border-color: rgb(243 244 246);
+  border-radius: 0.375rem;
+  background: white;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const projectInviteBox = (isOpen: boolean) => css`
@@ -68,6 +83,8 @@ export const projectInviteBox = (isOpen: boolean) => css`
   left: 0;
   width: 100vw;
   height: 100vh;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   outline: 2px solid green;
 `;
 
@@ -80,6 +97,19 @@ export const inviteModalBackground = (isOpen: boolean) => css`
   height: 100vh;
   background: black;
   opacity: 0.25;
+`;
+
+export const inviteModalCopyBtn = (isCopied: boolean) => css`
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  background-color: ${isCopied ? `rgb(226 232 240)` : `rgb(219 234 254)`};
+  border-radius: 0.375rem;
+  &:hover {
+    background-color: ${isCopied ? `none` : `rgb(191 219 254)`};
+  }
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const loginLogo = css`

@@ -6,14 +6,15 @@ import { useDeleteProject } from '@/hooks/queries/project/deleteProject';
 import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { InviteModal } from './inviteModal';
-import { useRecoilState } from 'recoil';
 import { inviteModalState } from '@/recoil/user/atom';
+import { adminState } from '@/recoil/user/atom';
 
 export const ProjectMenu = () => {
   const router = useRouter();
   const channelId = router.query.id;
   const channelName = useRecoilValue(channelNameState);
   const channelList = useRecoilValue(channelListState);
+  const isAdmin = useRecoilValue(adminState(channelId));
   const setIsInviteModal = useSetRecoilState(inviteModalState);
   const deleteProject = useDeleteProject(channelId, channelList);
   let [isOpen, setIsOpen] = useState(false);
@@ -26,6 +27,7 @@ export const ProjectMenu = () => {
 
   return (
     <div css={styles.projectNameBox}>
+      <InviteModal />
       <div
         onClick={onClickHandler}
         className="relative inline-block text-left w-[200px] z-50"
@@ -41,7 +43,7 @@ export const ProjectMenu = () => {
 
         <div
           css={styles.projectNambeBoxTransition(isOpen)}
-          className="absolute right-0 mt-3 w-56 origin-top divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          // className="absolute right-0 mt-3 w-48 origin-top divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <div className="px-1 py-1">
             <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-900">
@@ -58,16 +60,17 @@ export const ProjectMenu = () => {
                 프로젝트 초대하기
               </div>
             ) : null}
-            <div
-              onClick={() => deleteProject.mutate()}
-              className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-red-600"
-            >
-              <button>프로젝트 삭제하기</button>
-            </div>
+            {isAdmin ? (
+              <div
+                onClick={() => deleteProject.mutate()}
+                className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-red-600"
+              >
+                <button>프로젝트 삭제하기</button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
-      <InviteModal />
     </div>
   );
 };

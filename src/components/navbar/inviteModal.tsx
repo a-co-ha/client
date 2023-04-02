@@ -1,5 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { inviteChannelState, inviteModalState } from '@/recoil/user/atom';
 import * as styles from './styles';
@@ -7,34 +6,39 @@ import * as styles from './styles';
 export const InviteModal = () => {
   const { userId, channelName } = useRecoilValue(inviteChannelState);
   const [isInviteModal, setIsInviteModal] = useRecoilState(inviteModalState);
-  // let [isOpens, setIsOpens] = useState(false);
+  let [isCopied, setIsCopied] = useState(false);
   console.log(`인코딩 되기전`, userId, channelName);
   const encodedUserId = Buffer.from(String(userId)).toString('base64');
   const encodedChannelName = Buffer.from(channelName).toString('base64');
-  const inviteUrl = `${process.env.NEXT_PUBLIC_ENV_URL}/invite/${encodedUserId}?channelCode=${encodedChannelName}`;
+  const inviteUrl = `https://acoha.site/invite/${encodedUserId}?channelCode=${encodedChannelName}`;
   console.log(`인코딩 된 후 `, encodedUserId, encodedChannelName);
-  const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onClickHandler = () => {
     setIsInviteModal(false);
+    setIsCopied(false);
+  };
+  const codeCopyHandler = (inviteUrl: string) => {
+    navigator.clipboard.writeText(inviteUrl);
+    setIsCopied(true);
   };
   return (
-    <div className="text-sm text-left">
-      <div>
-        <button></button>
-      </div>
-      <div>
-        <div css={styles.projectInviteBox(isInviteModal)}>
-          <div
-            onClick={onClickHandler}
-            css={styles.inviteModalBackground(isInviteModal)}
-          ></div>
-          <div className="relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-            <h3 className="mt-2">프로젝트 초대코드</h3>
-            <div className="mt-2">
-              <p className="text-sm text-gray-500">{inviteUrl}</p>
-            </div>
-            <div className="mt-2">
-              <button>복사</button>
-            </div>
+    <div>
+      <div css={styles.projectInviteBox(isInviteModal)}>
+        <div
+          onClick={onClickHandler}
+          css={styles.inviteModalBackground(isInviteModal)}
+        ></div>
+        <div className="relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+          <h3 className="mt-2">프로젝트 초대코드</h3>
+          <div className="mt-2">
+            <p className="text-sm text-gray-500 select-text">{inviteUrl}</p>
+          </div>
+          <div className="mt-2">
+            <button
+              css={styles.inviteModalCopyBtn(isCopied)}
+              onClick={() => codeCopyHandler(inviteUrl)}
+            >
+              {isCopied ? `Copied` : `Copy`}
+            </button>
           </div>
         </div>
       </div>
