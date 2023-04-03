@@ -31,6 +31,11 @@ export const channelNameState = atom({
   default: 'A - COHA',
 });
 
+export const deleteModalState = atom({
+  key: `deleteModalState/${nanoId()}`,
+  default: false,
+});
+
 export const pageNameEditToggle = atomFamily({
   key: `pageNameEditToggle/${nanoId()}`,
   default: false,

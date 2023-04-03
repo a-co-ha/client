@@ -75,14 +75,13 @@ export const projectNambeBoxTransition = (isOpen: boolean) => css`
 
 export const projectInviteBox = (isOpen: boolean) => css`
   position: fixed;
-  display: ${isOpen ? `block` : `none`};
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: ${isOpen ? `100vw` : `0`};
+  height: ${isOpen ? `100vh` : `0`};
   font-size: 0.875rem;
   line-height: 1.25rem;
-  outline: 2px solid green;
+  z-index: 13;
 `;
 
 export const projectInviteBoxTransition = (isOpen: boolean) => css`
@@ -119,6 +118,28 @@ export const inviteModalCopyBtn = (isCopied: boolean) => css`
   border-radius: 0.375rem;
   &:hover {
     background-color: ${isCopied ? `none` : `rgb(191 219 254)`};
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const projectDeleteNameBtn = (
+  inputName: string,
+  channelName: string
+) => css`
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: ${inputName === channelName ? `white` : `black`};
+  cursor: pointer;
+  background-color: ${inputName === channelName
+    ? `rgba(255,0,0,0.7)`
+    : `rgb(226 232 240)`};
+  border-radius: 0.375rem;
+  &:hover {
+    background-color: ${inputName === channelName
+      ? `rgba(255,0,0,0.8)`
+      : `rgb(226 232 240)`};
   }
   &:focus {
     outline: none;
