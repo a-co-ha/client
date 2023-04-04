@@ -41,6 +41,7 @@ export const ProjectDeleteForm = ({
     try {
       deleteProject.mutate();
       setIsDeleteModal(false);
+      methods.reset();
     } catch (err) {
       console.error(err);
     }

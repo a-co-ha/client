@@ -16,8 +16,8 @@ export const usePostProject = () => {
     {
       onSuccess: (data) => {
         setChannelName(data.channelName);
-        queryClient.invalidateQueries([`user`]);
         router.push(`/project/${data.id}`);
+        queryClient.invalidateQueries([`user`]);
       },
     }
   );

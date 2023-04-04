@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         );
       } else if (type === `socket`) {
         await queryClient.prefetchQuery([`socketPage`, pageId], () =>
-          getSocketPage(channelId, pageId, type)
+          getSocketPage(pageId)
         );
       }
     }

@@ -11,7 +11,7 @@ export const useGetSocketPage = (
 ) => {
   return useQuery<SocketPage, AxiosError>(
     [`socketPage`, pageId],
-    () => getSocketPage(channelId, pageId, type),
+    () => getSocketPage(pageId),
     options
   );
 };

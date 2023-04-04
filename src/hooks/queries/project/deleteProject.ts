@@ -22,11 +22,11 @@ export const useDeleteProject = (
     {
       onSuccess: () => {
         queryClient.invalidateQueries([`user`]);
-        if (channelList.length !== 1) {
+        if (channelList.length === 0) {
+          resetChannelName();
+        } else {
           setChannelName(channelList[0].channelName);
           router.replace(`/project/${channelList[0].id}`);
-        } else {
-          resetChannelName();
         }
       },
     }

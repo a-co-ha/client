@@ -4,6 +4,7 @@ import { UserList } from '@/components/project-userlist';
 import { MainContent } from '@/components/project-main';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getUser } from '@/pages/api/user/getUser';
+import { getUsers } from '@/pages/api/user/getUsers';
 import { getChannelPages } from '@/pages/api/editable/getPages';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
@@ -34,7 +35,7 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       setInviteChannelData({ userId, channelName });
       console.log(`인바이트 인포`, userId, channelName);
     }
-  }, [channelId]);
+  }, [channelUsers]);
 
   return (
     <div css={styles.main}>
@@ -57,6 +58,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         queryClient.prefetchQuery([`user`], getUser),
         queryClient.prefetchQuery([`channelPages`, channelId], () =>
           getChannelPages(channelId)
+        ),
+        queryClient.prefetchQuery([`users`, channelId], () =>
+          getUsers(channelId)
         ),
       ]);
     }
