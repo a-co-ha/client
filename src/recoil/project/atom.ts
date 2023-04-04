@@ -1,6 +1,6 @@
 import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import type { Channels } from '@/components/project-sidebar/type';
+import { ChannelList } from '@/pages/api/user/type';
 
 export const pageListState = atom({
   key: `pageList/${nanoId()}`,
@@ -16,18 +16,13 @@ export const pageListState = atom({
   ],
 });
 
-export const channelListState = atom<Channels[]>({
+export const channelListState = atom<ChannelList[]>({
   key: `channelListState/${nanoId()}`,
-  default: [
-    // {
-    //   id: 0,
-    //   channelName: '',
-    // },
-  ],
+  default: [],
 });
 
 export const channelNameState = atom({
-  key: 'channelNameState',
+  key: `channelNameState/${nanoId()}`,
   default: 'A - COHA',
 });
 

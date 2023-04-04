@@ -53,13 +53,15 @@ export const PageNameForm = ({
     <div>
       {isEditing ? (
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-          <input
-            css={styles.pageNameInput}
-            value={pageNameField.value}
-            onChange={pageNameField.onChange}
-            name={pageNameField.name}
-            autoFocus
-          />
+          <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900">
+            <input
+              css={styles.pageNameInput}
+              value={pageNameField.value}
+              onChange={pageNameField.onChange}
+              name={pageNameField.name}
+              autoFocus
+            />
+          </div>
         </form>
       ) : null}
     </div>

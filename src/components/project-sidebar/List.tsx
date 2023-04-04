@@ -6,8 +6,10 @@ import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import githubChannelImg from '@/images/github_channel.png';
 import * as styles from './styles';
-import type { Channels } from './type';
+import type { ChannelList } from '@/pages/api/user/type';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
@@ -25,12 +27,14 @@ export const List = () => {
 
   useLayoutEffect(() => {
     try {
-      const channels: Channels[] = [];
+      const channels: ChannelList[] = [];
       if (userData !== undefined && userData.channels.length !== 0) {
-        userData.channels.map((e: Channels) => {
+        userData.channels.map((e: ChannelList) => {
           channels.push({
             id: e.id,
+            userId: e.userId,
             channelName: e.channelName,
+            channelImg: e.channelImg,
           });
         });
         setChannelList(channels);
@@ -45,25 +49,13 @@ export const List = () => {
     }
   }, [userData]);
 
-  // useLayoutEffect(() => {
-  //   try {
-  //     if (channelList.length === 1) {
-  //       router.push(`/project/${channelList[0].id}`);
-  //     } else {
-  //       return;
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }, [channelList]);
-
   console.log('채널리스트 ', channelList);
 
   const onClickHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
-    channelId: number
+    channelId: number,
+    channelName: string
   ) => {
-    const channelName = e.currentTarget.innerText;
     setChannelName(channelName);
     console.log(channelName);
     router.push(`/project/${channelId}`);
@@ -73,15 +65,26 @@ export const List = () => {
     <div css={styles.list}>
       <div>List</div>
       {channelList.map((channel) => (
-        <button
-          key={channel.id}
-          css={styles.ProjectCreate}
-          onClick={(e) => onClickHandler(e, channel.id)}
-        >
-          {channel.channelName}
-        </button>
+        <div key={channel.id} css={styles.ProjectCreateThumbnail}>
+          <button
+            css={{ position: `relative`, width: `100%`, height: `100%` }}
+            onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
+          >
+            <Image
+              src={
+                channel.channelImg == '' ? githubChannelImg : channel.channelImg
+              }
+              fill
+              alt={`channelImg`}
+            />
+          </button>
+        </div>
       ))}
-      <button type="button" onClick={openModal} css={styles.ProjectCreate}>
+      <button
+        type="button"
+        onClick={openModal}
+        css={styles.ProjectCreateThumbnail}
+      >
         +
       </button>
       <Transition appear show={isOpen} as={Fragment}>

@@ -21,7 +21,7 @@ export interface User {
 
 export interface ChannelList {
   id: number;
-  admin: string;
+  userId: number;
   channelName: string;
   channelImg: string;
 }

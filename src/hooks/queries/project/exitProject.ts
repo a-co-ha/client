@@ -5,11 +5,11 @@ import { channelNameState } from '@/recoil/project/atom';
 import { useRouter } from 'next/router';
 import type { AxiosError } from 'axios';
 import type { ExitProject } from '@/pages/api/project/type';
-import type { Channels } from '@/components/project-sidebar/type';
+import type { ChannelList } from '@/pages/api/user/type';
 
 export const useExitProject = (
   channelId: string | string[] | undefined,
-  channelList: Channels[]
+  channelList: ChannelList[]
 ) => {
   const queryClient = useQueryClient();
   const setChannelName = useSetRecoilState(channelNameState);

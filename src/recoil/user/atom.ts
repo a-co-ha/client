@@ -22,7 +22,7 @@ export const userDataState = atom<User>({
     channels: [
       {
         id: 0,
-        admin: '',
+        userId: 0,
         channelName: '',
         channelImg: '',
       },
@@ -55,10 +55,5 @@ export const inviteChannelState = atom({
 
 export const inviteModalState = atom({
   key: `inviteModalState/${nanoId()}`,
-  default: false,
-});
-
-export const deleteModalState = atom({
-  key: `deleteModalState/${nanoId()}`,
   default: false,
 });
