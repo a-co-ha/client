@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
 import { useDeleteEditablePage } from '@/hooks/queries/editable/deletePage';
-import { api } from '@/pages/api/config/api-config';
 import { useRouter } from 'next/router';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';

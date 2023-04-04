@@ -5,6 +5,7 @@ import { handlers } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { toast } from 'react-toastify';
 import Label from '../editable-block/Label';
+import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
 import { EditableBlock } from '@/components/editable-block';
 import { Notice } from '../notice/index';
 import { currentBlockIdState } from '@/recoil/editable-block/atom';
@@ -14,37 +15,26 @@ import { ErrorBoundary } from '../error-boundary/index';
 import { Error } from '../error-boundary/Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
-  if (err) {
-    toast.error(`예기치못한 에러가 발생했어요!`);
-    return null;
-    // return <Notice status="ERROR" />;
-  }
+export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
+  const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
+  // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
-  // const [blocks, setBlocks] = useState<Block[]>(() => {
-  //   console.log('블락스 초기값');
-  //   return fetchedBlocks;
-  // });
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
-  // const prevBlcoks = usePrevious(blocks);
   const router = useRouter();
-  const channelId = router.query.id;
 
   console.log('블락스', blocks);
   console.log('서버에서 넘어온 블락스', fetchedBlocks);
 
   useLayoutEffect(() => {
     console.log('블락스 서버블락스로 변경');
-    setBlocks(fetchedBlocks);
-  }, [router.query.pageId]);
+    if (fetchedBlocks !== undefined) {
+      setBlocks(fetchedBlocks);
+    }
+  }, [router.query.pageId, fetchedBlocks]);
 
   useEffect(() => {
     console.log('서버 블락스 업데이트');
-    handlers.updatePageOnserver(blocks, id, channelId);
-    // prevBlcoks && prevBlcoks !== blocks
-    //   ? handlers.updatePageOnserver(blocks, id, channelId)
-    //   : null;
-    // return;
+    handlers.updatePageOnserver(blocks, pageId, channelId);
   }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
@@ -77,7 +67,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
             {isNewPage && <Notice status="SUCCESS" />}
             <Label channelId={channelId} />
             <DragDropContext onDragEnd={onDragEndHandler}>
-              <Droppable key={id} droppableId={id}>
+              <Droppable key={pageId} droppableId={pageId}>
                 {(provided) => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
                     {blocks.map((block) => {
@@ -92,7 +82,7 @@ export const EditablePage = ({ id, fetchedBlocks, err }: EditablePages) => {
                           tag={block.tag}
                           html={block.html}
                           imgUrl={block.imgUrl}
-                          pageId={id}
+                          pageId={pageId}
                           addBlock={addBlockHandler}
                           updateBlock={updateBlockHandler}
                           deleteBlock={deleteBlockHandler}

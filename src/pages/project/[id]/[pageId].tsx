@@ -2,19 +2,17 @@ import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { EditablePage } from '@/components/editable-page';
+import { ChatPage } from '@/components/chat-page';
 import { GetServerSideProps } from 'next';
 import { resetServerContext } from 'react-beautiful-dnd';
-import { ChatPage } from '@/components/chat-page';
 import { Suspense, useEffect } from 'react';
 import { Loading } from '@/components/loading/Loading';
 import { QueryClient, dehydrate, hydrate } from '@tanstack/react-query';
 import { getEditablePage } from '@/pages/api/editable/getPage';
-import { useGetEditablePage } from '../../../hooks/queries/editable/getPage';
+import { getSocketPage } from '@/pages/api/socket/getPage';
 import type { pageProps } from '@/pages/api/editable/type';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
-  const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
-  const err = fetchedBlocks === null ? true : false;
   resetServerContext();
   return (
     /**
@@ -23,14 +21,16 @@ export default function Page({ channelId, pageId, type }: pageProps) {
     <div css={styles.main}>
       <Suspense fallback={<Loading />}>
         <ProjectSideBar />
-        {type === 'normal' && fetchedBlocks ? (
+        {type === 'normal' ? (
           <EditablePage
-            id={pageId as string}
-            fetchedBlocks={fetchedBlocks}
-            err={err}
+            channelId={channelId}
+            pageId={pageId as string}
+            type={type}
           />
         ) : null}
-        {/* {type === 'socket' && socketPage ? <ChatPage /> : null} */}
+        {type === 'socket' ? (
+          <ChatPage channelId={channelId} pageId={pageId} type={type} />
+        ) : null}
         <UserList />
       </Suspense>
     </div>
@@ -42,9 +42,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     // if (type === 'normal') {
     if (channelId) {
-      await queryClient.prefetchQuery([`editablePage`, pageId], () =>
-        getEditablePage(channelId, pageId, type)
-      );
+      if (type === `normal`) {
+        await queryClient.prefetchQuery([`editablePage`, pageId], () =>
+          getEditablePage(channelId, pageId, type)
+        );
+      } else if (type === `socket`) {
+        await queryClient.prefetchQuery([`socketPage`, pageId], () =>
+          getSocketPage(channelId, pageId, type)
+        );
+      }
     }
 
     return {
