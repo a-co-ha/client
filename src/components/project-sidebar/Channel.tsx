@@ -7,7 +7,7 @@ import { PageNameForm } from './PageNameForm';
 import { PageNameLink } from './PageNameLink';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useGetEditablePages } from '@/hooks/queries/editable/getPages';
+import { useGetChannelPages } from '@/hooks/queries/editable/getPages';
 import * as styles from './styles';
 
 /** 여기서 채널 간단목록 조회 api 쏨 */
@@ -16,10 +16,10 @@ export const Channel = () => {
   const [pageList, setPageList] = useRecoilState(pageListState);
   const router = useRouter();
   const channelId = router.query.id;
-  const { data: pages } = useGetEditablePages(channelId);
+  const { data: pages } = useGetChannelPages(channelId);
 
-  const socketPageList = pageList.filter(
-    (pageList) => pageList.page.categories === 'socket'
+  const socketPageList = pageList.SocketPage.filter(
+    (pageList) => pageList.room.categories === 'socket'
   );
   useEffect(() => {
     try {
@@ -38,7 +38,7 @@ export const Channel = () => {
     setIsOpen(true);
   };
   console.log(pageList);
-  const editablePageList = pageList.filter(
+  const editablePageList = pageList.EditablePage.filter(
     (pageList) => pageList.page.categories === 'page'
   );
   console.log(editablePageList);
@@ -114,18 +114,18 @@ export const Channel = () => {
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {socketPageList.map((pageList) => {
                     return (
-                      <div key={pageList.page._id}>
+                      <div key={pageList.room._id}>
                         <PageNameForm
                           // key={page._id}
                           channelId={channelId}
-                          pageId={pageList.page._id}
-                          pageName={pageList.page.pageName}
+                          pageId={pageList.room._id}
+                          pageName={pageList.room.roomName}
                         />
                         <PageNameLink
                           channelId={channelId}
-                          pageId={pageList.page._id}
-                          pageName={pageList.page.pageName}
-                          type={pageList.page.type}
+                          pageId={pageList.room._id}
+                          pageName={pageList.room.roomName}
+                          type={pageList.room.type}
                         />
                       </div>
                     );

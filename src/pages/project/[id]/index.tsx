@@ -4,7 +4,7 @@ import { UserList } from '@/components/project-userlist';
 import { MainContent } from '@/components/project-main';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getUser } from '@/pages/api/user/getUser';
-import { getEditablePages } from '@/pages/api/editable/getPages';
+import { getChannelPages } from '@/pages/api/editable/getPages';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
@@ -55,8 +55,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (channelId) {
       await Promise.all([
         queryClient.prefetchQuery([`user`], getUser),
-        queryClient.prefetchQuery([`editablePages`, channelId], () =>
-          getEditablePages(channelId)
+        queryClient.prefetchQuery([`channelPages`, channelId], () =>
+          getChannelPages(channelId)
         ),
       ]);
     }

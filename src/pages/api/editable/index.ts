@@ -1,5 +1,5 @@
 import { getEditablePage } from './getPage';
-import { getEditablePages } from './getPages';
+import { getChannelPages } from './getPages';
 import { postEditablePage } from './postPage';
 
-export { getEditablePage, getEditablePages, postEditablePage };
+export { getEditablePage, getChannelPages, postEditablePage };

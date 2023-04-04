@@ -16,7 +16,7 @@ export const usePostEditablePage = (
       onSuccess: (data) => {
         if (channelId) {
           console.log(`석세스`, data);
-          queryClient.invalidateQueries([`editablePages`, channelId]);
+          queryClient.invalidateQueries([`channelPages`, channelId]);
           router.push(
             `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
           );

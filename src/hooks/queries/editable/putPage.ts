@@ -15,7 +15,7 @@ export const usePutEditablePage = (
     {
       onSuccess: () => {
         if (channelId) {
-          return queryClient.invalidateQueries([`editablePages`, channelId]);
+          return queryClient.invalidateQueries([`channelPages`, channelId]);
         }
       },
     }

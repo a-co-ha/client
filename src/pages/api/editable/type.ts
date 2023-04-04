@@ -1,16 +1,25 @@
+import { SocketPage } from '../socket/type';
+
 export interface GetEditablePage {
   channelId: string | string[] | undefined;
   pageId: string | string[] | undefined;
   type: string | string[] | undefined;
 }
 
-export interface GetEditablePages {
+export interface GetChannelPages {
+  _id: string;
+  channelId: number;
+  EditablePage: EditablePage[];
+  SocketPage: SocketPage[];
+}
+export interface EditablePage {
   page: {
     _id: string;
     pageName: string;
     type: string;
     categories: string;
   };
+  _id: string;
 }
 
 export interface GetChannels {
