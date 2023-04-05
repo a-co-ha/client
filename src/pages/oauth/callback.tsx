@@ -11,14 +11,16 @@ import { oauthLogin } from '@/pages/api/user/oauthLogin';
 export default function Callback({
   accessToken,
   refreshToken,
+  sessionId,
 }: {
   accessToken: string;
   refreshToken: string;
+  sessionId: string;
 }) {
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
-  setToken(accessToken, refreshToken);
+  setToken(accessToken, refreshToken, sessionId);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   const { data: userData } = useGetUser();
   useEffect(() => {
@@ -44,8 +46,12 @@ export default function Callback({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const authCode = context.query.code;
-  const { accessToken, refreshToken } = await oauthLogin(authCode);
+  const {
+    token: { accessToken },
+    token: { refreshToken },
+    sessionId,
+  } = await oauthLogin(authCode);
   return {
-    props: { accessToken, refreshToken },
+    props: { accessToken, refreshToken, sessionId },
   };
 };

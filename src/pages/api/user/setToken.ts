@@ -3,7 +3,8 @@ import type { GetServerSidePropsContext } from 'next';
 
 export const setToken = async (
   accessToken: string,
-  refreshToken: string
+  refreshToken: string,
+  sessionId: string
   // context: GetServerSidePropsContext
 ) => {
   if (accessToken !== undefined && refreshToken !== undefined) {
@@ -13,6 +14,10 @@ export const setToken = async (
       sameSite: 'lax',
     });
     setCookie('refreshToken', refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: 'lax',
+    });
+    setCookie('sessionId', sessionId, {
       maxAge: 1000 * 60 * 60 * 24,
       sameSite: 'lax',
     });

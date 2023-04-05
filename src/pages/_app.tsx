@@ -74,28 +74,43 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
     [authState]
   );
   useEffect(() => {
-    const socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`);
-    console.log(socket);
+    const sessionId = getCookie(`sessionId`);
+    if (sessionId) {
+      const socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
+        auth: {
+          sessionId,
+          userId: 96574345,
+          name: 'tangjinlog',
+          githubID: 'tangjinlog',
+          githubURL: 'https://github.com/tangjinlog',
+          img: 'https://avatars.githubusercontent.com/u/96574345?v=4',
+        },
+      });
+      socket.on(`connect`, () => {
+        console.log(`connected`);
+      });
+      console.log(`여기 소켓@@`, socket);
+    }
   }, []);
 
   return (
     <RecoilRoot initializeState={initializer}>
-      <SocketContextProvider>
-        <ThemeProvider theme={theme}>
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-              <Layout>
-                <Component {...pageProps} />
-                <ReactQueryDevtools
-                  initialIsOpen={false}
-                  position="bottom-right"
-                />
-              </Layout>
-              <ToastContainer autoClose={2000} pauseOnHover />
-            </Hydrate>
-          </QueryClientProvider>
-        </ThemeProvider>
-      </SocketContextProvider>
+      {/* <SocketContextProvider> */}
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Layout>
+              <Component {...pageProps} />
+              <ReactQueryDevtools
+                initialIsOpen={false}
+                position="bottom-right"
+              />
+            </Layout>
+            <ToastContainer autoClose={2000} pauseOnHover />
+          </Hydrate>
+        </QueryClientProvider>
+      </ThemeProvider>
+      {/* </SocketContextProvider> */}
     </RecoilRoot>
   );
 }
