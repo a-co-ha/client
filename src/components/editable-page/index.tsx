@@ -30,7 +30,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     if (fetchedBlocks !== undefined) {
       setBlocks(fetchedBlocks);
     }
-  }, [router.query.pageId, fetchedBlocks]);
+  }, [router.query.pageId]);
 
   useEffect(() => {
     console.log('서버 블락스 업데이트');

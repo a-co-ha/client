@@ -10,15 +10,15 @@ export const setToken = async (
   if (accessToken !== undefined && refreshToken !== undefined) {
     // const { req, res } = context;
     setCookie('accessToken', accessToken, {
-      maxAge: 1000 * 60 * 60 * 24,
+      maxAge: 60 * 6 * 24,
       sameSite: 'lax',
     });
     setCookie('refreshToken', refreshToken, {
-      maxAge: 1000 * 60 * 60 * 24,
+      maxAge: 60 * 6 * 24,
       sameSite: 'lax',
     });
     setCookie('sessionId', sessionId, {
-      maxAge: 1000 * 60 * 60 * 24,
+      maxAge: 60 * 6 * 24,
       sameSite: 'lax',
     });
     const cookies = getCookies();

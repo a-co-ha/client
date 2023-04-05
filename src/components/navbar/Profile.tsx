@@ -15,6 +15,7 @@ export const Profile = () => {
   const onClickHandler = () => {
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
+    deleteCookie(`sessionId`);
     resetProfile();
     resetChannelName();
     router.replace(`/`);
