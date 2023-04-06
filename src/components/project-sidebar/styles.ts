@@ -13,13 +13,14 @@ const flexRowCenter = css`
 export const projectSideBarBox = css`
   ${flexRowCenter}
   width: 250px;
-  height: 100vh;
+  height: calc(100vh - 50px);
   outline: 1px solid limegreen;
 `;
 
 export const list = css`
   ${flexColumnCenter}
   width: 60px;
+  height: calc(100vh - 50px);
   outline: 1px solid red;
 `;
 
@@ -27,6 +28,7 @@ export const channel = css`
   ${flexColumnCenter}
   width: 250px;
   // flex-grow: 1;
+  height: calc(100vh - 50px);
   outline: 2px solid blue;
 `;
 

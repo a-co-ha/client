@@ -107,6 +107,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.4.1"\
       ],\
       [\
+        "@fortawesome/fontawesome-common-types",\
+        "npm:6.4.0"\
+      ],\
+      [\
+        "@fortawesome/fontawesome-svg-core",\
+        "npm:6.4.0"\
+      ],\
+      [\
+        "@fortawesome/free-regular-svg-icons",\
+        "npm:6.4.0"\
+      ],\
+      [\
+        "@fortawesome/free-solid-svg-icons",\
+        "npm:6.4.0"\
+      ],\
+      [\
+        "@fortawesome/react-fontawesome",\
+        "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.2.0"\
+      ],\
+      [\
         "@gar/promisify",\
         "npm:1.1.3"\
       ],\
@@ -2217,6 +2237,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@emotion/react", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:@emotion/react@npm%3A11.10.5#./.yarn/patches/@emotion-react-npm-11.10.5-98e2cdb553.patch::version=11.10.5&hash=2c3ff7&locator=acoha%40workspace%3A."],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.4.0"],\
+            ["@fortawesome/free-regular-svg-icons", "npm:6.4.0"],\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.4.0"],\
+            ["@fortawesome/react-fontawesome", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.2.0"],\
             ["@headlessui/react", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:@headlessui/react@npm%3A1.7.7#./.yarn/patches/@headlessui-react-npm-1.7.7-23b64271f9.patch::version=1.7.7&hash=8569f8&locator=acoha%40workspace%3A."],\
             ["@heroicons/react", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:2.0.13"],\
             ["@next/font", "npm:13.1.2"],\
@@ -2555,6 +2579,72 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["minimatch", "npm:3.1.2"],\
             ["strip-json-comments", "npm:3.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/fontawesome-common-types", [\
+        ["npm:6.4.0", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-common-types-npm-6.4.0-8174465a2e/node_modules/@fortawesome/fontawesome-common-types/",\
+          "packageDependencies": [\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/fontawesome-svg-core", [\
+        ["npm:6.4.0", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-svg-core-npm-6.4.0-bc7699426e/node_modules/@fortawesome/fontawesome-svg-core/",\
+          "packageDependencies": [\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.4.0"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/free-regular-svg-icons", [\
+        ["npm:6.4.0", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-free-regular-svg-icons-npm-6.4.0-2f59fc26d1/node_modules/@fortawesome/free-regular-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/free-regular-svg-icons", "npm:6.4.0"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/free-solid-svg-icons", [\
+        ["npm:6.4.0", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-free-solid-svg-icons-npm-6.4.0-be633fc4ad/node_modules/@fortawesome/free-solid-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.4.0"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/react-fontawesome", [\
+        ["npm:0.2.0", {\
+          "packageLocation": "./.yarn/cache/@fortawesome-react-fontawesome-npm-0.2.0-a36215138f-f652a0c217.zip/node_modules/@fortawesome/react-fontawesome/",\
+          "packageDependencies": [\
+            ["@fortawesome/react-fontawesome", "npm:0.2.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.2.0", {\
+          "packageLocation": "./.yarn/__virtual__/@fortawesome-react-fontawesome-virtual-b07b39d990/0/cache/@fortawesome-react-fontawesome-npm-0.2.0-a36215138f-f652a0c217.zip/node_modules/@fortawesome/react-fontawesome/",\
+          "packageDependencies": [\
+            ["@fortawesome/react-fontawesome", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.2.0"],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.4.0"],\
+            ["@types/fortawesome__fontawesome-svg-core", null],\
+            ["@types/react", "npm:18.0.26"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@fortawesome/fontawesome-svg-core",\
+            "@types/fortawesome__fontawesome-svg-core",\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3322,6 +3412,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["acoha", "workspace:."],\
             ["@emotion/react", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:@emotion/react@npm%3A11.10.5#./.yarn/patches/@emotion-react-npm-11.10.5-98e2cdb553.patch::version=11.10.5&hash=2c3ff7&locator=acoha%40workspace%3A."],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.4.0"],\
+            ["@fortawesome/free-regular-svg-icons", "npm:6.4.0"],\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.4.0"],\
+            ["@fortawesome/react-fontawesome", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.2.0"],\
             ["@headlessui/react", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:@headlessui/react@npm%3A1.7.7#./.yarn/patches/@headlessui-react-npm-1.7.7-23b64271f9.patch::version=1.7.7&hash=8569f8&locator=acoha%40workspace%3A."],\
             ["@heroicons/react", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:2.0.13"],\
             ["@next/font", "npm:13.1.2"],\

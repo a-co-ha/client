@@ -1,10 +1,11 @@
 import { useLayoutEffect, createContext, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
-import { getCookie } from 'cookies-next';
+import { getCookies } from 'cookies-next';
+import type { ChatUserData } from './type';
 
 interface Context {
-  messageSend: () => void;
+  sendMessage: (text: string, roomId: string) => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -19,18 +20,13 @@ export const SocketContextProvider = ({
   useEffect(() => {
     const connectSocket = (): Promise<any> => {
       return new Promise((resolve, reject) => {
-        const sessionId = getCookie(`sessionId`);
+        const { sessionId, accessToken } = getCookies();
+        console.log(`session id`, sessionId);
         if (!sessionId) return;
         socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
           auth: {
             sessionId,
-            user: {
-              userId: 96574345,
-              name: 'tangjinlog',
-              githubID: 'tangjinlog',
-              githubURL: 'https://github.com/tangjinlog',
-              img: 'https://avatars.githubusercontent.com/u/96574345?v=4',
-            },
+            token: `access ${accessToken}`,
           },
         });
         socket.on(`connect`, () => {
@@ -39,25 +35,25 @@ export const SocketContextProvider = ({
         });
         socket.on(`connect_error`, (error) => reject(error));
 
-        // socket.on(`users`, (data) => {
-        //   console.log(`user socket`, data);
-        // });
+        socket.on(`users`, (data) => {
+          console.log(`user socket`, data);
+        });
         socket.on(`session`, (data) => {
           console.log(`session sockeet data`, data);
         });
       });
     };
     connectSocket();
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  const messageSend = () => {
+  const sendMessage = (text: string, roomId: string) => {
     console.log(`보냅니다`);
-    socket.emit(`message-send`, {
-      name: 'Yi suho',
-      githubID: 'yisuho',
-      img: 'img',
-      text: '(승하, 수호)에게 12번 채널에서 보냅니다 ',
-      channelId: '642bf',
+    socket.emit(`SEND_MESSAGE`, {
+      text,
+      roomId,
     });
   };
 
@@ -76,7 +72,7 @@ export const SocketContextProvider = ({
   //     socket.on(`UPDATE_MESSAGE`, (msg) => func(msg));
 
   return (
-    <SocketContext.Provider value={{ messageSend }}>
+    <SocketContext.Provider value={{ sendMessage }}>
       {children}
     </SocketContext.Provider>
   );

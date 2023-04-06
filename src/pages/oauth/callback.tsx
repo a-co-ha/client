@@ -7,20 +7,21 @@ import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
+import { parseCookies } from 'nookies';
 
 export default function Callback({
   accessToken,
   refreshToken,
-  sessionId,
+  sessionID,
 }: {
   accessToken: string;
   refreshToken: string;
-  sessionId: string;
+  sessionID: string;
 }) {
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
-  setToken(accessToken, refreshToken, sessionId);
+  setToken(accessToken, refreshToken, sessionID);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   const { data: userData } = useGetUser();
   useEffect(() => {
@@ -47,11 +48,11 @@ export default function Callback({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const authCode = context.query.code;
   const {
-    token: { accessToken },
-    token: { refreshToken },
-    sessionId,
+    token: { accessToken, refreshToken },
+    sessionID,
   } = await oauthLogin(authCode);
+
   return {
-    props: { accessToken, refreshToken, sessionId },
+    props: { accessToken, refreshToken, sessionID },
   };
 };
