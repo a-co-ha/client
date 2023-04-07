@@ -42,32 +42,110 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     {
       userId: 4343,
       name: 'tangjin',
-      text: 'hahaaah',
+      text: 'hahadaah',
+    },
+    {
+      userId: 12345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 232323,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 12345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 232323,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 12345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 232323,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 12345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 232323,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
     },
   ];
-
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   return (
     <div css={styles.chatPage}>
+      {/* <div>chatpage</div> */}
       <div css={styles.chatPageInnerBox}>
-        <div>chatpage</div>
-        <div css={styles.chatPage}>
-          <div>
-            {/* <button>Send Message</button> */}
-            {/* <button>여기서 연결</button> */}
-            {messages.map((msg, i) => {
-              return (
-                <Message
-                  key={i}
-                  userId={msg.userId}
-                  name={msg.name}
-                  text={msg.text}
-                />
-              );
-            })}
-            <div ref={messagesEndRef} />
-          </div>
+        <div css={styles.messageBox}>
+          {messages.map((msg, i) => {
+            return (
+              <Message
+                key={i}
+                userId={msg.userId}
+                name={msg.name}
+                text={msg.text}
+              />
+            );
+          })}
+          <div ref={messagesEndRef} />
         </div>
-        <ChatSendForm pageId={pageId} />
+        <ChatSendForm pageId={pageId} messagesEndRef={messagesEndRef} />
       </div>
     </div>
   );

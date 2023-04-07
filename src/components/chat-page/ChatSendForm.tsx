@@ -1,16 +1,25 @@
 import { useForm } from 'react-hook-form';
 import { useChatSendForm } from '@/hooks/form/useChatSendForm';
-import { useContext, useRef } from 'react';
+import { RefObject, useContext, useRef } from 'react';
 import { SocketContext } from './SocketContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
 import type { ChatMessage } from './type';
 
-export const ChatSendForm = ({ pageId }: { pageId: string }) => {
+export const ChatSendForm = ({
+  pageId,
+  messagesEndRef,
+}: {
+  pageId: string;
+  messagesEndRef: RefObject<HTMLDivElement>;
+}) => {
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ block: 'center' });
+  };
   const { sendMessage } = useContext(SocketContext);
 
-  const onCahngeHandler = ({
+  const onChangeHandler = ({
     value,
     onChange,
     chatMessage,
@@ -19,10 +28,9 @@ export const ChatSendForm = ({ pageId }: { pageId: string }) => {
     onChange: (value: string) => void;
     chatMessage: any;
   }) => {
-    if (chatMessage) {
-      chatMessage.style.height = `auto`;
-      chatMessage.style.height = `${chatMessage.scrollHeight}px`;
-    }
+    chatMessage.style.height = `auto`;
+    chatMessage.style.height = `${chatMessage.scrollHeight}px`;
+    scrollToBottom();
     onChange(value);
   };
 
@@ -48,7 +56,7 @@ export const ChatSendForm = ({ pageId }: { pageId: string }) => {
             rows={1}
             value={chatMessage.value}
             onChange={(e) =>
-              onCahngeHandler({
+              onChangeHandler({
                 value: e.target.value,
                 onChange: chatMessage.onChange,
                 chatMessage: e.target,
