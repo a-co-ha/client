@@ -10,7 +10,7 @@ export const useGetEditablePage = (
   options?: UseQueryOptions<Block[], AxiosError>
 ) => {
   return useQuery<Block[], AxiosError>(
-    [`editablePage`, channelId],
+    [`editablePage`, pageId],
     () => getEditablePage(channelId, pageId, type),
     options
   );

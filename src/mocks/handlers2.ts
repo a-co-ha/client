@@ -7,16 +7,17 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         id: 69295153,
+        userId: 29321,
         name: 'seungha-o',
-        githubID: 'AhGnuesHo',
-        githubURL: 'https://github.com/AhGnuesHo',
+        github_id: 'AhGnuesHo',
+        github_url: 'https://github.com/AhGnuesHo',
         img: 'https://avatars.githubusercontent.com/u/69295153?v=4',
         channels: [
           {
             id: 45,
-            admin: 69295153,
+            userId: Number,
             channelName: '1240',
-            channelImg: null,
+            channelImg: '',
           },
         ],
       })
@@ -230,7 +231,9 @@ const handlers = [
       ctx.json({
         token: {
           accessToken: '12345',
+          refreshToken: '67899',
         },
+        sessionID: 'sessionId',
       })
     );
   }),
@@ -243,33 +246,23 @@ const handlers = [
       })
     );
   }),
-  rest.get(`http://localhost:3001/channel/users`, (_, res, ctx) => {
+  rest.get(`http://localhost:3001/api/channel/users`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        user: [
+        users: [
           {
             name: '상진',
-            _id: nanoId(),
+            id: nanoId(),
+            userId: '23232',
+            admin: 'true',
           },
           {
             name: '승하',
-            _id: nanoId(),
+            id: nanoId(),
+            userId: '21201',
+            admin: 'false',
           },
-          {
-            name: '수호',
-            _id: nanoId(),
-          },
-          {
-            name: '정현',
-            _id: nanoId(),
-          },
-          { name: 'Wade Cooper', _id: nanoId() },
-          { name: 'Arlene Mccoy', _id: nanoId() },
-          { name: 'Devon Webb', _id: nanoId() },
-          { name: 'Tom Cook', _id: nanoId() },
-          { name: 'Tanya Fox', _id: nanoId() },
-          { name: 'Hellen Schmidt', _id: nanoId() },
         ],
       })
     );

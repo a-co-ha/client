@@ -5,16 +5,17 @@ import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
 import { Profile } from './Profile';
-import { getCookies } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import * as styles from './styles';
 import githubLogo from '@/images/githubLogo.png';
 
 export const LoginBtn = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
+  console.log(`이즈로그드이이인`, isLoggedIn);
   useEffect(() => {
-    const token = getCookies();
-    console.log(`로그인 버튼 토큰!@`, token);
-    token ? setIsLoggedIn(true) : null;
+    // const token = getCookie(`accessToken`);
+    // console.log(`로그인 버튼 토큰!@`, token);
+    // token ? setIsLoggedIn(true) : setIsLoggedIn(false);
   }, []);
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {

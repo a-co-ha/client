@@ -13,13 +13,14 @@ const flexRowCenter = css`
 export const projectSideBarBox = css`
   ${flexRowCenter}
   width: 250px;
-  height: 100vh;
+  height: calc(100vh - 50px);
   outline: 1px solid limegreen;
 `;
 
 export const list = css`
   ${flexColumnCenter}
   width: 60px;
+  height: calc(100vh - 50px);
   outline: 1px solid red;
 `;
 
@@ -27,6 +28,7 @@ export const channel = css`
   ${flexColumnCenter}
   width: 250px;
   // flex-grow: 1;
+  height: calc(100vh - 50px);
   outline: 2px solid blue;
 `;
 
@@ -43,7 +45,7 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const ProjectCreate = css`
+export const ProjectCreateThumbnail = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
@@ -84,18 +86,27 @@ export const projectCreateBtn = css`
 export const pageNameInput = css`
   box-sizing: border-box;
   width: 100%;
-  margin-bottom: 0.5rem;
   color: red;
 `;
 
-export const pageNameLink = css`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.5rem;
+export const pageNameLink = (
+  propsPageId: string,
+  pageId: string | string[] | undefined
+) => css`
+  color: ${pageId !== undefined && propsPageId === pageId ? `black` : `gray`};
+  background: ${pageId !== undefined && propsPageId === pageId
+    ? `rgb(226 232 240)`
+    : `none`};
+  border-radius: 0.375rem;
   &:hover {
-    & > button {
+    background: rgb(241 245 249);
+    & > div > button {
       display: block;
     }
+  }
+  & > div {
+    display: flex;
+    justify-content: space-between;
   }
 `;
 

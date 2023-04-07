@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { usePageNameForm } from '../../hooks/usePageNameForm';
 import { useMutation } from '@tanstack/react-query';
+import { usePutEditablePage } from '@/hooks/queries/editable/putPage';
 import { api } from '@/pages/api/config/api-config';
 import { toast } from 'react-toastify';
 import * as styles from './styles';
@@ -20,11 +21,9 @@ export const PageNameForm = ({
 }) => {
   const [isEditing, setIsEditing] = useRecoilState(pageNameEditToggle(pageId));
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
-  const putPageName = useMutation((data: PageName) =>
-    api.put(`/api/page/${pageId}?channel=${channelId}`, {
-      pageName: data,
-    })
-  );
+  console.log(`채널 아이디입니다`, channelId);
+  const putPageName = usePutEditablePage(channelId, pageId);
+
   const methods = useForm<PageName>({
     defaultValues: { pageName },
     mode: 'onSubmit',
@@ -38,8 +37,8 @@ export const PageNameForm = ({
 
   const onSubmit = async (data: PageName) => {
     try {
-      console.log(data);
-      putPageName.mutate(data);
+      console.log(pageName);
+      putPageName.mutate(data.pageName);
       toast.success('페이지 이름을 바꿨어요');
       setIsEditing(false);
     } catch (error) {
@@ -54,13 +53,15 @@ export const PageNameForm = ({
     <div>
       {isEditing ? (
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-          <input
-            css={styles.pageNameInput}
-            value={pageNameField.value}
-            onChange={pageNameField.onChange}
-            name={pageNameField.name}
-            autoFocus
-          />
+          <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900">
+            <input
+              css={styles.pageNameInput}
+              value={pageNameField.value}
+              onChange={pageNameField.onChange}
+              name={pageNameField.name}
+              autoFocus
+            />
+          </div>
         </form>
       ) : null}
     </div>

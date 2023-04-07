@@ -2,21 +2,26 @@ import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
+import type { ChannelUser } from '@/pages/api/user/type';
 
 interface Person {
   name: string;
   _id: string;
 }
 
-export default function Label() {
+export default function Label({
+  channelId,
+}: {
+  channelId: string | string[] | undefined;
+}) {
   const [selected, setSelected] = useState<Person[]>([]);
   const [query, setQuery] = useState('');
-  const { isLoading, error, data } = useGetUsers();
+  const { isLoading, error, data } = useGetUsers(channelId);
 
-  const filteredPeople =
+  const filteredPeople: ChannelUser[] =
     query === ''
       ? data
-      : data.filter((person: Person) =>
+      : data.filter((person: ChannelUser) =>
           person.name
             .toLowerCase()
             .replace(/\s+/g, '')
@@ -59,9 +64,9 @@ export default function Label() {
                   Nothing found.
                 </div>
               ) : (
-                filteredPeople?.map((person: Person) => (
+                filteredPeople?.map((person: ChannelUser) => (
                   <Combobox.Option
-                    key={person._id}
+                    key={person.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? 'bg-teal-600 text-white' : 'text-gray-900'

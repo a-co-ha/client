@@ -1,7 +1,7 @@
 import { LoginBtn } from './LoginBtn';
 import { Profile } from './Profile';
 import { Title } from './Title';
-import { UserList } from './UserList';
+import { ProjectMenu } from './ProjectMenu';
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { initialUserState } from '@/recoil/user/atom';
@@ -19,9 +19,7 @@ export const NavBar = () => {
         <ErrorBoundary fallback={Error} onReset={reset}>
           {/* <Suspense fallback={<Loading />}> */}
           <div css={styles.navBar}>
-            <div css={{ width: '250px', outline: '1px solid limegreen' }}>
-              이자리 뭐넣을지 고민중
-            </div>
+            <ProjectMenu />
             <Title />
             <LoginBtn />
           </div>

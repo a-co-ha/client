@@ -2,11 +2,6 @@ export interface ProjectName {
   projectName: string;
 }
 
-export interface Channels {
-  id: number;
-  channelName: string;
-}
-
 export interface PageName {
   pageName: string;
 }
