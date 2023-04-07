@@ -95,11 +95,11 @@ export const pageNameLink = (
 ) => css`
   color: ${pageId !== undefined && propsPageId === pageId ? `black` : `gray`};
   background: ${pageId !== undefined && propsPageId === pageId
-    ? `rgb(241 245 249)`
+    ? `rgb(226 232 240)`
     : `none`};
   border-radius: 0.375rem;
   &:hover {
-    background: rgb(226 232 240);
+    background: rgb(241 245 249);
     & > div > button {
       display: block;
     }

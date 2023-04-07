@@ -16,14 +16,14 @@ export const chatMessageBox = css`
 export const chatPageInnerBox = css`
   display: flex;
   flex-direction: column;
-  // height: 100%;
 `;
 
 export const chatFormBox = css`
   position: absolute;
-  width: 100%;
+  width: calc(100% - 2rem);
   bottom: 1rem;
   padding: 0.5rem 1rem;
+  margin: 0 1rem;
   border-radius: 0.375rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
@@ -44,4 +44,16 @@ export const chatFormInput = css`
   &:focus {
     outline: none;
   }
+`;
+
+export const messageBox = css`
+  position: absolute;
+  right: 1rem;
+  padding: 0.5rem;
+  margin: 0.375rem 0;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background: #ffd6dc;
+  border-radius: 0.75rem;
+  border-bottom-right-radius: 0.2rem;
 `;
