@@ -24,9 +24,10 @@ export const SocketContextProvider = ({
         console.log(`session id`, sessionId);
         if (!sessionId) return;
         socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
+          withCredentials: true,
           auth: {
             sessionId,
-            token: `access ${accessToken}`,
+            // token: `access ${accessToken}`,
           },
         });
         socket.on(`connect`, () => {
