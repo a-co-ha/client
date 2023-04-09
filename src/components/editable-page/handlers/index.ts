@@ -84,7 +84,6 @@ const onDragEnd = (blocks: Block[], result: DropResult) => {
  * 추가로 imgUrl가 변하면 oldBlock변수로 체크, 다를 시 deleteImageOnserver handler 실행
  */
 const updateBlock = (blocks: Block[], currentBlock: Block) => {
-  console.log('update block', blocks, currentBlock);
   const index = blocks.map((b) => b.blockId).indexOf(currentBlock.blockId);
   const oldBlock = blocks[index];
   const updatedBlocks = [...blocks];
@@ -94,7 +93,7 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
     html: currentBlock.html,
     imgUrl: currentBlock.imgUrl,
   };
-  console.log('updateblocks', updatedBlocks);
+
   // oldBlock.imgUrl !== currentBlock.imgUrl
   //   ? deleteImageOnServer(oldBlock.imgUrl)
   //   : null;

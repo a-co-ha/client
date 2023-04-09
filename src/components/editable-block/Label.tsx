@@ -3,12 +3,15 @@ import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { ChannelUser } from '@/pages/api/user/type';
+import { useGetLabels } from '@/hooks/queries/editable/getLabels';
+import { usePutLabel } from '@/hooks/queries/editable/putLabel';
 
-//TODO: CRUD 해야함
 export default function Label() {
   const [selected, setSelected] = useState<ChannelUser[]>([]);
   const [query, setQuery] = useState('');
   const { data: users } = useGetUsers();
+  const labels = useGetLabels();
+  console.log('selectedTag', labels);
 
   const filteredPeople: ChannelUser[] =
     query === ''
@@ -48,7 +51,11 @@ export default function Label() {
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
-            afterLeave={() => setQuery('')}
+            afterLeave={() => {
+              const names = selected.map((data) => data.name);
+              usePutLabel(names);
+              setQuery('');
+            }}
           >
             <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {filteredPeople?.length === 0 && query !== '' ? (
