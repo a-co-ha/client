@@ -1,8 +1,7 @@
-import { useLayoutEffect, createContext, useEffect } from 'react';
+import { createContext, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
-import { getCookies } from 'cookies-next';
-import type { ChatUserData } from './type';
+import { getCookie } from 'cookies-next';
 
 interface Context {
   sendMessage: (text: string, roomId: string) => void;
@@ -18,17 +17,17 @@ export const SocketContextProvider = ({
   let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
   useEffect(() => {
-    const connectSocket = (): Promise<any> => {
+    const sessionId = getCookie(`sessionId`);
+    if (!sessionId) return;
+    const connectSocket = (): Promise<
+      Socket<DefaultEventsMap, DefaultEventsMap>
+    > => {
       return new Promise((resolve, reject) => {
-        const { sessionId, accessToken } = getCookies();
-        console.log(`session id`, sessionId);
-        if (!sessionId) return;
         socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
-          withCredentials: true,
           auth: {
-            sessionId,
-            // token: `access ${accessToken}`,
+            sessionID: sessionId,
           },
+          withCredentials: true,
         });
         socket.on(`connect`, () => {
           resolve(socket);

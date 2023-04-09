@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useResetRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
 import { channelNameState } from '@/recoil/project/atom';
+import { api } from '@/pages/api/config/api-config';
 import Image from 'next/image';
 
 export const Profile = () => {
@@ -12,11 +13,13 @@ export const Profile = () => {
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
-  const onClickHandler = () => {
+  const onClickHandler = async () => {
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
+    deleteCookie(`sessionId`);
     resetProfile();
     resetChannelName();
+    await api.post(`/api/user/logout`);
     router.replace(`/`);
   };
 

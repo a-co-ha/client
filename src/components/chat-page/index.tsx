@@ -7,7 +7,7 @@ import type { pageProps } from '@/pages/api/editable/type';
 import * as styles from './styles';
 
 export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
-  const { sendMessage } = useContext(SocketContext);
+  // const { sendMessage } = useContext(SocketContext);
   const { data: socketData } = useGetSocketPage(channelId, pageId, type);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +30,52 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
 
   const messages = [
     {
+      userId: 96574345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 232323,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 96574345,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
       userId: 12345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 96574345,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 96574345,
+      name: 'tangjin',
+      text: 'hahah',
+    },
+    {
+      userId: 96574345,
+      name: 'tangjin',
+      text: 'fds',
+    },
+    {
+      userId: 4343,
+      name: 'tangjin',
+      text: 'hahadaah',
+    },
+    {
+      userId: 1234,
       name: 'tangjin',
       text: 'hahah',
     },
@@ -45,62 +90,17 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       text: 'hahadaah',
     },
     {
-      userId: 12345,
+      userId: 1234,
       name: 'tangjin',
       text: 'hahah',
     },
     {
-      userId: 232323,
+      userId: 96574345,
       name: 'tangjin',
       text: 'fds',
     },
     {
-      userId: 4343,
-      name: 'tangjin',
-      text: 'hahadaah',
-    },
-    {
-      userId: 12345,
-      name: 'tangjin',
-      text: 'hahah',
-    },
-    {
-      userId: 232323,
-      name: 'tangjin',
-      text: 'fds',
-    },
-    {
-      userId: 4343,
-      name: 'tangjin',
-      text: 'hahadaah',
-    },
-    {
-      userId: 12345,
-      name: 'tangjin',
-      text: 'hahah',
-    },
-    {
-      userId: 232323,
-      name: 'tangjin',
-      text: 'fds',
-    },
-    {
-      userId: 4343,
-      name: 'tangjin',
-      text: 'hahadaah',
-    },
-    {
-      userId: 12345,
-      name: 'tangjin',
-      text: 'hahah',
-    },
-    {
-      userId: 232323,
-      name: 'tangjin',
-      text: 'fds',
-    },
-    {
-      userId: 4343,
+      userId: 1234,
       name: 'tangjin',
       text: 'hahadaah',
     },
@@ -115,12 +115,12 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       text: 'hahadaah',
     },
     {
-      userId: 4343,
+      userId: 96574345,
       name: 'tangjin',
       text: 'hahadaah',
     },
     {
-      userId: 4343,
+      userId: 96574345,
       name: 'tangjin',
       text: 'hahadaah',
     },
@@ -150,3 +150,8 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     </div>
   );
 };
+
+/**
+ * 이전 메세지와 현재 메세지 비교,
+ * getDate() - getDate() >
+ */
