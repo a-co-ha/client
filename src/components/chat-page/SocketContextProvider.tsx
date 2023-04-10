@@ -1,11 +1,11 @@
-import { useLayoutEffect, createContext, useEffect } from 'react';
+import { createContext, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
-import { getCookies } from 'cookies-next';
-import type { ChatUserData } from './type';
+import { getCookie } from 'cookies-next';
 
 interface Context {
   sendMessage: (text: string, roomId: string) => void;
+  // logout: () => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -17,18 +17,18 @@ export const SocketContextProvider = ({
 }) => {
   let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
+  const sessionId = getCookie(`sessionId`);
   useEffect(() => {
-    const connectSocket = (): Promise<any> => {
+    if (!sessionId) return;
+    const connectSocket = (): Promise<
+      Socket<DefaultEventsMap, DefaultEventsMap>
+    > => {
       return new Promise((resolve, reject) => {
-        const { sessionId, accessToken } = getCookies();
-        console.log(`session id`, sessionId);
-        if (!sessionId) return;
         socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
-          withCredentials: true,
           auth: {
-            sessionId,
-            // token: `access ${accessToken}`,
+            sessionID: sessionId,
           },
+          withCredentials: true,
         });
         socket.on(`connect`, () => {
           resolve(socket);
@@ -45,10 +45,7 @@ export const SocketContextProvider = ({
       });
     };
     connectSocket();
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  }, [sessionId]);
 
   const sendMessage = (text: string, roomId: string) => {
     console.log(`보냅니다`);
@@ -57,6 +54,10 @@ export const SocketContextProvider = ({
       roomId,
     });
   };
+
+  // const logout = () => {
+  //   socket.disconnect();
+  // };
 
   //   const sendMessage = ({
   //     roomId,

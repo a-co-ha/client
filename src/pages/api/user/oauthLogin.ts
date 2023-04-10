@@ -7,6 +7,18 @@ export const oauthLogin = async (
   if (authCode !== '') {
     const res = await api.get(`/api/oauth/github/callback?code=${authCode}`);
     console.log(`여기는 oauth res`, res);
-    return res.data;
+
+    const {
+      token: { accessToken, refreshToken },
+      user: { userId },
+      sessionID,
+    } = res.data;
+    let sidCookie;
+    if (res.headers['set-cookie'] !== undefined) {
+      sidCookie = res.headers['set-cookie'][0];
+      console.log(`쿠키`, sidCookie);
+    }
+
+    return { accessToken, refreshToken, userId, sessionID, sidCookie };
   } else return null;
 };

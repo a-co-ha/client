@@ -17,7 +17,7 @@ export const ChatSendForm = ({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
-  const { sendMessage } = useContext(SocketContext);
+  // const { sendMessage } = useContext(SocketContext);
 
   const onChangeHandler = ({
     value,
@@ -45,7 +45,7 @@ export const ChatSendForm = ({
   });
 
   const onSubmit = async (chatMessage: ChatMessage) => {
-    sendMessage(chatMessage.chatMessage, pageId);
+    // sendMessage(chatMessage.chatMessage, pageId);
   };
   return (
     <div css={styles.chatFormBox}>
@@ -66,7 +66,7 @@ export const ChatSendForm = ({
             placeholder={`메세지를 입력해주세요`}
           />
           {/* <p css={styles.validationMsg}>{error ? error.message : 'ㅤ'}</p> */}
-          <button type="submit">
+          <button css={styles.chatFormBtn} type="submit">
             <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#f85d75' }} />
           </button>
         </div>
