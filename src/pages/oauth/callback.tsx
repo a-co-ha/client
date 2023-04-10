@@ -7,7 +7,6 @@ import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
-import { parseCookies } from 'nookies';
 
 export default function Callback({
   accessToken,

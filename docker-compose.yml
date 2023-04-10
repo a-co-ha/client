@@ -23,7 +23,7 @@ services:
     container_name: nginx-proxy-manager
     restart: always
     ports:
-      - 81:81 #관리포트
+      # - 81:81 #관리포트
       - 80:80 #http
       - 443:443 #https
     volumes:
@@ -40,14 +40,6 @@ services:
     # DISABLE_IPV6: 'true'
     depends_on:
       - acoha-next
-
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer:/data
 
   watchtower:
     image: containrrr/watchtower:latest

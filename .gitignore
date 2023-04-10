@@ -71,5 +71,5 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,nextjs,yarn
 
-/nginx-proxy-manager
-/portainer
+nginx-proxy-manager
+# /portainer
