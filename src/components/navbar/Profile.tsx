@@ -1,6 +1,11 @@
 import * as styles from './styles';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { deleteCookie } from 'cookies-next';
+import {
+  deleteCookie,
+  getCookie,
+  CookieValueTypes,
+  setCookie,
+} from 'cookies-next';
 import { useRouter } from 'next/router';
 import { useResetRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
@@ -9,6 +14,8 @@ import { api } from '@/pages/api/config/api-config';
 import Image from 'next/image';
 
 export const Profile = () => {
+  const sidCookie = getCookie(`sidCookie`);
+  console.log(`여기서 sid쿠키`, sidCookie);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
@@ -17,9 +24,20 @@ export const Profile = () => {
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
+    deleteCookie(`myUserId`);
+    deleteCookie(`sidCookie`);
     resetProfile();
     resetChannelName();
-    await api.post(`/api/user/logout`);
+    await api.post(
+      `/api/user/logout`,
+      {},
+      {
+        headers: {
+          Cookie: sidCookie,
+        },
+      }
+    );
+
     router.replace(`/`);
   };
 

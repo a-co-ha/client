@@ -2,6 +2,7 @@ import { createContext, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { getCookie } from 'cookies-next';
+import { disconnect } from 'process';
 
 interface Context {
   sendMessage: (text: string, roomId: string) => void;
@@ -44,9 +45,6 @@ export const SocketContextProvider = ({
       });
     };
     connectSocket();
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   const sendMessage = (text: string, roomId: string) => {
