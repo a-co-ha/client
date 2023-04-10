@@ -1,17 +1,20 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { channelListState } from '@/recoil/project/atom';
+import { channelListState, channelNameState } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import githubChannelImg from '@/images/github_channel.png';
 import * as styles from './styles';
-import type { Channels } from './type';
+import type { ChannelList } from '@/pages/api/user/type';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
-  const setInitialUser = useSetRecoilState(initialUserState);
+  const setChannelName = useSetRecoilState(channelNameState);
+  const setIsInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { data: userData } = useGetUser();
@@ -22,20 +25,24 @@ export const List = () => {
     setIsOpen(true);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     try {
-      const channels: Channels[] = [];
+      const channels: ChannelList[] = [];
       if (userData !== undefined && userData.channels.length !== 0) {
-        userData.channels.map((e: Channels) => {
+        userData.channels.map((e: ChannelList) => {
           channels.push({
             id: e.id,
+            userId: e.userId,
             channelName: e.channelName,
+            channelImg: e.channelImg,
           });
         });
         setChannelList(channels);
-        setInitialUser(false);
+        setIsInitialUser(false);
       } else {
         setChannelList([]);
+        setIsInitialUser(true);
+        router.push(`/main`);
       }
     } catch (err) {
       console.error(err);
@@ -43,19 +50,41 @@ export const List = () => {
   }, [userData]);
 
   console.log('채널리스트 ', channelList);
+
+  const onClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    channelId: number,
+    channelName: string
+  ) => {
+    setChannelName(channelName);
+    console.log(channelName);
+    router.push(`/project/${channelId}`);
+  };
+
   return (
     <div css={styles.list}>
       <div>List</div>
       {channelList.map((channel) => (
-        <button
-          key={channel.id}
-          css={styles.ProjectCreate}
-          onClick={() => router.push(`/project/${channel.id}`)}
-        >
-          {channel.channelName}
-        </button>
+        <div key={channel.id} css={styles.ProjectCreateThumbnail}>
+          <button
+            css={{ position: `relative`, width: `100%`, height: `100%` }}
+            onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
+          >
+            <Image
+              src={
+                channel.channelImg == '' ? githubChannelImg : channel.channelImg
+              }
+              fill
+              alt={`channelImg`}
+            />
+          </button>
+        </div>
       ))}
-      <button type="button" onClick={openModal} css={styles.ProjectCreate}>
+      <button
+        type="button"
+        onClick={openModal}
+        css={styles.ProjectCreateThumbnail}
+      >
         +
       </button>
       <Transition appear show={isOpen} as={Fragment}>

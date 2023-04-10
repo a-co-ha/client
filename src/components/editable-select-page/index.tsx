@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 import * as styles from './styles';
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 
 interface SelectPage {
   closeModal: () => void;
@@ -11,24 +11,16 @@ interface SelectPage {
 export const SelectPage = ({ closeModal }: SelectPage) => {
   const router = useRouter();
   const { id: channelId } = router.query;
-  const postEditablePage = usePostEditablePage(channelId);
-
-  const onClickHandler = useMemo(
-    () => (e: React.MouseEvent<HTMLButtonElement>) => {
-      postEditablePage.mutate();
-      const pageData = postEditablePage.data;
-
-      console.log('페이지데이타', pageData);
-      if (pageData !== undefined) {
-        console.log(`pageData`, pageData);
+  const { mutate: postPageMutate } = usePostEditablePage(channelId);
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const template = e.currentTarget.innerText;
+    switch (template) {
+      case 'normal':
+        postPageMutate();
         closeModal();
-        router.push(
-          `/project/${channelId}/${pageData._id}?name=${pageData.pageName}&type=${pageData.type}`
-        );
-      }
-    },
-    [postEditablePage.data]
-  );
+        break;
+    }
+  };
 
   return (
     <div>

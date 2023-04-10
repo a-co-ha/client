@@ -106,7 +106,6 @@ const updatePageOnserver = async (
   channelId: string | string[] | undefined
 ) => {
   try {
-    console.log('여기 풋', pageId);
     await api.put(
       `/api/page/${pageId}?channel=${channelId}`, //channelId 쿼리
       {

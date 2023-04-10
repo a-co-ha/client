@@ -10,12 +10,9 @@ import { updateLabel } from '@/pages/api/editable/updateLabel';
 export default function Label() {
   const [selected, setSelected] = useState<ChannelUser[]>([]);
   const [query, setQuery] = useState('');
-  const { data: users } = useGetUsers();
-  const labels = useGetLabels();
-  const router = useRouter();
-  const { id: channelId, pageId } = router.query;
-  console.log('selectedTag', labels);
+  const { isLoading, error, data } = useGetUsers();
 
+  const filteredPeople: ChannelUser[] =
   const filteredPeople: ChannelUser[] =
     query === ''
       ? users

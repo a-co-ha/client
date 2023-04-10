@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { getToken } from '../user/getToken';
+import { useRouter } from 'next/router';
 
+// const router = useRouter();
 export const api = axios.create({
   baseURL: `${
     process.env.NEXT_PUBLIC_API_MOCKING === 'enabled'
@@ -35,7 +37,9 @@ api.interceptors.response.use(
   async (error) => {
     console.log(`이거에러`, error);
     if (error.response.status === 403) {
-      deleteCookie(`refreshToken`);
+      // router.push(`/`);
+      window.location.href = `/`;
+      // deleteCookie(`refreshToken`);
       // api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
       // setCookie(`accessToken`, accessToken);
       // console.log(`new accessToken`, accessToken);

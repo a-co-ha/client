@@ -1,9 +1,12 @@
-import axios from 'axios';
-import type { GetSocketPage } from './type';
+import { api } from '../config/api-config';
 
-export const getSocketPage: GetSocketPage = async (channelId, pageId) => {
-  const res = await axios.get(
-    `/api/get/socket?page=${pageId}?channel=${channelId}`
-  );
-  return res.data;
+export const getSocketPage = async (pageId: string | string[] | undefined) => {
+  try {
+    const res = await api.get(`/api/page/room/${pageId}`);
+    console.log(`socketpage 조회`, res.data);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 };

@@ -22,9 +22,9 @@ export interface Block {
 }
 
 export interface EditablePages {
-  id: string;
-  fetchedBlocks: Block[];
-  err: boolean;
+  channelId: string;
+  pageId: string;
+  type: string;
 }
 
 export interface DeletePageResponse {

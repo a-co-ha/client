@@ -3,7 +3,7 @@ import { useCreateProjectForm } from '@/hooks/useCreateProjectForm';
 import { initialUserState } from '@/recoil/user/atom';
 import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
-import { usePostProject } from '@/hooks/queries/project/usePostProject';
+import { usePostProject } from '@/hooks/queries/project/postProject';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 import * as styles from './styles';
 import type { ProjectName } from './type';
@@ -13,11 +13,8 @@ export const ProjectCreateForm = ({
 }: {
   closeModal: () => void;
 }) => {
-  const setInitialUser = useSetRecoilState(initialUserState);
-  const router = useRouter();
   const postProject = usePostProject();
-  // const postEditablePage = usePostEditablePage();
-
+  const setIsInitialUser = useSetRecoilState(initialUserState);
   const methods = useForm<ProjectName>({
     defaultValues: {
       projectName: '',
@@ -31,15 +28,8 @@ export const ProjectCreateForm = ({
   const onSubmit = async (channelName: ProjectName) => {
     console.log(channelName);
     postProject.mutate(channelName);
-    if (postProject.data !== undefined) {
-      console.log('postProject', postProject.data.id);
-      // postEditablePage.mutate(postProject.data.id);
-      // router.push(
-      //   `/project/${postProject.data.id}?channelName=${postProject.data.channelName}`
-      // );
-    }
     closeModal();
-    setInitialUser(false);
+    setIsInitialUser(false);
   };
   return (
     <div>

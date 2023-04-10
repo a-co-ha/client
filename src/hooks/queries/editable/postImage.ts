@@ -15,7 +15,7 @@ export const useDeleteEditablePage = (
     {
       onSuccess: () => {
         if (channelId) {
-          queryClient.invalidateQueries([`editablePages`, channelId]);
+          queryClient.invalidateQueries([`channelPages`, channelId]);
         }
       },
     }
