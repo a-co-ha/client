@@ -2,10 +2,10 @@ import { createContext, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { getCookie } from 'cookies-next';
-import { disconnect } from 'process';
 
 interface Context {
   sendMessage: (text: string, roomId: string) => void;
+  // logout: () => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -17,8 +17,8 @@ export const SocketContextProvider = ({
 }) => {
   let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
+  const sessionId = getCookie(`sessionId`);
   useEffect(() => {
-    const sessionId = getCookie(`sessionId`);
     if (!sessionId) return;
     const connectSocket = (): Promise<
       Socket<DefaultEventsMap, DefaultEventsMap>
@@ -45,7 +45,7 @@ export const SocketContextProvider = ({
       });
     };
     connectSocket();
-  }, []);
+  }, [sessionId]);
 
   const sendMessage = (text: string, roomId: string) => {
     console.log(`보냅니다`);
@@ -54,6 +54,10 @@ export const SocketContextProvider = ({
       roomId,
     });
   };
+
+  // const logout = () => {
+  //   socket.disconnect();
+  // };
 
   //   const sendMessage = ({
   //     roomId,

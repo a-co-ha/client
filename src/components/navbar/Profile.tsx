@@ -1,26 +1,24 @@
 import * as styles from './styles';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import {
-  deleteCookie,
-  getCookie,
-  CookieValueTypes,
-  setCookie,
-} from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { useResetRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
 import { channelNameState } from '@/recoil/project/atom';
 import { api } from '@/pages/api/config/api-config';
+import { SocketContext } from '../chat-page/SocketContextProvider';
+import { useContext } from 'react';
 import Image from 'next/image';
 
 export const Profile = () => {
-  const sidCookie = getCookie(`sidCookie`);
-  console.log(`여기서 sid쿠키`, sidCookie);
+  // const { logout } = useContext(SocketContext);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
   const onClickHandler = async () => {
+    const sidCookie = getCookie(`sidCookie`);
+    console.log(`여기서 sid쿠키`, sidCookie);
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
@@ -28,15 +26,8 @@ export const Profile = () => {
     deleteCookie(`sidCookie`);
     resetProfile();
     resetChannelName();
-    await api.post(
-      `/api/user/logout`,
-      {},
-      {
-        headers: {
-          Cookie: sidCookie,
-        },
-      }
-    );
+    await api.get(`/api/user/logout`);
+    // logout();
 
     router.replace(`/`);
   };
