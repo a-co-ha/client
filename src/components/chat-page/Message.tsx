@@ -1,8 +1,10 @@
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { messageModalState } from '@/recoil/socket/atom';
+import githubChannelImg from '@/images/github_channel.png';
 import * as styles from './styles';
 import type { MessageType } from './type';
-import githubChannelImg from '@/images/github_channel.png';
 
 export const Message = ({
   userId,
@@ -13,6 +15,11 @@ export const Message = ({
 }: MessageType) => {
   const myUserId = Number(getCookie(`myUserId`));
   const isMyMessage = userId === myUserId ? true : false;
+  const [messageModal, setMessageModal] = useRecoilState(messageModalState);
+
+  const onClickHandler = () => {
+    setMessageModal(true);
+  };
 
   return (
     <div css={styles.messageAlign(isMyMessage)}>
@@ -23,6 +30,7 @@ export const Message = ({
             width: `100%`,
             height: `100%`,
           }}
+          onClick={onClickHandler}
         >
           <Image
             css={{

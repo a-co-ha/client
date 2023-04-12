@@ -1,11 +1,12 @@
-import { createContext, useEffect } from 'react';
+import { createContext, useLayoutEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { getCookie } from 'cookies-next';
+import { useSetRecoilState } from 'recoil';
+import { onUserState } from '@/recoil/socket/atom';
 
 interface Context {
   sendMessage: (text: string, roomId: string) => void;
-  // logout: () => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -15,10 +16,11 @@ export const SocketContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+  const setOnUser = useSetRecoilState(onUserState);
 
+  let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   const sessionId = getCookie(`sessionId`);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!sessionId) return;
     const connectSocket = (): Promise<
       Socket<DefaultEventsMap, DefaultEventsMap>
@@ -37,6 +39,7 @@ export const SocketContextProvider = ({
         socket.on(`connect_error`, (error) => reject(error));
 
         socket.on(`users`, (data) => {
+          setOnUser(data);
           console.log(`user socket`, data);
         });
         socket.on(`session`, (data) => {
@@ -46,7 +49,6 @@ export const SocketContextProvider = ({
     };
     connectSocket();
   }, [sessionId]);
-
   const sendMessage = (text: string, roomId: string) => {
     console.log(`보냅니다`);
     socket.emit(`SEND_MESSAGE`, {

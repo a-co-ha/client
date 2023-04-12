@@ -3,7 +3,24 @@ import { nanoId } from '@/utils/nanoId';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 
-export const socketState = atom<Socket<DefaultEventsMap, DefaultEventsMap>>({
-  key: `socket/${nanoId()}`,
-  // default: Socket<DefaultEventsMap, DefaultEventsMap>,
+// export const socketState = atom<Socket<DefaultEventsMap, DefaultEventsMap>>({
+//   key: `socket/${nanoId()}`,
+//   // default: Socket<DefaultEventsMap, DefaultEventsMap>,
+// });
+
+export const onUserState = atom({
+  key: `onUserState/${nanoId()}`,
+  default: [
+    {
+      userID: 0,
+      name: '',
+      img: '',
+      messages: [],
+    },
+  ],
+});
+
+export const messageModalState = atom({
+  key: `messageModalState/${nanoId()}`,
+  default: false,
 });

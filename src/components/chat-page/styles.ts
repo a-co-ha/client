@@ -115,3 +115,41 @@ export const messageImgBox = (isMyMessage: boolean, isDisplay: boolean) => css`
   margin-left: 1rem;
   opacity: ${isDisplay ? `1` : `0`};
 `;
+
+export const messageModalBox = (isOpen: boolean) => css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: ${isOpen ? `100vw` : `0`};
+  height: ${isOpen ? `100vh` : `0`};
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  z-index: 13;
+`;
+
+export const messageModalBoxTransition = (isOpen: boolean) => css`
+  position: absolute;
+  & > * {
+    display: ${isOpen ? `block` : `none`};
+  }
+  top: 50%;
+  left: 50%;
+  z-index: 12;
+  transform: translate3d(-50%, -50%, 0) scale(${isOpen ? `1` : `0.5`});
+  transform-origin: center;
+  transform-duration: ${isOpen ? `0.1s` : `0.25s`};
+  opacity: ${isOpen ? `1` : `0.5`};
+  transition: 0.1s ease-out;
+`;
+
+export const messageModalBackground = (isOpen: boolean) => css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: ${isOpen ? `block` : `none`};
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  opacity: 0.2;
+  z-index: 11;
+`;

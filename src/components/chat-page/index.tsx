@@ -3,6 +3,7 @@ import { SocketContext } from './SocketContextProvider';
 import { useGetSocketPage } from '@/hooks/queries/socket/getPage';
 import { ChatSendForm } from './ChatSendForm';
 import { Message } from './Message';
+import { MessageModal } from './MessageModal';
 import dayjs from 'dayjs';
 import type { pageProps } from '@/pages/api/editable/type';
 import * as styles from './styles';
@@ -197,7 +198,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
 
   return (
     <div css={styles.chatPage}>
-      {/* <div>chatpage</div> */}
+      <MessageModal />
       <div css={styles.chatPageInnerBox}>
         <div css={styles.messageBox}>
           {messages.map((msg, i) => {
