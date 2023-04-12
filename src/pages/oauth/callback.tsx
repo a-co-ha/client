@@ -7,7 +7,6 @@ import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
-import { setCookie } from 'cookies-next';
 
 export default function Callback({
   accessToken,
@@ -65,6 +64,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = logindata?.userId;
   const sidCookie = logindata?.sidCookie;
 
+  const { req } = context;
+  console.log('컨텍', req.cookies);
   return {
     props: { accessToken, refreshToken, sessionID, userId, sidCookie },
   };
