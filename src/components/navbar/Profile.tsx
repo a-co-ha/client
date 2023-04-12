@@ -17,16 +17,19 @@ export const Profile = () => {
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
   const onClickHandler = async () => {
-    const sidCookie = getCookie(`sidCookie`);
-    console.log(`여기서 sid쿠키`, sidCookie);
-    deleteCookie(`refreshToken`);
-    deleteCookie(`accessToken`);
-    deleteCookie(`sessionId`);
-    deleteCookie(`myUserId`);
-    deleteCookie(`sidCookie`);
+      const sessionId = getCookie(`sessionId`);
+    // const sidCookie = getCookie(`sidCookie`);
+    console.log(`session`, sessionId);
+    // deleteCookie(`refreshToken`);
+    // deleteCookie(`accessToken`);
+    // deleteCookie(`sessionId`);
+    // deleteCookie(`myUserId`);
+    // deleteCookie(`sidCookie`);
     resetProfile();
     resetChannelName();
-    await api.get(`/api/user/logout`);
+    await api.post(`/api/user/logout`,{
+      sessionID : sessionId
+    });
     // logout();
 
     router.replace(`/`);

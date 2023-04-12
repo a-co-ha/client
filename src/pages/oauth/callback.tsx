@@ -7,7 +7,6 @@ import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
-
 export default function Callback({
   accessToken,
   refreshToken,
@@ -25,10 +24,11 @@ export default function Callback({
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
   const { data: userData } = useGetUser();
-  console.log(`sidCookie`, sidCookie);
+  // console.log(`sidCookie`, sidCookie);
   // setCookie(`sidCookie`, sidCookie, { maxAge: 60 * 60 * 24, sameSite: 'lax' });
   setToken(accessToken, refreshToken, sessionID, userId, sidCookie);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
+  api.defaults.headers.common['Cookie'] = sessionID;
   useEffect(() => {
     router.prefetch(`/project`);
   }, [router.isReady]);
@@ -62,7 +62,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const refreshToken = logindata?.refreshToken;
   const sessionID = logindata?.sessionID;
   const userId = logindata?.userId;
-  const sidCookie = logindata?.sidCookie;
+  const sidCookie = logindata?.sidCookie as string;
+//  console.log(context.req.session?.id);
+  console.log('쿠키', sidCookie);
+
+    context.res.setHeader('Set-Cookie', sidCookie);
 
   return {
     props: { accessToken, refreshToken, sessionID, userId, sidCookie },
