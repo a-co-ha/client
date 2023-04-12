@@ -71,7 +71,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
               <Droppable key={pageId} droppableId={pageId}>
                 {(provided) => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
-                    {blocks.map((block) => {
+                    {blocks?.map((block) => {
                       const position = blocks
                         .map((b) => b.blockId)
                         .indexOf(block.blockId);

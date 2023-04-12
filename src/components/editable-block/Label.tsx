@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
@@ -6,11 +6,7 @@ import { ChannelUser } from '@/pages/api/user/type';
 import { useGetLabels } from '@/hooks/queries/editable/getLabels';
 import { useRouter } from 'next/router';
 import { updateLabel } from '@/pages/api/editable/updateLabel';
-
-interface LabelType {
-  name: string;
-  id: string;
-}
+import { nanoId } from '@/utils/nanoId';
 
 export default function Label() {
   const selectedUsers = useGetLabels();
@@ -19,11 +15,13 @@ export default function Label() {
   const { data } = useGetUsers();
   const router = useRouter();
   const { id: channelId, pageId } = router.query;
-  const users = data?.map((x: ChannelUser) => x.name);
+  const users = useMemo(() => {
+    return data?.map((x: ChannelUser) => x.name);
+  }, [data]);
 
   useEffect(() => {
     setSelected(selectedUsers);
-  }, []);
+  }, [pageId]);
 
   const filteredPeople =
     query === ''
@@ -78,7 +76,7 @@ export default function Label() {
               ) : (
                 filteredPeople?.map((user: string[]) => (
                   <Combobox.Option
-                    // key={user.id}
+                    key={nanoId()}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? 'bg-teal-600 text-white' : 'text-gray-900'
