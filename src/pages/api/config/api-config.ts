@@ -20,7 +20,7 @@ console.log('여기', process.env.NEXT_PUBLIC_DEV_SERVER_URL);
 
 api.interceptors.request.use(
   (config) => {
-    console.log(`인터셉터 request`);
+    // console.log(`인터셉터 request`);
     const accessToken = getCookie('accessToken');
     // const accessToken = getCookie('accessToken');
     if (config.headers && accessToken)

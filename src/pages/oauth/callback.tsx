@@ -25,7 +25,7 @@ export default function Callback({
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
   const { data: userData } = useGetUser();
-  console.log(`sidCookie`, sidCookie);
+  // console.log(`sidCookie`, sidCookie);
   // setCookie(`sidCookie`, sidCookie, { maxAge: 60 * 60 * 24, sameSite: 'lax' });
   setToken(accessToken, refreshToken, sessionID, userId, sidCookie);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
@@ -62,11 +62,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const refreshToken = logindata?.refreshToken;
   const sessionID = logindata?.sessionID;
   const userId = logindata?.userId;
-  const sidCookie = logindata?.sidCookie;
+
+  // context.res.setHeader('Set-Cookie', sidCookie);
 
   const { req } = context;
   console.log('컨텍', req.cookies);
   return {
-    props: { accessToken, refreshToken, sessionID, userId, sidCookie },
+    props: { accessToken, refreshToken, sessionID, userId },
   };
 };
