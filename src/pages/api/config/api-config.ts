@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 
 // const router = useRouter();
 export const api = axios.create({
+  withCredentials: true,
   baseURL: `${
     process.env.NEXT_PUBLIC_API_MOCKING === 'enabled'
       ? process.env.NEXT_PUBLIC_ENV_URL
       : process.env.NEXT_PUBLIC_DEV_SERVER_URL
   }`,
-  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -20,7 +20,7 @@ console.log('여기', process.env.NEXT_PUBLIC_DEV_SERVER_URL);
 
 api.interceptors.request.use(
   (config) => {
-    console.log(`인터셉터 request`);
+    // console.log(`인터셉터 request`);
     const accessToken = getCookie('accessToken');
     // const accessToken = getCookie('accessToken');
     if (config.headers && accessToken)

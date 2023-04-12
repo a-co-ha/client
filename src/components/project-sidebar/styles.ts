@@ -50,7 +50,8 @@ export const ProjectCreateThumbnail = css`
   height: 40px;
   margin-top: 5px;
   border: 1px solid black;
-  border-radius: 4px;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 export const projectNameInput = (error: boolean) => css`

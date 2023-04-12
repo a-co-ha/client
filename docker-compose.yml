@@ -3,27 +3,12 @@ version: '3.8'
 
 # services는 컨테이너
 services:
-  # db:
-  #   image: mariadb
-  #   container_name: mariadb
-  #   restart: always
-  #   #ports:
-  #   # - 3306:3306
-  #   environment:
-  #     TZ: Asia/Seoul
-  #     MYSQL_ROOT_PASSWORD: "Qwer1234!!"
-  #     MARIADB_USER: npm
-  #     MARIADB_DATABASE: npm
-  #     MARIADB_PASSWORD: "Qwer1234!!"
-  #   volumes:
-  #     - ./mysql/data:/var/lib/mysql
-
   npm:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy-manager
     restart: always
     ports:
-      - 81:81 #관리포트
+      # - 81:81 #관리포트
       - 80:80 #http
       - 443:443 #https
     volumes:
@@ -40,14 +25,6 @@ services:
     # DISABLE_IPV6: 'true'
     depends_on:
       - acoha-next
-
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer:/data
 
   watchtower:
     image: containrrr/watchtower:latest

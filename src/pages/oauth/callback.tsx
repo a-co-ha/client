@@ -7,23 +7,24 @@ import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
 import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
-import { parseCookies } from 'nookies';
 
 export default function Callback({
   accessToken,
   refreshToken,
   sessionID,
+  userId,
 }: {
   accessToken: string;
   refreshToken: string;
   sessionID: string;
+  userId: number;
 }) {
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
-  setToken(accessToken, refreshToken, sessionID);
-  api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   const { data: userData } = useGetUser();
+  setToken(accessToken, refreshToken, sessionID, userId);
+  api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   useEffect(() => {
     router.prefetch(`/project`);
   }, [router.isReady]);
@@ -47,12 +48,13 @@ export default function Callback({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const authCode = context.query.code;
-  const {
-    token: { accessToken, refreshToken },
-    sessionID,
-  } = await oauthLogin(authCode);
+  const logindata = await oauthLogin(authCode);
+  const accessToken = logindata?.accessToken;
+  const refreshToken = logindata?.refreshToken;
+  const sessionID = logindata?.sessionID;
+  const userId = logindata?.userId;
 
   return {
-    props: { accessToken, refreshToken, sessionID },
+    props: { accessToken, refreshToken, sessionID, userId },
   };
 };

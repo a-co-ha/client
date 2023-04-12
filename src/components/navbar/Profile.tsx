@@ -1,26 +1,36 @@
 import * as styles from './styles';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { useResetRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
 import { channelNameState } from '@/recoil/project/atom';
+import { api } from '@/pages/api/config/api-config';
+import { SocketContext } from '../chat-page/SocketContextProvider';
+import { useContext } from 'react';
 import Image from 'next/image';
 
 export const Profile = () => {
+  // const { logout } = useContext(SocketContext);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
-  const onClickHandler = () => {
+  const onClickHandler = async () => {
+      const sessionID = getCookie(`sessionId`);
+    console.log(`session`, sessionID);
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
+    deleteCookie(`sessionId`);
+    deleteCookie(`myUserId`);
     resetProfile();
     resetChannelName();
+    await api.post(`/api/user/logout`,{
+      sessionID
+    });
+    // logout();
     router.replace(`/`);
   };
-
-  console.log(user);
   return (
     <div css={styles.profileBox}>
       {user && (

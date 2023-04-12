@@ -6,7 +6,14 @@ export const oauthLogin = async (
   console.log('oauth입니다');
   if (authCode !== '') {
     const res = await api.get(`/api/oauth/github/callback?code=${authCode}`);
-    console.log(`여기는 oauth res`, res);
-    return res.data;
+    console.log(`여기는 oauth res`, res.headers);
+
+    const {
+      token: { accessToken, refreshToken },
+      user: { userId },
+      sessionID,
+    } = res.data;
+
+    return { accessToken, refreshToken, userId, sessionID };
   } else return null;
 };
