@@ -1,6 +1,5 @@
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
-import dayjs from 'dayjs';
 import * as styles from './styles';
 import type { MessageType } from './type';
 import githubChannelImg from '@/images/github_channel.png';
@@ -9,7 +8,7 @@ export const Message = ({
   userId,
   name,
   text,
-  isDisplayTime,
+  isDisplay,
   currentMsgTime,
 }: MessageType) => {
   const myUserId = Number(getCookie(`myUserId`));
@@ -17,7 +16,7 @@ export const Message = ({
 
   return (
     <div css={styles.messageAlign(isMyMessage)}>
-      <div css={styles.messageImgBox(isMyMessage)}>
+      <div css={styles.messageImgBox(isMyMessage, isDisplay)}>
         <button
           css={{
             position: `relative`,
@@ -35,13 +34,12 @@ export const Message = ({
           />
         </button>
       </div>
-      <div css={styles.messageNameBox()}>
-        <div css={styles.messageName(isMyMessage)}>
-          <span>{name}</span>
-          <span css={styles.messageTime(isDisplayTime)}>{currentMsgTime}</span>
+      <div css={styles.messageNameAlign}>
+        <div css={styles.messageNameBox(isMyMessage)}>
+          <span css={styles.messageName(isMyMessage, isDisplay)}>{name}</span>
+          <span css={styles.messageTime(isDisplay)}>{currentMsgTime}</span>
         </div>
         <div css={styles.message(isMyMessage)}>
-          {/* <div>{userId}</div> */}
           <span>{text}</span>
         </div>
       </div>
