@@ -15,7 +15,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCookie, setCookie } from 'cookies-next';
 import { getToken } from './api/user/getToken';
-import { io } from 'socket.io-client';
 import { SocketContextProvider } from '@/components/chat-page/SocketContextProvider';
 import type { AppContext, AppProps } from 'next/app';
 interface MyAppProps extends AppProps {

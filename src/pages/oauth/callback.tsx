@@ -25,8 +25,6 @@ export default function Callback({
   const setIsLoggedIn = useSetRecoilState(loginState);
   const router = useRouter();
   const { data: userData } = useGetUser();
-  // console.log(`sidCookie`, sidCookie);
-  // setCookie(`sidCookie`, sidCookie, { maxAge: 60 * 60 * 24, sameSite: 'lax' });
   setToken(accessToken, refreshToken, sessionID, userId, sidCookie);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   useEffect(() => {
@@ -52,18 +50,11 @@ export default function Callback({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const authCode = context.query.code;
-  // const {
-  //   token: { accessToken, refreshToken },
-  //   sessionID,
-  //   user: { userId },
-  // } = await oauthLogin(authCode);
   const logindata = await oauthLogin(authCode);
   const accessToken = logindata?.accessToken;
   const refreshToken = logindata?.refreshToken;
   const sessionID = logindata?.sessionID;
   const userId = logindata?.userId;
-
-  // context.res.setHeader('Set-Cookie', sidCookie);
 
   const { req } = context;
   console.log('컨텍', req.cookies);
