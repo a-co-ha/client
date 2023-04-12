@@ -38,6 +38,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
+
   const { id: channelId, pageId, type } = context.query;
   try {
     // if (type === 'normal') {

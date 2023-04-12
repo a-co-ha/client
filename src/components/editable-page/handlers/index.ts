@@ -40,12 +40,10 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  * backend/controllers/pages.js/deleteImage 참조
  *
  */
-const deleteImageOnServer = async (imgUrl: string | ArrayBuffer | null) => {
+const deleteImageOnServer = async (imgUrl: string) => {
   try {
-    const res = await api.delete(`/pages/${imgUrl}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const res = await api.post(`/api/page/images/delete`, {
+      imgKey: imgUrl,
     });
     console.log(res);
   } catch (err) {
@@ -95,9 +93,10 @@ const updateBlock = (blocks: Block[], currentBlock: Block) => {
     html: currentBlock.html,
     imgUrl: currentBlock.imgUrl,
   };
-  oldBlock.imgUrl !== currentBlock.imgUrl
-    ? deleteImageOnServer(oldBlock.imgUrl)
-    : null;
+
+  // oldBlock.imgUrl !== currentBlock.imgUrl
+  //   ? deleteImageOnServer(oldBlock.imgUrl)
+  //   : null;
   return updatedBlocks;
 };
 
@@ -129,4 +128,5 @@ export const handlers = {
   onDragEnd,
   updateBlock,
   updatePageOnserver,
+  deleteImageOnServer,
 };

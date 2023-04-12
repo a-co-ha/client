@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
-import { useDeleteEditablePage } from '@/hooks/queries/editable/deletePage';
+
 import { useRouter } from 'next/router';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';
+import { useDeleteEditablePage } from '@/hooks/queries/editable/postImage';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
   const router = useRouter();

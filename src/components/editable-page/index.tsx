@@ -45,6 +45,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
 
   const updateBlockHandler = (currentBlock: Block) => {
     const updatedBlocks = handlers.updateBlock(blocks, currentBlock);
+    console.log('update', updatedBlocks); //여기까지 imgurl있음
     setBlocks(updatedBlocks);
   };
 
@@ -65,12 +66,12 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
         <ErrorBoundary fallback={Error} onReset={reset}>
           <div css={styles.contentBox}>
             {isNewPage && <Notice status="SUCCESS" />}
-            <Label channelId={channelId} />
+            <Label />
             <DragDropContext onDragEnd={onDragEndHandler}>
               <Droppable key={pageId} droppableId={pageId}>
                 {(provided) => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
-                    {blocks.map((block) => {
+                    {blocks?.map((block) => {
                       const position = blocks
                         .map((b) => b.blockId)
                         .indexOf(block.blockId);
