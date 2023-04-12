@@ -73,10 +73,10 @@ export const messageAlign = (isMyMessage: boolean) => css`
 `;
 
 export const message = (isMyMessage: boolean) => css`
-  display: block;
+  display: inline-block;
   max-width: 180px;
   padding: 0.5rem;
-  text-align: start;
+  // text-align: start;
   line-height: 1rem;
   font-size: 0.75rem;
   margin: ${isMyMessage ? `0` : `0.375rem 0 0 0.7rem`};
@@ -87,6 +87,12 @@ export const message = (isMyMessage: boolean) => css`
     : `border-top-left-radius: 0.2rem`};
 `;
 
+export const messageNameBox = () => css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 export const messageName = (isMyMessage: boolean) => css`
   display: ${isMyMessage ? `none` : `block`};
   text-align: start;
@@ -94,6 +100,10 @@ export const messageName = (isMyMessage: boolean) => css`
   font-size: 0.75rem;
   margin: ${isMyMessage ? `0` : `0 0 0 0.7rem`};
   opacity: ${isMyMessage ? `0` : `1`};
+`;
+
+export const messageTime = (isDisplayTime: boolean) => css`
+  margin-left: 5px;
 `;
 
 export const messageImgBox = (isMyMessage: boolean) => css`

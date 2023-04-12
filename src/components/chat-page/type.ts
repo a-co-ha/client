@@ -11,4 +11,6 @@ export interface MessageType {
   userId: number;
   name: string;
   text: string;
+  isDisplayTime: boolean;
+  currentMsgTime: string;
 }

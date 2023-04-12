@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 import * as styles from './styles';
-import { useCallback } from 'react';
 
 interface SelectPage {
   closeModal: () => void;
@@ -19,6 +18,7 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
         postPageMutate();
         closeModal();
         break;
+      case 'progress':
     }
   };
 
@@ -31,17 +31,17 @@ export const SelectPage = ({ closeModal }: SelectPage) => {
           </button>
         </div>
         <div>
-          <button css={styles.button} type="button">
+          <button css={styles.button} type="button" onClick={onClickHandler}>
             progress
           </button>
         </div>
         <div>
-          <button css={styles.button} type="button">
+          <button css={styles.button} type="button" onClick={onClickHandler}>
             example1
           </button>
         </div>
         <div>
-          <button css={styles.button} type="button">
+          <button css={styles.button} type="button" onClick={onClickHandler}>
             example2
           </button>
         </div>
