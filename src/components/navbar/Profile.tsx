@@ -17,25 +17,20 @@ export const Profile = () => {
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
   const onClickHandler = async () => {
-      const sessionId = getCookie(`sessionId`);
-    // const sidCookie = getCookie(`sidCookie`);
-    console.log(`session`, sessionId);
-    // deleteCookie(`refreshToken`);
-    // deleteCookie(`accessToken`);
-    // deleteCookie(`sessionId`);
-    // deleteCookie(`myUserId`);
-    // deleteCookie(`sidCookie`);
+      const sessionID = getCookie(`sessionId`);
+    console.log(`session`, sessionID);
+    deleteCookie(`refreshToken`);
+    deleteCookie(`accessToken`);
+    deleteCookie(`sessionId`);
+    deleteCookie(`myUserId`);
     resetProfile();
     resetChannelName();
     await api.post(`/api/user/logout`,{
-      sessionID : sessionId
+      sessionID
     });
     // logout();
-
     router.replace(`/`);
   };
-
-  console.log(user);
   return (
     <div css={styles.profileBox}>
       {user && (

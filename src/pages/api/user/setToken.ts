@@ -30,11 +30,11 @@ export const setToken = async (
       maxAge: 60 * 60 * 24,
       sameSite: 'lax',
     });
-    setCookie('sidCookie', sidCookie, {
-      maxAge: 60 * 60 * 24,
-      sameSite: 'none',
-      secure: true,
-    });
+    // setCookie('sidCookie', sidCookie, {
+    //   maxAge: 60 * 60 * 24,
+    //   sameSite: 'none',
+    //   secure: true,
+    // });
     const cookies = getCookies();
     return cookies;
   } else return null;

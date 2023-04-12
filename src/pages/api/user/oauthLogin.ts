@@ -13,13 +13,12 @@ export const oauthLogin = async (
       user: { userId },
       sessionID,
     } = res.data;
-    let sidCookie;
-    if (res.headers['set-cookie'] !== undefined) {
-      sidCookie = res.headers['set-cookie'][0];
-      // console.log(`쿠키`, sidCookie);
-    }
+    // let sidCookie;
+    // if (res.headers['set-cookie'] !== undefined) {
+    //   sidCookie = res.headers['set-cookie'][0];
+    //   // console.log(`쿠키`, sidCookie);
+    // }
 
-    return { accessToken, refreshToken, userId, sessionID, sidCookie };
-    // return { accessToken, refreshToken, userId, sessionID };
+    return { accessToken, refreshToken, userId, sessionID };
   } else return null;
 };
