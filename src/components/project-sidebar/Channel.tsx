@@ -2,17 +2,18 @@ import { useRecoilState } from 'recoil';
 import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
-import { Modal } from './modal';
+import Modal from './modal';
 import { PageNameForm } from './PageNameForm';
 import { PageNameLink } from './PageNameLink';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useGetChannelPages } from '@/hooks/queries/editable/getPages';
 import * as styles from './styles';
 
+import { Popover } from '@headlessui/react';
+
 /** 여기서 채널 간단목록 조회 api 쏨 */
 export const Channel = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [pageList, setPageList] = useRecoilState(pageListState);
   const router = useRouter();
   const channelId = router.query.id;
@@ -31,23 +32,15 @@ export const Channel = () => {
       console.error(err);
     }
   }, [pages]);
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const openModal = () => {
-    setIsOpen(true);
-  };
-  console.log(pageList);
+
   const editablePageList = pageList.EditablePage.filter(
     (pageList) => pageList.page.categories === 'page'
   );
-  console.log(editablePageList);
 
   return (
     <div css={styles.channel}>
       <div>channel</div>
       {/* 템플릿 선택 모달 */}
-      <Modal isOpen={isOpen} closeModal={closeModal} />
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
           <Disclosure defaultOpen>
@@ -62,12 +55,16 @@ export const Channel = () => {
                       } h-5 w-5 text-purple-500`}
                     />
                   </Disclosure.Button>
-                  <button
-                    css={styles.pageCreateBtn}
-                    onClick={() => openModal()}
-                  >
-                    +
-                  </button>
+                  <div css={styles.pageCreateBtn}>
+                    <Popover className="relative">
+                      <>
+                        <Popover.Button>
+                          <span>+</span>
+                        </Popover.Button>
+                        <Modal />
+                      </>
+                    </Popover>
+                  </div>
                 </div>
                 <Disclosure.Panel className="flex-col items-between px-4 pt-4 pb-2 text-sm text-gray-500">
                   {editablePageList.map((pageList) => {
@@ -104,12 +101,16 @@ export const Channel = () => {
                       } h-5 w-5 text-purple-500`}
                     />
                   </Disclosure.Button>
-                  <button
-                    css={styles.pageCreateBtn}
-                    onClick={() => openModal()}
-                  >
-                    +
-                  </button>
+                  <div css={styles.pageCreateBtn}>
+                    <Popover className="relative">
+                      <>
+                        <Popover.Button>
+                          <span>+</span>
+                        </Popover.Button>
+                        <Modal />
+                      </>
+                    </Popover>
+                  </div>
                 </div>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                   {socketPageList.map((pageList) => {
