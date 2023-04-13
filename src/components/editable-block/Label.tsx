@@ -10,7 +10,7 @@ import { nanoId } from '@/utils/nanoId';
 
 export default function Label() {
   const selectedUsers = useGetLabels();
-  const [selected, setSelected] = useState<string[] | undefined>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const { data } = useGetUsers();
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function Label() {
   }, [data]);
 
   useEffect(() => {
-    setSelected(selectedUsers);
+    setSelected(selectedUsers ?? []);
   }, [pageId]);
 
   const filteredPeople =
