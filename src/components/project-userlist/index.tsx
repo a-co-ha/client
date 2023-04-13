@@ -11,13 +11,13 @@ export const UserList = () => {
   return (
     <div css={styles.userListBox}>
       <div>
-        <div>userlist</div>
-        <div>Online</div>
+        <div css={{ textAlign: `center` }}>userlist</div>
         {onUser.map((user, i) => {
           return (
             <div key={i}>
-              <Image src={user.img} width={40} height={40} alt={`onUserList`} />
-              <span>{user.name}</span>
+              {/* <Image src={user.img} width={40} height={40} alt={`onUserList`} /> */}
+              <span css={styles.isUserOnline}></span>
+              <span css={styles.userName}>{user.name}</span>
             </div>
           );
         })}

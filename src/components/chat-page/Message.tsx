@@ -14,7 +14,7 @@ export const Message = ({
   currentMsgTime,
 }: MessageType) => {
   const myUserId = Number(getCookie(`myUserId`));
-  const isMyMessage = userId === myUserId ? true : false;
+  // const isMyMessage = userId === myUserId ? true : false;
   const [messageModal, setMessageModal] = useRecoilState(messageModalState);
 
   const onClickHandler = () => {
@@ -22,8 +22,8 @@ export const Message = ({
   };
 
   return (
-    <div css={styles.messageAlign(isMyMessage)}>
-      <div css={styles.messageImgBox(isMyMessage, isDisplay)}>
+    <div css={styles.messageAlign(isDisplay)}>
+      <div css={styles.messageImgBox(isDisplay)}>
         <button
           css={{
             position: `relative`,
@@ -43,11 +43,11 @@ export const Message = ({
         </button>
       </div>
       <div css={styles.messageNameAlign}>
-        <div css={styles.messageNameBox(isMyMessage)}>
-          <span css={styles.messageName(isMyMessage, isDisplay)}>{name}</span>
+        <div css={styles.messageNameBox}>
+          <span css={styles.messageName(isDisplay)}>{name}</span>
           <span css={styles.messageTime(isDisplay)}>{currentMsgTime}</span>
         </div>
-        <div css={styles.message(isMyMessage)}>
+        <div css={styles.message}>
           <span>{text}</span>
         </div>
       </div>

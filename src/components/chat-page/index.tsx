@@ -142,8 +142,14 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     {
       userId: 1234,
       name: 'githob',
-      text: 'hahadaah',
+      text: '디코스타일 어때요 디코스타일 어떤가요 디코 스타일이 나은가요 카톡 스타일이 나은가요 어떤가요',
       createdAt: '2023-04-11T16:09:09.401Z',
+    },
+    {
+      userId: 96574345,
+      name: 'tangjin',
+      text: '좋은데요',
+      createdAt: '2023-04-13T15:09:09.401Z',
     },
   ];
   useEffect(() => {

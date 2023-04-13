@@ -5,7 +5,11 @@ export const oauthLogin = async (
 ) => {
   console.log('oauth입니다');
   if (authCode !== '') {
-    const res = await api.get(`/api/oauth/github/callback?code=${authCode}`);
+    const res = await api.get(`/api/oauth/github/callback?code=${authCode}`, {
+      headers: {
+        Origin: 'http://localhost:3001',
+      },
+    });
     console.log(`여기는 oauth res`, res.headers);
 
     const {

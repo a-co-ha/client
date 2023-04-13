@@ -65,23 +65,24 @@ export const messageBox = css`
   }
 `;
 
-export const messageAlign = (isMyMessage: boolean) => css`
+export const messageAlign = (isDisplay: boolean) => css`
   display: flex;
-  justify-content: ${isMyMessage ? `flex-end` : `flex-start`};
+  justify-content: flex-start;
+  margin-top: ${isDisplay ? `1.5rem` : `0`};
 `;
 
-export const message = (isMyMessage: boolean) => css`
+export const message = css`
   display: inline-block;
   max-width: 180px;
   padding: 0.5rem;
+  margin: 0.375rem 0 0 0.7rem;
   line-height: 1rem;
   font-size: 0.75rem;
-  margin: ${isMyMessage ? `0.375rem 0 0 auto` : `0.375rem 0 0 0.7rem`};
+  font-weight: 500;
+  text-align: start;
   background: #ffd6dc;
   border-radius: 0.75rem;
-  ${isMyMessage
-    ? `border-top-right-radius: 0.2rem`
-    : `border-top-left-radius: 0.2rem`};
+  border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
@@ -91,15 +92,15 @@ export const messageNameAlign = css`
   align-items: flex-start;
 `;
 
-export const messageNameBox = (isMyMessage: boolean) => css`
+export const messageNameBox = css`
   display: block;
   line-height: 0.75rem;
   font-size: 0.75rem;
-  margin: ${isMyMessage ? `0` : `0 0 0 0.7rem`};
+  margin: 0 0 0 0.7rem;
 `;
 
-export const messageName = (isMyMessage: boolean, isDisplay: boolean) => css`
-  display: ${isMyMessage ? `none` : isDisplay ? `inline` : `none`};
+export const messageName = (isDisplay: boolean) => css`
+  display: ${isDisplay ? `inline` : `none`};
 `;
 
 export const messageTime = (isDisplay: boolean) => css`
@@ -108,8 +109,8 @@ export const messageTime = (isDisplay: boolean) => css`
   color: gray;
 `;
 
-export const messageImgBox = (isMyMessage: boolean, isDisplay: boolean) => css`
-  display: ${isMyMessage ? `none` : `block`};
+export const messageImgBox = (isDisplay: boolean) => css`
+  display: block;
   width: 35px;
   height: 35px;
   margin-left: 1rem;

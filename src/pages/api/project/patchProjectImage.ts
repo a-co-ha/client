@@ -5,10 +5,12 @@ export const patchProjectImage = async (channelId: number) => {
     const randomCount = Math.floor(Math.random() * 8 + 1);
     const formData = new FormData();
 
+    const img = await fetch(`/images/channelImg/${randomCount}.png`);
+    console.log(`이미지`, img);
+
     await fetch(`/images/channelImg/${randomCount}.png`)
       .then((res) => res.blob())
       .then((blob) => {
-        console.log(`blob`, blob);
         const file = new File([blob], `channelImg`, { type: 'image/png' });
         formData.append(`channelImg`, file);
         console.log(`getall`, formData.getAll(`channelImg`));
@@ -16,7 +18,7 @@ export const patchProjectImage = async (channelId: number) => {
 
     const res = await api.patch(
       `/api/channel/imageUpdate?channel=${channelId}`,
-      { channelImg: formData },
+      { image: formData },
       {
         headers: {
           'Content-Type': 'multipart/form-data',
