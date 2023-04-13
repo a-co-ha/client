@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
-import Modal from './modal';
+import { SelectTemplete } from './SelectTemplete';
 import { PageNameForm } from './PageNameForm';
 import { PageNameLink } from './PageNameLink';
 import { useRouter } from 'next/router';
@@ -22,6 +22,7 @@ export const Channel = () => {
   const socketPageList = pageList.SocketPage.filter(
     (pageList) => pageList.room.categories === 'socket'
   );
+
   useEffect(() => {
     try {
       console.log(pages);
@@ -57,12 +58,10 @@ export const Channel = () => {
                   </Disclosure.Button>
                   <div css={styles.pageCreateBtn}>
                     <Popover className="relative">
-                      <>
-                        <Popover.Button>
-                          <span>+</span>
-                        </Popover.Button>
-                        <Modal />
-                      </>
+                      <Popover.Button>
+                        <span>+</span>
+                      </Popover.Button>
+                      <SelectTemplete />
                     </Popover>
                   </div>
                 </div>
@@ -71,7 +70,6 @@ export const Channel = () => {
                     return (
                       <div key={pageList.page._id}>
                         <PageNameForm
-                          // key={page.page._id}
                           channelId={channelId}
                           pageId={pageList.page._id}
                           pageName={pageList.page.pageName}
@@ -89,7 +87,8 @@ export const Channel = () => {
               </>
             )}
           </Disclosure>
-          <Disclosure as="div" className="mt-2" defaultOpen>
+
+          {/* <Disclosure as="div" className="mt-2" defaultOpen>
             {({ open }) => (
               <>
                 <div css={styles.pageCreateBtnBox}>
@@ -117,7 +116,6 @@ export const Channel = () => {
                     return (
                       <div key={pageList.room._id}>
                         <PageNameForm
-                          // key={page._id}
                           channelId={channelId}
                           pageId={pageList.room._id}
                           pageName={pageList.room.roomName}
@@ -134,7 +132,7 @@ export const Channel = () => {
                 </Disclosure.Panel>
               </>
             )}
-          </Disclosure>
+          </Disclosure> */}
         </div>
       </div>
     </div>

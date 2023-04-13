@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 
-const solutions = [
+const templetes = [
   {
     name: 'normal',
     description: '기본 페이지 입니다.',
@@ -23,7 +23,7 @@ const solutions = [
 ];
 
 //()=> React.Dispatch<React.SetStateAction<boolean>>
-export default function Modal() {
+export const SelectTemplete = () => {
   const router = useRouter();
   const { id: channelId } = router.query;
   const { mutate: postPageMutate } = usePostEditablePage(channelId);
@@ -41,7 +41,7 @@ export default function Modal() {
         <Popover.Panel className="absolute left-1/5 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-              {solutions.map((item) => (
+              {templetes.map((item) => (
                 <button
                   key={item.name}
                   className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
@@ -64,7 +64,7 @@ export default function Modal() {
       </Transition>
     </>
   );
-}
+};
 
 function IconOne() {
   return (
