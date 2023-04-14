@@ -22,11 +22,10 @@ const templetes = [
   },
 ];
 
-//()=> React.Dispatch<React.SetStateAction<boolean>>
 export const SelectTemplete = () => {
-  const router = useRouter();
-  const { id: channelId } = router.query;
-  const { mutate: postPageMutate } = usePostEditablePage(channelId);
+  // const router = useRouter();
+  // const { id: channelId } = router.query;
+  const { mutate: postPageMutate } = usePostEditablePage();
   return (
     <>
       <Transition
