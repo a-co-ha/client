@@ -9,15 +9,15 @@ export const patchProjectImage = async (channelId: number) => {
   try {
     const randomCount = Math.floor(Math.random() * 8 + 1);
 
-    const a = await fetch(red.src);
-    const blob = await a.blob();
+    const blob = await fetch(red.src).then((res) => res.blob());
+    console.log('red', red);
+    const formData = new FormData();
+    formData.append('file', blob);
     console.log(
       '🚀 ~ file: patchProjectImage.ts:14 ~ patchProjectImage ~ blob:',
       blob
     );
 
-    const formData = new FormData();
-    formData.append(`channelImg`, blob);
     for (const [key, value] of formData.entries()) {
       console.log(
         '🚀 ~ file: patchProjectImage.ts:18 ~ patchProjectImage ~ key, value:',
@@ -34,6 +34,10 @@ export const patchProjectImage = async (channelId: number) => {
           'Content-Type': 'multipart/form-data',
         },
       }
+    );
+    console.log(
+      '🚀 ~ file: patchProjectImage.ts:38 ~ patchProjectImage ~ res:',
+      res.data
     );
     return res.data;
   } catch (err) {

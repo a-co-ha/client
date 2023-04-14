@@ -1,7 +1,7 @@
 export interface SocketPage {
-  room: {
+  page: {
     _id: string;
-    roomName: string;
+    pageName: string;
     type: string;
     categories: string;
   };

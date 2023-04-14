@@ -1,6 +1,5 @@
 import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
-import { useRouter } from 'next/router';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 
 const templetes = [
@@ -23,8 +22,6 @@ const templetes = [
 ];
 
 export const SelectTemplete = () => {
-  // const router = useRouter();
-  // const { id: channelId } = router.query;
   const { mutate: postPageMutate } = usePostEditablePage();
   return (
     <>
