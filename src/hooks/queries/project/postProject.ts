@@ -16,10 +16,10 @@ export const usePostProject = () => {
   return useMutation<PostProject, AxiosError, ProjectName>(
     (channelName) => postProject(channelName),
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         if (data) {
-          patchProjectImage(data.id);
-          queryClient.invalidateQueries([`user`]);
+          await patchProjectImage(data.id);
+          await queryClient.invalidateQueries([`user`]);
           setChannelName(data.channelName);
           router.push(`/project/${data.id}`);
         }

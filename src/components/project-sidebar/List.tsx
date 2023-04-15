@@ -50,7 +50,7 @@ export const List = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [userData?.channels]);
+  }, [userData]);
 
   console.log('채널리스트 ', channelList);
 
