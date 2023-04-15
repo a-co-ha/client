@@ -2,27 +2,37 @@ import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 
-const templetes = [
-  {
-    name: 'normal',
-    description: '기본 페이지 입니다.',
-    icon: IconOne,
-  },
-  {
-    name: 'progress',
-    description:
-      '팀을 위한 프로젝트 관리 템플릿입니다. 프로젝트별로 작업을 정리하고 팀 전반에 걸쳐 진행 상황을 트래킹하세요.',
-    icon: IconTwo,
-  },
-  {
-    name: 'document',
-    description: '한 곳에서 팀 문서를 정리하고 협업하세요.',
-    icon: IconThree,
-  },
-];
-
 export const SelectTemplete = () => {
   const { mutate: postPageMutate } = usePostEditablePage();
+
+  const templetes = [
+    {
+      name: 'normal',
+      description: '기본 페이지 입니다.',
+      icon: IconOne,
+      api() {
+        postPageMutate();
+      },
+    },
+    {
+      name: 'progress',
+      description:
+        '팀을 위한 프로젝트 관리 템플릿입니다. 프로젝트별로 작업을 정리하고 팀 전반에 걸쳐 진행 상황을 트래킹하세요.',
+      icon: IconTwo,
+      api() {
+        return;
+      },
+    },
+    {
+      name: 'document',
+      description: '한 곳에서 팀 문서를 정리하고 협업하세요.',
+      icon: IconThree,
+      api() {
+        return;
+      },
+    },
+  ];
+
   return (
     <>
       <Transition
@@ -41,7 +51,7 @@ export const SelectTemplete = () => {
                 <button
                   key={item.name}
                   className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                  onClick={() => postPageMutate()}
+                  onClick={() => item?.api()}
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
                     <item.icon aria-hidden="true" />
