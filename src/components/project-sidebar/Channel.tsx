@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { pageListState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
-import { SelectTemplete } from './SelectTemplete';
+import { SelectTemplate } from './SelectTemplate';
 import { PageNameForm } from './PageNameForm';
 import { PageNameLink } from './PageNameLink';
 import { useRouter } from 'next/router';
@@ -24,11 +24,9 @@ const pageListType: IpageListType[] = [
 /** 여기서 채널 간단목록 조회 api 쏨 */
 export const Channel = () => {
   const [pageList, setPageList] = useRecoilState(pageListState);
-  console.log('🚀 ~ file: Channel.tsx:24 ~ Channel ~ pageList:', pageList);
   const router = useRouter();
   const channelId = router.query.id;
   const { data: pages } = useGetChannelPages(channelId);
-  console.log('🚀 ~ file: Channel.tsx:28 ~ Channel ~ pages:', pages);
 
   useEffect(() => {
     try {
@@ -40,7 +38,7 @@ export const Channel = () => {
       console.error(err);
     }
   }, [pages]);
-
+  console.log('라우터', pageList);
   return (
     <div css={styles.channel}>
       <div>channel</div>
@@ -66,7 +64,7 @@ export const Channel = () => {
                           <Popover.Button>
                             <span>+</span>
                           </Popover.Button>
-                          <SelectTemplete />
+                          <SelectTemplate />
                         </Popover>
                       </div>
                     </div>

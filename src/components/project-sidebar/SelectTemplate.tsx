@@ -1,11 +1,13 @@
 import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
+import { useCreateTemplate } from '@/hooks/queries/template/useCreateTemplate';
 
-export const SelectTemplete = () => {
+export const SelectTemplate = () => {
   const { mutate: postPageMutate } = usePostEditablePage();
+  const { mutate: createTemplateMutate } = useCreateTemplate('progress');
 
-  const templetes = [
+  const templates = [
     {
       name: 'normal',
       description: '기본 페이지 입니다.',
@@ -20,7 +22,7 @@ export const SelectTemplete = () => {
         '팀을 위한 프로젝트 관리 템플릿입니다. 프로젝트별로 작업을 정리하고 팀 전반에 걸쳐 진행 상황을 트래킹하세요.',
       icon: IconTwo,
       api() {
-        return;
+        createTemplateMutate();
       },
     },
     {
@@ -47,7 +49,7 @@ export const SelectTemplete = () => {
         <Popover.Panel className="absolute left-1/5 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-              {templetes.map((item) => (
+              {templates.map((item) => (
                 <button
                   key={item.name}
                   className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
