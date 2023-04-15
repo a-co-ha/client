@@ -180,6 +180,7 @@ export const EditableBlock = (props: editableBlock) => {
       const imageFile = e.target.files[0];
       const formData = new FormData();
       formData.append('image', imageFile);
+      console.log(`edi form`, formData.getAll);
       const filePath = await postImage(formData);
       createImageNode(contentEditable, filePath);
       setState({

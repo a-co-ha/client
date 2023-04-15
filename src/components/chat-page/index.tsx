@@ -1,26 +1,43 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  useLayoutEffect,
+} from 'react';
 import { SocketContext } from './SocketContextProvider';
 import { useGetSocketPage } from '@/hooks/queries/socket/getPage';
 import { ChatSendForm } from './ChatSendForm';
 import { Message } from './Message';
 import { MessageModal } from './MessageModal';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { socketMessageState } from '@/recoil/socket/atom';
 import type { pageProps } from '@/pages/api/editable/type';
+import type { SocketMessage } from '@/pages/api/socket/type';
 import * as styles from './styles';
 
 export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
-  // const { sendMessage } = useContext(SocketContext);
-  const { data: socketData } = useGetSocketPage(channelId, pageId, type);
+  const { receiveMessage } = useContext(SocketContext);
+  const { data: socketMessage } = useGetSocketPage(pageId);
+  const [messages, setMessages] = useRecoilState(socketMessageState);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
-  // useEffect(() => {
-  //       try {
-  //           joinRoom({userId, roomId});
-  //           updateMessage(addMessage);
-  //       } catch {
-  //           navigate('/');
-  //       }
-  //   }, []);
+  const addMessage = (message: any) => {
+    console.log(`addmessage`, message);
+    setMessages((prev) => prev.concat(message));
+  };
+
+  useEffect(() => {
+    if (socketMessage !== undefined) {
+      console.log(`socketMsg`, socketMessage);
+      setMessages(socketMessage);
+    }
+  }, [router.query.pageId]);
+
+  receiveMessage(addMessage);
 
   // useEffect(() => {
   //   scrollToBottom();
@@ -30,138 +47,131 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const messages = [
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'hahah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 232323,
-      name: 'githob',
-      text: 'fds',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 12345,
-      name: 'githob',
-      text: 'hahah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 1234,
-      name: 'githob',
-      text: 'fds',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'hahah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 1234,
-      name: 'githob',
-      text: 'fds',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 4343,
-      name: 'githob',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 1234,
-      name: 'githob',
-      text: 'hahah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'fds',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 4343,
-      name: 'githob',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 1234,
-      name: 'githob',
-      text: 'hahah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 232323,
-      name: 'githob',
-      text: 'fds',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 1234,
-      name: 'githob',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 4343,
-      name: 'githob',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: 'hahadaah',
-      createdAt: '2023-03-19T16:09:09.401Z',
-    },
-    {
-      userId: 1234,
-      name: 'githob',
-      text: '디코스타일 어때요 디코스타일 어떤가요 디코 스타일이 나은가요 카톡 스타일이 나은가요 어떤가요',
-      createdAt: '2023-04-11T16:09:09.401Z',
-    },
-    {
-      userId: 96574345,
-      name: 'tangjin',
-      text: '좋은데요',
-      createdAt: '2023-04-13T15:09:09.401Z',
-    },
-  ];
+  // const messages = [
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'hahah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 232323,
+  //     name: 'githob',
+  //     text: 'fds',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 12345,
+  //     name: 'githob',
+  //     text: 'hahah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 1234,
+  //     name: 'githob',
+  //     text: 'fds',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'hahah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 1234,
+  //     name: 'githob',
+  //     text: 'fds',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 4343,
+  //     name: 'githob',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 1234,
+  //     name: 'githob',
+  //     text: 'hahah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'fds',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 4343,
+  //     name: 'githob',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 1234,
+  //     name: 'githob',
+  //     text: 'hahah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 232323,
+  //     name: 'githob',
+  //     text: 'fds',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 1234,
+  //     name: 'githob',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 4343,
+  //     name: 'githob',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: 'hahadaah',
+  //     createdAt: '2023-03-19T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 1234,
+  //     name: 'githob',
+  //     text: '디코스타일 어때요 디코스타일 어떤가요 디코 스타일이 나은가요 카톡 스타일이 나은가요 어떤가요',
+  //     createdAt: '2023-04-11T16:09:09.401Z',
+  //   },
+  //   {
+  //     userId: 96574345,
+  //     name: 'tangjin',
+  //     text: '좋은데요',
+  //     createdAt: '2023-04-13T15:09:09.401Z',
+  //   },
+  // ];
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  interface Msg {
-    userId: number;
-    name: string;
-    text: string;
-    createdAt: string;
-  }
 
   const getTimeValue = (createdAt: string) => {
     const date = dayjs(dayjs(createdAt).subtract(9, 'hour'));
@@ -183,9 +193,9 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     return time;
   };
 
-  const displayTime = (msg: Msg[], index: number) => {
+  const displayTime = (msg: SocketMessage[], index: number) => {
     let isDisplay = true;
-    const currentMsgTime = getTimeValue(msg[index].createdAt);
+    const currentMsgTime = getTimeValue(msg[index].createAt);
     if (index !== msg.length - 1 && index !== 0) {
       const prevSender = msg[index - 1].name;
       const nextSender = msg[index + 1].name;
@@ -193,7 +203,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
         (nextSender !== msg[index].name && prevSender === msg[index].name) ||
         (nextSender === msg[index].name && prevSender === msg[index].name)
       ) {
-        const nextSenderTime = getTimeValue(msg[index - 1].createdAt);
+        const nextSenderTime = getTimeValue(msg[index - 1].createAt);
         if (nextSenderTime === currentMsgTime) {
           isDisplay = false;
         }
@@ -207,13 +217,13 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       <MessageModal />
       <div css={styles.chatPageInnerBox}>
         <div css={styles.messageBox}>
-          {messages.map((msg, i) => {
+          {messages?.map((msg, i) => {
             const isDisplay = displayTime(messages, i);
-            const currentMsgTime = getTimeValue(msg.createdAt);
+            const currentMsgTime = getTimeValue(msg.createAt);
             return (
               <Message
                 key={i}
-                userId={msg.userId}
+                userId={msg.from}
                 name={msg.name}
                 text={msg.text}
                 isDisplay={isDisplay}

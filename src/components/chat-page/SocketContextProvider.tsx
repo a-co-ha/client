@@ -1,4 +1,4 @@
-import { createContext, useLayoutEffect } from 'react';
+import { createContext, useEffect, useLayoutEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { getCookie } from 'cookies-next';
@@ -7,6 +7,8 @@ import { onUserState } from '@/recoil/socket/atom';
 
 interface Context {
   sendMessage: (text: string, roomId: string) => void;
+  receiveMessage: (data: any) => void;
+  logout: () => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -17,49 +19,102 @@ export const SocketContextProvider = ({
   children: React.ReactNode;
 }) => {
   const setOnUser = useSetRecoilState(onUserState);
-
-  let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   const sessionId = getCookie(`sessionId`);
-  useLayoutEffect(() => {
-    if (!sessionId) return;
-    const connectSocket = (): Promise<
-      Socket<DefaultEventsMap, DefaultEventsMap>
-    > => {
-      return new Promise((resolve, reject) => {
-        socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
-          auth: {
-            sessionID: sessionId,
-          },
-          withCredentials: true,
-        });
-        socket.on(`connect`, () => {
-          resolve(socket);
-          console.log(`connected`, socket);
-        });
-        socket.on(`connect_error`, (error) => reject(error));
 
-        socket.on(`users`, (data) => {
-          setOnUser(data);
-          console.log(`user socket`, data);
-        });
-        socket.on(`session`, (data) => {
-          console.log(`session sockeet data`, data);
-        });
-      });
-    };
-    connectSocket();
+  let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
+    auth: {
+      sessionID: sessionId,
+    },
+    withCredentials: true,
+  });
+
+  // let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+  useEffect(() => {
+    if (!sessionId) return;
+    socket.on(`connect`, () => {
+      console.log(`connected`, socket);
+    });
+    socket.on(`connect_error`, (error) => console.log(error));
+
+    socket.on(`users`, (data) => {
+      setOnUser(data);
+      console.log(`user socket`, data);
+    });
+    socket.on;
+    socket.on(`session`, (data) => {
+      console.log(`session sockeet data`, data);
+    });
+
+    // const connectSocket = (): Promise<
+    //   Socket<DefaultEventsMap, DefaultEventsMap>
+    // > => {
+    //   return new Promise((resolve, reject) => {
+    //     socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
+    //       autoConnect: false,
+    //       auth: {
+    //         sessionID: sessionId,
+    //       },
+    //       withCredentials: true,
+    //     });
+    //     socket.connect();
+    //     socket.on(`connect`, () => {
+    //       resolve(socket);
+    //       console.log(`connected`, socket);
+    //     });
+    //     socket.on(`connect_error`, (error) => reject(error));
+
+    //     socket.on(`users`, (data) => {
+    //       setOnUser(data);
+    //       console.log(`user socket`, data);
+    //     });
+    //     socket.on(`session`, (data) => {
+    //       console.log(`session sockeet data`, data);
+    //     });
+    //   });
+    // };
+    // connectSocket();
   }, [sessionId]);
+  // useEffect(() => {
+  //   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
+  //     auth: {
+  //       sessionID: sessionId,
+  //     },
+  //     withCredentials: true,
+  //   });
+  //   socket.on(`connect`, () => {
+  //     console.log(`connected`, socket);
+  //   });
+  //   socket.on(`connect_error`, (error) => console.log(error));
+
+  //   socket.on(`users`, (data) => {
+  //     setOnUser(data);
+  //     console.log(`user socket`, data);
+  //   });
+  //   socket.on(`session`, (data) => {
+  //     console.log(`session sockeet data`, data);
+  //   });
+
+  // })e
   const sendMessage = (text: string, roomId: string) => {
+    console.log(`소케엣`, socket);
     console.log(`보냅니다`);
-    socket.emit(`SEND_MESSAGE`, {
+    console.log(`메세지 데이타`, text, roomId);
+    socket.emit(`message-send`, {
       text,
       roomId,
     });
   };
+  const receiveMessage = async (func: any) => {
+    console.log(`받습니다`);
+    socket.on(`message-receive`, (data) => {
+      console.log(data);
+      func(data.message);
+    });
+  };
 
-  // const logout = () => {
-  //   socket.disconnect();
-  // };
+  const logout = () => {
+    socket.disconnect();
+  };
 
   //   const sendMessage = ({
   //     roomId,
@@ -76,7 +131,7 @@ export const SocketContextProvider = ({
   //     socket.on(`UPDATE_MESSAGE`, (msg) => func(msg));
 
   return (
-    <SocketContext.Provider value={{ sendMessage }}>
+    <SocketContext.Provider value={{ sendMessage, receiveMessage, logout }}>
       {children}
     </SocketContext.Provider>
   );

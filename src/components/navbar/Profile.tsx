@@ -11,24 +11,24 @@ import { useContext } from 'react';
 import Image from 'next/image';
 
 export const Profile = () => {
-  // const { logout } = useContext(SocketContext);
+  const { logout } = useContext(SocketContext);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
   const onClickHandler = async () => {
-      const sessionID = getCookie(`sessionId`);
+    const sessionID = getCookie(`sessionId`);
     console.log(`session`, sessionID);
+    await api.post(`/api/user/logout`, {
+      sessionID,
+    });
+    logout();
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
     deleteCookie(`myUserId`);
     resetProfile();
     resetChannelName();
-    await api.post(`/api/user/logout`,{
-      sessionID
-    });
-    // logout();
     router.replace(`/`);
   };
   return (

@@ -24,3 +24,18 @@ export const messageModalState = atom({
   key: `messageModalState/${nanoId()}`,
   default: false,
 });
+
+export const socketMessageState = atom({
+  key: `socketMessageState/${nanoId()}`,
+  default: [
+    {
+      roomId: '',
+      text: '',
+      from: 0,
+      name: '',
+      img: '',
+      to: '',
+      createAt: '',
+    },
+  ],
+});

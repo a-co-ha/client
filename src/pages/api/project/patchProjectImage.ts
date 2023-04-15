@@ -9,11 +9,12 @@ export const patchProjectImage = async (channelId: number) => {
     console.log(`이미지`, img);
 
     await fetch(`/images/channelImg/${randomCount}.png`)
-      .then((res) => res.blob())
+      .then((res) => console.log(res.json()))
       .then((blob) => {
-        const file = new File([blob], `channelImg`, { type: 'image/png' });
-        formData.append(`channelImg`, file);
-        console.log(`getall`, formData.getAll(`channelImg`));
+        // const file = new File([blob], 'image', { type: 'image/png' });
+        console.log('🚀 ~ file: patchProjectImage.ts:15 ~ .then ~ blob:', blob);
+        // formData.append('image', file);
+        console.log(`getall`, formData.getAll(`image`));
       });
 
     const res = await api.patch(

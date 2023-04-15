@@ -17,7 +17,7 @@ export const ChatSendForm = ({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
-  // const { sendMessage } = useContext(SocketContext);
+  const { sendMessage } = useContext(SocketContext);
 
   const onChangeHandler = ({
     value,
@@ -45,7 +45,7 @@ export const ChatSendForm = ({
   });
 
   const onSubmit = async (chatMessage: ChatMessage) => {
-    // sendMessage(chatMessage.chatMessage, pageId);
+    sendMessage(chatMessage.chatMessage, pageId);
   };
   return (
     <div css={styles.chatFormBox}>
