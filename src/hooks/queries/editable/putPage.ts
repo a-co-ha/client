@@ -10,7 +10,7 @@ export const usePutEditablePage = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation<PostEditablePage, AxiosError, string>(
-    [`putEditablePage`],
+    [`putEditablePage`, pageId],
     (pageName) => putEditablePage(channelId, pageId, pageName),
     {
       onSuccess: () => {

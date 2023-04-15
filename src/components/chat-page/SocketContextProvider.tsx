@@ -104,10 +104,10 @@ export const SocketContextProvider = ({
       roomId,
     });
   };
-  const receiveMessage = async (func: any) => {
+  const receiveMessage = (func: any) => {
     console.log(`받습니다`);
     socket.on(`message-receive`, (data) => {
-      console.log(data);
+      console.log(`없는듯`, data);
       func(data.message);
     });
   };

@@ -1,7 +1,6 @@
 import { atom } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import { Socket } from 'socket.io-client';
-import { DefaultEventsMap } from '@socket.io/component-emitter';
+import type { SocketMessage } from '@/pages/api/socket/type';
 
 // export const socketState = atom<Socket<DefaultEventsMap, DefaultEventsMap>>({
 //   key: `socket/${nanoId()}`,
@@ -25,17 +24,15 @@ export const messageModalState = atom({
   default: false,
 });
 
-export const socketMessageState = atom({
+export const socketMessageState = atom<SocketMessage[]>({
   key: `socketMessageState/${nanoId()}`,
   default: [
     {
-      roomId: '',
-      text: '',
-      from: 0,
       name: '',
+      text: '',
       img: '',
-      to: '',
-      createAt: '',
+      userId: 0,
+      createdAt: '',
     },
   ],
 });

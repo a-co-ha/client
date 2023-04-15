@@ -8,12 +8,15 @@ export interface SocketPage {
   _id: string;
 }
 
-export interface SocketMessage {
+export interface SocketMessageResponse {
   roomId: string;
-  text: string;
-  from: number;
+  messages: SocketMessage[];
+}
+
+export interface SocketMessage {
   name: string;
+  text: string;
   img: string;
-  to: string;
-  createAt: string;
+  userId: number;
+  createdAt: string;
 }

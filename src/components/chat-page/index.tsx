@@ -32,13 +32,15 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
 
   useEffect(() => {
     if (socketMessage !== undefined) {
-      console.log(`socketMsg`, socketMessage);
-      setMessages(socketMessage);
+      console.log(`socketMsg`, socketMessage.messages);
+      setMessages(socketMessage.messages);
+      console.log(`메세지스`, messages);
     }
   }, [router.query.pageId]);
 
-  receiveMessage(addMessage);
-
+  useEffect(() => {
+    receiveMessage(addMessage);
+  }, [messages]);
   // useEffect(() => {
   //   scrollToBottom();
   // }, [messages]);
@@ -174,7 +176,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   }, [messages]);
 
   const getTimeValue = (createdAt: string) => {
-    const date = dayjs(dayjs(createdAt).subtract(9, 'hour'));
+    const date = dayjs(createdAt);
     const nowDate = dayjs();
     const hour = date.get(`hour`);
     const minute = date.get(`minute`);
@@ -195,7 +197,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
 
   const displayTime = (msg: SocketMessage[], index: number) => {
     let isDisplay = true;
-    const currentMsgTime = getTimeValue(msg[index].createAt);
+    const currentMsgTime = getTimeValue(msg[index].createdAt);
     if (index !== msg.length - 1 && index !== 0) {
       const prevSender = msg[index - 1].name;
       const nextSender = msg[index + 1].name;
@@ -203,7 +205,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
         (nextSender !== msg[index].name && prevSender === msg[index].name) ||
         (nextSender === msg[index].name && prevSender === msg[index].name)
       ) {
-        const nextSenderTime = getTimeValue(msg[index - 1].createAt);
+        const nextSenderTime = getTimeValue(msg[index - 1].createdAt);
         if (nextSenderTime === currentMsgTime) {
           isDisplay = false;
         }
@@ -217,20 +219,21 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       <MessageModal />
       <div css={styles.chatPageInnerBox}>
         <div css={styles.messageBox}>
-          {messages?.map((msg, i) => {
-            const isDisplay = displayTime(messages, i);
-            const currentMsgTime = getTimeValue(msg.createAt);
-            return (
-              <Message
-                key={i}
-                userId={msg.from}
-                name={msg.name}
-                text={msg.text}
-                isDisplay={isDisplay}
-                currentMsgTime={currentMsgTime}
-              />
-            );
-          })}
+          {messages &&
+            messages?.map((msg, i) => {
+              const isDisplay = displayTime(messages, i);
+              const currentMsgTime = getTimeValue(msg.createdAt);
+              return (
+                <Message
+                  key={i}
+                  userId={msg.userId}
+                  name={msg.name}
+                  text={msg.text}
+                  isDisplay={isDisplay}
+                  currentMsgTime={currentMsgTime}
+                />
+              );
+            })}
           <div ref={messagesEndRef} />
         </div>
         <ChatSendForm pageId={pageId} messagesEndRef={messagesEndRef} />

@@ -7,6 +7,5 @@ export const getSocketPage = async (pageId: string | string[] | undefined) => {
     return res.data;
   } catch (err) {
     console.error(err);
-    return null;
   }
 };
