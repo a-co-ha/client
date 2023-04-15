@@ -50,9 +50,12 @@ export const ProjectCreateThumbnail = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
-  border: 1px solid black;
   border-radius: 10px;
   overflow: hidden;
+`;
+export const ProjectCreatePlusBtn = css`
+  ${ProjectCreateThumbnail};
+  border: 1px solid black;
 `;
 
 export const projectNameInput = (error: boolean) => css`

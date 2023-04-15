@@ -70,20 +70,14 @@ export const List = () => {
             css={{ position: `relative`, width: `100%`, height: `100%` }}
             onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
           >
-            <Image
-              src={
-                channel.channelImg == '' ? githubChannelImg : channel.channelImg
-              }
-              fill
-              alt={`channelImg`}
-            />
+            <Image src={channel.channelImg} fill alt={`channelImg`} />
           </button>
         </div>
       ))}
       <button
         type="button"
         onClick={openModal}
-        css={styles.ProjectCreateThumbnail}
+        css={styles.ProjectCreatePlusBtn}
       >
         +
       </button>
