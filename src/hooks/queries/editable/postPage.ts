@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 export const usePostEditablePage = () => {
   const router = useRouter();
-  const { id: channelId } = router.query;
+  const { channelId } = router.query;
   const queryClient = useQueryClient();
   return useMutation<PostEditablePage, AxiosError>(
     () => postEditablePage(channelId),
