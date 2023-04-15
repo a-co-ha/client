@@ -4,23 +4,18 @@ import type { AxiosError } from 'axios';
 import type { PostEditablePage } from '@/pages/api/editable/type';
 import { useRouter } from 'next/router';
 
-export const usePostEditablePage = (
-  channelId: string | string[] | undefined
-) => {
-  console.log('채널 아이디이이', channelId);
-  const queryClient = useQueryClient();
+export const usePostEditablePage = () => {
   const router = useRouter();
+  const { channelId } = router.query;
+  const queryClient = useQueryClient();
   return useMutation<PostEditablePage, AxiosError>(
     () => postEditablePage(channelId),
     {
       onSuccess: (data) => {
-        if (channelId) {
-          console.log(`석세스`, data);
-          queryClient.invalidateQueries([`channelPages`, channelId]);
-          router.push(
-            `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
-          );
-        }
+        queryClient.invalidateQueries([`channelPages`, channelId]);
+        router.push(
+          `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
+        );
       },
     }
   );

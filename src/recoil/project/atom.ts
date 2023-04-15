@@ -21,9 +21,9 @@ export const pageListState = atom<GetChannelPages>({
     ],
     SocketPage: [
       {
-        room: {
+        page: {
           _id: '',
-          roomName: '',
+          pageName: '',
           type: '',
           categories: '',
         },

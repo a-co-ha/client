@@ -16,7 +16,11 @@ export const usePostProject = () => {
     (channelName) => postProject(channelName),
     {
       onSuccess: (data) => {
-        patchProjectImage(data.id);
+        const res = patchProjectImage(data.id);
+        console.log(
+          '🚀 ~ file: postProject.ts:20 ~ usePostProject ~ res:',
+          res
+        );
         setChannelName(data.channelName);
         router.push(`/project/${data.id}`);
         queryClient.invalidateQueries([`user`]);

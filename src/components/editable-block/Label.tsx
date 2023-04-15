@@ -6,11 +6,10 @@ import { ChannelUser } from '@/pages/api/user/type';
 import { useGetLabels } from '@/hooks/queries/editable/getLabels';
 import { useRouter } from 'next/router';
 import { updateLabel } from '@/pages/api/editable/updateLabel';
-import { nanoId } from '@/utils/nanoId';
 
 export default function Label() {
   const selectedUsers = useGetLabels();
-  const [selected, setSelected] = useState<string[] | undefined>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const { data } = useGetUsers();
   const router = useRouter();
@@ -20,7 +19,7 @@ export default function Label() {
   }, [data]);
 
   useEffect(() => {
-    setSelected(selectedUsers);
+    setSelected(selectedUsers ?? []);
   }, [pageId]);
 
   const filteredPeople =
@@ -74,9 +73,9 @@ export default function Label() {
                   Nothing found.
                 </div>
               ) : (
-                filteredPeople?.map((user: string[]) => (
+                filteredPeople?.map((user: string[], index: number) => (
                   <Combobox.Option
-                    key={nanoId()}
+                    key={index}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? 'bg-teal-600 text-white' : 'text-gray-900'
