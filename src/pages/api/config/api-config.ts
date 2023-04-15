@@ -2,6 +2,7 @@ import axios from 'axios';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { getToken } from '../user/getToken';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 // const router = useRouter();
 export const api = axios.create({
@@ -28,13 +29,17 @@ api.interceptors.request.use(
     // console.log(`인터셉터 request 2`, accessToken);
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    if (error.request.response.status === 400) {
+      toast.error(error.response.data.message);
+    }
+  }
 );
 api.interceptors.response.use(
   (res) => {
     return res;
   },
-  async (error) => {
+  (error) => {
     console.log(`이거에러`, error);
     if (error.response.status === 403) {
       // router.push(`/`);
@@ -43,6 +48,9 @@ api.interceptors.response.use(
       // api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
       // setCookie(`accessToken`, accessToken);
       // console.log(`new accessToken`, accessToken);
+    }
+    if (error.response.status === 400) {
+      toast.error(error.response.data.message);
     }
   }
 );

@@ -46,16 +46,21 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const ProjectCreateThumbnail = css`
+export const projectCreateThumbnail = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
   border-radius: 10px;
   overflow: hidden;
 `;
-export const ProjectCreatePlusBtn = css`
-  ${ProjectCreateThumbnail};
+export const projectCreatePlusBtn = css`
+  ${projectCreateThumbnail};
   border: 1px solid black;
+`;
+export const listAllDelete = css`
+  ${projectCreateThumbnail};
+  border: 1px solid black;
+  font-size: 0.5rem;
 `;
 
 export const projectNameInput = (error: boolean) => css`

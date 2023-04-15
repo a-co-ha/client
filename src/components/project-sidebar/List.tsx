@@ -11,6 +11,9 @@ import githubChannelImg from '@/images/github_channel.png';
 import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
 
+import { api } from '@/pages/api/config/api-config';
+import { deleteProject } from '@/pages/api/project/deleteProject';
+
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
   const setChannelName = useSetRecoilState(channelNameState);
@@ -47,7 +50,7 @@ export const List = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [userData]);
+  }, [userData?.channels]);
 
   console.log('채널리스트 ', channelList);
 
@@ -61,25 +64,45 @@ export const List = () => {
     router.push(`/project/${channelId}`);
   };
 
+  const deleteAllHandler = () => {
+    channelList.map((e) => {
+      const channelId = e.id as unknown as string;
+      api.delete(`/api/channel/admin?channel=${channelId}`);
+    });
+  };
+
   return (
     <div css={styles.list}>
       <div>List</div>
       {channelList.map((channel) => (
-        <div key={channel.id} css={styles.ProjectCreateThumbnail}>
+        <div key={channel.id} css={styles.projectCreateThumbnail}>
           <button
             css={{ position: `relative`, width: `100%`, height: `100%` }}
             onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
           >
-            <Image src={channel.channelImg} fill alt={`channelImg`} />
+            <Image
+              src={channel.channelImg}
+              fill
+              alt={`channelImg`}
+              placeholder="blur"
+              blurDataURL={`...Loading`}
+            />
           </button>
         </div>
       ))}
       <button
         type="button"
         onClick={openModal}
-        css={styles.ProjectCreatePlusBtn}
+        css={styles.projectCreatePlusBtn}
       >
         +
+      </button>
+      <button
+        type="button"
+        onClick={deleteAllHandler}
+        css={styles.listAllDelete}
+      >
+        임시 전체삭제
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
