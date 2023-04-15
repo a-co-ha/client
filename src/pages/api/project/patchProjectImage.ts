@@ -4,8 +4,8 @@ export const patchProjectImage = async (channelId: number) => {
   try {
     const randomCount = Math.floor(Math.random() * 8 + 1);
 
-    const blob = await fetch(red.src).then((res) => res.blob());
-    console.log('red', red);
+    const blob = await fetch(``).then((res) => res.blob());
+    // console.log('red', red);
     const formData = new FormData();
     formData.append('file', blob);
     console.log(
