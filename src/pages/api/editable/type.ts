@@ -10,10 +10,17 @@ export interface GetChannelPages {
   _id: string;
   channelId: number;
   EditablePage: EditablePage[];
-  SocketPage: SocketPage[];
+  SocketPage: EditablePage[];
 }
+
 export interface EditablePage {
-  page: {
+  page? : {
+    _id: string;
+    pageName: string;
+    type: string;
+    categories: string;
+  };
+  template?: {
     _id: string;
     pageName: string;
     type: string;

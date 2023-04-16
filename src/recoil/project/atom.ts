@@ -16,6 +16,12 @@ export const pageListState = atom<GetChannelPages>({
           type: '',
           categories: '',
         },
+        template: {
+          _id: '',
+          pageName: '',
+          type: '',
+          categories: '',
+        },
         _id: '',
       },
     ],

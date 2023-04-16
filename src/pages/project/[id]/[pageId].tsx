@@ -11,6 +11,7 @@ import { QueryClient, dehydrate, hydrate } from '@tanstack/react-query';
 import { getEditablePage } from '@/pages/api/editable/getPage';
 import { getSocketPage } from '@/pages/api/socket/getPage';
 import type { pageProps } from '@/pages/api/editable/type';
+import { TemplatePage } from '@/components/template';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   resetServerContext();
@@ -30,6 +31,9 @@ export default function Page({ channelId, pageId, type }: pageProps) {
         ) : null}
         {type === 'socket' ? (
           <ChatPage channelId={channelId} pageId={pageId} type={type} />
+        ) : null}
+        {type === 'template' ? (
+          <TemplatePage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
         <UserList />
       </Suspense>
