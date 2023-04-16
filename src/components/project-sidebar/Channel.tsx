@@ -38,7 +38,7 @@ export const Channel = () => {
       console.error(err);
     }
   }, [pages]);
-  console.log('라우터', pageList);
+
   return (
     <div css={styles.channel}>
       <div>channel</div>
@@ -79,7 +79,6 @@ export const Channel = () => {
                             pageName,
                             type,
                           } = pageList.page || pageList.template;
-
                           return (
                             <div key={pageId}>
                               <PageNameForm
@@ -87,7 +86,6 @@ export const Channel = () => {
                                 pageId={pageId}
                                 pageName={pageName}
                               />
-
                               <PageNameLink
                                 channelId={channelId}
                                 pageId={pageId}
