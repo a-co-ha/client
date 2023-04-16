@@ -25,8 +25,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   console.log('블락스', blocks);
   console.log('서버에서 넘어온 블락스', fetchedBlocks);
 
-  useEffect(() => {}, [router.query.pageId]);
-
   useLayoutEffect(() => {
     console.log('블락스 서버블락스로 변경');
     if (fetchedBlocks !== undefined) {
