@@ -13,14 +13,16 @@ export interface GetChannelPages {
   SocketPage: EditablePage[];
 }
 
+export type edtype = 'page' | 'template';
+
 export interface EditablePage {
-  page? : {
+  page:  {
     _id: string;
     pageName: string;
     type: string;
     categories: string;
   };
-  template?: {
+  template: {
     _id: string;
     pageName: string;
     type: string;

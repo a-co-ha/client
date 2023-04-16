@@ -13,9 +13,9 @@ export const useCreateTemplate = (type: string) => {
         '🚀 ~ file: useCreateTemplate.ts:11 ~ returnuseMutation ~ data:',
         data
       );
-      // router.push(
-      //   `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
-      // );
+      router.push(
+        `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
+      );
     },
   });
 };

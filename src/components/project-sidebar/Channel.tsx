@@ -21,18 +21,6 @@ const pageListType: IpageListType[] = [
   { type: 'SocketPage', title: '체팅체널' },
 ];
 
-interface editablePageType {
-  EditablePage: pageListPageType[];
-  _id: string;
-}
-
-interface pageListPageType {
-  _id: '';
-  pageName: '';
-  type: '';
-  categories: '';
-}
-
 /** 여기서 채널 간단목록 조회 api 쏨 */
 export const Channel = () => {
   const [pageList, setPageList] = useRecoilState(pageListState);
@@ -83,7 +71,7 @@ export const Channel = () => {
                     <Disclosure.Panel className="flex-col items-between px-4 pt-4 pb-2 text-sm text-gray-500">
                       {pageList[pageType.type as pageListTypeT].map(
                         (pageList) => {
-                          if (!pageList.page?._id) {
+                          if (!pageList.page && !pageList.template) {
                             return;
                           }
                           const {
@@ -93,9 +81,7 @@ export const Channel = () => {
                           } = pageList.page || pageList.template;
 
                           return (
-                            <div
-                              key={pageId}
-                            >
+                            <div key={pageId}>
                               <PageNameForm
                                 channelId={channelId}
                                 pageId={pageId}

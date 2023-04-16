@@ -32,7 +32,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
         {type === 'socket' ? (
           <ChatPage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
-        {type === 'template' ? (
+        {type === 'template-progress' ? (
           <TemplatePage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
         <UserList />

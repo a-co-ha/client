@@ -6,5 +6,5 @@ export const postTemplate = async (channelId: string, type: string) => {
     .post(`/api/template?type=template-${type}&channel=${channelId}`, {
       blockId: nanoId(),
     })
-    .then((res) => res);
+    .then((res) => res.data);
 };
