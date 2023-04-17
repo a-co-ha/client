@@ -11,6 +11,7 @@ export interface MessageType {
   userId: number;
   name: string;
   text: string;
+  img: string;
   isDisplay: boolean;
   currentMsgTime: string;
 }

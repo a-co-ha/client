@@ -6,9 +6,10 @@ import { useSetRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 
 interface Context {
-  sendMessage: (text: string, roomId: string) => void;
-  receiveMessage: (data: any) => void;
+  // sendMessage: (text: string, roomId: string) => void;
+  // receiveMessage: (data: any) => void;
   logout: () => void;
+  socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -95,22 +96,22 @@ export const SocketContextProvider = ({
   //   });
 
   // })e
-  const sendMessage = (text: string, roomId: string) => {
-    console.log(`소케엣`, socket);
-    console.log(`보냅니다`);
-    console.log(`메세지 데이타`, text, roomId);
-    socket.emit(`message-send`, {
-      text,
-      roomId,
-    });
-  };
-  const receiveMessage = (func: any) => {
-    console.log(`받습니다`);
-    socket.on(`message-receive`, (data) => {
-      console.log(`없는듯`, data);
-      func(data.message);
-    });
-  };
+  // const sendMessage = (text: string, roomId: string) => {
+  //   console.log(`소케엣`, socket);
+  //   console.log(`보냅니다`);
+  //   console.log(`메세지 데이타`, text, roomId);
+  //   socket.emit(`message-send`, {
+  //     text,
+  //     roomId,
+  //   });
+  // };
+  // const receiveMessage = (func: any) => {
+  //   console.log(`받습니다`);
+  //   socket.on(`message-receive`, (data) => {
+  //     console.log(`없는듯`, data);
+  //     func(data.message);
+  //   });
+  // };
 
   const logout = () => {
     socket.disconnect();
@@ -131,7 +132,7 @@ export const SocketContextProvider = ({
   //     socket.on(`UPDATE_MESSAGE`, (msg) => func(msg));
 
   return (
-    <SocketContext.Provider value={{ sendMessage, receiveMessage, logout }}>
+    <SocketContext.Provider value={{ logout, socket }}>
       {children}
     </SocketContext.Provider>
   );

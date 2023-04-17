@@ -19,7 +19,7 @@ import type { SocketMessage } from '@/pages/api/socket/type';
 import * as styles from './styles';
 
 export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
-  const { receiveMessage } = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
   const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -39,125 +39,18 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   }, [router.query.pageId]);
 
   useEffect(() => {
-    receiveMessage(addMessage);
-  }, [messages]);
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
+    socket.on(`message-receive`, (data) => {
+      addMessage(data.message);
+    });
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   // const messages = [
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'hahah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 232323,
-  //     name: 'githob',
-  //     text: 'fds',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 12345,
-  //     name: 'githob',
-  //     text: 'hahah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 1234,
-  //     name: 'githob',
-  //     text: 'fds',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'hahah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 1234,
-  //     name: 'githob',
-  //     text: 'fds',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 4343,
-  //     name: 'githob',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 1234,
-  //     name: 'githob',
-  //     text: 'hahah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'fds',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 4343,
-  //     name: 'githob',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 1234,
-  //     name: 'githob',
-  //     text: 'hahah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 232323,
-  //     name: 'githob',
-  //     text: 'fds',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 1234,
-  //     name: 'githob',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 4343,
-  //     name: 'githob',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: 'hahadaah',
-  //     createdAt: '2023-03-19T16:09:09.401Z',
-  //   },
+  //
+  //
   //   {
   //     userId: 1234,
   //     name: 'githob',
@@ -229,6 +122,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
                   userId={msg.userId}
                   name={msg.name}
                   text={msg.text}
+                  img={msg.img}
                   isDisplay={isDisplay}
                   currentMsgTime={currentMsgTime}
                 />

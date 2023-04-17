@@ -111,10 +111,18 @@ export const messageTime = (isDisplay: boolean) => css`
 
 export const messageImgBox = (isDisplay: boolean) => css`
   display: block;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   margin-left: 1rem;
   opacity: ${isDisplay ? `1` : `0`};
+  pointer-events: ${isDisplay ? `auto` : `none`};
+`;
+
+export const messageImgBtn = (isDisplay: boolean) => css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: ${isDisplay ? `pointer` : `unset`};
 `;
 
 export const messageModalBox = (isOpen: boolean) => css`

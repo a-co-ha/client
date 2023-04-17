@@ -1,44 +1,39 @@
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { messageModalState } from '@/recoil/socket/atom';
-import githubChannelImg from '@/images/github_channel.png';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { messageModalState, messageModalImgState } from '@/recoil/socket/atom';
+
 import * as styles from './styles';
 import type { MessageType } from './type';
 
 export const Message = ({
-  userId,
   name,
   text,
+  img,
   isDisplay,
   currentMsgTime,
 }: MessageType) => {
   const myUserId = Number(getCookie(`myUserId`));
   // const isMyMessage = userId === myUserId ? true : false;
   const [messageModal, setMessageModal] = useRecoilState(messageModalState);
-
-  const onClickHandler = () => {
+  const setMessageImgSrc = useSetRecoilState(messageModalImgState);
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setMessageModal(true);
+    setMessageImgSrc(img);
   };
 
   return (
     <div css={styles.messageAlign(isDisplay)}>
       <div css={styles.messageImgBox(isDisplay)}>
-        <button
-          css={{
-            position: `relative`,
-            width: `100%`,
-            height: `100%`,
-          }}
-          onClick={onClickHandler}
-        >
+        <button css={styles.messageImgBtn(isDisplay)} onClick={onClickHandler}>
           <Image
             css={{
               borderRadius: `50%`,
             }}
-            src={githubChannelImg}
+            src={img}
             fill
-            alt={`channelImg`}
+            sizes="40px"
+            alt={`userProfileImg`}
           />
         </button>
       </div>

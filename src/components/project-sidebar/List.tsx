@@ -83,6 +83,7 @@ export const List = () => {
             <Image
               src={channel.channelImg}
               fill
+              sizes="40px"
               alt={`channelImg`}
               placeholder="blur"
               blurDataURL={`...Loading`}

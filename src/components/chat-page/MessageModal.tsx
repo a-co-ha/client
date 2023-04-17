@@ -1,11 +1,11 @@
-import { useRecoilState } from 'recoil';
-import { messageModalState } from '@/recoil/socket/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { messageModalState, messageModalImgState } from '@/recoil/socket/atom';
 import Image from 'next/image';
 import * as styles from './styles';
-import githubChannelImg from '@/images/github_channel.png';
 
-export const MessageModal = ({ img }: any) => {
+export const MessageModal = () => {
   const [messageModal, setMessageModal] = useRecoilState(messageModalState);
+  const userProfileImgSrc = useRecoilValue(messageModalImgState);
   const onClickHandler = () => {
     setMessageModal(false);
   };
@@ -18,10 +18,10 @@ export const MessageModal = ({ img }: any) => {
       <div css={styles.messageModalBoxTransition(messageModal)}>
         <div className="w-60 max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
           <Image
-            src={githubChannelImg}
+            src={userProfileImgSrc}
             width={200}
             height={200}
-            alt={`messageImg`}
+            alt={`userProfileImg`}
           />
         </div>
       </div>
