@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useChatSendForm } from '@/hooks/form/useChatSendForm';
-import { RefObject, useContext, useRef } from 'react';
+import { RefObject, useContext, useEffect, useRef } from 'react';
 import { SocketContext } from './SocketContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
@@ -19,6 +19,16 @@ export const ChatSendForm = ({
   };
   const { socket } = useContext(SocketContext);
 
+  const methods = useForm<ChatMessage>({
+    defaultValues: {
+      chatMessage: '',
+    },
+    mode: 'onSubmit',
+  });
+  const { chatMessage, error } = useChatSendForm({
+    control: methods.control,
+  });
+
   const onChangeHandler = ({
     value,
     onChange,
@@ -30,33 +40,45 @@ export const ChatSendForm = ({
   }) => {
     chatMessage.style.height = `auto`;
     chatMessage.style.height = `${chatMessage.scrollHeight}px`;
-    scrollToBottom();
     onChange(value);
+    scrollToBottom();
   };
 
-  const methods = useForm<ChatMessage>({
-    defaultValues: {
-      chatMessage: '',
-    },
-    mode: 'onSubmit',
-  });
-  const { chatMessage, error } = useChatSendForm({
-    control: methods.control,
-  });
-
-  const onSubmit = async (chatMessage: ChatMessage) => {
+  const onSubmit = async (chat: ChatMessage) => {
     // sendMessage(chatMessage.chatMessage, pageId);
     socket.emit(`message-send`, {
-      text: chatMessage.chatMessage,
+      text: chat.chatMessage,
       roomId: pageId,
     });
     console.log(`보냅니다`);
+    methods.reset();
   };
+
+  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      methods.handleSubmit(onSubmit)();
+      e.currentTarget.style.height = `auto`;
+      e.preventDefault();
+    } else if (e.key === 'Enter' && e.shiftKey) {
+      return;
+    }
+  };
+
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.previousElementSibling !== null) {
+      const textArea = e.currentTarget
+        .previousElementSibling as HTMLTextAreaElement;
+      textArea.style.height = `auto`;
+    }
+  };
+
   return (
     <div css={styles.chatFormBox}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div css={styles.chatFormInputBox}>
           <textarea
+            autoFocus
+            spellCheck={false}
             css={styles.chatFormInput}
             rows={1}
             value={chatMessage.value}
@@ -67,11 +89,16 @@ export const ChatSendForm = ({
                 chatMessage: e.target,
               })
             }
+            onKeyDown={onKeyDownHandler}
             name={chatMessage.name}
             placeholder={`메세지를 입력해주세요`}
           />
           {/* <p css={styles.validationMsg}>{error ? error.message : 'ㅤ'}</p> */}
-          <button css={styles.chatFormBtn} type="submit">
+          <button
+            css={styles.chatFormBtn}
+            type="submit"
+            onClick={onClickHandler}
+          >
             <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#f85d75' }} />
           </button>
         </div>

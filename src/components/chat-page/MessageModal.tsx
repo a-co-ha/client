@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { messageModalState, messageModalImgState } from '@/recoil/socket/atom';
 import Image from 'next/image';
 import * as styles from './styles';
+import githubChannelImg from '@/images/github_channel.png';
 
 export const MessageModal = () => {
   const [messageModal, setMessageModal] = useRecoilState(messageModalState);
@@ -18,7 +19,7 @@ export const MessageModal = () => {
       <div css={styles.messageModalBoxTransition(messageModal)}>
         <div className="w-60 max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
           <Image
-            src={userProfileImgSrc}
+            src={userProfileImgSrc ? userProfileImgSrc : githubChannelImg}
             width={200}
             height={200}
             alt={`userProfileImg`}

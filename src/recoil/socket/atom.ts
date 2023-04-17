@@ -31,13 +31,5 @@ export const messageModalImgState = atom({
 
 export const socketMessageState = atom<SocketMessage[]>({
   key: `socketMessageState/${nanoId()}`,
-  default: [
-    {
-      name: '',
-      text: '',
-      img: '',
-      userId: 0,
-      createdAt: '',
-    },
-  ],
+  default: [],
 });

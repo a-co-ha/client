@@ -30,7 +30,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     setMessages((prev) => prev.concat(message));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (socketMessage !== undefined) {
       console.log(`socketMsg`, socketMessage.messages);
       setMessages(socketMessage.messages);
@@ -46,7 +46,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   }, []);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
   useEffect(() => {
     scrollToBottom();

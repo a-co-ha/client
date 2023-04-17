@@ -38,7 +38,7 @@ export const chatFormInput = css`
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1rem;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   background: transparent;
   resize: none;
   &:focus {
