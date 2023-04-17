@@ -46,11 +46,11 @@ export const ChatSendForm = ({
 
   const onSubmit = async (chatMessage: ChatMessage) => {
     // sendMessage(chatMessage.chatMessage, pageId);
-    console.log(chatMessage);
     socket.emit(`message-send`, {
       text: chatMessage.chatMessage,
       roomId: pageId,
     });
+    console.log(`보냅니다`);
   };
   return (
     <div css={styles.chatFormBox}>

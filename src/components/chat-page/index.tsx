@@ -40,6 +40,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
 
   useEffect(() => {
     socket.on(`message-receive`, (data) => {
+      console.log(`받습니다`);
       addMessage(data.message);
     });
   }, []);
@@ -47,23 +48,6 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  // const messages = [
-  //
-  //
-  //   {
-  //     userId: 1234,
-  //     name: 'githob',
-  //     text: '디코스타일 어때요 디코스타일 어떤가요 디코 스타일이 나은가요 카톡 스타일이 나은가요 어떤가요',
-  //     createdAt: '2023-04-11T16:09:09.401Z',
-  //   },
-  //   {
-  //     userId: 96574345,
-  //     name: 'tangjin',
-  //     text: '좋은데요',
-  //     createdAt: '2023-04-13T15:09:09.401Z',
-  //   },
-  // ];
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -91,13 +75,9 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const displayTime = (msg: SocketMessage[], index: number) => {
     let isDisplay = true;
     const currentMsgTime = getTimeValue(msg[index].createdAt);
-    if (index !== msg.length - 1 && index !== 0) {
+    if (index !== 0) {
       const prevSender = msg[index - 1].name;
-      const nextSender = msg[index + 1].name;
-      if (
-        (nextSender !== msg[index].name && prevSender === msg[index].name) ||
-        (nextSender === msg[index].name && prevSender === msg[index].name)
-      ) {
+      if (prevSender === msg[index].name) {
         const nextSenderTime = getTimeValue(msg[index - 1].createdAt);
         if (nextSenderTime === currentMsgTime) {
           isDisplay = false;

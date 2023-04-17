@@ -105,6 +105,12 @@ export const SocketContextProvider = ({
   //     roomId,
   //   });
   // };
+  // useEffect(() => {
+  //   socket.on(`message-receive`, (data) => {
+  //     console.log(`없는듯`, data);
+  //     func(data.message);
+  //   });
+  // },[])
   // const receiveMessage = (func: any) => {
   //   console.log(`받습니다`);
   //   socket.on(`message-receive`, (data) => {

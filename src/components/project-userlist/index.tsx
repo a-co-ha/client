@@ -1,12 +1,18 @@
-import * as styles from './styles';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 import Image from 'next/image';
+import * as styles from './styles';
 
 export const UserList = () => {
   const onUser = useRecoilValue(onUserState);
+  const { socket } = useContext(SocketContext);
+  useEffect(() => {
+    socket.on(`user connected`, (data) => {
+      console.log(`users`, data);
+    });
+  }, []);
 
   return (
     <div css={styles.userListBox}>
