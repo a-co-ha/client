@@ -14,6 +14,7 @@ import type { AddBlock, EditablePages, Block } from './type';
 import { ErrorBoundary } from '../error-boundary/index';
 import { Error } from '../error-boundary/Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
+import useDidMountEffect from '@/hooks/useDidMountEffect';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
@@ -32,10 +33,14 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     }
   }, [router.query.pageId]);
 
-  useEffect(() => {
-    console.log('서버 블락스 업데이트');
+  useDidMountEffect(() => {
     handlers.updatePageOnserver(blocks, pageId, channelId);
   }, [blocks]);
+
+  // useEffect(() => {
+  //   console.log('서버 블락스 업데이트');
+  //   handlers.updatePageOnserver(blocks, pageId, channelId);
+  // }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
     setCurrentBlockId(currentBlock.id);
