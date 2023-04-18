@@ -14,22 +14,26 @@ export const projectSideBarBox = css`
   ${flexRowCenter}
   width: 250px;
   height: calc(100vh - 50px);
-  outline: 1px solid limegreen;
+  // outline: 1px solid limegreen;
+  // box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const list = css`
   ${flexColumnCenter}
-  width: 60px;
+  width: 75px;
   height: calc(100vh - 50px);
-  outline: 1px solid red;
+  padding-top: 1rem;
+  box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
+    0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
 export const channel = css`
   ${flexColumnCenter}
   width: 250px;
-  // flex-grow: 1;
   height: calc(100vh - 50px);
-  outline: 2px solid blue;
+  margin: 0 0.3rem 0.3rem 0;
+  // background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
 export const pageCreateBtnBox = css`

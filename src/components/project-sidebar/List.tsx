@@ -73,7 +73,6 @@ export const List = () => {
 
   return (
     <div css={styles.list}>
-      <div>List</div>
       {channelList.map((channel) => (
         <div key={channel.id} css={styles.projectCreateThumbnail}>
           <button

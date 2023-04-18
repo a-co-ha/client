@@ -9,7 +9,6 @@ export const MainContent = () => {
   //DragDrop 적용 예정
   return (
     <div css={styles.flexColumnCenter}>
-      <div>메인 컨텐츠</div>
       <div css={styles.mainContentBox}>
         <Chart />
         <TroubleShooting />

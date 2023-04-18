@@ -1,6 +1,7 @@
 import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
+import { ChatBookmark } from '@/components/chat-bookmark';
 import { EditablePage } from '@/components/editable-page';
 import { ChatPage } from '@/components/chat-page';
 import { GetServerSideProps } from 'next';
@@ -31,7 +32,10 @@ export default function Page({ channelId, pageId, type }: pageProps) {
         {type === 'socket' ? (
           <ChatPage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
-        <UserList />
+        <div>
+          <UserList />
+          <ChatBookmark />
+        </div>
       </Suspense>
     </div>
   );

@@ -16,8 +16,7 @@ export const UserList = () => {
 
   return (
     <div css={styles.userListBox}>
-      <div>
-        <div css={{ textAlign: `center` }}>userlist</div>
+      <div css={styles.userListInnerBox}>
         {onUser.map((user, i) => {
           return (
             <div key={i}>

@@ -2,11 +2,6 @@ import { atom } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
 import type { SocketMessage } from '@/pages/api/socket/type';
 
-// export const socketState = atom<Socket<DefaultEventsMap, DefaultEventsMap>>({
-//   key: `socket/${nanoId()}`,
-//   // default: Socket<DefaultEventsMap, DefaultEventsMap>,
-// });
-
 export const onUserState = atom({
   key: `onUserState/${nanoId()}`,
   default: [
@@ -32,4 +27,9 @@ export const messageModalImgState = atom({
 export const socketMessageState = atom<SocketMessage[]>({
   key: `socketMessageState/${nanoId()}`,
   default: [],
+});
+
+export const chatBookmarkModalState = atom({
+  key: `chatBookmarkModalState/${nanoId()}`,
+  default: false,
 });

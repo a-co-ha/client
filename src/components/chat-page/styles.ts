@@ -2,11 +2,11 @@ import { css } from '@emotion/react';
 
 export const chatPage = css`
   position: relative;
+  // min-width: 840px;
   text-align: center;
   flex-basis: 0;
   flex-grow: 1;
   height: calc(100vh - 50px);
-  outline: 1px solid limegreen;
 `;
 
 export const chatPageInnerBox = css`

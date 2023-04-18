@@ -21,10 +21,12 @@ export const SocketContextProvider = ({
 }) => {
   const setOnUser = useSetRecoilState(onUserState);
   const sessionId = getCookie(`sessionId`);
+  const userId = getCookie(`myUserId`);
 
   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
     auth: {
       sessionID: sessionId,
+      userID: userId,
     },
     withCredentials: true,
   });
