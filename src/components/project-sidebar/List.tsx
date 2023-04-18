@@ -81,7 +81,7 @@ export const List = () => {
             onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
           >
             <Image
-              src={channel.channelImg}
+              src={channel.channelImg ? channel.channelImg : githubChannelImg}
               fill
               sizes="40px"
               alt={`channelImg`}
