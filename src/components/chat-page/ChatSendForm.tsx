@@ -25,7 +25,7 @@ export const ChatSendForm = ({
     },
     mode: 'onSubmit',
   });
-  const { chatMessage, error } = useChatSendForm({
+  const { chatMessage, error, isSubmitting } = useChatSendForm({
     control: methods.control,
   });
 
@@ -55,6 +55,7 @@ export const ChatSendForm = ({
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       methods.handleSubmit(onSubmit)();
       e.currentTarget.style.height = `auto`;
@@ -95,6 +96,7 @@ export const ChatSendForm = ({
           />
           {/* <p css={styles.validationMsg}>{error ? error.message : 'ㅤ'}</p> */}
           <button
+            disabled={isSubmitting}
             css={styles.chatFormBtn}
             type="submit"
             onClick={onClickHandler}

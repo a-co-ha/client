@@ -45,6 +45,7 @@ export const SocketContextProvider = ({
     socket.on(`session`, (data) => {
       console.log(`session sockeet data`, data);
     });
+    socket.on(`user connected`, (data) => console.log(`커넥티드`, data));
 
     // const connectSocket = (): Promise<
     //   Socket<DefaultEventsMap, DefaultEventsMap>

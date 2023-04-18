@@ -9,6 +9,7 @@ export const useChatSendForm = ({
   const {
     field: chatMessage,
     fieldState: { error },
+    formState: { isSubmitting },
   } = useController({
     name: 'chatMessage',
     control,
@@ -16,5 +17,5 @@ export const useChatSendForm = ({
       required: true,
     },
   });
-  return { chatMessage, error };
+  return { chatMessage, error, isSubmitting };
 };
