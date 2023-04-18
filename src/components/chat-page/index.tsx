@@ -30,7 +30,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     setMessages((prev) => prev.concat(message));
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (socketMessage !== undefined) {
       console.log(`socketMsg`, socketMessage.messages);
       setMessages(socketMessage.messages);
@@ -57,7 +57,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     const nowDate = dayjs();
     const hour = date.get(`hour`);
     const minute = date.get(`minute`);
-    const displayHour = hour < 12 ? `0${hour}` : hour - 12;
+    const displayHour = hour < 10 ? `0${hour}` : hour;
     const displayminute = minute < 10 ? `0${minute}` : minute;
     const isAm = hour < 12 ? `오전` : `오후`;
     const isToday =

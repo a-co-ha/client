@@ -44,7 +44,7 @@ export const ChatSendForm = ({
     scrollToBottom();
   };
 
-  const onSubmit = async (chat: ChatMessage) => {
+  const onSubmit = (chat: ChatMessage) => {
     // sendMessage(chatMessage.chatMessage, pageId);
     socket.emit(`message-send`, {
       text: chat.chatMessage,
