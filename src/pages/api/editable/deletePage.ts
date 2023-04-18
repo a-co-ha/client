@@ -1,7 +1,7 @@
 import { api } from '../config/api-config';
 export const deleteEditablePage = async (
   channelId: string | string[] | undefined,
-  pageId: string,
+  pageId: string | string[] | undefined,
   type: string | string[] | undefined
 ) => {
   try {

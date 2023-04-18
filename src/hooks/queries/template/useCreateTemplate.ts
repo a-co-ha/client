@@ -9,10 +9,6 @@ export const useCreateTemplate = (type: string) => {
   return useMutation(() => postTemplate(channelId as string, type), {
     onSuccess: (data) => {
       queryClient.invalidateQueries([`channelPages`, channelId]);
-      console.log(
-        '🚀 ~ file: useCreateTemplate.ts:11 ~ returnuseMutation ~ data:',
-        data
-      );
       router.push(
         `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
       );

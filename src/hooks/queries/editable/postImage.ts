@@ -2,6 +2,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { deleteEditablePage } from '@/pages/api/editable/deletePage';
 import type { AxiosError } from 'axios';
 import type { DeletePageResponse } from '@/components/editable-page/type';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 
 export const useDeleteEditablePage = (
   channelId: string | string[] | undefined,

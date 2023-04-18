@@ -22,7 +22,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
     <div css={styles.main}>
       <Suspense fallback={<Loading />}>
         <ProjectSideBar />
-        {type === 'normal' ? (
+        {type === 'normal' || type === 'progress-page' ? (
           <EditablePage
             channelId={channelId}
             pageId={pageId as string}
@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     // if (type === 'normal') {
     if (channelId) {
-      if (type === `normal`) {
+      if (type === `normal` || type === 'progress-page') {
         await queryClient.prefetchQuery([`editablePage`, pageId], () =>
           getEditablePage(channelId, pageId, type)
         );
