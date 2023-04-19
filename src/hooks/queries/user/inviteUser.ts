@@ -14,9 +14,9 @@ export const useInviteUser = (
   return useMutation<InviteUser, AxiosError>(
     () => inviteUser(adminCode, channelName),
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         if (data) {
-          router.push(`/project/${data.channelId}`);
+          await router.push(`/project/${data.channelId}`);
         }
       },
     }
