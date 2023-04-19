@@ -122,7 +122,11 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
             })}
           <div ref={messagesEndRef} />
         </div>
-        <ChatSendForm pageId={pageId} messagesEndRef={messagesEndRef} />
+        <ChatSendForm
+          pageId={pageId}
+          messagesEndRef={messagesEndRef}
+          setMessages={setMessages}
+        />
       </div>
     </div>
   );
