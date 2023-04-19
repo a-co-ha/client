@@ -15,7 +15,9 @@ export const useInviteUser = (
     () => inviteUser(adminCode, channelName),
     {
       onSuccess: (data) => {
-        router.push(`/project/${data.channelId}`);
+        if (data) {
+          router.push(`/project/${data.channelId}`);
+        }
       },
     }
   );
