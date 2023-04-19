@@ -14,6 +14,8 @@ export default function InviteUser() {
   console.log(`여기가 인바이트 유저`, adminCode, channelCode);
   const inviteUser = useInviteUser(adminCode, channelCode);
   useEffect(() => {
-    inviteUser.mutate();
-  }, []);
+    if (inviteUser !== undefined) {
+      inviteUser.mutate();
+    }
+  }, [inviteUser]);
 }
