@@ -11,3 +11,11 @@ export interface PageInTemplateProps {
   type: string;
   position: number;
 }
+
+export interface PageInPageList {
+  label: string[];
+  pageName: string;
+  progressStatus: string;
+  type: string;
+  _id: string;
+}
