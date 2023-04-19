@@ -17,5 +17,5 @@ export default function InviteUser() {
     if (inviteUser !== undefined) {
       inviteUser.mutate();
     }
-  }, [inviteUser]);
+  }, []);
 }
