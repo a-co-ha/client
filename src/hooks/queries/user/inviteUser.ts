@@ -22,8 +22,8 @@ export const useInviteUser = (
       },
       onError: async (data) => {
         if (data) {
-          toast.error(data.message);
-          router.push(`/`);
+          router.push(`/project/${data.message}`);
+          toast.error(`이미 참여한 프로젝트입니다`);
         }
       },
     }
