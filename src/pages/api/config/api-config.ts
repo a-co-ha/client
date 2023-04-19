@@ -41,13 +41,18 @@ api.interceptors.response.use(
   },
   (error) => {
     console.log(`이거에러`, error);
-    if (error.response.status === 403) {
+    const errorStatus = error.response.status;
+    if (errorStatus === 403) {
       if (window) window.location.href = `/error`;
     }
-    if (error.response.status === 400) {
+    if (errorStatus === 400) {
+      if (error.response.config.url.match(/invite/)) {
+        toast.error(`이미 참여한 프로젝트입니다`);
+        window.location.href = `/project/${error.response.data.message}`;
+      }
       toast.error(error.response.data.message);
     }
-    if (error.response.status === 500) {
+    if (errorStatus === 500) {
       toast.error(error.response.data.message);
     }
   }

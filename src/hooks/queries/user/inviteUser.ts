@@ -20,12 +20,6 @@ export const useInviteUser = (
           await router.push(`/project/${data.channelId}`);
         }
       },
-      onError: async (data) => {
-        if (data) {
-          router.push(`/project/${data.message}`);
-          toast.error(`이미 참여한 프로젝트입니다`);
-        }
-      },
     }
   );
 };
