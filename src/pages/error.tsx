@@ -2,7 +2,7 @@ import Image from 'next/image';
 import redImage from '@/images/channelImg/1.png';
 import * as styles from '@/components/error-boundary/styles';
 
-export const Error = () => {
+const Error = () => {
   return (
     <div css={styles.errorBackground}>
       <div>
@@ -17,3 +17,5 @@ export const Error = () => {
     </div>
   );
 };
+
+export default Error;
