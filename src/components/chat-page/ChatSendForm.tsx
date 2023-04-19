@@ -6,13 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
 import type { ChatMessage } from './type';
+import type { SocketMessage } from '@/pages/api/socket/type';
 
 export const ChatSendForm = ({
   pageId,
   messagesEndRef,
+  setMessages,
 }: {
   pageId: string;
   messagesEndRef: RefObject<HTMLDivElement>;
+  setMessages: React.Dispatch<React.SetStateAction<SocketMessage[]>>;
 }) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
@@ -44,11 +47,19 @@ export const ChatSendForm = ({
     scrollToBottom();
   };
 
+  const myMessage = (data: any) => {
+    setMessages((prev) => {
+      const newMessage = prev.concat([data]);
+      return newMessage;
+    });
+  };
+
   const onSubmit = (chat: ChatMessage) => {
     // sendMessage(chatMessage.chatMessage, pageId);
     socket.emit(`message-send`, {
       text: chat.chatMessage,
       roomId: pageId,
+      myMessage,
     });
     console.log(`보냅니다`);
     methods.reset();

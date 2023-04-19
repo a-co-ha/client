@@ -8,7 +8,6 @@ import { onUserState } from '@/recoil/socket/atom';
 interface Context {
   // sendMessage: (text: string, roomId: string) => void;
   // receiveMessage: (data: any) => void;
-  logout: () => void;
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 }
 
@@ -48,35 +47,13 @@ export const SocketContextProvider = ({
       console.log(`session sockeet data`, data);
     });
     socket.on(`user connected`, (data) => console.log(`커넥티드`, data));
-
-    // const connectSocket = (): Promise<
-    //   Socket<DefaultEventsMap, DefaultEventsMap>
-    // > => {
-    //   return new Promise((resolve, reject) => {
-    //     socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
-    //       autoConnect: false,
-    //       auth: {
-    //         sessionID: sessionId,
-    //       },
-    //       withCredentials: true,
-    //     });
-    //     socket.connect();
-    //     socket.on(`connect`, () => {
-    //       resolve(socket);
-    //       console.log(`connected`, socket);
-    //     });
-    //     socket.on(`connect_error`, (error) => reject(error));
-
-    //     socket.on(`users`, (data) => {
-    //       setOnUser(data);
-    //       console.log(`user socket`, data);
-    //     });
-    //     socket.on(`session`, (data) => {
-    //       console.log(`session sockeet data`, data);
-    //     });
-    //   });
-    // };
-    // connectSocket();
+    socket.on(`user disconnected`, (data) => {
+      console.log(`디스커넥트`, data);
+    });
+    return () => {
+      console.log(`disconnect`);
+      socket.disconnect();
+    };
   }, [sessionId]);
   // useEffect(() => {
   //   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
@@ -122,10 +99,6 @@ export const SocketContextProvider = ({
   //   });
   // };
 
-  const logout = () => {
-    socket.disconnect();
-  };
-
   //   const sendMessage = ({
   //     roomId,
   //     userId,
@@ -141,7 +114,7 @@ export const SocketContextProvider = ({
   //     socket.on(`UPDATE_MESSAGE`, (msg) => func(msg));
 
   return (
-    <SocketContext.Provider value={{ logout, socket }}>
+    <SocketContext.Provider value={{ socket }}>
       {children}
     </SocketContext.Provider>
   );

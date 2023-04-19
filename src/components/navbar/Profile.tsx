@@ -13,7 +13,7 @@ import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 export const Profile = () => {
-  const { logout } = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
@@ -24,7 +24,7 @@ export const Profile = () => {
     await api.post(`/api/user/logout`, {
       sessionID,
     });
-    logout();
+    socket.disconnect();
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
