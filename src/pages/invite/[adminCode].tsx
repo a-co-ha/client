@@ -7,7 +7,7 @@ import { api } from '../api/config/api-config';
 export default function InviteUser() {
   const router = useRouter();
   const accessToken = getCookie(`accessToken`);
-  if (accessToken) {
+  if (accessToken && accessToken !== null) {
     api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   }
   const { adminCode, channelCode } = router.query;
