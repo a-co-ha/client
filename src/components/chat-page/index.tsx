@@ -22,6 +22,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const { socket } = useContext(SocketContext);
   const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState);
+  const [isDuplication, setIsDuplication] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -30,7 +31,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     setMessages((prev) => prev.concat(message));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (socketMessage !== undefined) {
       console.log(`socketMsg`, socketMessage.messages);
       setMessages(socketMessage.messages);
@@ -40,8 +41,15 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
 
   useEffect(() => {
     socket.on(`message-receive`, (data) => {
-      console.log(`받습니다`);
-      addMessage(data.message);
+      if (isDuplication === data.id) {
+        console.log(`리턴`);
+        return;
+      } else {
+        setIsDuplication(data.id);
+        console.log(`받습니다`);
+        addMessage(data.message);
+        console.log(`여기다`, messages);
+      }
     });
   }, []);
 

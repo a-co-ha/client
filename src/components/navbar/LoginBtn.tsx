@@ -31,7 +31,7 @@ export const LoginBtn = () => {
         <Profile />
       ) : (
         <div>
-          <div css={styles.loginBox}>
+          <div>
             <div css={styles.loginBox}>
               <button
                 type="button"

@@ -42,8 +42,8 @@ api.interceptors.response.use(
   (error) => {
     console.log(`이거에러`, error);
     if (error.response.status === 403) {
+      if (window) window.location.href = `/error`;
       // router.push(`/`);
-      window.location.href = `/`;
       // deleteCookie(`refreshToken`);
       // api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
       // setCookie(`accessToken`, accessToken);
