@@ -35,7 +35,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     });
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (socketMessage !== undefined) {
       console.log(`socketMsg`, socketMessage.messages);
       setMessages(socketMessage.messages);

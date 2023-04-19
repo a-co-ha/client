@@ -31,7 +31,7 @@ export const SocketContextProvider = ({
   });
 
   // let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!sessionId) return;
     socket.on(`connect`, () => {
       console.log(`connected`, socket);
@@ -54,7 +54,7 @@ export const SocketContextProvider = ({
       console.log(`disconnect`);
       socket.disconnect();
     };
-  }, [sessionId]);
+  }, [sessionId, socket]);
   // useEffect(() => {
   //   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
   //     auth: {
