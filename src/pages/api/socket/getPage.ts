@@ -6,6 +6,6 @@ export const getSocketPage = async (pageId: string | string[] | undefined) => {
     console.log(`socketpage 조회`, res.data);
     return res.data;
   } catch (err) {
-    console.error(err);
+    return console.error(err);
   }
 };

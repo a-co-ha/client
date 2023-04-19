@@ -10,7 +10,7 @@ export const UserList = () => {
   const { socket } = useContext(SocketContext);
   useEffect(() => {
     socket.on(`user connected`, (data) => {
-      console.log(`users`, data);
+      // console.log(`users`, data);
     });
   }, []);
 

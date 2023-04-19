@@ -4,6 +4,7 @@ import {
   useContext,
   useRef,
   useLayoutEffect,
+  useCallback,
 } from 'react';
 import { SocketContext } from './SocketContextProvider';
 import { useGetSocketPage } from '@/hooks/queries/socket/getPage';
@@ -26,10 +27,13 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const addMessage = (message: any) => {
+  const addMessage = useCallback((message: any) => {
     console.log(`addmessage`, message);
-    setMessages((prev) => prev.concat(message));
-  };
+    setMessages((prev) => {
+      const newMessage = prev.concat([message]);
+      return newMessage;
+    });
+  }, []);
 
   useLayoutEffect(() => {
     if (socketMessage !== undefined) {
