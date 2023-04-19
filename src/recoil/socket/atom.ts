@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
 import type { SocketMessage } from '@/pages/api/socket/type';
 
@@ -24,7 +24,7 @@ export const messageModalImgState = atom({
   default: '',
 });
 
-export const socketMessageState = atom<SocketMessage[]>({
+export const socketMessageState = atomFamily<SocketMessage[], string>({
   key: `socketMessageState/${nanoId()}`,
   default: [],
 });

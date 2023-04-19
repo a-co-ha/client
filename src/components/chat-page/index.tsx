@@ -22,7 +22,7 @@ import * as styles from './styles';
 export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const { socket } = useContext(SocketContext);
   const { data: socketMessage } = useGetSocketPage(pageId);
-  const [messages, setMessages] = useRecoilState(socketMessageState);
+  const [messages, setMessages] = useRecoilState(socketMessageState(pageId));
   const [isDuplication, setIsDuplication] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
