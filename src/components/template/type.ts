@@ -9,4 +9,5 @@ export interface PageInTemplateProps {
   pageId: string;
   pageName: string;
   type: string;
+  position: number;
 }
