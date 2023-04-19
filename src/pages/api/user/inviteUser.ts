@@ -6,8 +6,7 @@ export const inviteUser = async (
   channelName: string | string[] | undefined
 ) => {
   const accessToken = getCookie(`accessToken`);
-  if (!accessToken) window.location.href = `/error`;
-
+  if (!accessToken) return (window.location.href = `/error`);
   const res = await api.post(`/invite/${adminCode}?channelCode=${channelName}`);
   return res.data;
 };
