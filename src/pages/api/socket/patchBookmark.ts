@@ -1,7 +1,6 @@
 import { api } from '../config/api-config';
 export const patchBookmark = async (
   channelId: string,
-  pageId: string,
   bookmarkId: string,
   bookmarkName: string,
   content: string

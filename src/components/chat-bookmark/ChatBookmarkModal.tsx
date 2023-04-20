@@ -29,7 +29,13 @@ export const ChatBookmarkModal = ({
     setIsCopied(true);
   };
 
-  const bookmarkEditHandler = () => {};
+  const bookmarkEditHandler = () => {
+    patchBookmark.mutate({
+      id: chatBookmarkData.id,
+      chatBookmarkTitle: '',
+      chatBookmarkContent: '',
+    });
+  };
   const bookmarkDeleteHandler = () => {};
 
   return (
@@ -59,6 +65,7 @@ export const ChatBookmarkModal = ({
             </button>
           </div>
           <div css={styles.chatBookmarkModalContent}>
+            {/* editing */}
             {chatBookmarkData.content}
           </div>
           <button
