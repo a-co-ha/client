@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
-
 import { useRouter } from 'next/router';
+import { useDeleteEditablePage } from '@/hooks/queries/editable/deletePage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';
-import { useDeleteEditablePage } from '@/hooks/queries/editable/deletePage';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
   const router = useRouter();
@@ -36,13 +38,17 @@ export const PageNameLink = (props: PageNameLinkProps) => {
               css={styles.pageNameEditBtn}
               onClick={() => setIsEditing(true)}
             >
-              ✏️
+              <FontAwesomeIcon
+                icon={faPencil}
+                size="sm"
+                style={{ color: '#efb925' }}
+              />
             </button>
             <button
               css={styles.pageNameEditBtn}
               onClick={() => deletePage.mutate()}
             >
-              🗑
+              <FontAwesomeIcon icon={faTrashCan} />
             </button>
           </div>
         </div>

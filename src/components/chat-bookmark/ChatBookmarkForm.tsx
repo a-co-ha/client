@@ -46,19 +46,25 @@ export const ChatBookmarkForm = ({
     methods.reset();
   };
 
-  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.nativeEvent.isComposing) return;
-    if (e.key === 'Enter' && !e.shiftKey) {
-      methods.handleSubmit(onSubmit)();
-      e.currentTarget.style.height = `auto`;
-      e.preventDefault();
-    } else if (e.key === 'Enter' && e.shiftKey) {
-      return;
+  const onKeyDownTitleHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      methods.setFocus(`chatBookmarkContent`);
     }
+  };
+
+  const onKeyDownContentHandler = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (e.nativeEvent.isComposing) return;
+    // e.preventDefault();
+    // if (e.key === 'Enter' && e.shiftKey) {
+    //   return;
+    // }
   };
 
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     setChatBookmarkFormModal(false);
+    methods.reset();
   };
 
   return (
@@ -77,19 +83,18 @@ export const ChatBookmarkForm = ({
                   type="text"
                   value={chatBookmarkTitle.value}
                   onChange={chatBookmarkTitle.onChange}
+                  onKeyDown={onKeyDownTitleHandler}
                   spellCheck={false}
                   autoFocus
                   placeholder={`제목`}
                 />
                 <textarea
                   css={styles.chatBookmarkFormInput}
-                  rows={1}
                   value={chatBookmarkContent.value}
                   onChange={chatBookmarkContent.onChange}
-                  onKeyDown={onKeyDownHandler}
+                  onKeyDown={onKeyDownContentHandler}
                   name={chatBookmarkContent.name}
                   spellCheck={false}
-                  autoFocus
                   placeholder={`내용을 입력해주세요`}
                 />
                 <button

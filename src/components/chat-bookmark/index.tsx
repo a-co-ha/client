@@ -26,9 +26,13 @@ export const ChatBookmark = ({
   );
   const [chatBookmark, setChatBookmark] = useRecoilState(chatBookmarkState);
 
-  const onClickHandler = (bookmarkName: string, content: string) => {
+  const onClickHandler = (
+    id: string,
+    bookmarkName: string,
+    content: string
+  ) => {
     setChatBookmarkModal(true);
-    setChatBookmarkFormData({ bookmarkName, content });
+    setChatBookmarkFormData({ id, bookmarkName, content });
   };
   useEffect(() => {
     if (chatBookmarkList !== undefined) {
@@ -38,7 +42,7 @@ export const ChatBookmark = ({
   return (
     <div css={styles.chatBookmarkBox}>
       <div>chatBookmark</div>
-      <ChatBookmarkModal />
+      <ChatBookmarkModal channelId={channelId} pageId={pageId} />
       <ChatBookmarkForm channelId={channelId} pageId={pageId} />
       <button
         css={styles.chatBookmarkCreateBtn}
@@ -54,7 +58,11 @@ export const ChatBookmark = ({
                 key={i}
                 css={styles.chatBookmarkItem}
                 onClick={(e) =>
-                  onClickHandler(bookmark.bookmarkName, bookmark.content)
+                  onClickHandler(
+                    bookmark._id,
+                    bookmark.bookmarkName,
+                    bookmark.content
+                  )
                 }
               >
                 {bookmark.bookmarkName}

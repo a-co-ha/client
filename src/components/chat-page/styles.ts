@@ -35,6 +35,7 @@ export const chatFormBtn = css`
 `;
 
 export const chatFormInput = css`
+  display: block;
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1rem;
@@ -84,6 +85,7 @@ export const message = css`
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  white-space: pre-wrap;
 `;
 
 export const messageNameAlign = css`

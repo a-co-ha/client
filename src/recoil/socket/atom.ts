@@ -48,6 +48,7 @@ export const chatBookmarkFormModalState = atom({
 export const chatBookmarkFormDataState = atom({
   key: `chatBookmarkFormDataState/${nanoId()}`,
   default: {
+    id: '',
     bookmarkName: '',
     content: '',
   },

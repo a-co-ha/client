@@ -26,14 +26,25 @@ export const chatBookmarkCreateBtn = css`
 export const chatBookmarkItemBox = css`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   width: 100%;
   padding: 0.5rem 1rem;
   // outline: 1px solid blue;
 `;
 
 export const chatBookmarkItem = css`
-  outline: 1px solid red;
+  padding: 0.375rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transform-origin: center;
+  &:hover {
+    background-color: rgb(0 0 0 / 0.5);
+    color: white;
+  }
+  &:active {
+    box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+  border-radius: 0.375rem;
 `;
 
 export const chatBookmarkModalBackground = (isOpen: boolean) => css`
@@ -76,13 +87,52 @@ export const chatBookmarkModalBox = css`
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
 
-export const chatBookmarkModalTitle = css`
+export const chatBookmarkModalTitleBox = css`
+  display: flex;
   margin-bottom: 1rem;
 `;
 
+export const chatBookmarkModalTitle = css`
+  margin-right: auto;
+`;
+
+export const chatBookmarkModalEditBtn = css`
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 0.375rem;
+  background: #eee;
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+`;
+
+export const chatBookmarkModalDeleteBtn = css`
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  color: white;
+  border-radius: 0.375rem;
+  background: rgba(255, 0, 0, 0.65);
+  &:hover {
+    background: rgba(255, 0, 0, 0.8);
+  }
+`;
+
 export const chatBookmarkModalContent = css`
+  white-space: pre-wrap;
   max-height: 63.5vh;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    background-color: #efefef;
+    border-radius: 0.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 export const chatBookmarkCopyBtn = (isCopied: boolean) => css`

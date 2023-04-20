@@ -4,9 +4,17 @@ import {
   chatBookmarkModalState,
   chatBookmarkFormDataState,
 } from '@/recoil/socket/atom';
+import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
 import * as styles from './styles';
 
-export const ChatBookmarkModal = () => {
+export const ChatBookmarkModal = ({
+  channelId,
+  pageId,
+}: {
+  channelId: string;
+  pageId: string;
+}) => {
+  const patchBookmark = usePatchBookmark(channelId, pageId);
   const chatBookmarkData = useRecoilValue(chatBookmarkFormDataState);
   const [chatBookmarkModal, setChatBookmarkModal] = useRecoilState(
     chatBookmarkModalState
@@ -20,6 +28,10 @@ export const ChatBookmarkModal = () => {
     navigator.clipboard.writeText(contents);
     setIsCopied(true);
   };
+
+  const bookmarkEditHandler = () => {};
+  const bookmarkDeleteHandler = () => {};
+
   return (
     <div>
       <div
@@ -29,9 +41,23 @@ export const ChatBookmarkModal = () => {
 
       <div css={styles.chatBookmarkModalTransition(chatBookmarkModal)}>
         <div css={styles.chatBookmarkModalBox}>
-          <h2 css={styles.chatBookmarkModalTitle}>
-            {chatBookmarkData.bookmarkName}
-          </h2>
+          <div css={styles.chatBookmarkModalTitleBox}>
+            <h2 css={styles.chatBookmarkModalTitle}>
+              {chatBookmarkData.bookmarkName}
+            </h2>
+            <button
+              css={styles.chatBookmarkModalEditBtn}
+              onClick={bookmarkEditHandler}
+            >
+              Edit
+            </button>
+            <button
+              css={styles.chatBookmarkModalDeleteBtn}
+              onClick={bookmarkDeleteHandler}
+            >
+              Delete
+            </button>
+          </div>
           <div css={styles.chatBookmarkModalContent}>
             {chatBookmarkData.content}
           </div>
