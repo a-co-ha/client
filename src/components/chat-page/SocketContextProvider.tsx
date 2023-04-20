@@ -6,8 +6,6 @@ import { useSetRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 
 interface Context {
-  // sendMessage: (text: string, roomId: string) => void;
-  // receiveMessage: (data: any) => void;
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 }
 
@@ -30,7 +28,6 @@ export const SocketContextProvider = ({
     withCredentials: true,
   });
 
-  // let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   useLayoutEffect(() => {
     if (!sessionId) return;
     socket.on(`connect`, () => {

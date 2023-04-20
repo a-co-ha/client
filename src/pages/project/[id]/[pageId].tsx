@@ -34,7 +34,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
         ) : null}
         <div>
           <UserList />
-          <ChatBookmark />
+          <ChatBookmark channelId={channelId} />
         </div>
       </Suspense>
     </div>
@@ -45,7 +45,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { id: channelId, pageId, type } = context.query;
   try {
-    // if (type === 'normal') {
     if (channelId) {
       if (type === `normal`) {
         await queryClient.prefetchQuery([`editablePage`, pageId], () =>
@@ -66,15 +65,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         type,
       },
     };
-    // } else if (type === 'socket') {
-    //   const pageData = await getSocketPage(channelId, pageId);
-    //   const socketPage = pageData.page;
-    //   return {
-    //     props: { socketPage, type },
-    //   };
-    // } else {
-    //   return { props: { editablePage: null, socketPage: null, type: null } };
-    // }
   } catch (err) {
     return {
       notFound: true,

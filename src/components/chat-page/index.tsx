@@ -41,7 +41,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       setMessages(socketMessage.messages);
       console.log(`메세지스`, messages);
     }
-  }, [router.query.pageId]);
+  }, [router.query.pageId, socketMessage]);
 
   useEffect(() => {
     socket.on(`message-receive`, (data) => {

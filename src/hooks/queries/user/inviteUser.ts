@@ -17,7 +17,7 @@ export const useInviteUser = (
     {
       onSuccess: async (data) => {
         if (data) {
-          await router.push(`/project/${data.channelId}`);
+          router.push(`/project/${data.channelId}`);
         }
       },
     }

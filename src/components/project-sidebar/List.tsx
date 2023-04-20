@@ -45,7 +45,7 @@ export const List = () => {
       } else {
         setChannelList([]);
         setIsInitialUser(true);
-        router.push(`/main`);
+        // router.push(`/main`);
       }
     } catch (err) {
       console.error(err);
