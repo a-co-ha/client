@@ -10,13 +10,28 @@ export const chatBookmarkBox = css`
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
 `;
 
+export const chatBookmarkCreateBtn = css`
+  width: 100%;
+  height: 2rem;
+  &:hover {
+    background: #eee;
+  }
+  &:active {
+    // background: #e0e0e0;
+    // color: white;
+    box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+`;
+
 export const chatBookmarkItemBox = css`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 100%;
   padding: 0.5rem 1rem;
-  outline: 1px solid blue;
+  // outline: 1px solid blue;
 `;
 
 export const chatBookmarkItem = css`
@@ -75,3 +90,35 @@ export const chatBookmarkCopyBtn = (isCopied: boolean) => css`
     outline: none;
   }
 `;
+
+export const chatBookmarkFormModalBox = css`
+  width: 500px;
+  max-width: 32rem;
+  height: 65vh;
+  padding: 1.5rem;
+  text-align: left;
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+`;
+
+export const chatBookmarkFormInputBox = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const chatBookmarkFormInput = css`
+  flex-grow: 1;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.5rem;
+  background: transparent;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const chatBookmarkFormBtn = css``;

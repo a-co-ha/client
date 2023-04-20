@@ -20,3 +20,16 @@ export interface SocketMessage {
   userId: number;
   createdAt: string;
 }
+
+export interface chatBookmark {
+  _id: string;
+  channelId: number;
+  bookmarkName: string;
+  content: string;
+  userId: number;
+  userName: string;
+  type: string;
+  categories: string;
+  createdAt: string;
+  updatedAt: string;
+}
