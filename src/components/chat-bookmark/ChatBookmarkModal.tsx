@@ -30,11 +30,11 @@ export const ChatBookmarkModal = ({
   };
 
   const bookmarkEditHandler = () => {
-    patchBookmark.mutate({
-      id: chatBookmarkData.id,
-      chatBookmarkTitle: '',
-      chatBookmarkContent: '',
-    });
+    // patchBookmark.mutate({
+    //   id: chatBookmarkData.id,
+    //   chatBookmarkTitle: '',
+    //   chatBookmarkContent: '',
+    // });
   };
   const bookmarkDeleteHandler = () => {};
 
