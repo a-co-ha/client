@@ -1,3 +1,4 @@
-export interface ChatBookmark {
-  chatBookmark: string;
+export interface ChatBookmarkFormType {
+  chatBookmarkContent: string;
+  chatBookmarkTitle: string;
 }

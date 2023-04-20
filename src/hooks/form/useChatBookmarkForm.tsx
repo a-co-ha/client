@@ -1,21 +1,37 @@
 import { Control, useController } from 'react-hook-form';
-import { ChatBookmark } from '@/components/chat-bookmark/type';
+import { ChatBookmarkFormType } from '@/components/chat-bookmark/type';
 
 export const useChatBookmarkForm = ({
   control,
 }: {
-  control: Control<ChatBookmark>;
+  control: Control<ChatBookmarkFormType>;
 }) => {
   const {
-    field: chatBookmark,
-    fieldState: { error },
-    formState: { isSubmitting },
+    field: chatBookmarkTitle,
+    fieldState: { error: titleError },
   } = useController({
-    name: 'chatBookmark',
+    name: 'chatBookmarkTitle',
     control,
     rules: {
       required: true,
     },
   });
-  return { chatBookmark, error, isSubmitting };
+  const {
+    field: chatBookmarkContent,
+    fieldState: { error: contentError },
+    formState: { isSubmitting },
+  } = useController({
+    name: 'chatBookmarkContent',
+    control,
+    rules: {
+      required: true,
+    },
+  });
+  return {
+    chatBookmarkTitle,
+    chatBookmarkContent,
+    titleError,
+    contentError,
+    isSubmitting,
+  };
 };

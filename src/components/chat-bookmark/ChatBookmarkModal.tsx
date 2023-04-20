@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { chatBookmarkModalState } from '@/recoil/socket/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  chatBookmarkModalState,
+  chatBookmarkFormDataState,
+} from '@/recoil/socket/atom';
 import * as styles from './styles';
 
 export const ChatBookmarkModal = () => {
+  const chatBookmarkData = useRecoilValue(chatBookmarkFormDataState);
   const [chatBookmarkModal, setChatBookmarkModal] = useRecoilState(
     chatBookmarkModalState
   );
@@ -22,13 +26,18 @@ export const ChatBookmarkModal = () => {
         onClick={onClickHandler}
         css={styles.chatBookmarkModalBackground(chatBookmarkModal)}
       ></div>
+
       <div css={styles.chatBookmarkModalTransition(chatBookmarkModal)}>
         <div css={styles.chatBookmarkModalBox}>
-          <h2>title</h2>
-          <div>content</div>
+          <h2 css={styles.chatBookmarkModalTitle}>
+            {chatBookmarkData.bookmarkName}
+          </h2>
+          <div css={styles.chatBookmarkModalContent}>
+            {chatBookmarkData.content}
+          </div>
           <button
             css={styles.chatBookmarkCopyBtn(isCopied)}
-            onClick={() => codeCopyHandler('contents')}
+            onClick={() => codeCopyHandler(chatBookmarkData.content)}
           >
             {isCopied ? `Copied ✔️` : `Copy`}
           </button>

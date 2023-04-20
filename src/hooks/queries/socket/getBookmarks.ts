@@ -1,14 +1,14 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getBookmarks } from '@/pages/api/socket/getBookmarks';
 import type { AxiosError } from 'axios';
-import type { chatBookmark } from '@/pages/api/socket/type';
+import type { ChatBookmark } from '@/pages/api/socket/type';
 
 export const useGetBookmarks = (
   channelId: string,
   pageId: string,
-  options?: UseQueryOptions<chatBookmark[], AxiosError>
+  options?: UseQueryOptions<ChatBookmark[], AxiosError>
 ) => {
-  return useQuery<chatBookmark[], AxiosError>(
+  return useQuery<ChatBookmark[], AxiosError>(
     [`getChatBookmarks`, pageId],
     () => getBookmarks(channelId),
     options

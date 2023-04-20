@@ -17,8 +17,6 @@ export const chatBookmarkCreateBtn = css`
     background: #eee;
   }
   &:active {
-    // background: #e0e0e0;
-    // color: white;
     box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
       0 4px 6px -4px rgb(0 0 0 / 0.2);
   }
@@ -68,18 +66,28 @@ export const chatBookmarkModalTransition = (isOpen: boolean) => css`
 export const chatBookmarkModalBox = css`
   width: 500px;
   max-width: 32rem;
+  max-height: 80vh;
   padding: 1.5rem;
   text-align: left;
   vertical-align: middle;
   background: white;
   border-radius: 1rem;
-  overflow: hidden;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
 
+export const chatBookmarkModalTitle = css`
+  margin-bottom: 1rem;
+`;
+
+export const chatBookmarkModalContent = css`
+  max-height: 63.5vh;
+  overflow-y: auto;
+`;
+
 export const chatBookmarkCopyBtn = (isCopied: boolean) => css`
   padding: 0.5rem 1rem;
+  margin: 1rem 0;
   font-weight: 500;
   background-color: ${isCopied ? `rgb(226 232 240)` : `rgb(219 234 254)`};
   border-radius: 0.375rem;
@@ -109,11 +117,26 @@ export const chatBookmarkFormInputBox = css`
   flex-direction: column;
 `;
 
+export const chatBookmarkFormTitleInput = (titleError: boolean) => css`
+  flex-grow: 1;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  background: transparent;
+  &:focus {
+    outline: none;
+  }
+  border-bottom: ${titleError ? `1px solid red` : `1px solid gray`};
+`;
+
 export const chatBookmarkFormInput = css`
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1rem;
+  height: calc(65vh - 176px);
   padding: 0.5rem;
+  margin-bottom: 1rem;
   background: transparent;
   resize: none;
   &:focus {
@@ -121,4 +144,16 @@ export const chatBookmarkFormInput = css`
   }
 `;
 
-export const chatBookmarkFormBtn = css``;
+export const chatBookmarkFormBtn = css`
+  padding: 1rem 0;
+  border-radius: 0.375rem;
+  &:active {
+    box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),
+    0 4px 6px -4px rgb(0 0 0 / 0.2);
+  &:hover {
+    background: #eee;
+  }
+`;

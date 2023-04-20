@@ -1,6 +1,7 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   chatBookmarkFormModalState,
+  chatBookmarkFormDataState,
   chatBookmarkModalState,
   chatBookmarkState,
 } from '@/recoil/socket/atom';
@@ -19,13 +20,15 @@ export const ChatBookmark = ({
 }) => {
   const { data: chatBookmarkList } = useGetBookmarks(channelId, pageId);
   const setChatBookmarkModal = useSetRecoilState(chatBookmarkModalState);
+  const setChatBookmarkFormData = useSetRecoilState(chatBookmarkFormDataState);
   const setChatBookmarkFormModal = useSetRecoilState(
     chatBookmarkFormModalState
   );
   const [chatBookmark, setChatBookmark] = useRecoilState(chatBookmarkState);
 
-  const onClickHandler = () => {
+  const onClickHandler = (bookmarkName: string, content: string) => {
     setChatBookmarkModal(true);
+    setChatBookmarkFormData({ bookmarkName, content });
   };
   useEffect(() => {
     if (chatBookmarkList !== undefined) {
@@ -36,7 +39,7 @@ export const ChatBookmark = ({
     <div css={styles.chatBookmarkBox}>
       <div>chatBookmark</div>
       <ChatBookmarkModal />
-      <ChatBookmarkForm />
+      <ChatBookmarkForm channelId={channelId} pageId={pageId} />
       <button
         css={styles.chatBookmarkCreateBtn}
         onClick={() => setChatBookmarkFormModal(true)}
@@ -45,9 +48,15 @@ export const ChatBookmark = ({
       </button>
       <div css={styles.chatBookmarkItemBox}>
         {chatBookmark &&
-          chatBookmark.map((bookmark) => {
+          chatBookmark.map((bookmark, i) => {
             return (
-              <div css={styles.chatBookmarkItem} onClick={onClickHandler}>
+              <div
+                key={i}
+                css={styles.chatBookmarkItem}
+                onClick={(e) =>
+                  onClickHandler(bookmark.bookmarkName, bookmark.content)
+                }
+              >
                 {bookmark.bookmarkName}
               </div>
             );

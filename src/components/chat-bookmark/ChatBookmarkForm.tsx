@@ -5,26 +5,44 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
-import type { ChatBookmark } from './type';
+import type { ChatBookmarkFormType } from './type';
 import { useRecoilState } from 'recoil';
 import { chatBookmarkFormModalState } from '@/recoil/socket/atom';
+import { usePostBookmark } from '@/hooks/queries/socket/postBookmark';
 
-export const ChatBookmarkForm = ({}: {}) => {
+export const ChatBookmarkForm = ({
+  channelId,
+  pageId,
+}: {
+  channelId: string;
+  pageId: string;
+}) => {
   const { socket } = useContext(SocketContext);
+  const postBookmark = usePostBookmark(channelId, pageId);
   const [chatBookmarkFormModal, setChatBookmarkFormModal] = useRecoilState(
     chatBookmarkFormModalState
   );
-  const methods = useForm<ChatBookmark>({
+  const methods = useForm<ChatBookmarkFormType>({
     defaultValues: {
-      chatBookmark: '',
+      chatBookmarkTitle: '',
+      chatBookmarkContent: '',
     },
     mode: 'onSubmit',
   });
-  const { chatBookmark, error, isSubmitting } = useChatBookmarkForm({
+  const {
+    chatBookmarkTitle,
+    chatBookmarkContent,
+    titleError,
+    contentError,
+    isSubmitting,
+  } = useChatBookmarkForm({
     control: methods.control,
   });
 
-  const onSubmit = (chat: ChatBookmark) => {
+  const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
+    console.log(`submitData`, chatBookmark);
+    postBookmark.mutate(chatBookmark);
+    setChatBookmarkFormModal(false);
     methods.reset();
   };
 
@@ -54,16 +72,25 @@ export const ChatBookmarkForm = ({}: {}) => {
           <div>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <div css={styles.chatBookmarkFormInputBox}>
-                <textarea
-                  autoFocus
+                <input
+                  css={styles.chatBookmarkFormTitleInput(!!titleError)}
+                  type="text"
+                  value={chatBookmarkTitle.value}
+                  onChange={chatBookmarkTitle.onChange}
                   spellCheck={false}
+                  autoFocus
+                  placeholder={`제목`}
+                />
+                <textarea
                   css={styles.chatBookmarkFormInput}
                   rows={1}
-                  value={chatBookmark.value}
-                  onChange={chatBookmark.onChange}
+                  value={chatBookmarkContent.value}
+                  onChange={chatBookmarkContent.onChange}
                   onKeyDown={onKeyDownHandler}
-                  name={chatBookmark.name}
-                  placeholder={`메세지를 입력해주세요`}
+                  name={chatBookmarkContent.name}
+                  spellCheck={false}
+                  autoFocus
+                  placeholder={`내용을 입력해주세요`}
                 />
                 <button
                   disabled={isSubmitting}

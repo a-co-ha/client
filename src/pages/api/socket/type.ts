@@ -21,7 +21,7 @@ export interface SocketMessage {
   createdAt: string;
 }
 
-export interface chatBookmark {
+export interface ChatBookmark {
   _id: string;
   channelId: number;
   bookmarkName: string;

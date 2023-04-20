@@ -42,6 +42,7 @@ export const ChatSendForm = ({
     chatMessage: any;
   }) => {
     chatMessage.style.height = `auto`;
+    chatMessage.style.maxHeight = `${window.innerHeight / 2}px`;
     chatMessage.style.height = `${chatMessage.scrollHeight}px`;
     onChange(value);
     scrollToBottom();
@@ -105,7 +106,6 @@ export const ChatSendForm = ({
             name={chatMessage.name}
             placeholder={`메세지를 입력해주세요`}
           />
-          {/* <p css={styles.validationMsg}>{error ? error.message : 'ㅤ'}</p> */}
           <button
             disabled={isSubmitting}
             css={styles.chatFormBtn}
