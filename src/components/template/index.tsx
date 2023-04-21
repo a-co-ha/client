@@ -28,20 +28,11 @@ export const TemplatePage = ({
   const { mutate: createPage } = useCreateTemplateInPage();
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
 
-  const todoPageList = pageList?.filter(
-    (page: PageInPageList) => page.progressStatus === 'todo'
+  const groupPageList = progressStatusType.map((status) =>
+    pageList?.filter((page: PageInPageList) => page.progressStatus === status)
   );
-  const progressPageList = pageList?.filter(
-    (page: PageInPageList) => page.progressStatus === 'progress'
-  );
-  const completePageList = pageList?.filter(
-    (page: PageInPageList) => page.progressStatus === 'complete'
-  );
-  const [pageArr, setPageArr] = useState([
-    todoPageList,
-    progressPageList,
-    completePageList,
-  ]);
+
+  const [pageArr, setPageArr] = useState(groupPageList);
   console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
 
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
@@ -52,7 +43,7 @@ export const TemplatePage = ({
   }, []);
 
   useDidMountEffect(() => {
-    setPageArr([todoPageList, progressPageList, completePageList]);
+    setPageArr(groupPageList);
   }, [pageList]);
 
   const reorder = (
@@ -116,34 +107,18 @@ export const TemplatePage = ({
         .map((el) => el.map((page: PageInPageList) => page._id))
         .flat();
 
-      if (destination?.droppableId === '0') {
-        const statusWithPageList = newStatePageId.map((pageId: string) => {
-          if (pageId === targetId) {
-            return { _id: pageId, progressStatus: 'todo' };
-          } else {
-            return pageId;
-          }
-        });
-        upatePageList(statusWithPageList);
-      } else if (destination?.droppableId === '1') {
-        const statusWithPageList = newStatePageId.map((pageId: string) => {
-          if (pageId === targetId) {
-            return { _id: pageId, progressStatus: 'progress' };
-          } else {
-            return pageId;
-          }
-        });
-        upatePageList(statusWithPageList);
-      } else if (destination?.droppableId === '2') {
-        const statusWithPageList = newStatePageId.map((pageId: string) => {
-          if (pageId === targetId) {
-            return { _id: pageId, progressStatus: 'complete' };
-          } else {
-            return pageId;
-          }
-        });
-        upatePageList(statusWithPageList);
-      } else return;
+      progressStatusType.forEach((status, index) => {
+        if (dInd === index) {
+          const statusWithPageList = newStatePageId.map((pageId: string) => {
+            if (pageId === targetId) {
+              return { _id: pageId, progressStatus: status };
+            } else {
+              return pageId;
+            }
+          });
+          upatePageList(statusWithPageList);
+        }
+      });
     }
   }
 
