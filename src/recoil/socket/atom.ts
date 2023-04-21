@@ -53,3 +53,8 @@ export const chatBookmarkFormDataState = atom({
     content: '',
   },
 });
+
+export const isBookmarkEditingState = atom({
+  key: `isBookmarkEditing/${nanoId()}`,
+  default: false,
+});

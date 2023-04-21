@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   chatBookmarkModalState,
   chatBookmarkFormDataState,
+  isBookmarkEditingState,
 } from '@/recoil/socket/atom';
 import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
+import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
 import * as styles from './styles';
 
 export const ChatBookmarkModal = ({
@@ -16,6 +18,9 @@ export const ChatBookmarkModal = ({
 }) => {
   const patchBookmark = usePatchBookmark(channelId, pageId);
   const chatBookmarkData = useRecoilValue(chatBookmarkFormDataState);
+  const [isBookmarkEditing, setIsBookmarkEditing] = useRecoilState(
+    isBookmarkEditingState
+  );
   const [chatBookmarkModal, setChatBookmarkModal] = useRecoilState(
     chatBookmarkModalState
   );
@@ -30,11 +35,7 @@ export const ChatBookmarkModal = ({
   };
 
   const bookmarkEditHandler = () => {
-    // patchBookmark.mutate({
-    //   id: chatBookmarkData.id,
-    //   chatBookmarkTitle: '',
-    //   chatBookmarkContent: '',
-    // });
+    setIsBookmarkEditing(true);
   };
   const bookmarkDeleteHandler = () => {};
 
@@ -47,33 +48,39 @@ export const ChatBookmarkModal = ({
 
       <div css={styles.chatBookmarkModalTransition(chatBookmarkModal)}>
         <div css={styles.chatBookmarkModalBox}>
-          <div css={styles.chatBookmarkModalTitleBox}>
-            <h2 css={styles.chatBookmarkModalTitle}>
-              {chatBookmarkData.bookmarkName}
-            </h2>
-            <button
-              css={styles.chatBookmarkModalEditBtn}
-              onClick={bookmarkEditHandler}
-            >
-              Edit
-            </button>
-            <button
-              css={styles.chatBookmarkModalDeleteBtn}
-              onClick={bookmarkDeleteHandler}
-            >
-              Delete
-            </button>
-          </div>
-          <div css={styles.chatBookmarkModalContent}>
-            {/* editing */}
-            {chatBookmarkData.content}
-          </div>
-          <button
-            css={styles.chatBookmarkCopyBtn(isCopied)}
-            onClick={() => codeCopyHandler(chatBookmarkData.content)}
-          >
-            {isCopied ? `Copied ✔️` : `Copy`}
-          </button>
+          {!isBookmarkEditing ? (
+            <div>
+              <div css={styles.chatBookmarkModalTitleBox}>
+                <h2 css={styles.chatBookmarkModalTitle}>
+                  {chatBookmarkData.bookmarkName}
+                </h2>
+                <button
+                  css={styles.chatBookmarkModalEditBtn}
+                  onClick={bookmarkEditHandler}
+                >
+                  Edit
+                </button>
+                <button
+                  css={styles.chatBookmarkModalDeleteBtn}
+                  onClick={bookmarkDeleteHandler}
+                >
+                  Delete
+                </button>
+              </div>
+              <div css={styles.chatBookmarkModalContent}>
+                {/* editing */}
+                {chatBookmarkData.content}
+              </div>
+              <button
+                css={styles.chatBookmarkCopyBtn(isCopied)}
+                onClick={() => codeCopyHandler(chatBookmarkData.content)}
+              >
+                {isCopied ? `Copied ✔️` : `Copy`}
+              </button>
+            </div>
+          ) : (
+            <CahtBookmarkEditForm channelId={channelId} pageId={pageId} />
+          )}
         </div>
       </div>
     </div>
