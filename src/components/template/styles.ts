@@ -11,5 +11,5 @@ export const progressContainer = css`
 
 export const progressSection = css`
   border: solid;
-  flex-basis: 50%;
+  flex-basis: 30%;
 `;

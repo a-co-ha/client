@@ -5,9 +5,13 @@ import { postTemplateInPage } from '@/pages/api/templete/postTemplateInPage';
 export const useCreateTemplateInPage = () => {
   const { channelId, pageId, type } = useGetUrlInfo();
   const queryClient = useQueryClient();
-  return useMutation(() => postTemplateInPage(channelId, pageId, type), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['editablePage']);
-    },
-  });
+  return useMutation(
+    (progressStatus: string) =>
+      postTemplateInPage(channelId, pageId, type, progressStatus),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['editablePage']);
+      },
+    }
+  );
 };

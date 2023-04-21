@@ -4,12 +4,13 @@ import { api } from '../config/api-config';
 export const postTemplateInPage = async (
   channelId: string | string[] | undefined,
   pageId: string | string[] | undefined,
-  type: string | string[] | undefined
+  type: string | string[] | undefined,
+  progressStatus: string
 ) => {
   return await api
     .patch(`/api/template/${pageId}?type=${type}&channel=${channelId}`, {
       blockId: nanoId(),
-      progressStatus: 'todo',
+      progressStatus,
     })
     .then((res) => res);
 };
