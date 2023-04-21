@@ -4,12 +4,17 @@ import { Error } from './Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useCreateTemplateInPage } from '@/hooks/queries/template/useCreateTemplateInPage';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  DraggableLocation,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { PageInTemplate } from './PageInTemplate';
 import { useEffect, useState } from 'react';
 import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
-import type { PageInPageList, TemplatePageProps } from './type';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
+import type { PageInPageList, TemplatePageProps } from './type';
 
 // FIXME: 페이지 이름 수정후 url 변경시에도 수정되야함
 
@@ -50,7 +55,11 @@ export const TemplatePage = ({
     setPageArr([todoPageList, progressPageList, completePageList]);
   }, [pageList]);
 
-  const reorder = (list: any, startIndex: any, endIndex: any) => {
+  const reorder = (
+    list: PageInPageList[],
+    startIndex: number,
+    endIndex: number
+  ) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -59,10 +68,10 @@ export const TemplatePage = ({
   };
 
   const move = (
-    source: any,
-    destination: any,
-    droppableSource: any,
-    droppableDestination: any
+    source: PageInPageList[],
+    destination: PageInPageList[],
+    droppableSource: DraggableLocation,
+    droppableDestination: DraggableLocation
   ) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
@@ -70,7 +79,7 @@ export const TemplatePage = ({
 
     destClone.splice(droppableDestination.index, 0, removed);
 
-    const result: any = {};
+    const result: Record<string, unknown> = {};
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
 
@@ -148,9 +157,9 @@ export const TemplatePage = ({
                 pageArr &&
                 pageArr.map((el: PageInPageList[], index) => {
                   return (
-                    <section css={styles.progressSection}>
+                    <section css={styles.progressSection} key={index}>
                       <h3>{progressStatusType[index]}</h3>
-                      <Droppable key={index} droppableId={`${index}`}>
+                      <Droppable droppableId={`${index}`}>
                         {(provided) => (
                           <div
                             ref={provided.innerRef}
