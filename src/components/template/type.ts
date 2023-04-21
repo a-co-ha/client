@@ -10,6 +10,7 @@ export interface PageInTemplateProps {
   pageName: string;
   type: string;
   position: number;
+  label: Labels[];
 }
 
 export interface PageInPageList {
@@ -17,5 +18,10 @@ export interface PageInPageList {
   pageName: string;
   progressStatus: string;
   type: string;
+  _id: string;
+}
+
+export interface Labels {
+  content: string;
   _id: string;
 }

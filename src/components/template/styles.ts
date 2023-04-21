@@ -10,6 +10,10 @@ export const progressContainer = css`
 `;
 
 export const progressSection = css`
-  border: solid;
   flex-basis: 30%;
+`;
+
+export const progressInPage = css`
+  border: solid;
+  height: 5rem;
 `;
