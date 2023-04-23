@@ -16,4 +16,6 @@ export const progressSection = css`
 export const progressInPage = css`
   border: solid;
   height: 5rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 `;

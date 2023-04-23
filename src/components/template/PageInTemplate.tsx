@@ -1,7 +1,7 @@
 import { PageNameForm } from '../project-sidebar/PageNameForm';
 import { PageNameLink } from '../project-sidebar/PageNameLink';
 import { Draggable } from 'react-beautiful-dnd';
-import type { PageInTemplateProps } from './type';
+import type { Labels, PageInTemplateProps } from './type';
 import { draggable } from '../editable-block/styles';
 import * as styles from './styles';
 
@@ -15,7 +15,6 @@ export const PageInTemplate = ({
   position,
   label,
 }: PageInTemplateProps) => {
-  console.log('🚀 ~ file: PageInTemplate.tsx:18 ~ label:', label);
   return (
     <Draggable key={pageId} draggableId={pageId} index={position}>
       {(provided, snapshot) => (
@@ -38,8 +37,11 @@ export const PageInTemplate = ({
               type={type}
             />
             <div>
-              {label.map((person) => (
-                <div key={person._id}>{person.content}</div>
+              `₩`
+              {label.map((person: Labels | string) => (
+                <div key={typeof person === 'string' ? person : person._id}>
+                  {typeof person === 'string' ? person : person.content}
+                </div>
               ))}
             </div>
           </div>

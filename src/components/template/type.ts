@@ -10,7 +10,7 @@ export interface PageInTemplateProps {
   pageName: string;
   type: string;
   position: number;
-  label: Labels[];
+  label: Labels[] | string[];
 }
 
 export interface PageInPageList {
