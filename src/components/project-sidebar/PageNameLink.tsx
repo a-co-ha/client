@@ -27,8 +27,8 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   return (
     <div>
       {!isEditing ? (
-        <div css={styles.pageNameLink(props.pageId, pageId)}>
-          <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900">
+        <div css={styles.pageNameLinkBox(props.pageId, pageId)}>
+          <div css={styles.pageNameLink}>
             <Link
               href={`/project/${props.channelId}/${props.pageId}?name=${props.pageName}&type=${props.type}`}
             >

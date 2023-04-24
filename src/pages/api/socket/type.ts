@@ -33,3 +33,15 @@ export interface ChatBookmark {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface PutSocketPage {
+  _id: string;
+  channelId: number;
+  pageName: string;
+  type: string;
+  categories: string;
+  bookmarkList: ChatBookmark[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

@@ -37,7 +37,7 @@ export default function Callback({
         ? router.push(`/main`)
         : router.push(`/project/${userData.channels[0].id}`);
     }
-  });
+  }, [userData]);
 
   return (
     <div>

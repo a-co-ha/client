@@ -104,7 +104,7 @@ export const pageNameInput = css`
   color: red;
 `;
 
-export const pageNameLink = (
+export const pageNameLinkBox = (
   propsPageId: string,
   pageId: string | string[] | undefined
 ) => css`
@@ -119,13 +119,18 @@ export const pageNameLink = (
       display: block;
     }
   }
-  & > div {
-    display: flex;
-    justify-content: space-between;
-  }
+`;
+
+export const pageNameLink = css`
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
 `;
 
 export const pageNameEditBtn = css`
   display: none;
   padding: 0;
+  margin-left: auto;
 `;

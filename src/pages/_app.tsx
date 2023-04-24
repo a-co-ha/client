@@ -108,6 +108,7 @@ App.getInitialProps = async (context: AppContext) => {
     // 새로고침시 전역 설정
     if (req) {
       const refreshToken = getCookie(`refreshToken`, { req, res });
+      console.log(`리프레에`, refreshToken);
       const accessToken = await getToken(refreshToken);
       setCookie(`accessToken`, accessToken, { req, res, maxAge: 60 * 60 * 24 });
       refreshToken
