@@ -1,6 +1,6 @@
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import Image from 'next/image';
@@ -8,17 +8,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import * as styles from './styles';
 import type { ChannelUser } from '@/pages/api/user/type';
-
 import { getUsers } from '@/pages/api/user/getUsers';
 
 export const UserList = () => {
   const { data: channelUsers } = useGetUsers();
-  const onUser = useRecoilValue(onUserState);
+  const [onUser, setOnUser] = useRecoilState(onUserState);
   const { socket } = useContext(SocketContext);
   useEffect(() => {
-    if (channelUsers !== undefined) {
-    }
-  }, [channelUsers]);
+    socket.on(`NEW_MEMBER`, (user) => {
+      setOnUser((prev) => {
+        const newOnUsers = prev.concat([user]);
+        return newOnUsers;
+      });
+    });
+  }, []);
 
   return (
     <div css={styles.userListBox}>
