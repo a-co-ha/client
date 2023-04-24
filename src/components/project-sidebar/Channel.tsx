@@ -63,7 +63,7 @@ export const Channel = () => {
                           <Popover.Button>
                             <span>+</span>
                           </Popover.Button>
-                          <SelectTemplete pageType={pageType.type} />
+                          <SelectTemplate pageType={pageType.type} />
                         </Popover>
                       </div>
                     </div>
