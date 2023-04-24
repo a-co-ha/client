@@ -9,7 +9,7 @@ export const useUpadatePageList = () => {
     (pages: any[]) => patchPageList(channelId, pageId, type, pages),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['editablePage']);
+        queryClient.invalidateQueries(['editablePage', pageId]);
       },
     }
   );
