@@ -1,6 +1,7 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { inviteUser } from '@/pages/api/user/inviteUser';
 import { InviteUser } from '@/pages/api/user/type';
+import { toast } from 'react-toastify';
 import type { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 
@@ -14,8 +15,10 @@ export const useInviteUser = (
   return useMutation<InviteUser, AxiosError>(
     () => inviteUser(adminCode, channelName),
     {
-      onSuccess: (data) => {
-        router.push(`/project/${data.channelId}`);
+      onSuccess: async (data) => {
+        if (data) {
+          router.push(`/project/${data.channelId}`);
+        }
       },
     }
   );

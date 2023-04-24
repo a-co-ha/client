@@ -14,22 +14,26 @@ export const projectSideBarBox = css`
   ${flexRowCenter}
   width: 250px;
   height: calc(100vh - 50px);
-  outline: 1px solid limegreen;
+  // outline: 1px solid limegreen;
+  // box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const list = css`
   ${flexColumnCenter}
-  width: 60px;
+  width: 75px;
   height: calc(100vh - 50px);
-  outline: 1px solid red;
+  padding-top: 1rem;
+  box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
+    0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
 export const channel = css`
   ${flexColumnCenter}
   width: 250px;
-  // flex-grow: 1;
   height: calc(100vh - 50px);
-  outline: 2px solid blue;
+  margin: 0 0.3rem 0.3rem 0;
+  // background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
 export const pageCreateBtnBox = css`
@@ -46,13 +50,22 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const ProjectCreateThumbnail = css`
+export const projectCreateThumbnail = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
-  border: 1px solid black;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+`;
+export const projectCreatePlusBtn = css`
+  ${projectCreateThumbnail};
+  border: 1px solid black;
+`;
+export const listAllDelete = css`
+  ${projectCreateThumbnail};
+  border: 1px solid black;
+  font-size: 0.5rem;
 `;
 
 export const projectNameInput = (error: boolean) => css`
@@ -91,7 +104,7 @@ export const pageNameInput = css`
   color: red;
 `;
 
-export const pageNameLink = (
+export const pageNameLinkBox = (
   propsPageId: string,
   pageId: string | string[] | undefined
 ) => css`
@@ -106,13 +119,18 @@ export const pageNameLink = (
       display: block;
     }
   }
-  & > div {
-    display: flex;
-    justify-content: space-between;
-  }
+`;
+
+export const pageNameLink = css`
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
 `;
 
 export const pageNameEditBtn = css`
   display: none;
   padding: 0;
+  margin-left: auto;
 `;

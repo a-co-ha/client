@@ -15,7 +15,7 @@ const nextConfig = {
   images: {
     domains: [
       `avatars.githubusercontent.com`,
-      `acoha.s3.ap-northeast-2.amazonaws.com`,
+      `a-coha.s3.ap-northeast-2.amazonaws.com`,
     ],
   },
 };

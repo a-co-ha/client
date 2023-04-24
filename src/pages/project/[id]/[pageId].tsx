@@ -1,6 +1,7 @@
 import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
+import { ChatBookmark } from '@/components/chat-bookmark';
 import { EditablePage } from '@/components/editable-page';
 import { ChatPage } from '@/components/chat-page';
 import { GetServerSideProps } from 'next';
@@ -45,7 +46,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { id: channelId, pageId, type } = context.query;
   try {
-    // if (type === 'normal') {
     if (channelId) {
       if (type === `normal` || type === 'progress-page') {
         await queryClient.prefetchQuery([`editablePage`, pageId], () =>
@@ -66,15 +66,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         type,
       },
     };
-    // } else if (type === 'socket') {
-    //   const pageData = await getSocketPage(channelId, pageId);
-    //   const socketPage = pageData.page;
-    //   return {
-    //     props: { socketPage, type },
-    //   };
-    // } else {
-    //   return { props: { editablePage: null, socketPage: null, type: null } };
-    // }
   } catch (err) {
     return {
       notFound: true,

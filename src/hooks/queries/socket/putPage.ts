@@ -1,17 +1,16 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { putEditablePage } from '@/pages/api/editable/putPage';
+import { putSocketPage } from '@/pages/api/socket/putPage';
 import type { AxiosError } from 'axios';
-import type { PostEditablePage } from '@/pages/api/editable/type';
+import type { PutSocketPage } from '@/pages/api/socket/type';
 
-export const usePutEditablePage = (
+export const usePutSocketPage = (
   channelId: string | string[] | undefined,
   pageId: string
-  // data: PageName
 ) => {
   const queryClient = useQueryClient();
-  return useMutation<PostEditablePage, AxiosError, string>(
-    [`putEditablePage`, pageId],
-    (pageName) => putEditablePage(channelId, pageId, pageName),
+  return useMutation<PutSocketPage, AxiosError, string>(
+    [`putSocketPage`, pageId],
+    (pageName) => putSocketPage(channelId, pageId, pageName),
     {
       onSuccess: () => {
         if (channelId) {

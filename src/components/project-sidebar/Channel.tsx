@@ -12,11 +12,11 @@ import * as styles from './styles';
 import { Popover } from '@headlessui/react';
 
 type pageListTypeT = 'EditablePage' | 'SocketPage';
-interface IpageListType {
+export interface IpageListType {
   type: string;
   title: string;
 }
-const pageListType: IpageListType[] = [
+export const pageListType: IpageListType[] = [
   { type: 'EditablePage', title: '노션체널' },
   { type: 'SocketPage', title: '체팅체널' },
 ];
@@ -41,7 +41,6 @@ export const Channel = () => {
 
   return (
     <div css={styles.channel}>
-      <div>channel</div>
       {/* 템플릿 선택 모달 */}
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
@@ -64,7 +63,7 @@ export const Channel = () => {
                           <Popover.Button>
                             <span>+</span>
                           </Popover.Button>
-                          <SelectTemplate />
+                          <SelectTemplete pageType={pageType.type} />
                         </Popover>
                       </div>
                     </div>
@@ -83,8 +82,9 @@ export const Channel = () => {
                             <div key={pageId}>
                               <PageNameForm
                                 channelId={channelId}
-                                pageId={pageId}
-                                pageName={pageName}
+                                pageId={pageList.page._id}
+                                pageName={pageList.page.pageName}
+                                type={pageList.page.type}
                               />
                               <PageNameLink
                                 channelId={channelId}

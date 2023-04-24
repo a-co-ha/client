@@ -1,34 +1,20 @@
-import { createReadStream } from 'fs';
-import { blob } from 'stream/consumers';
-import { Blob } from 'buffer';
 import { api } from '../config/api-config';
-import red from '@/images/channelImg/1.png';
-import githubChannelImg from '@/images/github_channel.png';
 
 export const patchProjectImage = async (channelId: number) => {
   try {
     const randomCount = Math.floor(Math.random() * 8 + 1);
-
-    const blob = await fetch(red.src).then((res) => res.blob());
-    console.log('red', red);
     const formData = new FormData();
-    formData.append('file', blob);
-    console.log(
-      '🚀 ~ file: patchProjectImage.ts:14 ~ patchProjectImage ~ blob:',
-      blob
-    );
-
-    for (const [key, value] of formData.entries()) {
-      console.log(
-        '🚀 ~ file: patchProjectImage.ts:18 ~ patchProjectImage ~ key, value:',
-        key,
-        value
-      );
-    }
+    await fetch(`/images/channelImg/${randomCount}.png`)
+      .then((res) => res.blob())
+      .then((blob) => {
+        console.log(`blob`, blob);
+        const file = new File([blob], 'image', { type: 'image/png' });
+        formData.append(`image`, file, 'channelImg.png');
+      });
 
     const res = await api.patch(
       `/api/channel/imageUpdate?channel=${channelId}`,
-      { channelImg: formData },
+      { channelImg: formData.get('image') },
       {
         headers: {
           'Content-Type': 'multipart/form-data',

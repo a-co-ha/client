@@ -6,7 +6,6 @@ export const flexColumnCenter = css`
   flex-grow: 1;
   flex-basis: 0;
   text-align: center;
-  outline: 1px solid red;
 `;
 
 export const contentBox = css`
@@ -35,4 +34,5 @@ export const mainContentBox = css`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  padding-top: 1rem;
 `;

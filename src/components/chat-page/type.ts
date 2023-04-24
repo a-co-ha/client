@@ -10,5 +10,8 @@ export interface ChatUserData {
 export interface MessageType {
   userId: number;
   name: string;
-  text: string;
+  content: string;
+  img: string;
+  isDisplay: boolean;
+  currentMsgTime: string;
 }

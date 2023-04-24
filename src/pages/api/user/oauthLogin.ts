@@ -7,7 +7,7 @@ export const oauthLogin = async (
   if (authCode !== '') {
     const res = await api.get(`/api/oauth/github/callback?code=${authCode}`, {
       headers: {
-        Origin: 'http://localhost:3001',
+        Origin: `${process.env.NEXT_PUBLIC_ORIGIN}`,
       },
     });
     console.log(`여기는 oauth res`, res.headers);

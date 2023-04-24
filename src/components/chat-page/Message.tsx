@@ -1,39 +1,49 @@
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { messageModalState, messageModalImgState } from '@/recoil/socket/atom';
+
 import * as styles from './styles';
 import type { MessageType } from './type';
-import githubChannelImg from '@/images/github_channel.png';
 
-export const Message = ({ userId, name, text }: MessageType) => {
+export const Message = ({
+  name,
+  content,
+  img,
+  isDisplay,
+  currentMsgTime,
+}: MessageType) => {
   const myUserId = Number(getCookie(`myUserId`));
-  const isMyMessage = userId === myUserId ? true : false;
+  // const isMyMessage = userId === myUserId ? true : false;
+  const [messageModal, setMessageModal] = useRecoilState(messageModalState);
+  const setMessageImgSrc = useSetRecoilState(messageModalImgState);
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setMessageModal(true);
+    setMessageImgSrc(img);
+  };
+
   return (
-    <div css={styles.messageAlign(isMyMessage)}>
-      <div css={styles.messageImgBox(isMyMessage)}>
-        <button
-          css={{
-            position: `relative`,
-            width: `100%`,
-            height: `100%`,
-          }}
-        >
+    <div css={styles.messageAlign(isDisplay)}>
+      <div css={styles.messageImgBox(isDisplay)}>
+        <button css={styles.messageImgBtn(isDisplay)} onClick={onClickHandler}>
           <Image
             css={{
               borderRadius: `50%`,
             }}
-            src={githubChannelImg}
+            src={img}
             fill
-            alt={`channelImg`}
+            sizes="40px"
+            alt={`userProfileImg`}
           />
         </button>
       </div>
-      <div>
-        <div css={styles.messageName(isMyMessage)}>
-          <span>{name}</span>
+      <div css={styles.messageNameAlign}>
+        <div css={styles.messageNameBox}>
+          <span css={styles.messageName(isDisplay)}>{name}</span>
+          <span css={styles.messageTime(isDisplay)}>{currentMsgTime}</span>
         </div>
-        <div css={styles.message(isMyMessage)}>
-          {/* <div>{userId}</div> */}
-          <span>{text}</span>
+        <div css={styles.message}>
+          <span>{content}</span>
         </div>
       </div>
     </div>

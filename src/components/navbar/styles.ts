@@ -16,26 +16,27 @@ export const navBar = css`
 export const profileBox = css`
   ${flexCenterNavBar}
   width: 200px;
-  outline: 1px solid limegreen;
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const titleBox = css`
   ${flexCenterNavBar}
   flex-grow: 1;
-  outline: 1px solid limegreen;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const loginBox = css`
-  ${flexCenterNavBar}
+  ${flexCenterNavBar};
   width: 200px;
-  outline: 1px solid limegreen;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const projectNameBox = css`
   ${flexCenterNavBar}
   justify-content: flex-end;
   width: 250px;
-  outline: 1px solid limegreen;
+  // border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const modalBackground = (isOpen: boolean) => css`

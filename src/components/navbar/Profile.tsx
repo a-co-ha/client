@@ -8,27 +8,29 @@ import { channelNameState } from '@/recoil/project/atom';
 import { api } from '@/pages/api/config/api-config';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 export const Profile = () => {
-  // const { logout } = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
   const onClickHandler = async () => {
-      const sessionID = getCookie(`sessionId`);
+    const sessionID = getCookie(`sessionId`);
     console.log(`session`, sessionID);
+    await api.post(`/api/user/logout`, {
+      sessionID,
+    });
+    socket.disconnect();
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
     deleteCookie(`myUserId`);
     resetProfile();
     resetChannelName();
-    await api.post(`/api/user/logout`,{
-      sessionID
-    });
-    // logout();
     router.replace(`/`);
   };
   return (
@@ -40,7 +42,7 @@ export const Profile = () => {
           </div>
           <button css={{ fontSize: '12px' }}>{user.name}</button>
           <button css={{ marginLeft: '4px' }} onClick={onClickHandler}>
-            🚪
+            <FontAwesomeIcon icon={faDoorOpen} />
           </button>
         </div>
       )}

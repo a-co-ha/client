@@ -11,7 +11,7 @@ export const useDeleteEditablePage = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation<DeletePageResponse, AxiosError>(
-    [`deleteEditablePage`],
+    [`deleteEditablePage`, pageId],
     () => deleteEditablePage(channelId, pageId, type),
     {
       onSuccess: () => {

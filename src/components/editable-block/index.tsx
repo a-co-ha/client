@@ -30,8 +30,8 @@ export const EditableBlock = (props: editableBlock) => {
     },
   });
 
-  console.log('state', state);
-  console.log('props', props);
+  // console.log('state', state);
+  // console.log('props', props);
 
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
