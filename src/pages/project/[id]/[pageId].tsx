@@ -13,6 +13,7 @@ import { getEditablePage } from '@/pages/api/editable/getPage';
 import { getSocketPage } from '@/pages/api/socket/getPage';
 import type { pageProps } from '@/pages/api/editable/type';
 import { TemplatePage } from '@/components/template';
+import { channel } from '../../../components/project-sidebar/styles';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   resetServerContext();
@@ -31,12 +32,17 @@ export default function Page({ channelId, pageId, type }: pageProps) {
           />
         ) : null}
         {type === 'socket' ? (
-          <ChatPage channelId={channelId} pageId={pageId} type={type} />
+          <>
+            <ChatPage channelId={channelId} pageId={pageId} type={type} />
+            <div>
+              <UserList />
+              <ChatBookmark channelId={channelId} pageId={pageId} />
+            </div>
+          </>
         ) : null}
         {type === 'template-progress' ? (
           <TemplatePage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
-        <UserList />
       </Suspense>
     </div>
   );
