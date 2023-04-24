@@ -8,5 +8,5 @@ export const postEditablePage = async (
     blockId: nanoId(),
   });
   console.log(`여기는 포스트 에디터블`, res.data);
-  return res.data[0];
+  return res.data;
 };
