@@ -17,12 +17,18 @@ export const userName = css`
   font-size: 0.8rem;
 `;
 
-export const isUserOnline = css`
+export const adminCrown = (isAdmin: boolean) => css`
+  display: ${isAdmin ? `inline-block` : `none`};
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+`;
+
+export const isUserOnline = (isOnUser: boolean, isAdmin: boolean) => css`
   display: inline-block;
   width: 5px;
   height: 5px;
   margin-right: 5px;
   vertical-align: middle;
-  background: limegreen;
+  background: ${isOnUser ? `limegreen` : `gray`};
   border-radius: 50%;
 `;

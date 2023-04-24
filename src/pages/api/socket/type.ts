@@ -15,7 +15,7 @@ export interface SocketMessageResponse {
 
 export interface SocketMessage {
   name: string;
-  text: string;
+  content: string;
   img: string;
   userId: number;
   createdAt: string;

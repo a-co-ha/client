@@ -8,30 +8,35 @@ import * as styles from './styles';
 import type { ChatBookmarkFormType, ChatBookmarkPatchType } from './type';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  chatBookmarkFormModalState,
   chatBookmarkFormDataState,
   isBookmarkEditingState,
+  chatBookmarkEditContentShare,
 } from '@/recoil/socket/atom';
 import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
 
 export const CahtBookmarkEditForm = ({
   channelId,
   pageId,
+  id,
+  bookmarkDeleteHandler,
 }: {
   channelId: string;
   pageId: string;
+  id: string;
+  bookmarkDeleteHandler: () => void;
 }) => {
-  const { socket } = useContext(SocketContext);
   const patchBookmark = usePatchBookmark(channelId, pageId);
   const chatBookmarkData = useRecoilValue(chatBookmarkFormDataState);
-  const setIsBookmarkEditing = useSetRecoilState(isBookmarkEditingState);
-  const [chatBookmarkFormModal, setChatBookmarkFormModal] = useRecoilState(
-    chatBookmarkFormModalState
+  const [isBookmarkEditing, setIsBookmarkEditing] = useRecoilState(
+    isBookmarkEditingState
   );
+  const [ChatBookmarkEditContentShare, setChatBookmarkEditContentShare] =
+    useRecoilState(chatBookmarkEditContentShare(id));
+
   const methods = useForm<ChatBookmarkFormType>({
     defaultValues: {
-      chatBookmarkTitle: chatBookmarkData.bookmarkName,
-      chatBookmarkContent: chatBookmarkData.content,
+      chatBookmarkTitle: ChatBookmarkEditContentShare.chatBookmarkTitle,
+      chatBookmarkContent: ChatBookmarkEditContentShare.chatBookmarkContent,
     },
     mode: 'onSubmit',
   });
@@ -47,12 +52,16 @@ export const CahtBookmarkEditForm = ({
 
   const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
     console.log(`submitData`, chatBookmark);
+    setChatBookmarkEditContentShare({
+      id: '',
+      chatBookmarkTitle: chatBookmark.chatBookmarkTitle,
+      chatBookmarkContent: chatBookmark.chatBookmarkContent,
+    });
     patchBookmark.mutate({
       id: chatBookmarkData.id,
       chatBookmarkTitle: chatBookmark.chatBookmarkTitle,
       chatBookmarkContent: chatBookmark.chatBookmarkContent,
     });
-    // setChatBookmarkFormModal(false)
     setIsBookmarkEditing(false);
     methods.reset();
   };
@@ -69,39 +78,57 @@ export const CahtBookmarkEditForm = ({
     if (e.nativeEvent.isComposing) return;
   };
 
-  const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    setChatBookmarkFormModal(false);
+  const bookmarkEditHandler = () => {
+    setIsBookmarkEditing(false);
     methods.reset();
   };
 
   return (
     <div>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div css={styles.chatBookmarkFormInputBox}>
-          <input
-            css={styles.chatBookmarkFormTitleInput(!!titleError)}
-            type="text"
-            value={chatBookmarkTitle.value}
-            onChange={chatBookmarkTitle.onChange}
-            onKeyDown={onKeyDownTitleHandler}
-            spellCheck={false}
-            autoFocus
-            placeholder={`제목`}
-          />
-          <textarea
-            css={styles.chatBookmarkFormInput}
-            value={chatBookmarkContent.value}
-            onChange={chatBookmarkContent.onChange}
-            onKeyDown={onKeyDownContentHandler}
-            name={chatBookmarkContent.name}
-            spellCheck={false}
-            placeholder={`내용을 입력해주세요`}
-          />
+        <div css={styles.chatBookmarkFormEditBox}>
+          <div css={styles.chatBookmarkModalTitleBox}>
+            <input
+              css={styles.chatBookmarkFormTitleInput(
+                !!titleError,
+                isBookmarkEditing
+              )}
+              type="text"
+              value={chatBookmarkTitle.value}
+              onChange={chatBookmarkTitle.onChange}
+              onKeyDown={onKeyDownTitleHandler}
+              spellCheck={false}
+              autoFocus
+              placeholder={`제목`}
+            />
+            <button
+              css={styles.chatBookmarkModalEditBtn(isBookmarkEditing)}
+              onClick={bookmarkEditHandler}
+            >
+              Cancel
+            </button>
+            <button
+              css={styles.chatBookmarkModalDeleteBtn}
+              onClick={bookmarkDeleteHandler}
+            >
+              Delete
+            </button>
+          </div>
+          <div>
+            <textarea
+              css={styles.chatBookmarkFormInput(isBookmarkEditing)}
+              value={chatBookmarkContent.value}
+              onChange={chatBookmarkContent.onChange}
+              onKeyDown={onKeyDownContentHandler}
+              name={chatBookmarkContent.name}
+              spellCheck={false}
+              placeholder={`내용을 입력해주세요`}
+            />
+          </div>
           <button
             disabled={isSubmitting}
             css={styles.chatBookmarkFormBtn}
             type="submit"
-            // onClick={onClickHandler}
           >
             <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#f85d75' }} />
           </button>

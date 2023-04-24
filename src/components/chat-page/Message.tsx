@@ -8,7 +8,7 @@ import type { MessageType } from './type';
 
 export const Message = ({
   name,
-  text,
+  content,
   img,
   isDisplay,
   currentMsgTime,
@@ -43,7 +43,7 @@ export const Message = ({
           <span css={styles.messageTime(isDisplay)}>{currentMsgTime}</span>
         </div>
         <div css={styles.message}>
-          <span>{text}</span>
+          <span>{content}</span>
         </div>
       </div>
     </div>

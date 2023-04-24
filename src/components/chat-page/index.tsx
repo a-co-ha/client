@@ -44,7 +44,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   }, [router.query.pageId, socketMessage]);
 
   useEffect(() => {
-    socket.on(`message-receive`, (data) => {
+    socket.on(`RECEIVE_MESSAGE`, (data) => {
       if (isDuplication === data.id) {
         console.log(`리턴`);
         return;
@@ -113,7 +113,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
                   key={i}
                   userId={msg.userId}
                   name={msg.name}
-                  text={msg.text}
+                  content={msg.content}
                   img={msg.img}
                   isDisplay={isDisplay}
                   currentMsgTime={currentMsgTime}

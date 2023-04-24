@@ -1,7 +1,7 @@
 export interface ChatBookmarkFormType {
   id: string;
-  chatBookmarkContent: string;
   chatBookmarkTitle: string;
+  chatBookmarkContent: string;
 }
 
 export interface ChatBookmarkPatchType {

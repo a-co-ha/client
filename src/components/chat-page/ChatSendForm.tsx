@@ -57,8 +57,8 @@ export const ChatSendForm = ({
 
   const onSubmit = (chat: ChatMessage) => {
     // sendMessage(chatMessage.chatMessage, pageId);
-    socket.emit(`message-send`, {
-      text: chat.chatMessage,
+    socket.emit(`SEND_MESSAGE`, {
+      content: chat.chatMessage,
       roomId: pageId,
       myMessage,
     });

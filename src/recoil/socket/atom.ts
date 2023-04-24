@@ -2,15 +2,16 @@ import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
 import type { SocketMessage } from '@/pages/api/socket/type';
 import type { ChatBookmark } from '@/pages/api/socket/type';
+import type { ChatBookmarkFormType } from '@/components/chat-bookmark/type';
 
 export const onUserState = atom({
   key: `onUserState/${nanoId()}`,
   default: [
     {
+      roomId: '',
       userID: 0,
       name: '',
-      img: '',
-      messages: [],
+      connected: false,
     },
   ],
 });
@@ -57,4 +58,16 @@ export const chatBookmarkFormDataState = atom({
 export const isBookmarkEditingState = atom({
   key: `isBookmarkEditing/${nanoId()}`,
   default: false,
+});
+
+export const chatBookmarkEditContentShare = atomFamily<
+  ChatBookmarkFormType,
+  string
+>({
+  key: `chatBookmarkEditContentShare/${nanoId()}`,
+  default: {
+    id: '',
+    chatBookmarkTitle: '',
+    chatBookmarkContent: '',
+  },
 });

@@ -35,18 +35,14 @@ export const SocketContextProvider = ({
     });
     socket.on(`connect_error`, (error) => console.log(error));
 
-    socket.on(`users`, (data) => {
+    socket.on(`MEMBERS`, (data) => {
       setOnUser(data);
-      console.log(`user socket`, data);
+      console.log(`MEMBERS`, data);
     });
-    socket.on;
-    socket.on(`session`, (data) => {
-      console.log(`session sockeet data`, data);
+    socket.on(`USER_INFO`, (data) => {
+      console.log(`session USER_INFO`, data);
     });
-    socket.on(`user connected`, (data) => console.log(`커넥티드`, data));
-    socket.on(`user disconnected`, (data) => {
-      console.log(`디스커넥트`, data);
-    });
+    socket.on(`NEW_MEMBER`, (data) => console.log(`유저 접속`, data));
     return () => {
       console.log(`disconnect`);
       socket.disconnect();

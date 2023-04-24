@@ -32,6 +32,7 @@ export const chatBookmarkItemBox = css`
 `;
 
 export const chatBookmarkItem = css`
+  width: 100%;
   padding: 0.375rem;
   font-size: 0.8rem;
   cursor: pointer;
@@ -45,6 +46,9 @@ export const chatBookmarkItem = css`
       0 4px 6px -4px rgb(0 0 0 / 0.2);
   }
   border-radius: 0.375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const chatBookmarkModalBackground = (isOpen: boolean) => css`
@@ -96,10 +100,11 @@ export const chatBookmarkModalTitle = css`
   margin-right: auto;
 `;
 
-export const chatBookmarkModalEditBtn = css`
+export const chatBookmarkModalEditBtn = (isEditing: boolean) => css`
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
   border-radius: 0.375rem;
+  // cursor: pointer;
   background: #eee;
   &:hover {
     background: rgba(0, 0, 0, 0.3);
@@ -162,17 +167,24 @@ export const chatBookmarkFormModalBox = css`
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
 
-export const chatBookmarkFormInputBox = css`
+export const chatBookmarkFormEditBox = css`
   display: flex;
   flex-direction: column;
 `;
 
-export const chatBookmarkFormTitleInput = (titleError: boolean) => css`
+export const chatBookmarkFormInputBox = css`
+  display: flex;
+`;
+
+export const chatBookmarkFormTitleInput = (
+  titleError: boolean,
+  isEditing: boolean
+) => css`
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1rem;
   padding: 0.5rem 0;
-  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  margin: ${isEditing ? `0 0.5rem 0 0.5rem` : `0.5rem 0.5rem 1rem 0.5rem`};
   background: transparent;
   &:focus {
     outline: none;
@@ -180,11 +192,11 @@ export const chatBookmarkFormTitleInput = (titleError: boolean) => css`
   border-bottom: ${titleError ? `1px solid red` : `1px solid gray`};
 `;
 
-export const chatBookmarkFormInput = css`
+export const chatBookmarkFormInput = (isEditing: boolean) => css`
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1rem;
-  height: calc(65vh - 176px);
+  height: ${isEditing ? `auto` : `calc(65vh - 176px)`};
   padding: 0.5rem;
   margin-bottom: 1rem;
   background: transparent;

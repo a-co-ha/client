@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   chatBookmarkModalState,
   chatBookmarkFormDataState,
   isBookmarkEditingState,
+  chatBookmarkEditContentShare,
 } from '@/recoil/socket/atom';
 import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
+import { useDeleteBookmark } from '@/hooks/queries/socket/deleteBookmark';
 import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
 import * as styles from './styles';
 
@@ -16,17 +18,36 @@ export const ChatBookmarkModal = ({
   channelId: string;
   pageId: string;
 }) => {
-  const patchBookmark = usePatchBookmark(channelId, pageId);
   const chatBookmarkData = useRecoilValue(chatBookmarkFormDataState);
+  const deleteBookmark = useDeleteBookmark(
+    channelId,
+    pageId,
+    chatBookmarkData.id
+  );
   const [isBookmarkEditing, setIsBookmarkEditing] = useRecoilState(
     isBookmarkEditingState
   );
+
+  const [ChatBookmarkEditContentShare, setChatBookmarkEditContentShare] =
+    useRecoilState(chatBookmarkEditContentShare(chatBookmarkData.id));
+
   const [chatBookmarkModal, setChatBookmarkModal] = useRecoilState(
     chatBookmarkModalState
   );
+
   const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    setChatBookmarkEditContentShare({
+      id: '',
+      chatBookmarkTitle: chatBookmarkData.bookmarkName,
+      chatBookmarkContent: chatBookmarkData.content,
+    });
+  }, [chatBookmarkData]);
+
   const onClickHandler = () => {
     setChatBookmarkModal(false);
+    setIsBookmarkEditing(false);
     setIsCopied(false);
   };
   const codeCopyHandler = (contents: string) => {
@@ -37,7 +58,10 @@ export const ChatBookmarkModal = ({
   const bookmarkEditHandler = () => {
     setIsBookmarkEditing(true);
   };
-  const bookmarkDeleteHandler = () => {};
+  const bookmarkDeleteHandler = () => {
+    deleteBookmark.mutate();
+    setChatBookmarkModal(false);
+  };
 
   return (
     <div>
@@ -52,10 +76,10 @@ export const ChatBookmarkModal = ({
             <div>
               <div css={styles.chatBookmarkModalTitleBox}>
                 <h2 css={styles.chatBookmarkModalTitle}>
-                  {chatBookmarkData.bookmarkName}
+                  {ChatBookmarkEditContentShare.chatBookmarkTitle}
                 </h2>
                 <button
-                  css={styles.chatBookmarkModalEditBtn}
+                  css={styles.chatBookmarkModalEditBtn(isBookmarkEditing)}
                   onClick={bookmarkEditHandler}
                 >
                   Edit
@@ -69,7 +93,7 @@ export const ChatBookmarkModal = ({
               </div>
               <div css={styles.chatBookmarkModalContent}>
                 {/* editing */}
-                {chatBookmarkData.content}
+                {ChatBookmarkEditContentShare.chatBookmarkContent}
               </div>
               <button
                 css={styles.chatBookmarkCopyBtn(isCopied)}
@@ -79,7 +103,12 @@ export const ChatBookmarkModal = ({
               </button>
             </div>
           ) : (
-            <CahtBookmarkEditForm channelId={channelId} pageId={pageId} />
+            <CahtBookmarkEditForm
+              channelId={channelId}
+              pageId={pageId}
+              id={chatBookmarkData.id}
+              bookmarkDeleteHandler={bookmarkDeleteHandler}
+            />
           )}
         </div>
       </div>
