@@ -10,7 +10,7 @@ export const Error = ({ onReset }: ErrorProps) => {
           onReset();
         }}
       >
-        editable template 에러컴포넌트
+        editable page 에러컴포넌트
       </button>
     </>
   );

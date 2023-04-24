@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getLabels } from '@/pages/api/editable/getLabels';
 import type { AxiosError } from 'axios';
-import { useRouter } from 'next/router';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 
 interface label {
   content: string;
@@ -9,8 +9,7 @@ interface label {
 }
 
 export const useGetLabels = () => {
-  const router = useRouter();
-  const { id: channelId, pageId, type } = router.query;
+  const {  channelId, pageId, type } = useGetUrlInfo();
   return useQuery<label[], AxiosError>([`labels`, pageId], () =>
     getLabels(channelId, pageId, type)
   ).data?.map((item) => item.content);

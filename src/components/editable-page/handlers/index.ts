@@ -42,7 +42,7 @@ const deleteBlock = (blocks: Block[], currentBlockId: string) => {
  */
 const deleteImageOnServer = async (imgUrl: string) => {
   try {
-    const res = await api.post(`/api/page/images/delete`, {
+    const res = await api.post(`/api/image/delete`, {
       imgKey: imgUrl,
     });
     console.log(res);

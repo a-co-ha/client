@@ -34,6 +34,7 @@ export const channel = css`
 
 export const pageCreateBtnBox = css`
   display: flex;
+  align-items: center;
 `;
 
 export const pageCreateBtn = css`

@@ -9,23 +9,35 @@ export const patchProjectImage = async (channelId: number) => {
   try {
     const randomCount = Math.floor(Math.random() * 8 + 1);
 
-    // const channelImg = await blob(
-    //   createReadStream(`@/images/channelImg/${randomCount}.png`)
-    // );
-    // new Blob({});
+    const blob = await fetch(red.src).then((res) => res.blob());
+    console.log('red', red);
     const formData = new FormData();
-    // formData.append(`channelImg`, createReadStream(new Blob(red)));
-    let values = formData.values();
-    console.log(`form`, values);
+    formData.append('file', blob);
+    console.log(
+      '🚀 ~ file: patchProjectImage.ts:14 ~ patchProjectImage ~ blob:',
+      blob
+    );
+
+    for (const [key, value] of formData.entries()) {
+      console.log(
+        '🚀 ~ file: patchProjectImage.ts:18 ~ patchProjectImage ~ key, value:',
+        key,
+        value
+      );
+    }
 
     const res = await api.patch(
       `/api/channel/imageUpdate?channel=${channelId}`,
-      { data: formData },
+      { channelImg: formData },
       {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }
+    );
+    console.log(
+      '🚀 ~ file: patchProjectImage.ts:38 ~ patchProjectImage ~ res:',
+      res.data
     );
     return res.data;
   } catch (err) {

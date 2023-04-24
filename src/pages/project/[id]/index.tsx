@@ -19,7 +19,7 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
   const setIsAdmin = useSetRecoilState(adminState(channelId));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
   const { data: userData } = useGetUser();
-  const { data: channelUsers } = useGetUsers(channelId);
+  const { data: channelUsers } = useGetUsers();
 
   useEffect(() => {
     if (userData !== undefined && channelUsers !== undefined) {
@@ -51,7 +51,7 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  const channelId = context.query.id;
+  const channelId = context.query.id as string;
   try {
     if (channelId) {
       await Promise.all([

@@ -16,14 +16,26 @@ export const pageListState = atom<GetChannelPages>({
           type: '',
           categories: '',
         },
+        template: {
+          _id: '',
+          pageName: '',
+          type: '',
+          categories: '',
+        },
         _id: '',
       },
     ],
     SocketPage: [
       {
-        room: {
+        page: {
           _id: '',
-          roomName: '',
+          pageName: '',
+          type: '',
+          categories: '',
+        },
+        template: {
+          _id: '',
+          pageName: '',
           type: '',
           categories: '',
         },

@@ -11,6 +11,7 @@ import { QueryClient, dehydrate, hydrate } from '@tanstack/react-query';
 import { getEditablePage } from '@/pages/api/editable/getPage';
 import { getSocketPage } from '@/pages/api/socket/getPage';
 import type { pageProps } from '@/pages/api/editable/type';
+import { TemplatePage } from '@/components/template';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   resetServerContext();
@@ -21,7 +22,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
     <div css={styles.main}>
       <Suspense fallback={<Loading />}>
         <ProjectSideBar />
-        {type === 'normal' ? (
+        {type === 'normal' || type === 'progress-page' ? (
           <EditablePage
             channelId={channelId}
             pageId={pageId as string}
@@ -30,6 +31,9 @@ export default function Page({ channelId, pageId, type }: pageProps) {
         ) : null}
         {type === 'socket' ? (
           <ChatPage channelId={channelId} pageId={pageId} type={type} />
+        ) : null}
+        {type === 'template-progress' ? (
+          <TemplatePage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
         <UserList />
       </Suspense>
@@ -43,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     // if (type === 'normal') {
     if (channelId) {
-      if (type === `normal`) {
+      if (type === `normal` || type === 'progress-page') {
         await queryClient.prefetchQuery([`editablePage`, pageId], () =>
           getEditablePage(channelId, pageId, type)
         );
