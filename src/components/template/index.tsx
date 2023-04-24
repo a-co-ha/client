@@ -17,7 +17,6 @@ import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 
 // FIXME: 페이지 이름 수정후 url 변경시에도 수정되야함
-// TODO: 각 페이지 hover 시 태그 된 사람 보여주도록 구현
 
 const progressStatusType = ['todo', 'progress', 'complete'];
 
@@ -90,22 +89,24 @@ export const TemplatePage = ({
     if (sInd === dInd) {
       const items = reorder(pageArr[sInd], source.index, destination.index);
       const newState = [...pageArr];
+
+      newState[sInd] = items;
+      setPageArr(newState);
       const newStateId = newState
         .map((pages) => pages.map((page: PageInPageList) => page._id))
         .flat();
-      newState[sInd] = items;
-      setPageArr(newState);
 
       upatePageList(newStateId);
     } else {
       const result = move(pageArr[sInd], pageArr[dInd], source, destination);
       const newState = [...pageArr];
-      const newStatePageId = newState
-        .map((el) => el.map((page: PageInPageList) => page._id))
-        .flat();
+      
       newState[sInd] = result[sInd];
       newState[dInd] = result[dInd];
       setPageArr(newState.filter((group) => group.length));
+      const newStatePageId = newState
+        .map((el) => el.map((page: PageInPageList) => page._id))
+        .flat();
 
       progressStatusType.forEach((status, index) => {
         if (dInd === index) {

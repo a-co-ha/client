@@ -37,7 +37,6 @@ export const PageInTemplate = ({
               type={type}
             />
             <div>
-              `₩`
               {label.map((person: Labels | string) => (
                 <div key={typeof person === 'string' ? person : person._id}>
                   {typeof person === 'string' ? person : person.content}
