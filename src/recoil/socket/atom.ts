@@ -8,10 +8,9 @@ export const onUserState = atom({
   key: `onUserState/${nanoId()}`,
   default: [
     {
-      roomId: '',
+      img: '',
       userID: 0,
       name: '',
-      connected: false,
     },
   ],
 });

@@ -22,6 +22,17 @@ export const UserList = () => {
       });
     });
   }, []);
+  useEffect(() => {
+    socket.on(`DISCONNECT_MEMBER`, (user) => {
+      console.log(`disconnect user`, user);
+      setOnUser((prev) => {
+        const newOnUsers = prev.filter(
+          (prevUser) => prevUser.userID !== user.userID
+        );
+        return newOnUsers;
+      });
+    });
+  }, []);
 
   return (
     <div css={styles.userListBox}>
