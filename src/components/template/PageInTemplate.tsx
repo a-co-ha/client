@@ -29,6 +29,7 @@ export const PageInTemplate = ({
               channelId={channelId}
               pageId={pageId}
               pageName={pageName}
+              type={type}
             />
             <PageNameLink
               channelId={channelId}

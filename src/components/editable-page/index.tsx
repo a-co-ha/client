@@ -34,6 +34,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   }, [router.query.pageId]);
 
   useDidMountEffect(() => {
+    console.log('첫번쨰 랜더링에 실행');
     handlers.updatePageOnserver(blocks, pageId, channelId);
   }, [blocks]);
 

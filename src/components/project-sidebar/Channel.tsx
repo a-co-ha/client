@@ -82,9 +82,9 @@ export const Channel = () => {
                             <div key={pageId}>
                               <PageNameForm
                                 channelId={channelId}
-                                pageId={pageList.page._id}
-                                pageName={pageList.page.pageName}
-                                type={pageList.page.type}
+                                pageId={pageId}
+                                pageName={pageName}
+                                type={type}
                               />
                               <PageNameLink
                                 channelId={channelId}
