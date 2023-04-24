@@ -11,7 +11,7 @@ import type { ChannelUser } from '@/pages/api/user/type';
 
 import { getUsers } from '@/pages/api/user/getUsers';
 
-export const UserList = ({ channelId }: { channelId: string }) => {
+export const UserList = () => {
   const { data: channelUsers } = useGetUsers();
   const onUser = useRecoilValue(onUserState);
   const { socket } = useContext(SocketContext);

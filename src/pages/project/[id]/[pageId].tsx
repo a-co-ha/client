@@ -33,7 +33,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
           <ChatPage channelId={channelId} pageId={pageId} type={type} />
         ) : null}
         <div>
-          <UserList channelId={channelId} />
+          <UserList />
           <ChatBookmark channelId={channelId} pageId={pageId} />
         </div>
       </Suspense>

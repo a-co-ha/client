@@ -41,7 +41,7 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
     <div css={styles.main}>
       <ProjectSideBar />
       <MainContent />
-      <UserList channelId={channelId} />
+      <UserList />
     </div>
   );
 }
