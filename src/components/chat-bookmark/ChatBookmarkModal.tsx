@@ -50,8 +50,8 @@ export const ChatBookmarkModal = ({
     setIsBookmarkEditing(false);
     setIsCopied(false);
   };
-  const codeCopyHandler = (contents: string) => {
-    navigator.clipboard.writeText(contents);
+  const codeCopyHandler = async (contents: string) => {
+    await navigator.clipboard.writeText(contents);
     setIsCopied(true);
   };
 
@@ -97,7 +97,11 @@ export const ChatBookmarkModal = ({
               </div>
               <button
                 css={styles.chatBookmarkCopyBtn(isCopied)}
-                onClick={() => codeCopyHandler(chatBookmarkData.content)}
+                onClick={() =>
+                  codeCopyHandler(
+                    ChatBookmarkEditContentShare.chatBookmarkContent
+                  )
+                }
               >
                 {isCopied ? `Copied ✔️` : `Copy`}
               </button>
