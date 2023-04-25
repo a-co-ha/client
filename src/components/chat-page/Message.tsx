@@ -21,7 +21,6 @@ export const Message = ({
     setMessageModal(true);
     setMessageImgSrc(img);
   };
-
   return (
     <div css={styles.messageAlign(isDisplay)}>
       <div css={styles.messageImgBox(isDisplay)}>
