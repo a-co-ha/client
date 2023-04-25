@@ -25,7 +25,7 @@ export const PageNameForm = ({
 }) => {
   const [isEditing, setIsEditing] = useRecoilState(pageNameEditToggle(pageId));
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
-  const putEditablePageName = usePutEditablePage(channelId, pageId);
+  const putEditablePageName = usePutEditablePage(channelId, pageId, type);
   const putSocketPageName = usePutSocketPage(channelId, pageId);
   const patchTemplatePageName = useUpadatePageName();
 

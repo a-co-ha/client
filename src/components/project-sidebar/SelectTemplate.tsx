@@ -6,7 +6,7 @@ import { useCreateTemplate } from '@/hooks/queries/template/useCreateTemplate';
 
 export const SelectTemplate = ({ pageType }: { pageType: string }) => {
   const { mutate: postEditablePageMutate } = usePostEditablePage();
-  const { mutate: createTemplateMutate } = useCreateTemplate('progress');
+  const { mutate: createTemplateMutate } = useCreateTemplate();
   const { mutate: postSocketPageMutate } = usePostSocketPage();
 
   const templates =
@@ -26,7 +26,7 @@ export const SelectTemplate = ({ pageType }: { pageType: string }) => {
               '팀을 위한 프로젝트 관리 템플릿입니다. 프로젝트별로 작업을 정리하고 팀 전반에 걸쳐 진행 상황을 트래킹하세요.',
             icon: IconTwo,
             api() {
-              createTemplateMutate();
+              createTemplateMutate(this.name);
             },
           },
           {
