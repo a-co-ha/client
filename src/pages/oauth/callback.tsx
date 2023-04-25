@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { initialUserState, loginState } from '@/recoil/user/atom';
+import { channelNameState } from '@/recoil/project/atom';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
@@ -21,6 +22,7 @@ export default function Callback({
 }) {
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
+  const setChannelName = useSetRecoilState(channelNameState);
   const router = useRouter();
   const { data: userData } = useGetUser();
   setToken(accessToken, refreshToken, sessionID, userId);
@@ -35,7 +37,8 @@ export default function Callback({
       setIsLoggedIn(true);
       initialUser
         ? router.push(`/main`)
-        : router.push(`/project/${userData.channels[0].id}`);
+        : (router.push(`/project/${userData.channels[0].id}`),
+          setChannelName(userData.channels[0].channelName));
     }
   }, [userData]);
 
