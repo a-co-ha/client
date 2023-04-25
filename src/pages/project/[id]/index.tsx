@@ -24,9 +24,11 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
   useEffect(() => {
     if (userData !== undefined && channelUsers !== undefined) {
       console.log(`채널 유저스`, channelUsers);
-      const isAdmin = channelUsers.filter(
+      const admin = channelUsers.filter(
         (user: ChannelUser) => user.userId === userData.userId
-      )[0].admin;
+      )[0];
+      const isAdmin = admin.admin;
+      console.log(`이즈 어드민`, admin, isAdmin);
       console.log('이거 인덱스 유저데이타', userData);
       const { userId, channelName } = channelUsers.filter(
         (user: ChannelUser) => user.admin === true
