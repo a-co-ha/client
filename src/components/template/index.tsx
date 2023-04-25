@@ -16,8 +16,6 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 
-// FIXME: 페이지 이름 수정후 url 변경시에도 수정되야함
-
 const progressStatusType = ['todo', 'progress', 'complete'];
 
 export const TemplatePage = ({
@@ -100,7 +98,7 @@ export const TemplatePage = ({
     } else {
       const result = move(pageArr[sInd], pageArr[dInd], source, destination);
       const newState = [...pageArr];
-      
+
       newState[sInd] = result[sInd];
       newState[dInd] = result[dInd];
       setPageArr(newState.filter((group) => group.length));

@@ -10,7 +10,7 @@ export const Error = ({ onReset }: ErrorProps) => {
           onReset();
         }}
       >
-        진행현황 템플릿 에러컴포넌트
+        문서 페이지 에러컴포넌트
       </button>
     </>
   );

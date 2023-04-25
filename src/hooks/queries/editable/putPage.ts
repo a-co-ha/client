@@ -16,7 +16,7 @@ export const usePutEditablePage = (
     (pageName) => putEditablePage(channelId, pageId, pageName),
     {
       onSuccess: () => {
-        if (type === 'progress-page') {
+        if (type === 'progress-page' || type === 'normal-page') {
           return queryClient.invalidateQueries([
             `editablePage`,
             templatePageId,

@@ -34,7 +34,7 @@ export const SelectTemplate = ({ pageType }: { pageType: string }) => {
             description: '한 곳에서 팀 문서를 정리하고 협업하세요.',
             icon: IconThree,
             api() {
-              return;
+              createTemplateMutate('normal');
             },
           },
         ]

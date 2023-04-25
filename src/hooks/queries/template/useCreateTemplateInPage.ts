@@ -6,7 +6,7 @@ export const useCreateTemplateInPage = () => {
   const { channelId, pageId, type } = useGetUrlInfo();
   const queryClient = useQueryClient();
   return useMutation(
-    (progressStatus: string) =>
+    (progressStatus: string | null) =>
       postTemplateInPage(channelId, pageId, type, progressStatus),
     {
       onSuccess: () => {

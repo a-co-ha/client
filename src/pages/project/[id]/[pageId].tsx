@@ -13,6 +13,7 @@ import { getEditablePage } from '@/pages/api/editable/getPage';
 import { getSocketPage } from '@/pages/api/socket/getPage';
 import type { pageProps } from '@/pages/api/editable/type';
 import { TemplatePage } from '@/components/template';
+import { TemplateNormalPage } from '@/components/template-normal';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   resetServerContext();
@@ -23,7 +24,9 @@ export default function Page({ channelId, pageId, type }: pageProps) {
     <div css={styles.main}>
       <Suspense fallback={<Loading />}>
         <ProjectSideBar />
-        {type === 'normal' || type === 'progress-page' ? (
+        {type === 'normal' ||
+        type === 'progress-page' ||
+        type === 'normal-page' ? (
           <EditablePage
             channelId={channelId}
             pageId={pageId as string}
@@ -35,6 +38,13 @@ export default function Page({ channelId, pageId, type }: pageProps) {
         ) : null}
         {type === 'template-progress' ? (
           <TemplatePage channelId={channelId} pageId={pageId} type={type} />
+        ) : null}
+        {type === 'template-normal' ? (
+          <TemplateNormalPage
+            channelId={channelId}
+            pageId={pageId}
+            type={type}
+          />
         ) : null}
         <UserList />
       </Suspense>

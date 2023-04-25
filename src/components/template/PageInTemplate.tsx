@@ -5,8 +5,6 @@ import type { Labels, PageInTemplateProps } from './type';
 import { draggable } from '../editable-block/styles';
 import * as styles from './styles';
 
-// hover 시 라벨에 태그된 사람목록 보여주기
-
 export const PageInTemplate = ({
   channelId,
   pageId,
