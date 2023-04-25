@@ -9,6 +9,7 @@ import { usePutSocketPage } from '@/hooks/queries/socket/putPage';
 import { api } from '@/pages/api/config/api-config';
 import { toast } from 'react-toastify';
 import * as styles from './styles';
+import { useUpadatePageName } from '@/hooks/queries/template/useUpdatePageName';
 import type { PageName } from './type';
 
 export const PageNameForm = ({
@@ -24,9 +25,9 @@ export const PageNameForm = ({
 }) => {
   const [isEditing, setIsEditing] = useRecoilState(pageNameEditToggle(pageId));
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
-  console.log(`채널 아이디입니다`, channelId);
   const putEditablePageName = usePutEditablePage(channelId, pageId);
   const putSocketPageName = usePutSocketPage(channelId, pageId);
+  const patchTemplatePageName = useUpadatePageName();
 
   const methods = useForm<PageName>({
     defaultValues: { pageName },
@@ -41,9 +42,10 @@ export const PageNameForm = ({
 
   const onSubmit = async (data: PageName) => {
     try {
-      console.log(pageName);
-      if (type === 'normal') putEditablePageName.mutate(data.pageName);
       if (type === 'socket') putSocketPageName.mutate(data.pageName);
+      else if (type === 'template-progress')
+        patchTemplatePageName.mutate(data.pageName);
+      else putEditablePageName.mutate(data.pageName);
       toast.success('페이지 이름을 바꿨어요');
       setIsEditing(false);
     } catch (error) {
