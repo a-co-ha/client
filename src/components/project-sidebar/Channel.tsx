@@ -58,14 +58,12 @@ export const Channel = () => {
                           } h-5 w-5 text-purple-500`}
                         />
                       </Disclosure.Button>
-                      <div css={styles.pageCreateBtn}>
-                        <Popover className="relative">
-                          <Popover.Button>
-                            <span>+</span>
-                          </Popover.Button>
-                          <SelectTemplate pageType={pageType.type} />
-                        </Popover>
-                      </div>
+                      <Popover className="relative">
+                        <Popover.Button css={styles.pageCreateBtn}>
+                          +
+                        </Popover.Button>
+                        <SelectTemplate pageType={pageType.type} />
+                      </Popover>
                     </div>
                     <Disclosure.Panel className="flex-col items-between px-4 pt-4 pb-2 text-sm text-gray-500">
                       {pageList[pageType.type as pageListTypeT].map(

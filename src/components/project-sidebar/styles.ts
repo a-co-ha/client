@@ -46,6 +46,7 @@ export const pageCreateBtn = css`
   color: purple;
   &:hover {
     background: gray;
+    height: 2rem;
   }
   border-radius: 8px;
 `;
