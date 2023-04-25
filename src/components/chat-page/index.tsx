@@ -74,7 +74,9 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     const nowDate = dayjs();
     const hour = date.get(`hour`);
     const minute = date.get(`minute`);
-    const displayHour = hour <= 12 ? hour : hour - 12;
+    console.log(`hour`, hour);
+    const displayHour =
+      hour !== 0 && hour <= 12 ? hour : hour === 0 ? 12 : hour - 12;
     const displayminute = minute < 10 ? `0${minute}` : minute;
     const isAm = hour < 12 ? `오전` : `오후`;
     const isToday =
