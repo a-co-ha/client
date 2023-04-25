@@ -1,11 +1,14 @@
-import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { messageModalState, messageModalImgState } from '@/recoil/socket/atom';
+import {
+  messageModalState,
+  messageModalImgState,
+  messageMoreState,
+} from '@/recoil/socket/atom';
 
 import * as styles from './styles';
 import type { MessageType } from './type';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useLayoutEffect } from 'react';
 
 export const Message = ({
   name,
@@ -14,32 +17,36 @@ export const Message = ({
   isDisplay,
   currentMsgTime,
 }: MessageType) => {
-  const myUserId = Number(getCookie(`myUserId`));
-  // const isMyMessage = userId === myUserId ? true : false;
   const [messageModal, setMessageModal] = useRecoilState(messageModalState);
   const setMessageImgSrc = useSetRecoilState(messageModalImgState);
+  const [isMessageMore, setIsMessageMore] = useRecoilState(messageMoreState);
+  const messageHeightRef = useRef<HTMLDivElement>(null);
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setMessageModal(true);
     setMessageImgSrc(img);
   };
-  const messageHeightRef = useRef<HTMLDivElement>(null);
-  const target = messageHeightRef.current;
 
   useEffect(() => {
-    if (target?.scrollHeight) {
+    if (messageHeightRef.current?.scrollHeight) {
       console.log(`scollheight`, messageHeightRef.current?.scrollHeight);
-      if (target.scrollHeight > 545 && target.nextElementSibling) {
+      if (messageHeightRef.current.scrollHeight > 545) {
         (
-          target.nextElementSibling as HTMLButtonElement
+          messageHeightRef.current.nextElementSibling as HTMLDivElement
         ).style.display = `block`;
       }
     }
   }, [messageHeightRef.current]);
   const moreMessageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (target !== null && e.currentTarget.parentElement !== null) {
-      target.style.maxHeight = `none`;
-      // (target.nextElementSibling as HTMLButtonElement).style.display = `none`;
-      // e.currentTarget.parentElement.style.display = `none`;
+    if (
+      messageHeightRef.current !== null &&
+      e.currentTarget.parentElement !== null
+    ) {
+      isMessageMore ? setIsMessageMore(false) : setIsMessageMore(true);
+      if (messageHeightRef.current.style.maxHeight !== `none`) {
+        messageHeightRef.current.style.maxHeight = `none`;
+      } else {
+        messageHeightRef.current.style.maxHeight = `540px`;
+      }
     }
   };
 
@@ -67,10 +74,12 @@ export const Message = ({
           <div css={styles.messageContentInnerBox} ref={messageHeightRef}>
             <span css={styles.message}>{content}</span>
           </div>
-          <div css={{ textAlign: 'center', userSelect: `none` }}>
-            <span css={styles.messageMoreSpan}>...</span>
+          <div css={styles.messageMoreBox}>
+            <span css={styles.messageMoreSpan}>
+              {isMessageMore ? '' : '...'}
+            </span>
             <button css={styles.messageMoreBtn} onClick={moreMessageHandler}>
-              더보기
+              {isMessageMore ? '접기' : '더보기'}
             </button>
           </div>
         </div>

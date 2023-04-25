@@ -95,8 +95,14 @@ export const message = css`
   display: inline-block;
   max-width: 164px;
   white-space: pre-wrap;
-  line-height: 1.2rem;
+  line-height: 1.1rem;
   word-wrap: break-word;
+`;
+
+export const messageMoreBox = css`
+  display: none;
+  text-align: center;
+  user-select: none;
 `;
 
 export const messageMoreSpan = css`

@@ -30,6 +30,11 @@ export const socketMessageState = atomFamily<SocketMessage[], string>({
   default: [],
 });
 
+export const messageMoreState = atom({
+  key: `messageMoreState/${nanoId()}`,
+  default: false,
+});
+
 export const chatBookmarkState = atom<ChatBookmark[]>({
   key: `chatBookmarkState/${nanoId()}`,
   default: [],
