@@ -7,9 +7,9 @@ import { api } from '../api/config/api-config';
 export default function InviteUser() {
   const router = useRouter();
   const accessToken = getCookie(`accessToken`);
-  if (accessToken && accessToken !== null) {
-    api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
-  }
+  // if (accessToken && accessToken !== null) {
+  //   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
+  // }
   const { adminCode, channelCode } = router.query;
   console.log(`여기가 인바이트 유저`, adminCode, channelCode);
   const inviteUser = useInviteUser(adminCode, channelCode);

@@ -114,7 +114,7 @@ export const CahtBookmarkEditForm = ({
               Delete
             </button>
           </div>
-          <div>
+          <div css={styles.chatBookmarkFormEditBox}>
             <textarea
               css={styles.chatBookmarkFormInput(isBookmarkEditing)}
               value={chatBookmarkContent.value}

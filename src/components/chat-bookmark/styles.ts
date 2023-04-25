@@ -196,13 +196,25 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1rem;
-  height: ${isEditing ? `auto` : `calc(65vh - 176px)`};
+  height: calc(65vh - 176px);
   padding: 0.5rem;
   margin-bottom: 1rem;
   background: transparent;
   resize: none;
   &:focus {
     outline: none;
+  }
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    background-color: #efefef;
+    border-radius: 0.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
   }
 `;
 

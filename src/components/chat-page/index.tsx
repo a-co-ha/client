@@ -66,13 +66,11 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   }, [messages]);
 
   const getTimeValue = (createdAt: string) => {
-    console.log(`createdAt`, createdAt);
     const format = `20${createdAt.substring(0, 2)}-${createdAt.substring(
       3,
       5
     )}-${createdAt.substring(6, 8)}T${createdAt.substring(9)}`;
     const date = dayjs(format);
-    console.log(`데이`, format);
     const nowDate = dayjs();
     const hour = date.get(`hour`);
     const minute = date.get(`minute`);

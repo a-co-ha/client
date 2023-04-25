@@ -2,14 +2,6 @@ import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
 import type { User } from '@/pages/api/user/type';
 
-// export const userProfile = atom({
-//   key: `userProfile/${nanoId()}`,
-//   default: {
-//     id: '',
-//     avartarUrl: '',
-//   },
-// });
-
 export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,
   default: {
@@ -56,4 +48,9 @@ export const inviteChannelState = atom({
 export const inviteModalState = atom({
   key: `inviteModalState/${nanoId()}`,
   default: false,
+});
+
+export const channelUserState = atom({
+  key: `channelUserState/${nanoId()}`,
+  default: [],
 });

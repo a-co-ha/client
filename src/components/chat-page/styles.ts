@@ -72,8 +72,7 @@ export const messageAlign = (isDisplay: boolean) => css`
   margin-top: ${isDisplay ? `1.5rem` : `0`};
 `;
 
-export const message = css`
-  display: inline-block;
+export const messageContentBox = css`
   max-width: 180px;
   padding: 0.5rem;
   margin: 0.375rem 0 0 0.7rem;
@@ -85,7 +84,41 @@ export const message = css`
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+export const messageContentInnerBox = css`
+  max-height: 540px;
+  overflow: hidden;
+`;
+
+export const message = css`
+  display: inline-block;
+  max-width: 164px;
   white-space: pre-wrap;
+  line-height: 1.2rem;
+  word-wrap: break-word;
+`;
+
+export const messageMoreSpan = css`
+  font-size: 1.5rem;
+  color: gray;
+  padding: 0.375rem 0;
+`;
+
+export const messageMoreBtn = css`
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0;
+  margin: 0 auto;
+  color: gray;
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  &:focus {
+    outline: none;
+  }
+  line-height: 1.2rem;
+  border-radius: 0.375rem;
 `;
 
 export const messageNameAlign = css`

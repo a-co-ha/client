@@ -2,18 +2,25 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
+import { channelUserState } from '@/recoil/user/atom';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import * as styles from './styles';
 import type { ChannelUser } from '@/pages/api/user/type';
-import { getUsers } from '@/pages/api/user/getUsers';
 
 export const UserList = () => {
-  const { data: channelUsers } = useGetUsers();
+  const { data: channelUsersData } = useGetUsers();
   const [onUser, setOnUser] = useRecoilState(onUserState);
+  const [channelUsers, setChannelUsers] = useRecoilState(channelUserState);
   const { socket } = useContext(SocketContext);
+  useEffect(() => {
+    if (channelUsersData !== undefined) {
+      setChannelUsers(channelUsersData);
+    }
+  });
+
   useEffect(() => {
     socket.on(`NEW_MEMBER`, (user) => {
       setOnUser((prev) => {
