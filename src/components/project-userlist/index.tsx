@@ -19,7 +19,7 @@ export const UserList = () => {
     if (channelUsersData !== undefined) {
       setChannelUsers(channelUsersData);
     }
-  });
+  }, [channelUsersData]);
 
   useEffect(() => {
     socket.on(`NEW_MEMBER`, (user) => {
