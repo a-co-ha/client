@@ -40,7 +40,9 @@ export const Profile = () => {
           <div css={styles.profileImageBox}>
             <Image src={user.img} alt="" width={100} height={100} />{' '}
           </div>
-          <button css={{ fontSize: '12px' }}>{user.name}</button>
+          <button css={{ fontSize: '12px', marginRight: `auto` }}>
+            {user.name}
+          </button>
           <button css={{ marginLeft: '4px' }} onClick={onClickHandler}>
             <FontAwesomeIcon icon={faDoorOpen} />
           </button>

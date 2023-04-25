@@ -15,19 +15,20 @@ export const navBar = css`
 
 export const profileBox = css`
   ${flexCenterNavBar}
-  width: 200px;
+  min-width: 200px;
   box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const titleBox = css`
   ${flexCenterNavBar}
+  min-width: 310px;
   flex-grow: 1;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const loginBox = css`
   ${flexCenterNavBar};
-  width: 200px;
+  min-width: 200px;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
@@ -155,6 +156,8 @@ export const loginLogo = css`
 
 export const profileInnerBox = css`
   display: flex;
+  width: 100%;
+  padding-inline: 1rem;
   gap: 0.5rem;
   cursor: pointer;
 `;

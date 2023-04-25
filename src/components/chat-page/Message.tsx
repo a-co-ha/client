@@ -29,13 +29,14 @@ export const Message = ({
   useEffect(() => {
     if (messageHeightRef.current?.scrollHeight) {
       console.log(`scollheight`, messageHeightRef.current?.scrollHeight);
-      if (messageHeightRef.current.scrollHeight > 545) {
+      if (messageHeightRef.current.scrollHeight > 310) {
         (
           messageHeightRef.current.nextElementSibling as HTMLDivElement
         ).style.display = `block`;
       }
     }
   }, [messageHeightRef.current]);
+
   const moreMessageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (
       messageHeightRef.current !== null &&
@@ -45,7 +46,7 @@ export const Message = ({
       if (messageHeightRef.current.style.maxHeight !== `none`) {
         messageHeightRef.current.style.maxHeight = `none`;
       } else {
-        messageHeightRef.current.style.maxHeight = `540px`;
+        messageHeightRef.current.style.maxHeight = `310px`;
       }
     }
   };

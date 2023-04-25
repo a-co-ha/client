@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 export const chatPage = css`
   position: relative;
-  // min-width: 840px;
+  min-width: 310px;
   text-align: center;
   flex-basis: 0;
   flex-grow: 1;
@@ -50,6 +50,7 @@ export const chatFormInput = css`
 export const messageBox = css`
   text-align: right;
   position: relative;
+  padding-right: 44px;
   padding-bottom: 1rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -73,7 +74,7 @@ export const messageAlign = (isDisplay: boolean) => css`
 `;
 
 export const messageContentBox = css`
-  max-width: 180px;
+  max-width: 815px;
   padding: 0.5rem;
   margin: 0.375rem 0 0 0.7rem;
   line-height: 1rem;
@@ -87,13 +88,13 @@ export const messageContentBox = css`
 `;
 
 export const messageContentInnerBox = css`
-  max-height: 540px;
+  max-height: 310px;
+  // max-width: 164px;
   overflow: hidden;
 `;
 
 export const message = css`
   display: inline-block;
-  max-width: 164px;
   white-space: pre-wrap;
   line-height: 1.1rem;
   word-wrap: break-word;
@@ -119,6 +120,7 @@ export const messageMoreBtn = css`
   color: gray;
   &:hover {
     background: rgba(0, 0, 0, 0.2);
+    color: white;
   }
   &:focus {
     outline: none;
@@ -152,7 +154,7 @@ export const messageTime = (isDisplay: boolean) => css`
 
 export const messageImgBox = (isDisplay: boolean) => css`
   display: block;
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   margin-left: 1rem;
   opacity: ${isDisplay ? `1` : `0`};
