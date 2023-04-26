@@ -55,6 +55,11 @@ export const channelNameState = atom({
   default: 'A - COHA',
 });
 
+export const channelSidebarOpenState = atom({
+  key: `channelSidebarOpenState/${nanoId()}`,
+  default: true,
+});
+
 export const deleteModalState = atom({
   key: `deleteModalState/${nanoId()}`,
   default: false,

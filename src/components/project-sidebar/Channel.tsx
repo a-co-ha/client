@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { pageListState } from '@/recoil/project/atom';
+import { pageListState, channelSidebarOpenState } from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { SelectTemplate } from './SelectTemplate';
@@ -8,6 +8,8 @@ import { PageNameLink } from './PageNameLink';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useGetChannelPages } from '@/hooks/queries/editable/getPages';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import * as styles from './styles';
 import { Popover } from '@headlessui/react';
 
@@ -24,6 +26,9 @@ export const pageListType: IpageListType[] = [
 /** 여기서 채널 간단목록 조회 api 쏨 */
 export const Channel = () => {
   const [pageList, setPageList] = useRecoilState(pageListState);
+  const [isChannelSidebarOpen, setIsChannelSidebarOpen] = useRecoilState(
+    channelSidebarOpenState
+  );
   const router = useRouter();
   const channelId = router.query.id;
   const { data: pages } = useGetChannelPages(channelId);
@@ -39,11 +44,23 @@ export const Channel = () => {
     }
   }, [pages]);
 
+  const onClickHandler = () => {
+    isChannelSidebarOpen
+      ? setIsChannelSidebarOpen(false)
+      : setIsChannelSidebarOpen(true);
+  };
+
   return (
-    <div css={styles.channel}>
+    <div css={styles.channel(isChannelSidebarOpen)}>
+      <button
+        css={styles.channelSidbarMoreBtn(isChannelSidebarOpen)}
+        onClick={onClickHandler}
+      >
+        <FontAwesomeIcon icon={faChevronLeft} size="xs" />
+      </button>
       {/* 템플릿 선택 모달 */}
       <div className="w-full px-4 pt-16">
-        <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
+        <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2 bg-transparent">
           {pageListType.map((pageType: IpageListType, index) => {
             return (
               <Disclosure key={index} defaultOpen>

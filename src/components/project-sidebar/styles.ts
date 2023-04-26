@@ -20,20 +20,46 @@ export const projectSideBarBox = css`
 
 export const list = css`
   ${flexColumnCenter}
-  width: 75px;
+  width: 85px;
   height: calc(100vh - 50px);
   padding-top: 1rem;
   box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 8px -4px rgb(0 0 0 / 0.2);
+  z-index: 1;
 `;
 
-export const channel = css`
+export const channel = (isOpen: boolean) => css`
   ${flexColumnCenter}
+  position: relative;
   width: 250px;
   height: calc(100vh - 50px);
   margin: 0 0.3rem 0.3rem 0;
-  // background: rgba(0, 0, 0, 0.1);
+  transform: translate3d(${isOpen ? `0, 0, 0` : `-100%,0,0`});
+  transition: 0.5s;
+  transition-delay: ${isOpen ? `0s` : `0.5s`};
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &:hover > button {
+    display: block;
+  }
+  & > *:not(button:nth-child(1)) {
+    opacity: ${isOpen ? `1` : `0`};
+    transition: 0.5s;
+  }
+`;
+
+export const channelSidbarMoreBtn = (isOpen: boolean) => css`
+  display: ${isOpen ? `none` : `block`};
+  position: ${isOpen ? `absolute` : `fixed`};
+  top: 50%;
+  left: ${isOpen ? `calc(100% - 10px)` : `100%`};
+  width: ${isOpen ? `20px` : `40px`};
+  height: ${isOpen ? `60px` : `40px`};
+  transform: translate3d(-50%, -50%, 0) ${isOpen ? null : `rotate(180deg)`};
+  transition: 0.5s;
+  background: ${isOpen ? `transparent` : `white`};
+  border: 1px solid rgb(0 0 0 / 0.2);
+  border-right: none;
+  border-radius: ${isOpen ? `4px 0 0 4px` : `50%`};
 `;
 
 export const pageCreateBtnBox = css`
@@ -50,20 +76,33 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const projectCreateThumbnail = css`
+export const projectCreateThumbnail = (isSelected: boolean) => css`
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  transform: ${isSelected ? `scale(1.15)` : `scale(1)`};
+  transition: 0.5s;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+`;
+
+export const projectCreatePlusBtn = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
-`;
-export const projectCreatePlusBtn = css`
-  ${projectCreateThumbnail};
   border: 1px solid black;
 `;
 export const listAllDelete = css`
-  ${projectCreateThumbnail};
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   border: 1px solid black;
   font-size: 0.5rem;
 `;

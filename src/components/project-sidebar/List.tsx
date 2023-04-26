@@ -20,6 +20,7 @@ export const List = () => {
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const channelId = router.query.id;
   const { data: userData } = useGetUser();
   const closeModal = () => {
     setIsOpen(false);
@@ -45,7 +46,6 @@ export const List = () => {
       } else {
         setChannelList([]);
         setIsInitialUser(true);
-        // router.push(`/main`);
       }
     } catch (err) {
       console.error(err);
@@ -74,7 +74,12 @@ export const List = () => {
   return (
     <div css={styles.list}>
       {channelList.map((channel) => (
-        <div key={channel.id} css={styles.projectCreateThumbnail}>
+        <div
+          key={channel.id}
+          css={styles.projectCreateThumbnail(
+            String(channel.id) === channelId ? true : false
+          )}
+        >
           <button
             css={{ position: `relative`, width: `100%`, height: `100%` }}
             onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
