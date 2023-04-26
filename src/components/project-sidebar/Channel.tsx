@@ -60,7 +60,7 @@ export const Channel = () => {
       </button>
       {/* 템플릿 선택 모달 */}
       <div className="w-full px-4 pt-16">
-        <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2 bg-transparent">
+        <div className="mx-auto w-full max-w-md rounded-2xl bg-white bg-transparent">
           {pageListType.map((pageType: IpageListType, index) => {
             return (
               <Disclosure key={index} defaultOpen>

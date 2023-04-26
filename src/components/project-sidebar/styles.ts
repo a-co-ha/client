@@ -10,17 +10,17 @@ const flexRowCenter = css`
   display: flex;
 `;
 
-export const projectSideBarBox = css`
+export const projectSideBarBox = (isOpen: boolean) => css`
   ${flexRowCenter}
-  width: 250px;
+  width: ${isOpen ? `260px` : `85px`};
   height: calc(100vh - 50px);
-  // outline: 1px solid limegreen;
-  // box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  transition-delay: ${isOpen ? `0s` : `0.5s`};
 `;
 
 export const list = css`
   ${flexColumnCenter}
-  width: 85px;
+  min-width: 70px;
   height: calc(100vh - 50px);
   padding-top: 1rem;
   box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
@@ -31,7 +31,7 @@ export const list = css`
 export const channel = (isOpen: boolean) => css`
   ${flexColumnCenter}
   position: relative;
-  width: 250px;
+  width: 260px;
   height: calc(100vh - 50px);
   margin: 0 0.3rem 0.3rem 0;
   transform: translate3d(${isOpen ? `0, 0, 0` : `-100%,0,0`});
@@ -41,7 +41,7 @@ export const channel = (isOpen: boolean) => css`
   &:hover > button {
     display: block;
   }
-  & > *:not(button:nth-child(1)) {
+  & > *:not(button:nth-of-type(1)) {
     opacity: ${isOpen ? `1` : `0`};
     transition: 0.5s;
   }
@@ -60,6 +60,7 @@ export const channelSidbarMoreBtn = (isOpen: boolean) => css`
   border: 1px solid rgb(0 0 0 / 0.2);
   border-right: none;
   border-radius: ${isOpen ? `4px 0 0 4px` : `50%`};
+  line-height: 40px;
 `;
 
 export const pageCreateBtnBox = css`

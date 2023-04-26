@@ -74,7 +74,6 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     const nowDate = dayjs();
     const hour = date.get(`hour`);
     const minute = date.get(`minute`);
-    console.log(`hour`, hour);
     const displayHour =
       hour !== 0 && hour <= 12 ? hour : hour === 0 ? 12 : hour - 12;
     const displayminute = minute < 10 ? `0${minute}` : minute;

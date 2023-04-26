@@ -35,7 +35,7 @@ export const loginBox = css`
 export const projectNameBox = css`
   ${flexCenterNavBar}
   justify-content: flex-end;
-  width: 250px;
+  min-width: 260px;
   // border-radius: 0.375rem;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
