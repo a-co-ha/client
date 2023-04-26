@@ -21,7 +21,7 @@ export const profileBox = css`
 
 export const titleBox = css`
   ${flexCenterNavBar}
-  min-width: 310px;
+  width: 310px;
   flex-grow: 1;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
