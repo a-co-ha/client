@@ -18,20 +18,13 @@ export const TemplateNormalPage = ({
 }: TemplatePageProps) => {
   const { mutate: createPage } = useCreateTemplateInPage();
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
+  const { mutate: upatePageList } = useUpadatePageList();
 
   const [pageArr, setPageArr] = useState(pageList);
   console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
 
-  const PageIdList = pageArr?.map((page: PageInPageList) => page._id);
-  const { mutate: upatePageList } = useUpadatePageList();
-
-  useEffect(() => {
-    upatePageList(PageIdList);
-  }, [pageArr]);
-
   useDidMountEffect(() => {
     // 마운트 시 실행되지 않지만 마운트 후 상태값이 바뀌면서 리랜더링이 일어나 그떄부터 실행되어 첫 랜더링 때 실행되는것처럼 보임
-    console.log('디드마운트');
     setPageArr(pageList);
   }, [pageList]);
 
@@ -44,8 +37,7 @@ export const TemplateNormalPage = ({
     const removedBlocks = updatedBlocks.splice(source.index, 1);
     updatedBlocks.splice(destination.index, 0, removedBlocks[0]);
     updatedBlocks && setPageArr(updatedBlocks);
-    // const newStateId = updatedBlocks.map((page) => page._id);
-    // upatePageList(newStateId);
+    upatePageList(updatedBlocks);
   };
 
   return (
