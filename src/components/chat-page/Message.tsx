@@ -10,8 +10,9 @@ import * as styles from './styles';
 import type { MessageType } from './type';
 import { useEffect, useRef, useLayoutEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import remarkGfm from 'remark-gfm';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 export const Message = ({
   name,
@@ -78,6 +79,7 @@ export const Message = ({
           <div css={styles.messageContentInnerBox} ref={messageHeightRef}>
             <span css={styles.message}>
               <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
                 children={content}
                 components={{
                   code({ node, inline, className, children, ...props }) {
@@ -89,7 +91,7 @@ export const Message = ({
                         // showInlineLineNumbers={true}
                         showLineNumbers
                         {...props}
-                        style={atomOneLight}
+                        style={oneLight}
                       />
                     ) : (
                       <code className={className} {...props}>

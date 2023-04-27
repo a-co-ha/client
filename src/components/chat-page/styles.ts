@@ -103,13 +103,12 @@ export const message = css`
   line-height: 1.1rem;
   word-break: break-word;
   & code {
-    font-size: 0.9rem;
-    background: transparent;
-    font-family: Apple SD Gothic Neo;
-    line-height: 1.2rem;
-  }
-  & pre code {
+    font-size: 0.7rem;
     white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+  & code span {
+    min-width: 0 !important;
   }
 `;
 

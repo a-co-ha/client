@@ -11,8 +11,10 @@ import { useDeleteBookmark } from '@/hooks/queries/socket/deleteBookmark';
 import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
 import * as styles from './styles';
 import ReactMarkdown from 'react-markdown';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
+import remarkGfm from 'remark-gfm';
+import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 export const ChatBookmarkModal = ({
   channelId,
@@ -97,6 +99,7 @@ export const ChatBookmarkModal = ({
               <div css={styles.chatBookmarkModalContent}>
                 {/* editing */}
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   children={ChatBookmarkEditContentShare.chatBookmarkContent}
                   components={{
                     code({ node, inline, className, children, ...props }) {
@@ -105,10 +108,10 @@ export const ChatBookmarkModal = ({
                         <SyntaxHighlighter
                           children={String(children).replace(/\n$/, '')}
                           language={match[1]}
-                          // showInlineLineNumbers={true}
                           showLineNumbers
+                          PreTag="div"
                           {...props}
-                          style={atomOneLight}
+                          style={oneLight}
                         />
                       ) : (
                         <code className={className} {...props}>

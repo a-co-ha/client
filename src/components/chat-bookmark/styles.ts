@@ -140,10 +140,12 @@ export const chatBookmarkModalContent = css`
     background-color: transparent;
   }
   & code {
-    font-size: 0.9rem;
-    background: transparent;
-    font-family: Apple SD Gothic Neo;
-    line-height: 1.2rem;
+    font-size: 0.8rem;
+    // font-family: Apple SD Gothic Neo;
+    // line-height: 1.2rem;
+  }
+  & code span {
+    min-width: 0 !important;
   }
 `;
 
