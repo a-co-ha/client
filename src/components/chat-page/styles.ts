@@ -90,9 +90,6 @@ export const messageContentBox = css`
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  & > div {
-    width: ;
-  }
 `;
 
 export const messageContentInnerBox = css`
@@ -105,6 +102,15 @@ export const message = css`
   white-space: pre-wrap;
   line-height: 1.1rem;
   word-break: break-word;
+  & code {
+    font-size: 0.9rem;
+    background: transparent;
+    font-family: Apple SD Gothic Neo;
+    line-height: 1.2rem;
+  }
+  & pre code {
+    white-space: pre-wrap !important;
+  }
 `;
 
 export const messageMoreBox = css`

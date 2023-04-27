@@ -45,3 +45,15 @@ export interface PutSocketPage {
   updatedAt: string;
   __v: number;
 }
+
+export interface PostSocketPage {
+  channelId: number;
+  pageName: string;
+  type: string;
+  categories: string;
+  _id: string;
+  bookmarkList: ChatBookmark[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

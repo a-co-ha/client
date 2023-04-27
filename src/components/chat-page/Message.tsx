@@ -9,6 +9,9 @@ import {
 import * as styles from './styles';
 import type { MessageType } from './type';
 import { useEffect, useRef, useLayoutEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 export const Message = ({
   name,
@@ -73,7 +76,30 @@ export const Message = ({
         </div>
         <div css={styles.messageContentBox}>
           <div css={styles.messageContentInnerBox} ref={messageHeightRef}>
-            <span css={styles.message}>{content}</span>
+            <span css={styles.message}>
+              <ReactMarkdown
+                children={content}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        children={String(children).replace(/\n$/, '')}
+                        language={match[1]}
+                        // showInlineLineNumbers={true}
+                        showLineNumbers
+                        {...props}
+                        style={atomOneLight}
+                      />
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              />
+            </span>
           </div>
           <div css={styles.messageMoreBox}>
             <span css={styles.messageMoreSpan}>
