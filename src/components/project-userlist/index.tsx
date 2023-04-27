@@ -2,8 +2,9 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
-import { channelUserState } from '@/recoil/user/atom';
+import { channelUserState, channelUserModalState } from '@/recoil/user/atom';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
+import { UserModal } from './UserModal';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +15,9 @@ export const UserList = () => {
   const { data: channelUsersData } = useGetUsers();
   const [onUser, setOnUser] = useRecoilState(onUserState);
   const [channelUsers, setChannelUsers] = useRecoilState(channelUserState);
+  const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
+    channelUserModalState
+  );
   const { socket } = useContext(SocketContext);
   useEffect(() => {
     if (channelUsersData !== undefined) {
@@ -41,6 +45,10 @@ export const UserList = () => {
     });
   }, []);
 
+  const onClickHandler = (e: any) => {
+    setIsUserModalOpen(true);
+  };
+
   return (
     <div css={styles.userListBox}>
       <div css={styles.userListInnerBox}>
@@ -51,8 +59,8 @@ export const UserList = () => {
             );
             const isAdmin = member.admin;
             return (
-              <div key={i}>
-                {/* <Image src={user.img} width={40} height={40} alt={`onUserList`} /> */}
+              <div key={i} css={styles.user} onClick={onClickHandler}>
+                <UserModal />
                 <span css={styles.isUserOnline(isOnUser, isAdmin)}></span>
                 <span css={styles.userName}>{member.name}</span>
                 <span css={styles.adminCrown(isAdmin)}>
