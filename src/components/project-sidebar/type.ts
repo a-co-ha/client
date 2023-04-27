@@ -12,3 +12,7 @@ export interface PageNameLinkProps {
   pageName: string;
   type: string;
 }
+
+export type SelectTemplateProps = {
+  pageType: 'EditablePage' | 'SocketPage';
+};

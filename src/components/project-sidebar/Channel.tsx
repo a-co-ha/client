@@ -13,7 +13,7 @@ import { Popover } from '@headlessui/react';
 
 type pageListTypeT = 'EditablePage' | 'SocketPage';
 export interface IpageListType {
-  type: string;
+  type: 'EditablePage' | 'SocketPage';
   title: string;
 }
 export const pageListType: IpageListType[] = [
