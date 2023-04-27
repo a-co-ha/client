@@ -90,7 +90,6 @@ export const ChatSendForm = ({
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div css={styles.chatFormInputBox}>
           <textarea
-            wrap="hard"
             autoFocus
             spellCheck={false}
             css={styles.chatFormInput}

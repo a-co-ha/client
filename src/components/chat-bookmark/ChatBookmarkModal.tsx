@@ -10,6 +10,9 @@ import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
 import { useDeleteBookmark } from '@/hooks/queries/socket/deleteBookmark';
 import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
 import * as styles from './styles';
+import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 export const ChatBookmarkModal = ({
   channelId,
@@ -93,7 +96,28 @@ export const ChatBookmarkModal = ({
               </div>
               <div css={styles.chatBookmarkModalContent}>
                 {/* editing */}
-                {ChatBookmarkEditContentShare.chatBookmarkContent}
+                <ReactMarkdown
+                  children={ChatBookmarkEditContentShare.chatBookmarkContent}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          children={String(children).replace(/\n$/, '')}
+                          language={match[1]}
+                          // showInlineLineNumbers={true}
+                          showLineNumbers
+                          {...props}
+                          style={atomOneLight}
+                        />
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                />
               </div>
               <button
                 css={styles.chatBookmarkCopyBtn(isCopied)}

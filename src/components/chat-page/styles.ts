@@ -37,13 +37,18 @@ export const chatFormBtn = css`
 export const chatFormInput = css`
   display: block;
   flex-grow: 1;
-  font-size: 1rem;
-  line-height: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
   padding: 0.5rem;
   background: transparent;
   resize: none;
+  white-space: pre-wrap;
+  word-break: break-word;
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    font-size: 1rem;
   }
 `;
 
@@ -52,7 +57,7 @@ export const messageBox = css`
   position: relative;
   padding-right: 44px;
   padding-bottom: 1rem;
-  overflow-y: scroll;
+  overflow: hidden scroll;
   &::-webkit-scrollbar {
     width: 15px;
   }
@@ -85,11 +90,13 @@ export const messageContentBox = css`
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  & > div {
+    width: ;
+  }
 `;
 
 export const messageContentInnerBox = css`
   max-height: 310px;
-  // max-width: 164px;
   overflow: hidden;
 `;
 
@@ -97,7 +104,7 @@ export const message = css`
   display: inline-block;
   white-space: pre-wrap;
   line-height: 1.1rem;
-  word-wrap: break-word;
+  word-break: break-word;
 `;
 
 export const messageMoreBox = css`

@@ -11,7 +11,6 @@ import {
   chatBookmarkFormModalState,
   isBookmarkEditingState,
 } from '@/recoil/socket/atom';
-import { usePostBookmark } from '@/hooks/queries/socket/postBookmark';
 
 export const ChatBookmarkForm = ({
   channelId,
@@ -21,7 +20,6 @@ export const ChatBookmarkForm = ({
   pageId: string;
 }) => {
   const { socket } = useContext(SocketContext);
-  const postBookmark = usePostBookmark(channelId, pageId);
   const [isBookmarkEditing, setIsBookmarkEditing] = useRecoilState(
     isBookmarkEditingState
   );
@@ -57,11 +55,11 @@ export const ChatBookmarkForm = ({
     methods.reset();
   };
 
-  const onKeyDownTitleHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      methods.setFocus(`chatBookmarkContent`);
-    }
-  };
+  // const onKeyDownTitleHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === 'Enter') {
+  //     methods.setFocus(`chatBookmarkContent`);
+  //   }
+  // };
 
   const onKeyDownContentHandler = (
     e: React.KeyboardEvent<HTMLTextAreaElement>
@@ -97,13 +95,14 @@ export const ChatBookmarkForm = ({
                   type="text"
                   value={chatBookmarkTitle.value}
                   onChange={chatBookmarkTitle.onChange}
-                  onKeyDown={onKeyDownTitleHandler}
+                  // onKeyDown={onKeyDownTitleHandler}
                   maxLength={30}
                   spellCheck={false}
-                  autoFocus
                   placeholder={`제목`}
+                  autoFocus
                 />
                 <textarea
+                  autoFocus
                   css={styles.chatBookmarkFormInput(isBookmarkEditing)}
                   value={chatBookmarkContent.value}
                   onChange={chatBookmarkContent.onChange}

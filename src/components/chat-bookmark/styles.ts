@@ -125,7 +125,8 @@ export const chatBookmarkModalDeleteBtn = css`
 export const chatBookmarkModalContent = css`
   white-space: pre-wrap;
   max-height: 63.5vh;
-  overflow-y: auto;
+  width: 100%;
+  overflow: auto;
   &::-webkit-scrollbar {
     width: 15px;
   }
@@ -137,6 +138,12 @@ export const chatBookmarkModalContent = css`
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;
+  }
+  & code {
+    font-size: 0.9rem;
+    background: transparent;
+    font-family: Apple SD Gothic Neo;
+    line-height: 1.2rem;
   }
 `;
 

@@ -62,6 +62,7 @@ export const CahtBookmarkEditForm = ({
       chatBookmarkTitle: chatBookmark.chatBookmarkTitle,
       chatBookmarkContent: chatBookmark.chatBookmarkContent,
     });
+
     setIsBookmarkEditing(false);
     methods.reset();
   };
