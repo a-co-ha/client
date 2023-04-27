@@ -79,7 +79,7 @@ export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
                       <item.icon aria-hidden="true" />
                     </div>
                     <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900 ">
+                      <p className="text-sm font-medium text-gray-900 text-left">
                         {item.name}
                       </p>
                       <p className="text-sm text-gray-500 text-left">
