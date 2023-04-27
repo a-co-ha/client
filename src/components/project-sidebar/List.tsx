@@ -5,6 +5,7 @@ import { channelListState, channelNameState } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
+import { HoverModal } from '@/hooks/useHoverModal';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import githubChannelImg from '@/images/github_channel.png';
@@ -64,13 +65,6 @@ export const List = () => {
     router.push(`/project/${channelId}`);
   };
 
-  const deleteAllHandler = () => {
-    channelList.map((e) => {
-      const channelId = e.id as unknown as string;
-      api.delete(`/api/channel/admin?channel=${channelId}`);
-    });
-  };
-
   return (
     <div css={styles.list}>
       {channelList.map((channel) => (
@@ -80,6 +74,7 @@ export const List = () => {
             String(channel.id) === channelId ? true : false
           )}
         >
+          <HoverModal content={channel.channelName} />
           <button
             css={{ position: `relative`, width: `100%`, height: `100%` }}
             onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
@@ -91,6 +86,7 @@ export const List = () => {
               alt={`channelImg`}
               placeholder="blur"
               blurDataURL={`...Loading`}
+              style={{ borderRadius: `10px` }}
             />
           </button>
         </div>
@@ -101,13 +97,7 @@ export const List = () => {
         css={styles.projectCreatePlusBtn}
       >
         +
-      </button>
-      <button
-        type="button"
-        onClick={deleteAllHandler}
-        css={styles.listAllDelete}
-      >
-        임시 전체삭제
+        <HoverModal content={`채널 생성하기`} />
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>

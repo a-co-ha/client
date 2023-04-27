@@ -78,24 +78,57 @@ export const pageCreateBtn = css`
 `;
 
 export const projectCreateThumbnail = (isSelected: boolean) => css`
+  position: relative;
   width: 40px;
   height: 40px;
   margin-top: 5px;
   border-radius: 10px;
-  overflow: hidden;
   transform: ${isSelected ? `scale(1.15)` : `scale(1)`};
   transition: 0.5s;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &:hover > div {
+    display: block;
+  }
+`;
+
+export const projectThumbnailHoverModal = css`
+  display: none;
+  position: absolute;
+  top: 5%;
+  left: 125%;
+  min-width: 50px;
+  padding: 0.5rem;
+  text-align: center;
+  color: white;
+  background: black;
+  border-radius: 0.375rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  white-space: nowrap;
+`;
+
+export const projectThumbnailModalLeftArrow = css`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  background: black;
 `;
 
 export const projectCreatePlusBtn = css`
+  position: relative;
   width: 40px;
   height: 40px;
   margin-top: 5px;
   border-radius: 10px;
-  overflow: hidden;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   border: 1px solid black;
+  &:hover > div {
+    display: block;
+  }
 `;
 export const listAllDelete = css`
   width: 40px;
