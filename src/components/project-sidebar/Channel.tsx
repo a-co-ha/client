@@ -29,14 +29,7 @@ export const Channel = () => {
   const { data: pages } = useGetChannelPages(channelId);
 
   useEffect(() => {
-    try {
-      console.log(pages);
-      if (pages !== undefined) {
-        setPageList(pages);
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    pages && setPageList(pages);
   }, [pages]);
 
   return (

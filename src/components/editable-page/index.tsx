@@ -1,9 +1,8 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { toast } from 'react-toastify';
 import Label from '../editable-block/Label';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
 import { EditableBlock } from '@/components/editable-block';
@@ -23,25 +22,13 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
 
-  console.log('블락스', blocks);
-  console.log('서버에서 넘어온 블락스', fetchedBlocks);
-
-  useLayoutEffect(() => {
-    console.log('블락스 서버블락스로 변경');
-    if (fetchedBlocks !== undefined) {
-      setBlocks(fetchedBlocks);
-    }
+  useEffect(() => {
+    fetchedBlocks && setBlocks(fetchedBlocks);
   }, [router.query.pageId]);
 
   useDidMountEffect(() => {
-    console.log('첫번쨰 랜더링에 실행');
     handlers.updatePageOnserver(blocks, pageId, channelId);
   }, [blocks]);
-
-  // useEffect(() => {
-  //   console.log('서버 블락스 업데이트');
-  //   handlers.updatePageOnserver(blocks, pageId, channelId);
-  // }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
     setCurrentBlockId(currentBlock.id);
@@ -51,7 +38,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
 
   const updateBlockHandler = (currentBlock: Block) => {
     const updatedBlocks = handlers.updateBlock(blocks, currentBlock);
-    console.log('update', updatedBlocks); //여기까지 imgurl있음
     setBlocks(updatedBlocks);
   };
 
