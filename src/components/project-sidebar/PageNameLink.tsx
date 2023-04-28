@@ -8,12 +8,18 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';
+import { useDeletePageInTemplate } from '@/hooks/queries/template/useDeletePageInTemplate';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
   const router = useRouter();
   const pageName = useRecoilValue(pageNameShare(props.pageId));
   const [isEditing, setIsEditing] = useRecoilState(
     pageNameEditToggle(props.pageId)
+  );
+  const { mutate: deletePageInTemplate } = useDeletePageInTemplate(
+    props.channelId,
+    props.pageId,
+    props.type
   );
 
   const pageId = router.query.pageId;
@@ -23,6 +29,11 @@ export const PageNameLink = (props: PageNameLinkProps) => {
     props.pageId,
     props.type
   );
+
+  const onDelete = () => {
+    if (props.type.endsWith('-page')) return deletePageInTemplate();
+    deletePage.mutate();
+  };
 
   return (
     <div>
@@ -44,10 +55,7 @@ export const PageNameLink = (props: PageNameLinkProps) => {
                 style={{ color: '#efb925' }}
               />
             </button>
-            <button
-              css={styles.pageNameEditBtn}
-              onClick={() => deletePage.mutate()}
-            >
+            <button css={styles.pageNameEditBtn} onClick={onDelete}>
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
           </div>
