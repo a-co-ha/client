@@ -6,7 +6,7 @@ export const deletePageInTemplate = async (
   type: string
 ) => {
   console.log('delete', channelId, pageId, type);
-  return await api
-    .delete(`/api/page/${pageId}?type=${type}&channel=${channelId}`)
-    .then((res) => res?.data);
+  return await api.delete(
+    `/api/page/${pageId}?type=${type}&channel=${channelId}`
+  );
 };

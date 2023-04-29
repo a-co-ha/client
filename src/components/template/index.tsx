@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
+import { ProgressGauge } from './progressGauge';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
 
@@ -125,48 +126,51 @@ export const TemplatePage = ({
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <main css={styles.progressContainer}>
-            <DragDropContext onDragEnd={onDragEndHandler}>
-              {pageList &&
-                pageArr &&
-                pageArr.map((el: PageInPageList[], index) => {
-                  return (
-                    <section css={styles.progressSection} key={index}>
-                      <h3>{progressStatusType[index]}</h3>
-                      <Droppable droppableId={`${index}`}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                          >
-                            {el &&
-                              el.map((page: PageInPageList, i) => {
-                                return (
-                                  <PageInTemplate
-                                    key={page._id}
-                                    channelId={channelId}
-                                    pageId={page._id}
-                                    pageName={page.pageName}
-                                    type={page.type}
-                                    position={i}
-                                    label={page.label}
-                                  />
-                                );
-                              })}
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Droppable>
-                      <button
-                        onClick={() => createPage(progressStatusType[index])}
-                      >
-                        + 새로 만들기
-                      </button>
-                    </section>
-                  );
-                })}
-            </DragDropContext>
-          </main>
+          <div css={styles.mainContainer}>
+            <ProgressGauge pageId={pageId} />
+            <main css={styles.progressContainer}>
+              <DragDropContext onDragEnd={onDragEndHandler}>
+                {pageList &&
+                  pageArr &&
+                  pageArr.map((el: PageInPageList[], index) => {
+                    return (
+                      <section css={styles.progressSection} key={index}>
+                        <h3>{progressStatusType[index]}</h3>
+                        <Droppable droppableId={`${index}`}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                            >
+                              {el &&
+                                el.map((page: PageInPageList, i) => {
+                                  return (
+                                    <PageInTemplate
+                                      key={page._id}
+                                      channelId={channelId}
+                                      pageId={page._id}
+                                      pageName={page.pageName}
+                                      type={page.type}
+                                      position={i}
+                                      label={page.label}
+                                    />
+                                  );
+                                })}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                        <button
+                          onClick={() => createPage(progressStatusType[index])}
+                        >
+                          + 새로 만들기
+                        </button>
+                      </section>
+                    );
+                  })}
+              </DragDropContext>
+            </main>
+          </div>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>
