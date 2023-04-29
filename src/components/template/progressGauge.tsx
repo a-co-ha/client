@@ -1,4 +1,4 @@
-import { useGetProgressPercent } from '@/hooks/queries/main/useGetProgressPercent';
+import { useGetProgressPercent } from '@/hooks/queries/template/useGetProgressPercent';
 import { Dealt, Progress, gaugeContainer } from './styles';
 
 export const ProgressGauge = ({ pageId = '' }) => {
