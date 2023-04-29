@@ -13,26 +13,23 @@ export interface PageProgress {
 export const Progress = () => {
   const { channelId } = useGetUrlInfo();
   const { data: pagePercentList } = useGetProgressPercentList();
-  console.log(
-    '🚀 ~ file: Progress.tsx:9 ~ Progress ~ pagePercentList:',
-    pagePercentList
-  );
 
   return (
     <div css={styles.contentBox}>
       <h3 css={styles.contentBoxTitle}>진행상황</h3>
       <main css={styles.content}>
-        {pagePercentList?.map((page: PageProgress) => (
-          <>
-            <PageNameLink
-              channelId={channelId}
-              pageId={page._id}
-              pageName={page.pageName}
-              type={'template-progress'}
-            />
-            <ProgressGauge pageId={page._id} />
-          </>
-        ))}
+        {pagePercentList &&
+          pagePercentList.map((page: PageProgress) => (
+            <>
+              <PageNameLink
+                channelId={channelId}
+                pageId={page._id}
+                pageName={page.pageName}
+                type={'template-progress'}
+              />
+              <ProgressGauge pageId={page._id} />
+            </>
+          ))}
       </main>
     </div>
   );

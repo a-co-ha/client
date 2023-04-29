@@ -9,9 +9,11 @@ export const useCreateTemplateInPage = () => {
     (progressStatus: string | null) =>
       postTemplateInPage(channelId, pageId, type, progressStatus),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['editablePage']);
-      },
+      onSuccess: () =>
+        Promise.all([
+          queryClient.invalidateQueries(['editablePage']),
+          queryClient.invalidateQueries(['getProgressPercent']),
+        ]),
     }
   );
 };

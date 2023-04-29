@@ -8,8 +8,10 @@ export const useDeletePageInTemplate = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation(() => deletePageInTemplate(channelId, pageId, type), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['editablePage']);
-    },
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries(['editablePage']),
+        queryClient.invalidateQueries(['getProgressPercent']),
+      ]),
   });
 };
