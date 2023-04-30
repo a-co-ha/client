@@ -16,7 +16,13 @@ export const useDeleteEditablePage = (
     {
       onSuccess: () => {
         if (channelId) {
-          queryClient.invalidateQueries([`channelPages`, channelId]);
+          Promise.all([
+            queryClient.invalidateQueries([`channelPages`, channelId]),
+            queryClient.invalidateQueries([
+              `getProgressPercentList`,
+              channelId,
+            ]),
+          ]);
         }
       },
     }

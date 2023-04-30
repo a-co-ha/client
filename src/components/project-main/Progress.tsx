@@ -13,10 +13,6 @@ export interface PageProgress {
 export const Progress = () => {
   const { channelId } = useGetUrlInfo();
   const { data: pagePercentList } = useGetProgressPercentList(channelId);
-  console.log(
-    '🚀 ~ file: Progress.tsx:16 ~ Progress progressGauge ~ pagePercentList:',
-    pagePercentList
-  );
 
   return (
     <div css={styles.contentBox}>
