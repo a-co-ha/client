@@ -12,7 +12,11 @@ export interface PageProgress {
 //FIXME: 페이지이름 수정 시 해당페이지 안 외에는 바뀌지 않음
 export const Progress = () => {
   const { channelId } = useGetUrlInfo();
-  const { data: pagePercentList } = useGetProgressPercentList();
+  const { data: pagePercentList } = useGetProgressPercentList(channelId);
+  console.log(
+    '🚀 ~ file: Progress.tsx:16 ~ Progress progressGauge ~ pagePercentList:',
+    pagePercentList
+  );
 
   return (
     <div css={styles.contentBox}>
@@ -20,16 +24,15 @@ export const Progress = () => {
       <main css={styles.content}>
         {pagePercentList &&
           pagePercentList.map((page: PageProgress) => (
-            <>
+            <div key={page._id}>
               <PageNameLink
-                key={page._id}
                 channelId={channelId}
                 pageId={page._id}
                 pageName={page.pageName}
                 type={'template-progress'}
               />
               <ProgressGauge pageId={page._id} />
-            </>
+            </div>
           ))}
       </main>
     </div>
