@@ -12,7 +12,6 @@ import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
 
 import { api } from '@/pages/api/config/api-config';
-import { deleteProject } from '@/pages/api/project/deleteProject';
 
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);

@@ -9,10 +9,10 @@ export const ProgressGauge = ({ pageId = '' }) => {
   );
   return (
     <div css={gaugeContainer}>
-      <p>{progressPercent?.percentage}</p>
-      <div css={progress}>
+      <div css={progress(progressPercent?.percentage)}>
         <div css={dealt(progressPercent?.percentage)} />
       </div>
+      <p>{progressPercent?.percentage}</p>
     </div>
   );
 };

@@ -1,15 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 import { useProjectDeleteVerificationForm } from '@/hooks/form/useProjectDeleteVerificationForm';
 import { useDeleteProject } from '@/hooks/queries/project/deleteProject';
 import { deleteModalState } from '@/recoil/project/atom';
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
-import { useRouter } from 'next/router';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
 import * as styles from './styles';
 import type { ProjectDeleteName } from './type';
 import type { ChannelList } from '@/pages/api/user/type';
-import type { RefCallBack } from 'react-hook-form';
 
 export const ProjectDeleteForm = ({
   channelId,

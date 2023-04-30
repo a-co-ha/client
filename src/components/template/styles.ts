@@ -28,16 +28,22 @@ export const progressInPage = css`
 
 export const gaugeContainer = css`
   align-self: flex-end;
+  display: flex;
 `;
 
-export const progress = css`
-  width: 5rem;
+export const progress = (dealt: number) => css`
+  width: 10rem;
   height: 1rem;
   background-color: white;
-  border: solid;
+  border: ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'};
+  box-shadow: 0 0 3px
+    ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'};
+  margin-right: 1rem;
+  border-radius: 1rem;
 `;
 export const dealt = (dealt: number) => css`
-  background-color: red;
   width: ${dealt + '%'};
   height: 100%;
+  border-radius: 1rem;
+  background-color: ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? 'yellow' : 'red'};
 `;
