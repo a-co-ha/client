@@ -22,6 +22,7 @@ export const Progress = () => {
           pagePercentList.map((page: PageProgress) => (
             <>
               <PageNameLink
+                key={page._id}
                 channelId={channelId}
                 pageId={page._id}
                 pageName={page.pageName}

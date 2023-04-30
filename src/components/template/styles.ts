@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 
 export const mainContainer = css`
   flex-basis: 0;
@@ -31,14 +30,14 @@ export const gaugeContainer = css`
   align-self: flex-end;
 `;
 
-export const Progress = styled.div`
+export const progress = css`
   width: 5rem;
   height: 1rem;
   background-color: white;
   border: solid;
 `;
-export const Dealt = styled.div<{ dealt: number }>`
+export const dealt = (dealt: number) => css`
   background-color: red;
-  width: ${(props) => props.dealt + '%'};
+  width: ${dealt + '%'};
   height: 100%;
 `;

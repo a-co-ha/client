@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.8",
     "@headlessui/react": "^1.7.7",
     "@next/font": "13.1.2",
     "@socket.io/component-emitter": "^4.0.0",
