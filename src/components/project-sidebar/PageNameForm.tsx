@@ -27,7 +27,7 @@ export const PageNameForm = ({
   const setPageNameShare = useSetRecoilState(pageNameShare(pageId));
   const putEditablePageName = usePutEditablePage(channelId, pageId, type);
   const putSocketPageName = usePutSocketPage(channelId, pageId);
-  const patchTemplatePageName = useUpadatePageName();
+  const patchTemplatePageName = useUpadatePageName(channelId, pageId, type);
 
   const methods = useForm<PageName>({
     defaultValues: { pageName },
@@ -43,7 +43,7 @@ export const PageNameForm = ({
   const onSubmit = async (data: PageName) => {
     try {
       if (type === 'socket') putSocketPageName.mutate(data.pageName);
-      else if (type === 'template-progress')
+      else if (type === 'template-progress' || type === 'template-normal')
         patchTemplatePageName.mutate(data.pageName);
       else putEditablePageName.mutate(data.pageName);
       toast.success('페이지 이름을 바꿨어요');

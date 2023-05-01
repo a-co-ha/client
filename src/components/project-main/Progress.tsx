@@ -9,7 +9,7 @@ export interface PageProgress {
   percentage: number;
   _id: string;
 }
-//FIXME: 페이지이름 수정 시 해당페이지 안 외에는 바뀌지 않음
+
 export const Progress = () => {
   const { channelId } = useGetUrlInfo();
   const { data: pagePercentList } = useGetProgressPercentList(channelId);
