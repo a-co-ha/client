@@ -16,11 +16,11 @@ export const Progress = () => {
 
   return (
     <div css={styles.contentBox}>
-      <h3 css={styles.contentBoxTitle}>진행상황</h3>
+      <h3 css={styles.contentBoxTitle}>진행현황</h3>
       <main css={styles.content}>
         {pagePercentList &&
           pagePercentList.map((page: PageProgress) => (
-            <div key={page._id}>
+            <div key={page._id} css={styles.guageContainer}>
               <PageNameLink
                 channelId={channelId}
                 pageId={page._id}

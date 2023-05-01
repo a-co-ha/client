@@ -30,9 +30,6 @@ export const EditableBlock = (props: editableBlock) => {
     },
   });
 
-  // console.log('state', state);
-  // console.log('props', props);
-
   const addPlaceholder = () => {
     if (contentEditable.current && contentEditable.current.parentElement) {
       const hasOnlyOneBlock =
@@ -47,7 +44,6 @@ export const EditableBlock = (props: editableBlock) => {
   };
 
   useEffect(() => {
-    console.log('블럭 유즈이펙트 첫실행');
     const hasPlaceholder = addPlaceholder();
     if (hasPlaceholder) {
       return;
@@ -181,13 +177,6 @@ export const EditableBlock = (props: editableBlock) => {
       const imageFile = e.target.files[0];
       const formData = new FormData();
       formData.append('image', imageFile);
-      for (const [key, value] of formData.entries()) {
-        console.log(
-          '🚀 ~ file: patchProjectImage.ts:18 ~ patchProjectImage ~ key, value:',
-          key,
-          value
-        );
-      }
       const filePath = await postImage(formData);
       createImageNode(contentEditable, filePath);
       setState({

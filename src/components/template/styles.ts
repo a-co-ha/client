@@ -36,10 +36,15 @@ export const progress = (dealt: number) => css`
   height: 1rem;
   background-color: white;
   border: ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'};
-  box-shadow: 0 0 3px
+  box-shadow: 0 0 2px
     ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'};
   margin-right: 1rem;
   border-radius: 1rem;
+  ${dealt === 100
+    ? `filter: drop-shadow(0 0 2px ${
+        dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'
+      })`
+    : ''}
 `;
 export const dealt = (dealt: number) => css`
   width: ${dealt + '%'};

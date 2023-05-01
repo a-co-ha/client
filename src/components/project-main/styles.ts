@@ -26,6 +26,11 @@ export const content = css`
   border-radius: 4px;
 `;
 
+export const guageContainer = css`
+&:hover {
+  background: rgb(241 245 249);
+`;
+
 export const main = css`
   display: flex;
 `;
