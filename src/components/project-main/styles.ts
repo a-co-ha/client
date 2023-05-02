@@ -26,7 +26,7 @@ export const content = css`
   border-radius: 4px;
 `;
 
-export const guageContainer = css`
+export const gaugeContainer = css`
 &:hover {
   background: rgb(241 245 249);
 `;

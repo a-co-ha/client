@@ -17,16 +17,23 @@ import useDidMountEffect from '@/hooks/useDidMountEffect';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
+  console.log(
+    '🚀 ~ file: index.tsx:20 ~ EditablePage ~ fetchedBlocks:',
+    fetchedBlocks
+  );
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
+  console.log('🚀 ~ file: index.tsx:22 ~ EditablePage ~ blocks:', blocks);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
 
   useEffect(() => {
+    console.log('useEffect실행');
     fetchedBlocks && setBlocks(fetchedBlocks);
   }, [router.query.pageId]);
 
   useDidMountEffect(() => {
+    console.log('useDidMountEffect실행');
     handlers.updatePageOnserver(blocks, pageId, channelId);
   }, [blocks]);
 

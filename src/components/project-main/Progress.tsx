@@ -20,7 +20,7 @@ export const Progress = () => {
       <main css={styles.content}>
         {pagePercentList &&
           pagePercentList.map((page: PageProgress) => (
-            <div key={page._id} css={styles.guageContainer}>
+            <div key={page._id} css={styles.gaugeContainer}>
               <PageNameLink
                 channelId={channelId}
                 pageId={page._id}

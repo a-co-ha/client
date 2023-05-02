@@ -12,11 +12,11 @@ import { createNode } from '@/utils/createNode';
 import { createImageNode } from '@/utils/createImageNode';
 import type { StateTypes } from './type';
 import type { editableBlock } from '../editable-page/type';
+import useDidMountEffect from '@/hooks/useDidMountEffect';
 
 export const EditableBlock = (props: editableBlock) => {
   const contentEditable = useRef<HTMLDivElement | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
-
   const [state, setState] = useState<StateTypes>({
     html: '',
     tag: 'p',
@@ -60,6 +60,7 @@ export const EditableBlock = (props: editableBlock) => {
       } else if (props.imgUrl) {
         createImageNode(contentEditable, props.imgUrl);
       }
+
       setState({
         ...state,
         html: props.html,
@@ -68,8 +69,7 @@ export const EditableBlock = (props: editableBlock) => {
       });
     }
   }, []);
-
-  useEffect(() => {
+  useDidMountEffect(() => {
     props.updateBlock({
       blockId: props.id,
       html: state.html,
@@ -79,7 +79,6 @@ export const EditableBlock = (props: editableBlock) => {
   }, [state.tag]);
 
   const handleFocus = () => {
-    console.log(state);
     if (state.placeholder) {
       if (contentEditable.current) contentEditable.current.innerText = '';
       setState({
@@ -105,12 +104,12 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
-      console.log('shift + enter');
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (e.nativeEvent.isComposing) {
         return;
       }
+
       props.addBlock({
         id: props.id,
         html: state.html,
@@ -140,6 +139,7 @@ export const EditableBlock = (props: editableBlock) => {
     if (e.key === 'Shift') state.previousKey = null;
     else if (e.key === CMD_KEY) {
       const { x, y } = getCaretCoordinates(true);
+
       setState({
         ...state,
         tagSelectorMenuPosition: { x: x, y: y },
@@ -179,6 +179,7 @@ export const EditableBlock = (props: editableBlock) => {
       formData.append('image', imageFile);
       const filePath = await postImage(formData);
       createImageNode(contentEditable, filePath);
+
       setState({
         ...state,
         imgUrl: filePath,
@@ -186,9 +187,7 @@ export const EditableBlock = (props: editableBlock) => {
         html: state.html.replace(/\/$/, ''),
         openTagSelectorMenu: false,
       });
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (
