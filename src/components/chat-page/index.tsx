@@ -21,7 +21,7 @@ import * as styles from './styles';
 
 export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const { socket } = useContext(SocketContext);
-  const { data: socketMessage } = useGetSocketPage(pageId);
+  // const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState(pageId));
   const [isDuplication, setIsDuplication] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -36,13 +36,19 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     });
   }, []);
 
+  // useEffect(() => {
+  //   if (socketMessage !== undefined) {
+  //     console.log(`socketMsg`, socketMessage.messages);
+  //     setMessages(socketMessage.messages);
+  //     console.log(`메세지스`, messages);
+  //   }
+  // }, [router.query.pageId, socketMessage]);
   useEffect(() => {
-    if (socketMessage !== undefined) {
-      console.log(`socketMsg`, socketMessage.messages);
-      setMessages(socketMessage.messages);
-      console.log(`메세지스`, messages);
-    }
-  }, [router.query.pageId, socketMessage]);
+    socket.emit(`READ_MESSAGE`, (data: SocketMessage[]) => {
+      console.log(`read`, data);
+      setMessages(data);
+    });
+  }, []);
 
   useEffect(() => {
     socket.on(`RECEIVE_MESSAGE`, (data) => {

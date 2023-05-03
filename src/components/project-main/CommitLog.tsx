@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import * as styles from './styles';
+import { useGetRepository } from '@/hooks/github/getHub';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
 export const CommitLog = () => {
+  const getRepository = useGetRepository();
+
   let [categories] = useState({
     Recent: [
       {
@@ -74,10 +77,9 @@ export const CommitLog = () => {
                     : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
                 )
               }
-            >
-              {category}
-            </Tab>
+            ></Tab>
           ))}
+          <button onClick={() => getRepository.mutate()}>getRepository</button>
         </Tab.List>
         <Tab.Panels className="mt-2">
           {Object.values(categories).map((posts, idx) => (

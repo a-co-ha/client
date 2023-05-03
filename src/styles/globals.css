@@ -14,7 +14,7 @@ body {
 }
 div#__next {
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 html,
 body,

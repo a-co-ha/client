@@ -9,8 +9,10 @@ const flexCenterNavBar = css`
 `;
 
 export const navBar = css`
+  position: relative;
   display: flex;
   width: 100%;
+  z-index: 1;
 `;
 
 export const profileBox = css`

@@ -44,6 +44,11 @@ export const ChatSendForm = ({
     chatMessage.style.height = `auto`;
     chatMessage.style.maxHeight = `${window.innerHeight / 2}px`;
     chatMessage.style.height = `${chatMessage.scrollHeight}px`;
+    if (value == '```js') {
+      chatMessage.style.color = `green`;
+    } else {
+      chatMessage.style.color = `black`;
+    }
     onChange(value);
     scrollToBottom();
   };

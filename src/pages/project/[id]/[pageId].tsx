@@ -57,10 +57,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         await queryClient.prefetchQuery([`editablePage`, pageId], () =>
           getEditablePage(channelId, pageId, type)
         );
-      } else if (type === `socket`) {
-        await queryClient.prefetchQuery([`socketPage`, pageId], () =>
-          getSocketPage(pageId)
-        );
+        // } else if (type === `socket`) {
+        //   await queryClient.prefetchQuery([`socketPage`, pageId], () =>
+        //     getSocketPage(pageId)
+        //   );
       }
     }
 
