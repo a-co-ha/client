@@ -223,7 +223,11 @@ export const EditableBlock = (props: editableBlock) => {
                 spellCheck={false}
                 ref={contentEditable}
                 key={props.id}
-                css={styles.block(snapshot.isDragging, snapshot.dropAnimation)}
+                css={styles.block(
+                  snapshot.isDragging,
+                  snapshot.dropAnimation,
+                  state.placeholder
+                )}
                 data-position={props.position}
                 data-tag={state.tag}
                 onInput={handleChange}
@@ -231,7 +235,6 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
-                style={{ opacity: state.placeholder ? '0.5' : '' }}
               />
               <input
                 type="file"

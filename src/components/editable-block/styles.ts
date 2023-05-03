@@ -21,7 +21,8 @@ export const dragHandle = css`
 `;
 export const block = (
   isDragging: boolean,
-  dropAnimating: DropAnimation | undefined | null
+  dropAnimating: DropAnimation | undefined | null,
+  hasPlaceholder: boolean
 ) => css`
   display: inline-block;
   width: calc(100% - 1.2rem);
@@ -31,4 +32,5 @@ export const block = (
   outline: ${dropAnimating ? '2px solid limegreen' : null};
   -webkit-user-select: text;
   user-select: text;
+  opacity: ${hasPlaceholder ? '0.5' : ''};
 `;

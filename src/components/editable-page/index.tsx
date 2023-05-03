@@ -22,12 +22,12 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     fetchedBlocks
   );
   // return <Notice status="ERROR" />;
-  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [blocks, setBlocks] = useState<Block[]>(fetchedBlocks);
   console.log('🚀 ~ file: index.tsx:22 ~ EditablePage ~ blocks:', blocks);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     console.log('useEffect실행');
     fetchedBlocks && setBlocks(fetchedBlocks);
   }, [router.query.pageId]);
