@@ -1,11 +1,14 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState, useContext } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { ChannelUser } from '@/pages/api/user/type';
 import { useGetLabels } from '@/hooks/queries/editable/getLabels';
 import { useRouter } from 'next/router';
+import { SocketContext } from '../chat-page/SocketContextProvider';
 import { updateLabel } from '@/pages/api/editable/updateLabel';
+import { useRecoilValue } from 'recoil';
+import { channelListState } from '@/recoil/project/atom';
 
 export default function Label() {
   const selectedUsers = useGetLabels();
@@ -14,6 +17,11 @@ export default function Label() {
   const { data } = useGetUsers();
   const router = useRouter();
   const { id: channelId, pageId } = router.query;
+  console.log('🚀 ~ file: Label.tsx:18 ~ Label ~  router.query:', router.query);
+  // const { socket } = useContext(SocketContext);
+  // const channelList = useRecoilValue(channelListState);
+  // console.log('🚀 ~ file: Label.tsx:23 ~ Label ~ channelList:', channelList);
+
   const users = useMemo(() => {
     return data?.map((x: ChannelUser) => x.name);
   }, [data]);
@@ -34,6 +42,16 @@ export default function Label() {
 
   const afterLeaveHandler = () => {
     updateLabel(channelId, pageId, selected);
+    console.log(
+      '🚀 ~ file: Label.tsx:42 ~ afterLeaveHandler ~ selected:',
+      selected
+    );
+    // socket.emit('SET_ALERT', {
+    //   channelName,
+    //   pageName,
+    //   targetUserId,
+    //   targetUserName,
+    // });
     setQuery('');
   };
 

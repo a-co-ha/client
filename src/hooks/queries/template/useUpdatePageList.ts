@@ -8,9 +8,11 @@ export const useUpadatePageList = () => {
   return useMutation(
     (pages: any[]) => patchPageList(channelId, pageId, type, pages),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['editablePage', pageId]);
-      },
+      onSuccess: () =>
+        Promise.all([
+          queryClient.invalidateQueries(['editablePage', pageId]),
+          queryClient.invalidateQueries(['getProgressPercent', pageId]),
+        ]),
     }
   );
 };
