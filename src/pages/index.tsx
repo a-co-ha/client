@@ -7,7 +7,7 @@ import {
   useRef,
 } from 'react';
 import { throttle } from 'lodash';
-import * as styles from './styles';
+import * as styles from '../styles/styles';
 // import { Error } from './error';
 
 const IndexPage = () => {

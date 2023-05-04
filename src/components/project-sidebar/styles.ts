@@ -97,6 +97,7 @@ export const projectThumbnailHoverModal = css`
   left: 125%;
   min-width: 50px;
   padding: 0.5rem;
+  z-index: 2;
   text-align: center;
   color: white;
   background: black;
