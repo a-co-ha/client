@@ -5,11 +5,13 @@ export const ProgressGauge = ({ pageId = '' }) => {
   const { data: progressPercent } = useGetProgressPercent(pageId);
 
   return (
-    <div css={gaugeContainer}>
-      <div css={progress(progressPercent?.percentage)}>
-        <div css={dealt(progressPercent?.percentage)} />
+    progressPercent && (
+      <div css={gaugeContainer}>
+        <div css={progress(progressPercent?.percentage)}>
+          <div css={dealt(progressPercent?.percentage)} />
+        </div>
+        <p>{progressPercent?.percentage}</p>
       </div>
-      <p>{progressPercent?.percentage}</p>
-    </div>
+    )
   );
 };
