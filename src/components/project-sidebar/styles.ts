@@ -25,7 +25,6 @@ export const list = css`
   padding-top: 1rem;
   box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 8px -4px rgb(0 0 0 / 0.2);
-  z-index: 1;
 `;
 
 export const channel = (isOpen: boolean) => css`

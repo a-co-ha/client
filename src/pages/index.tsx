@@ -36,17 +36,19 @@ const IndexPage = () => {
     []
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLayout();
+    scrollLoop();
+    console.log('12');
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.addEventListener(`scroll`, throttledScroll);
     // console.log(`scroll`);
     return () => {
       window.addEventListener(`scroll`, throttledScroll);
     };
-  }, [messageA, throttledScroll]);
+  }, [throttledScroll]);
 
   const sceneInfo = [
     {
@@ -76,8 +78,8 @@ const IndexPage = () => {
         messageC_translateY_out: [20, 0, { start: 0.4, end: 0.6 }],
         messageD_translateY_out: [20, 0, { start: 0.4, end: 0.6 }],
         messageB_opacity_in: [0, 1, { start: 0.15, end: 0.3 }],
-        messageB_opacity_out: [1, 0, { start: 0.4, end: 0.6 }],
         messageD_opacity_in: [0, 1, { start: 0.15, end: 0.3 }],
+        messageB_opacity_out: [1, 0, { start: 0.4, end: 0.6 }],
         messageD_opacity_out: [1, 0, { start: 0.4, end: 0.6 }],
       },
     },

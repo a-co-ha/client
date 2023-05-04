@@ -2,9 +2,9 @@ import { useRecoilState } from 'recoil';
 import { channelUserModalState } from '@/recoil/user/atom';
 import * as styles from './styles';
 
-export const UserModal = () => {
+export const UserModal = ({ userId }: { userId: number }) => {
   const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
-    channelUserModalState
+    channelUserModalState(userId)
   );
 
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {

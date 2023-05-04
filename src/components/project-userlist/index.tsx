@@ -16,7 +16,7 @@ export const UserList = () => {
   const [onUser, setOnUser] = useRecoilState(onUserState);
   const [channelUsers, setChannelUsers] = useRecoilState(channelUserState);
   const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
-    channelUserModalState
+    channelUserModalState(1)
   );
   const { socket } = useContext(SocketContext);
   useEffect(() => {
@@ -60,7 +60,7 @@ export const UserList = () => {
             const isAdmin = member.admin;
             return (
               <div key={i} css={styles.user} onClick={onClickHandler}>
-                <UserModal />
+                <UserModal userId={member.userId} />
                 <span css={styles.isUserOnline(isOnUser, isAdmin)}></span>
                 <span css={styles.userName}>{member.name}</span>
                 <span css={styles.adminCrown(isAdmin)}>

@@ -44,8 +44,11 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   //   }
   // }, [router.query.pageId, socketMessage]);
   useEffect(() => {
-    socket.emit(`READ_MESSAGE`, (data: SocketMessage[]) => {
-      console.log(`read`, data);
+    socket.emit(`READ_MESSAGE`, {
+      roomId: pageId,
+    });
+    socket.on(`READ_MESSAGE`, (data: SocketMessage[]) => {
+      console.log(`리드`, data);
       setMessages(data);
     });
   }, []);

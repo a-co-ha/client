@@ -57,7 +57,7 @@ export const userModalBackground = (isOpen: boolean) => css`
 `;
 
 export const userModalTransition = (isOpen: boolean) => css`
-  position: absolute;
+  position: relative;
   & > * {
     display: ${isOpen ? `block` : `none`};
   }
@@ -65,15 +65,14 @@ export const userModalTransition = (isOpen: boolean) => css`
   left: 0;
   z-index: 12;
   transform: translate3d(-105%, 0, 0) scale(${isOpen ? `1` : `0.5`});
-  transftransform: translate3d(-110%, 0, 0) scale(${isOpen ? `1` : `0.5`});
-  orm-origin: right;
+  transform-origin: right;
   transform-duration: ${isOpen ? `0.1s` : `0.25s`};
   opacity: ${isOpen ? `1` : `0.5`};
   transition: 0.1s ease-out;
 `;
 
 export const userModalBox = css`
-  position: relative;
+  position: absolute;
   width: 200px;
   max-width: 16rem;
   padding: 0.5rem;

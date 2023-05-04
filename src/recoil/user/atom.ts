@@ -55,7 +55,7 @@ export const channelUserState = atom({
   default: [],
 });
 
-export const channelUserModalState = atom({
+export const channelUserModalState = atomFamily({
   key: `channelUserModalState/${nanoId()}`,
   default: false,
 });
