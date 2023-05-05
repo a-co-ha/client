@@ -131,7 +131,7 @@ export const TemplatePage = ({
             <main css={styles.progressContainer}>
               <DragDropContext onDragEnd={onDragEndHandler}>
                 {pageList &&
-                  pageArr &&
+                  pageArr.length === 3 &&
                   pageArr.map((el: PageInPageList[], index) => {
                     return (
                       <section css={styles.progressSection} key={index}>
