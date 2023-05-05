@@ -23,6 +23,7 @@ export const list = css`
   min-width: 70px;
   height: calc(100vh - 50px);
   padding-top: 1rem;
+  z-index: 1;
   box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;

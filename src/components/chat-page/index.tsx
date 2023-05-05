@@ -23,7 +23,6 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const { socket } = useContext(SocketContext);
   // const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState(pageId));
-  const [isDuplication, setIsDuplication] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -47,23 +46,19 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     socket.emit(`READ_MESSAGE`, {
       roomId: pageId,
     });
+    console.log('보냄');
+  }, [router.query.pageId]);
+  useEffect(() => {
     socket.on(`READ_MESSAGE`, (data: SocketMessage[]) => {
       console.log(`리드`, data);
       setMessages(data);
     });
   }, []);
-
   useEffect(() => {
     socket.on(`RECEIVE_MESSAGE`, (data) => {
-      if (isDuplication === data.id) {
-        console.log(`리턴`);
-        return;
-      } else {
-        setIsDuplication(data.id);
-        console.log(`받습니다`);
-        addMessage(data.message);
-        console.log(`여기다`, messages);
-      }
+      console.log(`받습니다`);
+      addMessage(data.message);
+      console.log(`여기다`, messages);
     });
   }, []);
 

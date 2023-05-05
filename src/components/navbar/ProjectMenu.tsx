@@ -36,7 +36,7 @@ export const ProjectMenu = () => {
       <ProjectDeleteForm channelId={channelId} channelList={channelList} />
       <div
         onClick={onClickHandler}
-        className="relative inline-block text-left w-[200px] z-10"
+        className="relative inline-block text-left w-[200px]"
       >
         <div css={styles.modalBackground(isOpen)}></div>
         <div className="group inline-flex w-full justify-center cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">

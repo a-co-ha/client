@@ -7,7 +7,7 @@ import {
 } from '@/recoil/socket/atom';
 import { ChatBookmarkModal } from './ChatBookmarkModal';
 import { ChatBookmarkForm } from './ChatBookmarkForm';
-import { useEffect, useCallback, useContext } from 'react';
+import { useEffect, useCallback, useContext, useLayoutEffect } from 'react';
 import { useGetBookmarks } from '@/hooks/queries/socket/getBookmarks';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import * as styles from './styles';
