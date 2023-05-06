@@ -4,31 +4,28 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { ChannelUser } from '@/pages/api/user/type';
 import { useGetLabels } from '@/hooks/queries/editable/getLabels';
-import { useRouter } from 'next/router';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { updateLabel } from '@/pages/api/editable/updateLabel';
-import { useRecoilValue } from 'recoil';
-import { channelListState } from '@/recoil/project/atom';
+import { usePreviousState } from '@/hooks/usePrevious';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
+import useDidMountEffect from '@/hooks/useDidMountEffect';
 
 export default function Label() {
-  const selectedUsers = useGetLabels();
-  const [selected, setSelected] = useState<string[]>([]);
+  const { channelId, pageId } = useGetUrlInfo();
+  const { data } = useGetLabels(pageId);
+  const selectedUsers = data?.map((item) => item.content);
   const [query, setQuery] = useState('');
-  const { data } = useGetUsers();
-  const router = useRouter();
-  const { id: channelId, pageId } = router.query;
-  console.log('🚀 ~ file: Label.tsx:18 ~ Label ~  router.query:', router.query);
+  const { data: usersInChannel } = useGetUsers();
+  const users = usersInChannel?.map((x: ChannelUser) => x.name);
+  const [selected, setSelected] = useState<any[]>([]);
+  console.log('🚀 ~ file: Label.tsx:20 ~ Label ~ selected:', selected);
   // const { socket } = useContext(SocketContext);
-  // const channelList = useRecoilValue(channelListState);
-  // console.log('🚀 ~ file: Label.tsx:23 ~ Label ~ channelList:', channelList);
-
-  const users = useMemo(() => {
-    return data?.map((x: ChannelUser) => x.name);
-  }, [data]);
+  // const preSelected = usePreviousState(selected);
+  // console.log('🚀 ~ file: Label.tsx:22 ~ Label ~ preSelected:', preSelected);
 
   useEffect(() => {
     setSelected(selectedUsers ?? []);
-  }, [pageId]);
+  }, [data]);
 
   const filteredPeople =
     query === ''
@@ -46,12 +43,22 @@ export default function Label() {
       '🚀 ~ file: Label.tsx:42 ~ afterLeaveHandler ~ selected:',
       selected
     );
-    // socket.emit('SET_ALERT', {
-    //   channelName,
-    //   pageName,
-    //   targetUserId,
-    //   targetUserName,
+
+    // const newSelected = selected.filter((user) => !preSelected?.includes(user));
+    // newSelected.forEach((name) => {
+    //   const userId = data.filter((user: any) => user.name === name)[0].userId;
+    //   console.log(
+    //     '🚀 ~ file: Label.tsx:47 ~ selected.forEach ~ userId:',
+    //     userId
+    //   );
+    //   socket.emit('SET_ALERT', {
+    //     channelId,
+    //     pageId,
+    //     targetUserId: userId,
+    //     targetUserName: name,
+    //   });
     // });
+
     setQuery('');
   };
 

@@ -8,9 +8,9 @@ interface label {
   _id: string;
 }
 
-export const useGetLabels = () => {
-  const {  channelId, pageId, type } = useGetUrlInfo();
+export const useGetLabels = (pageId: string | string[] | undefined) => {
+  const { channelId, type } = useGetUrlInfo();
   return useQuery<label[], AxiosError>([`labels`, pageId], () =>
     getLabels(channelId, pageId, type)
-  ).data?.map((item) => item.content);
+  );
 };

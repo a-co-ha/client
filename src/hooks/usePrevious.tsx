@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react';
-import { Block } from '@/components/editable-page/type';
+import { useState, useRef, useEffect } from 'react';
 
-export const usePrevious = (value: Block[]) => {
-  const ref = useRef<null | Block[]>(null);
+export function usePreviousState<T>(value: T): T | undefined {
+  const ref = useRef<T>();
+  const [previousState, setPreviousState] = useState<T>();
+
   useEffect(() => {
     ref.current = value;
-  });
-  return ref.current;
-};
+    setPreviousState(ref.current);
+  }, [value]);
+
+  return previousState;
+}
