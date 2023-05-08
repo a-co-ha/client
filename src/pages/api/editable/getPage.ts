@@ -13,7 +13,6 @@ export const getEditablePage = async (
     if (!res.data.blocks) return res.data.pages;
     const blocks = res.data.blocks;
     const newblocks = blocks.map(({ _id, ...keepAttrs }: any) => keepAttrs);
-    console.log('제거한 ', newblocks);
     return newblocks;
   } catch (err) {
     console.error(err);

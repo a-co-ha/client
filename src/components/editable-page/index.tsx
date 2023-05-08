@@ -22,18 +22,24 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     fetchedBlocks
   );
   // return <Notice status="ERROR" />;
-  const [blocks, setBlocks] = useState<Block[]>(fetchedBlocks);
+  const [blocks, setBlocks] = useState<Block[]>([]);
   console.log('🚀 ~ file: index.tsx:22 ~ EditablePage ~ blocks:', blocks);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
-
-  useDidMountEffect(() => {
-    console.log('useEffect실행');
+  // 여기까지 돌아오기
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: index.tsx:34 ~ useEffect ~ fetchedBlocks:',
+      fetchedBlocks
+    );
     fetchedBlocks && setBlocks(fetchedBlocks);
-  }, [router.query.pageId]);
+  }, [router.query.pageId, fetchedBlocks]);
 
   useDidMountEffect(() => {
-    console.log('useDidMountEffect실행');
+    console.log(
+      '🚀 ~ file: index.tsx:36 ~ useDidMountEffect ~ blocks:',
+      blocks
+    );
     handlers.updatePageOnserver(blocks, pageId, channelId);
   }, [blocks]);
 
@@ -58,7 +64,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     updatedBlocks && setBlocks(updatedBlocks);
   };
   const isNewPage = router.query.initial === 'true';
-
+  console.log('EditablePage 랜더링');
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
