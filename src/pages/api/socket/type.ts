@@ -21,6 +21,11 @@ export interface SocketMessage {
   createdAt: string;
 }
 
+export interface ChatBookmarkList {
+  _id: string;
+  bookmarkList: ChatBookmark[];
+}
+
 export interface ChatBookmark {
   _id: string;
   channelId: number;

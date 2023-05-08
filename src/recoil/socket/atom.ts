@@ -1,7 +1,7 @@
 import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import type { SocketMessage } from '@/pages/api/socket/type';
-import type { ChatBookmark } from '@/pages/api/socket/type';
+import type { ChatBookmark, SocketMessage } from '@/pages/api/socket/type';
+import type { ChatBookmarkList } from '@/pages/api/socket/type';
 import type { ChatBookmarkFormType } from '@/components/chat-bookmark/type';
 
 export const onUserState = atom({

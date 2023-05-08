@@ -19,17 +19,16 @@ export const ChatBookmark = ({
   channelId: string;
   pageId: string;
 }) => {
-  const { data: chatBookmarkList } = useGetBookmarks(pageId);
+  const { data: chatBookmarkList, refetch } = useGetBookmarks(pageId);
+  const [chatBookmark, setChatBookmark] = useRecoilState(chatBookmarkState);
   const setChatBookmarkModal = useSetRecoilState(chatBookmarkModalState);
   const setChatBookmarkFormData = useSetRecoilState(chatBookmarkFormDataState);
   const setChatBookmarkFormModal = useSetRecoilState(
     chatBookmarkFormModalState
   );
-  const [chatBookmark, setChatBookmark] = useRecoilState(chatBookmarkState);
   const { socket } = useContext(SocketContext);
 
   const addBookmark = useCallback((bookmark: any) => {
-    console.log(`addBookmark`, bookmark);
     setChatBookmark((prev) => {
       const newBookmark = prev.concat([bookmark]);
       console.log(`newBook`, newBookmark);
@@ -38,7 +37,7 @@ export const ChatBookmark = ({
   }, []);
   useEffect(() => {
     if (chatBookmarkList !== undefined) {
-      setChatBookmark(chatBookmarkList);
+      setChatBookmark(chatBookmarkList.bookmarkList);
       console.log(chatBookmarkList);
     }
   }, [chatBookmarkList]);
@@ -47,6 +46,7 @@ export const ChatBookmark = ({
     socket.on(`NEW_BOOKMARK`, (data) => {
       console.log(`받습니다`);
       addBookmark(data);
+      refetch();
       console.log(`여기다`, data);
     });
   }, []);
@@ -71,24 +71,23 @@ export const ChatBookmark = ({
         +
       </button>
       <div css={styles.chatBookmarkItemBox}>
-        {chatBookmark &&
-          chatBookmark.map((bookmark, i) => {
-            return (
-              <div
-                key={i}
-                css={styles.chatBookmarkItem}
-                onClick={(e) =>
-                  onClickHandler(
-                    bookmark._id,
-                    bookmark.bookmarkName,
-                    bookmark.content
-                  )
-                }
-              >
-                {bookmark.bookmarkName}
-              </div>
-            );
-          })}
+        {chatBookmark.map((bookmark, i) => {
+          return (
+            <div
+              key={i}
+              css={styles.chatBookmarkItem}
+              onClick={(e) =>
+                onClickHandler(
+                  bookmark._id,
+                  bookmark.bookmarkName,
+                  bookmark.content
+                )
+              }
+            >
+              {bookmark.bookmarkName}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

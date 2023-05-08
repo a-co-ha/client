@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import * as styles from './styles';
-import { useGetRepository } from '@/hooks/github/getHub';
+import { useGetOrg } from '@/hooks/github/getHubOrg';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
+import { CommitLogForm } from './CommitLogForm';
+import { commitLogModalFormState } from '@/recoil/github/atom';
+
+import { useRecoilState } from 'recoil';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
 export const CommitLog = () => {
-  const getRepository = useGetRepository();
+  const { channelId } = useGetUrlInfo();
+  // const getRepository = useGetOrg(channelId);
+
+  const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
+    commitLogModalFormState
+  );
 
   let [categories] = useState({
     Recent: [
@@ -63,6 +73,7 @@ export const CommitLog = () => {
 
   return (
     <div css={styles.contentBox} className="w-full max-w-md px-2 py-16 sm:px-0">
+      <CommitLogForm channelId={channelId} />
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
           {Object.keys(categories).map((category) => (
@@ -77,9 +88,11 @@ export const CommitLog = () => {
                     : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
                 )
               }
-            ></Tab>
+            >
+              {category}
+            </Tab>
           ))}
-          <button onClick={() => getRepository.mutate()}>getRepository</button>
+          {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
         </Tab.List>
         <Tab.Panels className="mt-2">
           {Object.values(categories).map((posts, idx) => (
@@ -109,6 +122,7 @@ export const CommitLog = () => {
                     </ul>
 
                     <a
+                      onClick={() => setIsCommitLogFormModal(true)}
                       href="#"
                       className={classNames(
                         'absolute inset-0 rounded-md',

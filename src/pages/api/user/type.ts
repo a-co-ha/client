@@ -24,6 +24,7 @@ export interface ChannelList {
   userId: number;
   channelName: string;
   channelImg: string;
+  orgGithubName: string;
 }
 
 export interface ChannelUser {

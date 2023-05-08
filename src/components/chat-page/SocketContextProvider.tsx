@@ -23,7 +23,6 @@ export const SocketContextProvider = ({
   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
     auth: {
       sessionID: sessionId,
-      userID: userId,
     },
     withCredentials: true,
   });

@@ -17,6 +17,7 @@ export const userDataState = atom<User>({
         userId: 0,
         channelName: '',
         channelImg: '',
+        orgGithubName: '',
       },
     ],
   },

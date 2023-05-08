@@ -15,8 +15,8 @@ export const useDeleteBookmark = (
     [`deleteBookmark`, pageId],
     () => deleteBookmark(channelId, bookmarkId),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries([`getChatBookmarks`, pageId]);
+      onSuccess: async () => {
+        await queryClient.invalidateQueries([`getChatBookmarks`, pageId]);
       },
     }
   );

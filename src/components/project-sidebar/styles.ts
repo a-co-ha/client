@@ -23,7 +23,7 @@ export const list = css`
   min-width: 70px;
   height: calc(100vh - 50px);
   padding-top: 1rem;
-  z-index: 1;
+  z-index: 2;
   box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
@@ -34,6 +34,7 @@ export const channel = (isOpen: boolean) => css`
   width: 260px;
   height: calc(100vh - 50px);
   margin: 0 0.3rem 0.3rem 0;
+  z-index: 1;
   transform: translate3d(${isOpen ? `0, 0, 0` : `-100%,0,0`});
   transition: 0.5s;
   transition-delay: ${isOpen ? `0s` : `0.5s`};
@@ -54,6 +55,7 @@ export const channelSidbarMoreBtn = (isOpen: boolean) => css`
   left: ${isOpen ? `calc(100% - 10px)` : `100%`};
   width: ${isOpen ? `20px` : `40px`};
   height: ${isOpen ? `60px` : `40px`};
+  z-index: 2;
   transform: translate3d(-50%, -50%, 0) ${isOpen ? null : `rotate(180deg)`};
   transition: 0.5s;
   background: ${isOpen ? `transparent` : `white`};

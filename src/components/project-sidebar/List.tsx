@@ -40,6 +40,7 @@ export const List = () => {
             userId: e.userId,
             channelName: e.channelName,
             channelImg: e.channelImg,
+            orgGithubName: e.orgGithubName,
           });
         });
         setChannelList(channels);
@@ -97,7 +98,7 @@ export const List = () => {
         css={styles.projectCreatePlusBtn}
       >
         +
-        <HoverModal content={`채널 생성하기`} />
+        <HoverModal content={`프로젝트 생성하기`} />
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
