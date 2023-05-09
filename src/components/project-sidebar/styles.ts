@@ -103,7 +103,7 @@ export const projectThumbnailHoverModal = css`
   z-index: 2;
   text-align: center;
   color: white;
-  background: black;
+  background: gray;
   border-radius: 0.375rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -113,12 +113,12 @@ export const projectThumbnailHoverModal = css`
 
 export const projectThumbnailModalLeftArrow = css`
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 0;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   transform: translate3d(-50%, -50%, 0) rotate(45deg);
-  background: black;
+  background: gray;
 `;
 
 export const projectCreatePlusBtn = css`

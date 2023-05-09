@@ -6,15 +6,15 @@ import {
   isBookmarkEditingState,
   chatBookmarkEditContentShare,
 } from '@/recoil/socket/atom';
-import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
+import { HelpModal } from '@/hooks/useHelpModal';
 import { useDeleteBookmark } from '@/hooks/queries/socket/deleteBookmark';
 import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
-import * as styles from './styles';
 import ReactMarkdown from 'react-markdown';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import remarkGfm from 'remark-gfm';
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import * as styles from './styles';
+import bookmark from '@/images/helpImg/bookmark.png';
 
 export const ChatBookmarkModal = ({
   channelId,
@@ -83,6 +83,12 @@ export const ChatBookmarkModal = ({
                 <h2 css={styles.chatBookmarkModalTitle}>
                   {ChatBookmarkEditContentShare.chatBookmarkTitle}
                 </h2>
+                <HelpModal
+                  content={
+                    '수정과 삭제 그리고 간편하게 내용을 복사할 수 있답니다. 또한 코드도 쉽게 전달해 보세요!'
+                  }
+                  image={bookmark.src}
+                />
                 <button
                   css={styles.chatBookmarkModalEditBtn(isBookmarkEditing)}
                   onClick={bookmarkEditHandler}

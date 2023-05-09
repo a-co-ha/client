@@ -192,9 +192,11 @@ export const helpModalContent = css`
   display: none;
   position: absolute;
   left: 0;
+  min-width: 200px;
   padding: 1rem;
   margin: 0.5rem 0 0 0;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
   background: white;
   border-radius: 0.375rem;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),

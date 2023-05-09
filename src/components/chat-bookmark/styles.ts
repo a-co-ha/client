@@ -93,6 +93,7 @@ export const chatBookmarkModalBox = css`
 
 export const chatBookmarkModalTitleBox = css`
   display: flex;
+  align-items: center;
   margin-bottom: 1rem;
 `;
 
@@ -102,12 +103,11 @@ export const chatBookmarkModalTitle = css`
 
 export const chatBookmarkModalEditBtn = (isEditing: boolean) => css`
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin-inline: 0.5rem;
   border-radius: 0.375rem;
-  // cursor: pointer;
   background: #eee;
   &:hover {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -135,14 +135,15 @@ export const chatBookmarkModalContent = css`
     border: 5px solid transparent;
     background-color: #efefef;
     border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
   & code {
     font-size: 0.8rem;
-    // font-family: Apple SD Gothic Neo;
-    // line-height: 1.2rem;
   }
   & code span {
     min-width: 0 !important;
