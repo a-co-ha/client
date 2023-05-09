@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { chatBookmarkModalContent } from '../chat-bookmark/styles';
 
 export const flexColumnCenter = css`
   display: flex;
@@ -150,9 +151,18 @@ export const commitLogFormBtn = css`
   }
 `;
 
-export const orgItemBox = css`
+export const ItemBox = css`
+  ${chatBookmarkModalContent}
   display: flex;
+  flex-direction: column;
   margin-top: 1rem;
+  max-height: 45.5vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
+export const ItemBoxPadding = css`
+  padding-right: 0.5rem;
 `;
 
 export const orgItem = css`
@@ -161,18 +171,40 @@ export const orgItem = css`
   align-items: center;
   width: 100%;
   padding: 0.5rem;
+  margin: 0.1rem;
   border-radius: 0.375rem;
   &:hover {
     outline: 0.1px solid gray;
   }
   &:focus {
     background: #ffd6dc;
+    outline: none;
   }
-  transition: 0.3s;
+  transition: 0.2s;
 `;
 
 export const orgName = css`
+  font-size: 1.5rem;
   margin-left: 0.5rem;
+`;
+
+export const orgDesc = css`
+  font-size: 1rem;
+  margin-left: 0.5rem;
+`;
+
+export const commitLogSubmitBtn = (isFocus: boolean) => css`
+  width: 100%;
+  padding: 1rem 0;
+  color: ${isFocus ? `white` : `#ddd`};
+  font-weight: 600;
+  background: ${isFocus ? `rgba(248, 93, 117, 0.9)` : `white`};
+  border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),
+    0 4px 6px -4px rgb(0 0 0 / 0.2);
+  &:hover {
+    background: ${isFocus ? `rgba(248, 93, 117, 1)` : `white`};
+  }
 `;
 
 export const errorMessage = css`
@@ -183,6 +215,7 @@ export const errorMessage = css`
 `;
 
 export const helpModal = css`
+  display: inline-block;
   position: relative;
   &:hover div {
     display: block;
@@ -202,4 +235,5 @@ export const helpModalContent = css`
   border-radius: 0.375rem;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 6px -4px rgb(0 0 0 / 0.2);
+  white-space: pre-wrap;
 `;

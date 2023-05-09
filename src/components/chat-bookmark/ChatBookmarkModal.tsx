@@ -84,9 +84,7 @@ export const ChatBookmarkModal = ({
                   {ChatBookmarkEditContentShare.chatBookmarkTitle}
                 </h2>
                 <HelpModal
-                  content={
-                    '수정과 삭제 그리고 간편하게 내용을 복사할 수 있답니다. 또한 코드도 쉽게 전달해 보세요!'
-                  }
+                  content={`수정과 삭제, copy 버튼으로 간편하게 내용을 복사할 수 있답니다. \n내 코드를 공유하고 싶으시다구요? 물론 가능합니다!`}
                   image={bookmark.src}
                 />
                 <button

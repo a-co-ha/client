@@ -123,10 +123,8 @@ export const chatBookmarkModalDeleteBtn = css`
 `;
 
 export const chatBookmarkModalContent = css`
-  white-space: pre-wrap;
-  max-height: 63.5vh;
   width: 100%;
-  overflow: auto;
+  max-height: 63.5vh;
   &::-webkit-scrollbar {
     width: 15px;
   }
@@ -148,6 +146,8 @@ export const chatBookmarkModalContent = css`
   & code span {
     min-width: 0 !important;
   }
+  overflow: auto;
+  white-space: pre-wrap;
 `;
 
 export const chatBookmarkCopyBtn = (isCopied: boolean) => css`

@@ -6,8 +6,9 @@ import { channelNameState } from '@/recoil/project/atom';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
-import type { GetServerSideProps } from 'next';
 import { oauthLogin } from '@/pages/api/user/oauthLogin';
+import { Loading } from '@/components/loading/Loading';
+import type { GetServerSideProps } from 'next';
 
 export default function Callback({
   accessToken,
@@ -44,7 +45,7 @@ export default function Callback({
 
   return (
     <div>
-      <div>oauth 로그인중</div>
+      <Loading />
     </div>
   );
 }

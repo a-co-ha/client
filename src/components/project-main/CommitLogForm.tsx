@@ -4,6 +4,7 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { faArrowTurnUp } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { commitLogModalFormState } from '@/recoil/github/atom';
 import {
@@ -28,7 +29,9 @@ export const CommitLogForm = ({
   const getOrg = useGetOrg();
   const getRepo = useGetRepo();
   const [selected, setSelected] = useState('organization');
+  const [isFocus, setIsFocus] = useState(false);
   const orgSearchResponse = useRecoilValue(commitLogModalOrgSearchState);
+  const repoSearchResponse = useRecoilValue(commitLogModalRepoSearchState);
   const resetOrgResponse = useResetRecoilState(commitLogModalOrgSearchState);
   const resetRepoResponse = useResetRecoilState(commitLogModalRepoSearchState);
   const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
@@ -71,20 +74,26 @@ export const CommitLogForm = ({
     }
   };
 
-  const onKeyDownContentHandler = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (e.nativeEvent.isComposing) return;
-    // e.preventDefault();
-    // if (e.key === 'Enter' && e.shiftKey) {
-    //   return;
-    // }
+  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const button = e.target as HTMLButtonElement;
+    if (button.nextElementSibling && e.key === 'ArrowDown') {
+      (button.nextElementSibling as HTMLButtonElement).focus();
+    } else if (!button.nextElementSibling && e.key === 'ArrowDown') {
+      (button.parentElement?.firstElementChild as HTMLButtonElement).focus();
+    }
+    if (button.previousElementSibling && e.key === 'ArrowUp') {
+      (button.previousElementSibling as HTMLButtonElement).focus();
+    } else if (!button.previousElementSibling && e.key === 'ArrowUp') {
+      (button.parentElement?.lastElementChild as HTMLButtonElement).focus();
+    }
   };
 
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsCommitLogFormModal(false);
     resetOrgResponse();
     resetRepoResponse();
+    setSelected('organization');
     methods.reset();
   };
   console.log(`selected`, selected);
@@ -97,7 +106,7 @@ export const CommitLogForm = ({
       <div css={styles.commitLogModalTransition(isCommitLogFormModal)}>
         <div css={styles.commitLogModalFormBox}>
           <HelpModal
-            content={`내가 속한 organization 또는, 내가 만든 repository를 검색하고 우리의 프로젝트에 연결해 보세요!`}
+            content={`내가 속한 organization 또는\n내가 만든 repository를 검색하고 우리의 프로젝트에 연결해 보세요!`}
           />
           <div>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -143,7 +152,7 @@ export const CommitLogForm = ({
                     type="submit"
                   >
                     <FontAwesomeIcon
-                      icon={faPaperPlane}
+                      icon={faMagnifyingGlass}
                       style={{ color: '#f85d75' }}
                     />
                   </button>
@@ -151,14 +160,17 @@ export const CommitLogForm = ({
 
                 <div>
                   {orgSearchResponse.length !== 0 ? (
-                    <div css={styles.orgItemBox}>
-                      {orgSearchResponse.map((org, i) => {
-                        return (
-                          <div css={{ width: `100%` }}>
+                    <div css={styles.ItemBox}>
+                      <div css={styles.ItemBoxPadding}>
+                        {orgSearchResponse.map((org, i) => {
+                          return (
                             <button
                               key={i}
                               css={styles.orgItem}
                               type={'button'}
+                              onKeyDown={onKeyDownHandler}
+                              onFocus={() => setIsFocus(true)}
+                              onBlur={() => setIsFocus(false)}
                             >
                               {org.orgImg !== '' ? (
                                 <Image
@@ -169,70 +181,31 @@ export const CommitLogForm = ({
                                 />
                               ) : null}
                               <span css={styles.orgName}>{org.name}</span>
+                              <span css={styles.orgDesc}>{org.desc}</span>
                             </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : repoSearchResponse.length !== 0 ? (
+                    <div css={styles.ItemBox}>
+                      <div css={styles.ItemBoxPadding}>
+                        {repoSearchResponse.map((repo, i) => {
+                          return (
                             <button
-                              key={i + 1}
+                              key={i}
                               css={styles.orgItem}
                               type={'button'}
+                              onKeyDown={onKeyDownHandler}
+                              onFocus={() => setIsFocus(true)}
+                              onBlur={() => setIsFocus(false)}
                             >
-                              {org.orgImg !== '' ? (
-                                <Image
-                                  src={org.orgImg}
-                                  width={40}
-                                  height={40}
-                                  alt={`org image`}
-                                />
-                              ) : null}
-                              <span css={styles.orgName}>{org.name}</span>
+                              <span css={styles.orgName}>{repo.name}</span>
+                              <span css={styles.orgDesc}>{repo.desc}</span>
                             </button>
-                            <button
-                              key={i + 2}
-                              css={styles.orgItem}
-                              type={'button'}
-                            >
-                              {org.orgImg !== '' ? (
-                                <Image
-                                  src={org.orgImg}
-                                  width={40}
-                                  height={40}
-                                  alt={`org image`}
-                                />
-                              ) : null}
-                              <span css={styles.orgName}>{org.name}</span>
-                            </button>
-                            <button
-                              key={i + 3}
-                              css={styles.orgItem}
-                              type={'button'}
-                            >
-                              {org.orgImg !== '' ? (
-                                <Image
-                                  src={org.orgImg}
-                                  width={40}
-                                  height={40}
-                                  alt={`org image`}
-                                />
-                              ) : null}
-                              <span css={styles.orgName}>{org.name}</span>
-                            </button>
-                            <button
-                              key={i + 4}
-                              css={styles.orgItem}
-                              type={'button'}
-                            >
-                              {org.orgImg !== '' ? (
-                                <Image
-                                  src={org.orgImg}
-                                  width={40}
-                                  height={40}
-                                  alt={`org image`}
-                                />
-                              ) : null}
-                              <span css={styles.orgName}>{org.name}</span>
-                            </button>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
+                      </div>
                     </div>
                   ) : (
                     <div css={styles.errorMessage}>
@@ -257,6 +230,13 @@ export const CommitLogForm = ({
                   </div> */}
                 </div>
               </div>
+              <button
+                disabled={methods.formState.isSubmitting || !isFocus}
+                css={styles.commitLogSubmitBtn(isFocus)}
+                type="button"
+              >
+                <span>Connect</span>
+              </button>
             </form>
           </div>
         </div>
