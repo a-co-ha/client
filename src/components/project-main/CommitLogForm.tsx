@@ -151,7 +151,7 @@ export const CommitLogForm = ({
 
                 <div>
                   {orgSearchResponse.length !== 0 ? (
-                    <div css={styles.orgImageBox}>
+                    <div css={styles.orgItemBox}>
                       {orgSearchResponse.map((org, i) => {
                         return (
                           <div css={{ width: `100%` }}>

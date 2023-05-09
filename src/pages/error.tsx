@@ -1,8 +1,16 @@
 import Image from 'next/image';
 import redImage from '@/images/channelImg/1.png';
+import { loginState } from '@/recoil/user/atom';
+import { useResetRecoilState } from 'recoil';
 import * as styles from '@/components/error-boundary/styles';
+import { useEffect } from 'react';
 
 const Error = () => {
+  const resetLoginState = useResetRecoilState(loginState);
+  useEffect(() => {
+    resetLoginState();
+  }, []);
+
   return (
     <div css={styles.errorBackground}>
       <div>

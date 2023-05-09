@@ -150,8 +150,9 @@ export const commitLogFormBtn = css`
   }
 `;
 
-export const orgImageBox = css`
+export const orgItemBox = css`
   display: flex;
+  margin-top: 1rem;
 `;
 
 export const orgItem = css`
