@@ -8,29 +8,25 @@ export const commitLogModalFormState = atom({
   default: false,
 });
 
-export const commitLogModalOrgSearchState = atom<commitLogOrgResponse>({
+export const commitLogModalOrgSearchState = atom<commitLogOrgResponse[]>({
   key: `commitLogModalOrgSearchState/${nanoId()}`,
-  default: {
-    desc: '',
-    orgImg: '',
-    orgName: '',
-    orgUrl: '',
-    repos: [
-      {
-        name: '',
-        url: '',
-      },
-    ],
-  },
+  default: [
+    // {
+    //   name: '',
+    //   orgID: 0,
+    //   orgImg: '',
+    //   desc: '',
+    // },
+  ],
 });
 
-export const commitLogModalRepoSearchState = atom<commitLogRepoResponse>({
+export const commitLogModalRepoSearchState = atom<commitLogRepoResponse[]>({
   key: `commitLogModalRepoSearchState/${nanoId()}`,
-  default: {
-    desc: '',
-    events: [],
-    name: '',
-    private: false,
-    url: '',
-  },
+  default: [
+    // desc: '',
+    // events: [],
+    // name: '',
+    // private: false,
+    // url: '',
+  ],
 });

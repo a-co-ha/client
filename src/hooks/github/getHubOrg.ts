@@ -4,10 +4,10 @@ import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { commitLogModalOrgSearchState } from '@/recoil/github/atom';
 
-export const useGetOrg = (channelId: string | string[] | undefined) => {
+export const useGetOrg = () => {
   // const queryClient = useQueryClient();
   const setOrgSearchResponse = useSetRecoilState(commitLogModalOrgSearchState);
-  return useMutation([`getOrg`], (org: string) => getOrg(channelId, org), {
+  return useMutation([`getOrg`], () => getOrg(), {
     onSuccess: (data) => {
       console.log('org입ㄴ디ㅏ', data);
       // queryClient.invalidateQueries([`channelPages`, channelId]);

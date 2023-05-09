@@ -1,12 +1,7 @@
 import { api } from '../config/api-config';
-export const getOrg = async (
-  channelId: string | string[] | undefined,
-  org: string
-) => {
+export const getOrg = async () => {
   try {
-    const res = await api.post(`/api/github/org?channel=${channelId}`, {
-      org,
-    });
+    const res = await api.post(`/api/github/orgs`);
     console.log(`github-org`, res.data);
     return res.data;
   } catch (err) {

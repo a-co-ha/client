@@ -8,7 +8,7 @@ export const useGetRepo = () => {
   const setRepoSearchResponse = useSetRecoilState(
     commitLogModalRepoSearchState
   );
-  return useMutation([`getRepo`], (repo: string) => getRepo(repo), {
+  return useMutation([`getRepo`], () => getRepo(), {
     onSuccess: (data) => {
       console.log('repo 입니다', data);
       // queryClient.invalidateQueries([`channelPages`, channelId]);

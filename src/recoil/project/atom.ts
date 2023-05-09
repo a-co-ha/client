@@ -74,3 +74,8 @@ export const pageNameShare = atomFamily({
   key: `pageNameShare/${nanoId()}`,
   default: '',
 });
+
+// export const helpModalState = atomFamily({
+//   key: `helpModalState/${nanoId()}`,
+//   default: false,
+// });

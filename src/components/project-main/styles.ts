@@ -73,21 +73,28 @@ export const commitLogModalFormBox = css`
   text-align: left;
   background: white;
   border-radius: 1rem;
-  overflow: hidden;
+  // overflow: hidden;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
 
-export const commitLogFormEditBox = css`
+export const commitLogFormBox = css`
   display: flex;
   flex-direction: column;
 `;
 
+export const commitLogFormAlign = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const commitLogModalOrgBtn = css`
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
   color: white;
   border-radius: 0.375rem;
+  vertical-align: middle;
   background: rgba(255, 0, 0, 0.65);
   &:hover {
     background: rgba(255, 0, 0, 0.8);
@@ -96,13 +103,18 @@ export const commitLogModalOrgBtn = css`
 
 export const commitLogModalRepoBtn = css`
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
   color: white;
   border-radius: 0.375rem;
+  vertical-align: middle;
   background: rgba(255, 0, 0, 0.65);
   &:hover {
     background: rgba(255, 0, 0, 0.8);
   }
+`;
+
+export const commitLogRepoLabel = css`
+  margin-left: 1rem;
 `;
 
 export const commitLogFormTitleInput = (titleError: boolean) => css`
@@ -119,7 +131,13 @@ export const commitLogFormTitleInput = (titleError: boolean) => css`
 `;
 
 export const commitLogFormBtn = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  height: 40px;
   padding: 1rem 0;
+  margin-left: 1rem;
   border-radius: 0.375rem;
   &:active {
     box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
@@ -136,19 +154,49 @@ export const orgImageBox = css`
   display: flex;
 `;
 
-export const orgImageAlign = css`
+export const orgItem = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  &:hover {
+    outline: 0.1px solid gray;
+  }
+  &:focus {
+    background: #ffd6dc;
+  }
+  transition: 0.3s;
 `;
 
-export const orgRepoNameBox = css`
-  // &:not(div:nth-of-type(1)) {
-  //   padding: 1rem;
-  // }
-  padding-left: 1rem;
+export const orgName = css`
+  margin-left: 0.5rem;
 `;
 
-export const orgRepoName = css`
-  margin-left: 1rem;
+export const errorMessage = css`
+  padding: 1rem;
+  text-align: center;
+  color: rgb(0 0 0 /0.2);
+  user-select: none;
+`;
+
+export const helpModal = css`
+  position: relative;
+  &:hover div {
+    display: block;
+  }
+`;
+
+export const helpModalContent = css`
+  display: none;
+  position: absolute;
+  left: 0;
+  padding: 1rem;
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+  background: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),
+    0 4px 6px -4px rgb(0 0 0 / 0.2);
 `;

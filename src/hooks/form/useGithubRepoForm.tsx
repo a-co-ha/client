@@ -11,29 +11,15 @@ export const useGithubRepoForm = ({
     fieldState: { error: searchOptionError },
   } = useController({
     name: 'searchOptionsInput',
-
+    defaultValue: 'organization',
     control,
     rules: {
       required: true,
     },
   });
 
-  const {
-    field: searchInput,
-    fieldState: { error: contentError },
-    formState: { isSubmitting },
-  } = useController({
-    name: 'searchInput',
-    control,
-    rules: {
-      required: true,
-    },
-  });
   return {
     searchOptionsInput,
-    searchInput,
     searchOptionError,
-    contentError,
-    isSubmitting,
   };
 };
