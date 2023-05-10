@@ -114,10 +114,11 @@ export const CommitLogForm = ({
                   <label htmlFor={`organization`}>
                     <input
                       id={`organization`}
-                      css={styles.commitLogModalOrgBtn}
+                      css={styles.commitLogModalBtn}
                       type="radio"
                       value="organization"
                       name="searchOption"
+                      aria-label="organization"
                       checked={selected === 'organization'}
                       onChange={(e) => {
                         onChangeHandler({
@@ -126,15 +127,16 @@ export const CommitLogForm = ({
                         });
                       }}
                     />
-                    organization
+                    {/* organization */}
                   </label>
                   <label htmlFor={`repo`} css={styles.commitLogRepoLabel}>
                     <input
                       id={`repo`}
-                      css={styles.commitLogModalRepoBtn}
+                      css={styles.commitLogModalBtn}
                       type={'radio'}
                       value="repo"
                       name="searchOption"
+                      aria-label="repo"
                       checked={selected === 'repo'}
                       onChange={(e) => {
                         onChangeHandler({
@@ -143,7 +145,7 @@ export const CommitLogForm = ({
                         });
                       }}
                     />
-                    repo
+                    {/* repo */}
                   </label>
                   <button
                     disabled={methods.formState.isSubmitting}
