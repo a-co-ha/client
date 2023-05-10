@@ -206,10 +206,7 @@ export const CommitLogForm = ({
                         })}
                       </div>
                     </div>
-                  ) : // ) : methods.formState.isSubmitting ? (
-                  //   <div css={styles.errorMessage}>검색중...</div>
-                  // ) : null}
-                  getOrg.isLoading || getRepo.isLoading ? (
+                  ) : getOrg.isLoading || getRepo.isLoading ? (
                     <div css={styles.errorMessage}>검색중...</div>
                   ) : (
                     <div css={styles.errorMessage}>

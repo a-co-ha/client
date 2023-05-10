@@ -67,14 +67,13 @@ export const commitLogModalTransition = (isOpen: boolean) => css`
 `;
 
 export const commitLogModalFormBox = css`
+  position: relative;
   width: 500px;
-  max-width: 32rem;
   height: 65vh;
   padding: 1.5rem;
   text-align: left;
   background: white;
   border-radius: 1rem;
-  // overflow: hidden;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
@@ -156,7 +155,7 @@ export const ItemBox = css`
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
-  max-height: 45.5vh;
+  height: 44.5vh;
   overflow-y: auto;
   overflow-x: hidden;
 `;
@@ -194,7 +193,9 @@ export const orgDesc = css`
 `;
 
 export const commitLogSubmitBtn = (isFocus: boolean) => css`
-  width: 100%;
+  position: absolute;
+  bottom: 1.5rem;
+  width: calc(100% - 3rem);
   padding: 1rem 0;
   color: ${isFocus ? `white` : `#ddd`};
   font-weight: 600;
