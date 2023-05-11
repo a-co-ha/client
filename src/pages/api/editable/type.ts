@@ -16,7 +16,7 @@ export interface GetChannelPages {
 export type edtype = 'page' | 'template';
 
 export interface EditablePage {
-  page:  {
+  page: {
     _id: string;
     pageName: string;
     type: string;

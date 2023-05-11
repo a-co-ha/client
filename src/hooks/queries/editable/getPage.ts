@@ -7,7 +7,7 @@ export const useGetEditablePage = (
   pageId: string,
   type: string
 ) => {
-  return useQuery([`editablePage`, pageId], () => {
-    return getEditablePage(channelId, pageId, type);
-  });
+  return useQuery([`editablePage`, pageId], () =>
+    getEditablePage(channelId, pageId, type)
+  );
 };
