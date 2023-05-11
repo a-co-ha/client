@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState, useContext } from 'react';
+import { Fragment, useEffect, useState, useContext } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
@@ -7,63 +7,22 @@ import { useGetLabels } from '@/hooks/queries/editable/getLabels';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { updateLabel } from '@/pages/api/editable/updateLabel';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
-import { toast } from 'react-toastify';
 import { usePreviousState } from '@/hooks/usePrevious';
 
 export default function Label() {
   const { channelId, pageId } = useGetUrlInfo();
   const { socket } = useContext(SocketContext);
   const [query, setQuery] = useState('');
-
   const { data } = useGetLabels(pageId);
-  console.log('🚀 ~ file: Label.tsx:19 ~ gdgd   Label ~ data:', data);
   const selectedUsers = data?.map((item) => item.content);
-  console.log(
-    '🚀 ~ file: Label.tsx:20 ~ Label ~ gdgd selectedUsers:',
-    selectedUsers
-  );
   const { data: usersInChannel } = useGetUsers();
   const users = usersInChannel?.map((x: ChannelUser) => x.name);
-
-  // data 가 있을 떄 selected의 초기값으로 selectedUsers가 들어가야함
   const [selected, setSelected] = useState<string[]>([]);
-  console.log('🚀 ~ file: Label.tsx:20 ~ ss Label ~ selected:', selected);
   const prevSelected: string[] = usePreviousState(selected) ?? [];
-  console.log(
-    '🚀 ~ file: Label.tsx:22 ~ Label ~ ss prevSelected:',
-    prevSelected
-  );
-
-  // const [alertData, setAlertData] = useState(null);
-  // console.log('🚀 ~ file: Label.tsx:24 ~ Label ~ alertData:', alertData);
 
   useEffect(() => {
-    console.log('useffect data ss gdgd 변경');
     setSelected(selectedUsers ?? []);
   }, [data]);
-
-  useEffect(() => {
-    socket.on('ALERT', (data) => {
-      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
-    });
-    socket.on('GET_ALERT', (data) => {
-      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
-      // setAlertData(data);
-      toast(
-        `🦄 ${data.channelName}프로젝트의 ${data.subPageName}${data.pageName}페이지에서 나(${data.targetUserName})를 태그하였습니다.`,
-        {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        }
-      );
-    });
-  }, [socket]);
 
   const filteredPeople =
     query === ''
@@ -80,11 +39,6 @@ export default function Label() {
 
     const newSelected = selected.filter(
       (user) => prevSelected && !prevSelected.includes(user)
-    );
-
-    console.log(
-      '🚀 ~ file: Label.tsx:69 ~ afterLeaveHandler ~ newSelected:',
-      newSelected
     );
 
     newSelected.forEach((name) => {
