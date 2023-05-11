@@ -18,29 +18,27 @@ import useDidMountEffect from '@/hooks/useDidMountEffect';
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   console.log(
-    '🚀 ~ file: index.tsx:20 ~ EditablePage ~ fetchedBlocks:',
+    '🚀 ~ file: index.tsx:20 ~ EditablePage ~ 랜더링 fetchedBlocks:',
     fetchedBlocks
   );
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
-  console.log('🚀 ~ file: index.tsx:22 ~ EditablePage ~ blocks:', blocks);
+  console.log(
+    '🚀 ~ file: index.tsx:26 ~ EditablePage 랜더링 ~ blocks:',
+    blocks
+  );
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
-  // 여기까지 돌아오기
+
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: index.tsx:34 ~ useEffect ~ fetchedBlocks:',
-      fetchedBlocks
-    );
+    console.log('useEffect 랜더링');
     fetchedBlocks && setBlocks(fetchedBlocks);
-  }, [router.query.pageId, fetchedBlocks]);
+  }, [fetchedBlocks]);
 
   useDidMountEffect(() => {
-    console.log(
-      '🚀 ~ file: index.tsx:36 ~ useDidMountEffect ~ blocks:',
-      blocks
-    );
-    handlers.updatePageOnserver(blocks, pageId, channelId);
+    if (fetchedBlocks !== blocks) {
+      handlers.updatePageOnserver(blocks, pageId, channelId);
+    }
   }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
@@ -64,45 +62,48 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     updatedBlocks && setBlocks(updatedBlocks);
   };
   const isNewPage = router.query.initial === 'true';
-  console.log('EditablePage 랜더링');
+
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary fallback={Error} onReset={reset}>
-          <div css={styles.contentBox}>
-            {isNewPage && <Notice status="SUCCESS" />}
-            <Label />
-            <DragDropContext onDragEnd={onDragEndHandler}>
-              <Droppable key={pageId} droppableId={pageId}>
-                {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
-                    {blocks?.map((block) => {
-                      const position = blocks
-                        .map((b) => b.blockId)
-                        .indexOf(block.blockId);
-                      return (
-                        <EditableBlock
-                          key={block.blockId}
-                          position={position}
-                          id={block.blockId}
-                          tag={block.tag}
-                          html={block.html}
-                          imgUrl={block.imgUrl}
-                          pageId={pageId}
-                          addBlock={addBlockHandler}
-                          updateBlock={updateBlockHandler}
-                          deleteBlock={deleteBlockHandler}
-                        />
-                      );
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </div>
-        </ErrorBoundary>
-      )}
-    </QueryErrorResetBoundary>
+    fetchedBlocks && (
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary fallback={Error} onReset={reset}>
+            <div css={styles.contentBox}>
+              {isNewPage && <Notice status="SUCCESS" />}
+              <Label />
+              <DragDropContext onDragEnd={onDragEndHandler}>
+                <Droppable key={pageId} droppableId={pageId}>
+                  {(provided) => (
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      {blocks &&
+                        blocks.map((block) => {
+                          const position = blocks
+                            .map((b) => b.blockId)
+                            .indexOf(block.blockId);
+                          return (
+                            <EditableBlock
+                              key={block.blockId}
+                              position={position}
+                              id={block.blockId}
+                              tag={block.tag}
+                              html={block.html}
+                              imgUrl={block.imgUrl}
+                              pageId={pageId}
+                              addBlock={addBlockHandler}
+                              updateBlock={updateBlockHandler}
+                              deleteBlock={deleteBlockHandler}
+                            />
+                          );
+                        })}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
+    )
   );
 };
