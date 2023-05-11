@@ -93,14 +93,16 @@ export const commitLogModalBtn = css`
   display: flex;
   align-itmes: center;
   gap: 10px;
-  padding: 14px 24px;
 
+  padding: 14px 24px;
   margin-right: 0.3rem;
   color: black;
   font-weight: 600;
   vertical-align: middle;
   border-radius: 0.375rem;
   background: white;
+  appearance: none;
+  cursor: pointer;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 6px -4px rgb(0 0 0 / 0.2);
 
@@ -108,7 +110,6 @@ export const commitLogModalBtn = css`
     color: white;
     background: rgba(255, 0, 0, 0.8);
   }
-  appearance: none;
 
   &::before {
     content: '';

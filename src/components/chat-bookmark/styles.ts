@@ -205,7 +205,7 @@ export const chatBookmarkFormTitleInput = (
 export const chatBookmarkFormInput = (isEditing: boolean) => css`
   flex-grow: 1;
   font-size: 1rem;
-  line-height: 1rem;
+  line-height: 1.2rem;
   height: calc(65vh - 176px);
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -226,6 +226,7 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
+  white-space: pre-wrap;
 `;
 
 export const chatBookmarkFormBtn = css`
@@ -239,5 +240,11 @@ export const chatBookmarkFormBtn = css`
     0 4px 6px -4px rgb(0 0 0 / 0.2);
   &:hover {
     background: #eee;
+  }
+`;
+
+export const markdownStyle = css`
+  & a {
+    color: red;
   }
 `;

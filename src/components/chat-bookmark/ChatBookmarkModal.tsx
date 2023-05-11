@@ -10,7 +10,7 @@ import { HelpModal } from '@/hooks/useHelpModal';
 import { useDeleteBookmark } from '@/hooks/queries/socket/deleteBookmark';
 import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
 import ReactMarkdown from 'react-markdown';
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import * as styles from './styles';
@@ -105,16 +105,17 @@ export const ChatBookmarkModal = ({
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   children={ChatBookmarkEditContentShare.chatBookmarkContent}
+                  linkTarget={`_blank`}
                   components={{
                     code({ node, inline, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || '');
                       return !inline && match ? (
                         <SyntaxHighlighter
+                          {...props}
                           children={String(children).replace(/\n$/, '')}
                           language={match[1]}
                           showLineNumbers
                           PreTag="div"
-                          {...props}
                           style={oneLight}
                         />
                       ) : (
