@@ -17,6 +17,8 @@ export const CustomHead = ({ type }: { type: string }) => {
       <meta property="og:title" content={`A-COHA | 아코하`} />
       <meta property="og:description" content={`아코하로 프로젝트 시작하기`} />
       <meta property="og:image" content={`${DOMAIN}/${acohaImg.src}`} />
+      <meta property="og:image:width" content="400" />
+      <meta property="og:image:height" content="300" />
     </Head>
   ) : (
     <Head>
