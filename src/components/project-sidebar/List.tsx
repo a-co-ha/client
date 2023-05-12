@@ -63,7 +63,7 @@ export const List = () => {
     setChannelName(channelData.channelName);
     setChannelImage(channelData.channelImg);
     console.log(channelData.channelName);
-    router.push(`/project/${channelId}`);
+    router.push(`/project/${channelData.id}`);
   };
 
   return (
