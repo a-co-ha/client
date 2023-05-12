@@ -26,19 +26,16 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const addMessage = useCallback(
-    (message: any) => {
-      console.log(`addmessage`, message);
-      setMessages((prev) => {
-        console.log(`prev`, prev);
-        const newMessage = prev.concat([message]);
-        console.log(`newMesage`, newMessage);
-        return newMessage;
-      });
-      console.log(`메세지스`, messages);
-    },
-    [messages]
-  );
+  const addMessage = useCallback((message: any) => {
+    console.log(`addmessage`, message);
+    setMessages((prev) => {
+      console.log(`prev`, prev);
+      const newMessage = prev.concat([message]);
+      console.log(`newMesage`, newMessage);
+      return newMessage;
+    });
+    console.log(`메세지스`, messages);
+  }, []);
 
   // useEffect(() => {
   //   if (socketMessage !== undefined) {
@@ -52,20 +49,21 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       roomId: pageId,
     });
     console.log('보냄');
+  }, [router.query.pageId]);
+
+  useEffect(() => {
     socket.on(`GET_MESSAGE`, (data: SocketMessage[]) => {
       console.log(`리드`, data);
       setMessages(data);
     });
   }, [router.query.pageId]);
-  // useEffect(() => {
-  // }, []);
   useEffect(() => {
     socket.on(`RECEIVE_MESSAGE`, (data) => {
       console.log(`받습니다`);
       addMessage(data.message);
       console.log(`여기다`, messages);
     });
-  }, [socket]);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });

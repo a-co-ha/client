@@ -127,6 +127,21 @@ export const inviteModalCopyBtn = (isCopied: boolean) => css`
   }
 `;
 
+export const inviteModalShareBtn = css`
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: rgba(248, 93, 117, 0.9);
+  border-radius: 0.375rem;
+  &:hover {
+    background-color: rgba(248, 93, 117, 1);
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const projectDeleteNameBtn = (
   inputName: string,
   channelName: string

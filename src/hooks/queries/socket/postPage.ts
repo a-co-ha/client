@@ -11,11 +11,13 @@ export const usePostSocketPage = () => {
   return useMutation<PostSocketPage, AxiosError>(
     () => postSocketPage(channelId),
     {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries([`channelPages`, channelId]);
-        router.push(
-          `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
-        );
+      onSuccess: async (data) => {
+        if (data) {
+          queryClient.invalidateQueries([`channelPages`, channelId]);
+          await router.push(
+            `/project/${channelId}/${data._id}?name=${data.pageName}&type=${data.type}`
+          );
+        }
       },
     }
   );

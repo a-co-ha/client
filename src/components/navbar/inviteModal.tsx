@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { inviteChannelState, inviteModalState } from '@/recoil/user/atom';
 import * as styles from './styles';
+import { toast } from 'react-toastify';
 
 export const InviteModal = () => {
   const { userId, channelName } = useRecoilValue(inviteChannelState);
@@ -20,6 +21,18 @@ export const InviteModal = () => {
     navigator.clipboard.writeText(inviteUrl);
     setIsCopied(true);
   };
+
+  const codeShareHandler = (inviteUrl: string, channelName: string) => {
+    try {
+      navigator.share({
+        title: `아코하 : 프로젝트 ${channelName}`,
+        url: `${inviteUrl}`,
+      });
+    } catch (e) {
+      toast.error(`공유하기가 지원되지 않는 환경입니다`);
+    }
+  };
+
   return (
     <div css={styles.projectInviteBox(isInviteModal)}>
       <div
@@ -38,6 +51,12 @@ export const InviteModal = () => {
               onClick={() => codeCopyHandler(inviteUrl)}
             >
               {isCopied ? `Copied ✔️` : `Copy`}
+            </button>
+            <button
+              css={styles.inviteModalShareBtn}
+              onClick={() => codeShareHandler(inviteUrl, channelName)}
+            >
+              {isCopied ? `Copied ✔️` : `Share`}
             </button>
           </div>
         </div>
