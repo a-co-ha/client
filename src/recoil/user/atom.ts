@@ -43,6 +43,7 @@ export const inviteChannelState = atom({
   default: {
     userId: 0,
     channelName: '',
+    channelId: '',
   },
 });
 

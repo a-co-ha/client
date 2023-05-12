@@ -30,11 +30,11 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       const isAdmin = admin.admin;
       console.log(`이즈 어드민`, admin, isAdmin);
       console.log('이거 인덱스 유저데이타', userData);
-      const { userId, channelName } = channelUsers.filter(
+      const { userId, channelName, channelId } = channelUsers.filter(
         (user: ChannelUser) => user.admin === true
       )[0];
       setIsAdmin(isAdmin);
-      setInviteChannelData({ userId, channelName });
+      setInviteChannelData({ userId, channelName, channelId });
       console.log(`인바이트 인포`, userId, channelName);
     }
   }, [channelUsers]);

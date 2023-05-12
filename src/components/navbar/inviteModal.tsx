@@ -10,12 +10,12 @@ export interface OgData {
   title: string;
   desc: string;
   image: string;
-  url: string;
+  id: string;
   type: `main` | `invite`;
 }
 
 export const InviteModal = () => {
-  const { userId, channelName } = useRecoilValue(inviteChannelState);
+  const { userId, channelName, channelId } = useRecoilValue(inviteChannelState);
   const channelImg = useRecoilValue(channelImageState);
   const [isInviteModal, setIsInviteModal] = useRecoilState(inviteModalState);
   let [isCopied, setIsCopied] = useState(false);
@@ -50,7 +50,7 @@ export const InviteModal = () => {
         title={channelName}
         desc={`ewf`}
         image={channelImg}
-        url={inviteUrl}
+        id={channelId}
         type={`invite`}
       />
       <div
@@ -74,7 +74,7 @@ export const InviteModal = () => {
               css={styles.inviteModalShareBtn}
               onClick={() => codeShareHandler(inviteUrl, channelName)}
             >
-              {isCopied ? `Copied ✔️` : `Share`}
+              {`Share`}
             </button>
           </div>
         </div>
