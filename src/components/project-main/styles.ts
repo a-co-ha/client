@@ -245,10 +245,10 @@ export const helpModal = css`
   }
 `;
 
-export const helpModalContent = css`
+export const helpModalContent = (direction: string | undefined) => css`
   display: none;
   position: absolute;
-  left: 0;
+  left: ${direction === 'left' ? '-200px' : `0`};
   min-width: 200px;
   padding: 1rem;
   margin: 0.5rem 0 0 0;

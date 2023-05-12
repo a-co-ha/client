@@ -5,9 +5,11 @@ import * as styles from '@/components/project-main/styles';
 
 export const HelpModal = ({
   content,
+  direction,
   image = '',
 }: {
   content: string;
+  direction?: string;
   image?: string;
 }) => {
   return (
@@ -15,7 +17,7 @@ export const HelpModal = ({
       <button>
         <FontAwesomeIcon icon={faCircleQuestion} />
       </button>
-      <div css={styles.helpModalContent}>
+      <div css={styles.helpModalContent(direction)}>
         {content}
         {image !== '' ? (
           <Image src={image} width={200} height={200} alt="help image" />

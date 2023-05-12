@@ -24,8 +24,8 @@ export const list = css`
   height: calc(100vh - 50px);
   padding-top: 1rem;
   z-index: 2;
-  box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
-    0 4px 8px -4px rgb(0 0 0 / 0.2);
+  // box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
+  //   0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
 export const channel = (isOpen: boolean) => css`
@@ -55,18 +55,19 @@ export const channelSidbarMoreBtn = (isOpen: boolean) => css`
   left: ${isOpen ? `calc(100% - 10px)` : `100%`};
   width: ${isOpen ? `20px` : `40px`};
   height: ${isOpen ? `60px` : `40px`};
-  z-index: 2;
+  z-index: 4 !important;
   transform: translate3d(-50%, -50%, 0) ${isOpen ? null : `rotate(180deg)`};
   transition: 0.5s;
   background: ${isOpen ? `transparent` : `white`};
   border: 1px solid ${isOpen ? `rgb(0 0 0 / 0.2)` : `rgb(0 0 0 / 0)`};
   border-right: none;
   border-radius: ${isOpen ? `4px 0 0 4px` : `50%`};
-  line-height: 40px;
   box-shadow: ${isOpen
     ? undefined
-    : `-5px 0 15px -3px rgb(0 0 0 / 0.2),
-    -4px 0 8px -4px rgb(0 0 0 / 0.2)`};
+    : `-5px 0 5px -3px rgb(0 0 0 / 0.2),
+-6px 0 6px -4px rgb(0 0 0 / 0.2)`};
+  line-height: 42px;
+  text-indent: ${isOpen ? `0` : `-10px`};
 `;
 
 export const pageCreateBtnBox = css`

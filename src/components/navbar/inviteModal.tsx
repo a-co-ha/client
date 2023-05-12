@@ -36,7 +36,7 @@ export const InviteModal = () => {
   const codeShareHandler = (inviteUrl: string, channelName: string) => {
     try {
       navigator.share({
-        title: `${channelName} | 아코하`,
+        title: `프로젝트 ${channelName} | 아코하`,
         url: `${inviteUrl}`,
       });
     } catch (e) {
@@ -56,6 +56,7 @@ export const InviteModal = () => {
             <h3 className="mt-2">프로젝트 초대코드</h3>
             <HelpModal
               content={`Share 기능은 모바일에서만 가능합니다. 또한 카톡브라우저에서는 동작하지 않아요.`}
+              direction={`left`}
             />
           </div>
           <div className="mt-2">
