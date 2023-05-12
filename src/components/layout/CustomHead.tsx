@@ -16,7 +16,7 @@ export const CustomHead = ({ type }: { type: string }) => {
       <meta property="og:site_name" content={`A-COHA | 아코하`} />
       <meta property="og:title" content={`A-COHA | 아코하`} />
       <meta property="og:description" content={`아코하로 프로젝트 시작하기`} />
-      <meta property="og:image" content={`${DOMAIN}/${acohaImg}`} />
+      <meta property="og:image" content={`${DOMAIN}/${acohaImg.src}`} />
     </Head>
   ) : (
     <Head>
@@ -29,7 +29,7 @@ export const CustomHead = ({ type }: { type: string }) => {
       <meta property="og:site_name" content={`아코하 : 아-코딩하고싶다`} />
       <meta property="og:title" content={`아코하 : 아-코딩하고싶다`} />
       <meta property="og:description" content={`신나게 코딩해보아요`} />
-      <meta property="og:image" content={`${DOMAIN}/${acohaImg}`} />
+      <meta property="og:image" content={`${DOMAIN}/${acohaImg.src}`} />
     </Head>
   );
 };
