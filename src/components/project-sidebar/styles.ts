@@ -59,10 +59,14 @@ export const channelSidbarMoreBtn = (isOpen: boolean) => css`
   transform: translate3d(-50%, -50%, 0) ${isOpen ? null : `rotate(180deg)`};
   transition: 0.5s;
   background: ${isOpen ? `transparent` : `white`};
-  border: 1px solid rgb(0 0 0 / 0.2);
+  border: 1px solid ${isOpen ? `rgb(0 0 0 / 0.2)` : `rgb(0 0 0 / 0)`};
   border-right: none;
   border-radius: ${isOpen ? `4px 0 0 4px` : `50%`};
   line-height: 40px;
+  box-shadow: ${isOpen
+    ? undefined
+    : `-5px 0 15px -3px rgb(0 0 0 / 0.2),
+    -4px 0 8px -4px rgb(0 0 0 / 0.2)`};
 `;
 
 export const pageCreateBtnBox = css`

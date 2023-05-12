@@ -50,7 +50,7 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
   }
   useEffect(() => {
     router.pathname === `/project/:*` && authState.isLoggedIn === false
-      ? router.push(`/error`)
+      ? (router.push(`/error`), console.log('ah'))
       : null;
   }, []);
   const [queryClient] = useState(

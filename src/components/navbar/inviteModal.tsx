@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { inviteChannelState, inviteModalState } from '@/recoil/user/atom';
 import { channelImageState } from '@/recoil/project/atom';
-import { CustomHead } from '../layout/CustomHead';
+import { HelpModal } from '@/hooks/useHelpModal';
 import * as styles from './styles';
 import { toast } from 'react-toastify';
 
@@ -51,8 +51,13 @@ export const InviteModal = () => {
         css={styles.inviteModalBackground(isInviteModal)}
       ></div>
       <div css={styles.projectInviteBoxTransition(isInviteModal)}>
-        <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
-          <h3 className="mt-2">프로젝트 초대코드</h3>
+        <div className="w-full max-w-md rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
+          <div className="flex justify-between">
+            <h3 className="mt-2">프로젝트 초대코드</h3>
+            <HelpModal
+              content={`Share 기능은 모바일에서만 가능합니다. 또한 카톡브라우저에서는 동작하지 않아요.`}
+            />
+          </div>
           <div className="mt-2">
             <p className="text-sm text-gray-500 select-text">{inviteUrl}</p>
           </div>
