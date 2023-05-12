@@ -36,7 +36,7 @@ export const InviteModal = () => {
   const codeShareHandler = (inviteUrl: string, channelName: string) => {
     try {
       navigator.share({
-        title: `아코하 : 프로젝트 ${channelName}`,
+        title: `${channelName} | 아코하`,
         url: `${inviteUrl}`,
       });
     } catch (e) {
@@ -46,13 +46,6 @@ export const InviteModal = () => {
 
   return (
     <div css={styles.projectInviteBox(isInviteModal)}>
-      <CustomHead
-        title={channelName}
-        desc={`ewf`}
-        image={channelImg}
-        id={channelId}
-        type={`invite`}
-      />
       <div
         onClick={onClickHandler}
         css={styles.inviteModalBackground(isInviteModal)}

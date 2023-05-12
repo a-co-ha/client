@@ -22,6 +22,7 @@ interface MyAppProps extends AppProps {
     isLoggedIn: boolean;
   };
 }
+import { CustomHead } from '@/components/layout/CustomHead';
 
 export default function App({ Component, pageProps, authState }: MyAppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -75,6 +76,7 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
 
   return (
     <RecoilRoot initializeState={initializer}>
+      <CustomHead type={`invite`} />
       <SocketContextProvider>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
