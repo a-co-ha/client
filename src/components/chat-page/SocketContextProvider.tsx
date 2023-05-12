@@ -42,6 +42,7 @@ export const SocketContextProvider = ({
       console.log(`session USER_INFO`, data);
     });
     socket.on(`NEW_MEMBER`, (data) => console.log(`유저 접속`, data));
+
     return () => {
       console.log(`disconnect`);
       socket.disconnect();

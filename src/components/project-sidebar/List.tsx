@@ -1,7 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { channelListState, channelNameState } from '@/recoil/project/atom';
+import {
+  channelListState,
+  channelNameState,
+  channelImageState,
+} from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
@@ -12,13 +16,12 @@ import githubChannelImg from '@/images/github_channel.png';
 import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
 
-import { api } from '@/pages/api/config/api-config';
-import { deleteProject } from '@/pages/api/project/deleteProject';
-
 export const List = () => {
   const [channelList, setChannelList] = useRecoilState(channelListState);
   const setChannelName = useSetRecoilState(channelNameState);
+  const setChannelImage = useSetRecoilState(channelImageState);
   const setIsInitialUser = useSetRecoilState(initialUserState);
+
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const channelId = router.query.id;
@@ -56,13 +59,10 @@ export const List = () => {
 
   console.log('채널리스트 ', channelList);
 
-  const onClickHandler = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    channelId: number,
-    channelName: string
-  ) => {
-    setChannelName(channelName);
-    console.log(channelName);
+  const onClickHandler = (channelData: ChannelList) => {
+    setChannelName(channelData.channelName);
+    setChannelImage(channelData.channelImg);
+    console.log(channelData.channelName);
     router.push(`/project/${channelId}`);
   };
 
@@ -78,7 +78,7 @@ export const List = () => {
           <HoverModal content={channel.channelName} />
           <button
             css={{ position: `relative`, width: `100%`, height: `100%` }}
-            onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
+            onClick={() => onClickHandler(channel)}
           >
             <Image
               src={channel.channelImg ? channel.channelImg : githubChannelImg}

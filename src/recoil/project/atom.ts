@@ -55,6 +55,11 @@ export const channelNameState = atom({
   default: 'A - COHA',
 });
 
+export const channelImageState = atom({
+  key: `channelImageState/${nanoId()}`,
+  default: '',
+});
+
 export const channelSidebarOpenState = atom({
   key: `channelSidebarOpenState/${nanoId()}`,
   default: true,

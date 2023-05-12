@@ -22,7 +22,6 @@ interface MyAppProps extends AppProps {
     isLoggedIn: boolean;
   };
 }
-import acohaMetaImage from '@/images/channelImg/1.png';
 
 export default function App({ Component, pageProps, authState }: MyAppProps) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {

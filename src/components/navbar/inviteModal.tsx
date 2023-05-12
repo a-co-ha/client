@@ -1,11 +1,22 @@
 import { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { inviteChannelState, inviteModalState } from '@/recoil/user/atom';
+import { channelImageState } from '@/recoil/project/atom';
+import { CustomHead } from '../layout/CustomHead';
 import * as styles from './styles';
 import { toast } from 'react-toastify';
 
+export interface OgData {
+  title: string;
+  desc: string;
+  image: string;
+  url: string;
+  type: `main` | `invite`;
+}
+
 export const InviteModal = () => {
   const { userId, channelName } = useRecoilValue(inviteChannelState);
+  const channelImg = useRecoilValue(channelImageState);
   const [isInviteModal, setIsInviteModal] = useRecoilState(inviteModalState);
   let [isCopied, setIsCopied] = useState(false);
   console.log(`인코딩 되기전`, userId, channelName);
@@ -35,6 +46,13 @@ export const InviteModal = () => {
 
   return (
     <div css={styles.projectInviteBox(isInviteModal)}>
+      <CustomHead
+        title={channelName}
+        desc={`ewf`}
+        image={channelImg}
+        url={inviteUrl}
+        type={`invite`}
+      />
       <div
         onClick={onClickHandler}
         css={styles.inviteModalBackground(isInviteModal)}
