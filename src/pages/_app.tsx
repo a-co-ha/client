@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import { ThemeProvider } from '@emotion/react';
 import theme from '@/styles/theme';
 import { useState, useEffect, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { MutableSnapshot, RecoilRoot, useSetRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
 import { Layout } from '@/components/layout';
@@ -25,6 +26,8 @@ interface MyAppProps extends AppProps {
 import { CustomHead } from '@/components/layout/CustomHead';
 
 export default function App({ Component, pageProps, authState }: MyAppProps) {
+  const router = useRouter();
+
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     import('../mocks');
   }
@@ -45,7 +48,11 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
   if (!shouldRender) {
     // return null;
   }
-
+  useEffect(() => {
+    router.pathname === `/project/:*` && authState.isLoggedIn === false
+      ? router.push(`/error`)
+      : null;
+  }, []);
   const [queryClient] = useState(
     () =>
       new QueryClient({

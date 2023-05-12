@@ -13,8 +13,8 @@ export const LoginBtn = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
   console.log(`이즈로그드이이인`, isLoggedIn);
   useEffect(() => {
-    // const token = getCookie(`accessToken`);
-    // console.log(`로그인 버튼 토큰!@`, token);
+    const token = getCookie(`accessToken`);
+    console.log(`로그인 버튼 토큰!@`, token);
     // token ? setIsLoggedIn(true) : setIsLoggedIn(false);
   }, []);
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ export const LoginBtn = () => {
                 onClick={openModal}
                 className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
               >
-                로그인 버튼
+                로그인
               </button>
             </div>
           </div>
