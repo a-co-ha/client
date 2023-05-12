@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import acohaImage from '@/images/channelImg/1.png';
+import acohaMetaImage from '@/images/channelImg/1.png';
 
 export default function Document() {
   return (
@@ -12,7 +12,7 @@ export default function Document() {
           key="og-desc"
         />
         <meta property="og:url" content={`https://acoha.site`} key="og-url" />
-        <meta property="og:image" content={acohaImage.src} key="og-image" />
+        <meta property="og:image" content={acohaMetaImage.src} key="og-image" />
         <meta property="og:site_name" content="acoha" key="og-site" />
       </Head>
       <body>
