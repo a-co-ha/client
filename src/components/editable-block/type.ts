@@ -17,3 +17,15 @@ export interface StateTypes {
   openTagSelectorMenu: boolean;
   tagSelectorMenuPosition: Coordinates;
 }
+
+export interface UserInChannel {
+  admin: boolean;
+  channelId: string;
+  channelName: string;
+  channel_id: string;
+  id: number;
+  name: string;
+  "user.user_id": number;
+  userId: number;
+  user_id: number;
+}

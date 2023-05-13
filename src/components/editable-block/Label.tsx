@@ -8,6 +8,7 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { updateLabel } from '@/pages/api/editable/updateLabel';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { usePreviousState } from '@/hooks/usePrevious';
+import { UserInChannel } from './type';
 
 export default function Label() {
   const { channelId, pageId } = useGetUrlInfo();
@@ -16,18 +17,19 @@ export default function Label() {
   const { data } = useGetLabels(pageId);
   const selectedUsers = data?.map((item) => item.content);
   const { data: usersInChannel } = useGetUsers();
-  const users = usersInChannel?.map((x: ChannelUser) => x.name);
+  const users = usersInChannel?.map((x: UserInChannel) => x.name);
   const [selected, setSelected] = useState<string[]>([]);
   const prevSelected: string[] = usePreviousState(selected) ?? [];
 
   useEffect(() => {
+    console.log('Label useeffect');
     setSelected(selectedUsers ?? []);
   }, [data]);
 
   const filteredPeople =
     query === ''
       ? users
-      : users.filter((user: string) =>
+      : users?.filter((user: string) =>
           user
             .toLowerCase()
             .replace(/\s+/g, '')
@@ -42,13 +44,14 @@ export default function Label() {
     );
 
     newSelected.forEach((name) => {
-      const userId = usersInChannel.filter((user: any) => user.name === name)[0]
-        .userId;
-
+      const userId = usersInChannel?.filter(
+        (user: any) => user.name === name
+      )[0].userId;
+      console.log(channelId, pageId, userId?.toString(), name);
       socket.emit('SET_ALERT', {
         channelId,
         pageId,
-        targetUserId: userId.toString(),
+        targetUserId: userId?.toString(),
         targetUserName: name,
       });
     });
@@ -91,7 +94,7 @@ export default function Label() {
                   Nothing found.
                 </div>
               ) : (
-                filteredPeople?.map((user: string[], index: number) => (
+                filteredPeople?.map((user: string, index: number) => (
                   <Combobox.Option
                     key={index}
                     className={({ active }) =>
