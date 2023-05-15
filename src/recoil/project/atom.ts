@@ -52,7 +52,7 @@ export const channelListState = atom<ChannelList[]>({
 
 export const channelNameState = atom({
   key: `channelNameState/${nanoId()}`,
-  default: 'A - COHA',
+  default: '',
 });
 
 export const channelImageState = atom({

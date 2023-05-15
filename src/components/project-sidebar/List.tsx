@@ -48,6 +48,10 @@ export const List = () => {
         });
         setChannelList(channels);
         setIsInitialUser(false);
+        const channelName = channels.filter(
+          (e) => channelId === String(e.id)
+        )[0].channelName;
+        setChannelName(channelName);
       } else {
         setChannelList([]);
         setIsInitialUser(true);
