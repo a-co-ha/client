@@ -80,7 +80,7 @@ export const pageNameShare = atomFamily({
   default: '',
 });
 
-// export const helpModalState = atomFamily({
-//   key: `helpModalState/${nanoId()}`,
-//   default: false,
-// });
+export const confirmModalState = atomFamily({
+  key: `confirmModalState/${nanoId()}`,
+  default: false,
+});

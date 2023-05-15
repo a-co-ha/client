@@ -1,14 +1,14 @@
 import { atom } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import type { commitLogOrgResponse } from '@/components/project-main/type';
-import type { commitLogRepoResponse } from '@/components/project-main/type';
+import type { CommitLogOrgResponse } from '@/components/project-main/type';
+import type { CommitLogRepoResponse } from '@/components/project-main/type';
 
 export const commitLogModalFormState = atom({
   key: `commitLogModalFormState/${nanoId()}`,
   default: false,
 });
 
-export const commitLogModalOrgSearchState = atom<commitLogOrgResponse[]>({
+export const commitLogModalOrgSearchState = atom<CommitLogOrgResponse[]>({
   key: `commitLogModalOrgSearchState/${nanoId()}`,
   default: [
     // {
@@ -20,7 +20,7 @@ export const commitLogModalOrgSearchState = atom<commitLogOrgResponse[]>({
   ],
 });
 
-export const commitLogModalRepoSearchState = atom<commitLogRepoResponse[]>({
+export const commitLogModalRepoSearchState = atom<CommitLogRepoResponse[]>({
   key: `commitLogModalRepoSearchState/${nanoId()}`,
   default: [
     // desc: '',

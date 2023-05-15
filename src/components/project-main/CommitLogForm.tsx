@@ -1,9 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
-import { faArrowTurnUp } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { commitLogModalFormState } from '@/recoil/github/atom';
@@ -11,14 +9,16 @@ import {
   commitLogModalOrgSearchState,
   commitLogModalRepoSearchState,
 } from '@/recoil/github/atom';
+import { confirmModalState } from '@/recoil/project/atom';
 import { useGithubRepoForm } from '@/hooks/form/useGithubRepoForm';
 import { useGetOrg } from '@/hooks/github/getHubOrg';
 import { useGetRepo } from '@/hooks/github/getHubRepo';
 import { HelpModal } from '@/hooks/useHelpModal';
+import { ConfirmModal } from '@/hooks/useConfirmModal';
+import { MODAL_KEY } from '@/utils/const';
 import Image from 'next/image';
 import * as styles from './styles';
-import type { commitLogFormType } from './type';
-import { divide } from 'lodash';
+import type { CommitLogFormType } from './type';
 
 export const CommitLogForm = ({
   channelId,
@@ -30,6 +30,7 @@ export const CommitLogForm = ({
   const getRepo = useGetRepo();
   const [selected, setSelected] = useState('organization');
   const [isFocus, setIsFocus] = useState(false);
+  const [isFocusContent, setIsFocusContent] = useState('');
   const orgSearchResponse = useRecoilValue(commitLogModalOrgSearchState);
   const repoSearchResponse = useRecoilValue(commitLogModalRepoSearchState);
   const resetOrgResponse = useResetRecoilState(commitLogModalOrgSearchState);
@@ -37,9 +38,10 @@ export const CommitLogForm = ({
   const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
     commitLogModalFormState
   );
-  const searchOptions = ['organization', 'repo'];
-
-  const methods = useForm<commitLogFormType>({
+  const [isModalOpen, setIsModalOpen] = useRecoilState(
+    confirmModalState(MODAL_KEY.confirm)
+  );
+  const methods = useForm<CommitLogFormType>({
     defaultValues: {
       searchOptionsInput: 'organization',
     },
@@ -61,7 +63,7 @@ export const CommitLogForm = ({
     onChange(value);
   };
 
-  const onSubmit = (searchOptions: commitLogFormType) => {
+  const onSubmit = (searchOptions: CommitLogFormType) => {
     resetOrgResponse();
     resetRepoResponse();
     console.log(`searchOptions`, searchOptions);
@@ -95,17 +97,27 @@ export const CommitLogForm = ({
     setSelected('organization');
     methods.reset();
   };
+
+  const onCancelHandler = () => {
+    setIsFocusContent('');
+  };
   console.log(`selected`, selected);
   return (
     <div>
       <div
         onClick={onClickHandler}
         css={styles.commitLogModalBackground(isCommitLogFormModal)}
-      ></div>
+      />
+      <ConfirmModal
+        title={`다음 저장소로 연결할까요?`}
+        content={isFocusContent}
+        confirmFunc={() => console.log('connect')}
+        cancelFunc={onCancelHandler}
+      />
       <div css={styles.commitLogModalTransition(isCommitLogFormModal)}>
         <div css={styles.commitLogModalFormBox}>
           <HelpModal
-            content={`내가 속한 organization 또는\n내가 만든 repository를 검색하고 우리의 프로젝트에 연결해 보세요!`}
+            content={`내가 속한 organization 또는\n내가 만든 repository를 검색하고 우리의 프로젝트에 연결해 보세요!\n(단, private 저장소는 검색되지 않습니다)`}
           />
           <div>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -161,7 +173,7 @@ export const CommitLogForm = ({
 
                 <div>
                   {orgSearchResponse.length !== 0 ? (
-                    <div css={styles.ItemBox}>
+                    <div css={styles.ItemBox} onClick={() => setIsFocus(false)}>
                       <div css={styles.ItemBoxPadding}>
                         {orgSearchResponse.map((org, i) => {
                           return (
@@ -170,14 +182,22 @@ export const CommitLogForm = ({
                               css={styles.orgItem}
                               type={'button'}
                               onKeyDown={onKeyDownHandler}
-                              onFocus={() => setIsFocus(true)}
-                              onBlur={() => setIsFocus(false)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsFocus(true);
+                                setIsFocusContent(
+                                  org.desc
+                                    ? `${org.name} : ${org.desc}`
+                                    : `${org.name}${org.desc}`
+                                );
+                              }}
                             >
                               {org.orgImg !== '' ? (
                                 <Image
                                   src={org.orgImg}
                                   width={40}
                                   height={40}
+                                  css={{ borderRadius: '0.375rem' }}
                                   alt={`org image`}
                                 />
                               ) : null}
@@ -198,8 +218,15 @@ export const CommitLogForm = ({
                               css={styles.orgItem}
                               type={'button'}
                               onKeyDown={onKeyDownHandler}
-                              onFocus={() => setIsFocus(true)}
-                              onBlur={() => setIsFocus(false)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsFocus(true);
+                                setIsFocusContent(
+                                  repo.desc
+                                    ? `${repo.name} : ${repo.desc}`
+                                    : `${repo.name}${repo.desc}`
+                                );
+                              }}
                             >
                               <span css={styles.orgName}>{repo.name}</span>
                               <span css={styles.orgDesc}>{repo.desc}</span>
@@ -234,9 +261,14 @@ export const CommitLogForm = ({
                 </div>
               </div>
               <button
-                disabled={methods.formState.isSubmitting || !isFocus}
                 css={styles.commitLogSubmitBtn(isFocus)}
-                type="button"
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setIsFocus(false);
+                }}
+                disabled={
+                  methods.formState.isSubmitting || isModalOpen || !isFocus
+                }
               >
                 <span>Connect</span>
               </button>

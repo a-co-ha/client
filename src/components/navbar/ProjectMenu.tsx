@@ -52,12 +52,12 @@ export const ProjectMenu = () => {
           // className="absolute right-0 mt-3 w-48 origin-top divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <div className="px-1 py-1">
-            <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-900">
-              <button>button 1</button>
+            <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-400">
+              <button>프로젝트 정보 (예정)</button>
             </div>
-            <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-900">
+            {/* <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-900">
               <button>button 2</button>
-            </div>
+            </div> */}
             {channelList.length !== 0 ? (
               <div
                 onClick={() => setIsInviteModal(true)}

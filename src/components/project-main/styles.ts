@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { chatBookmarkModalContent } from '../chat-bookmark/styles';
+import { inviteModalShareBtn } from '../navbar/styles';
 
 export const flexColumnCenter = css`
   display: flex;
@@ -67,7 +68,7 @@ export const commitLogModalTransition = (isOpen: boolean) => css`
 `;
 
 export const commitLogModalFormBox = css`
-  position: relative;
+  // position: relative;
   width: 500px;
   height: 65vh;
   padding: 1.5rem;
@@ -228,6 +229,7 @@ export const commitLogSubmitBtn = (isFocus: boolean) => css`
   &:hover {
     background: ${isFocus ? `rgba(248, 93, 117, 1)` : `white`};
   }
+  user-select: ${isFocus ? `auto` : `none`};
 `;
 
 export const errorMessage = css`
@@ -259,4 +261,50 @@ export const helpModalContent = (direction: string | undefined) => css`
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 -2px 5px -3px rgb(0 0 0 / 0.2),
     0 4px 6px -4px rgb(0 0 0 / 0.2);
   white-space: pre-wrap;
+`;
+
+export const confirmModalBackground = (isOpen: boolean) => css`
+  ${commitLogModalBackground(isOpen)};
+  z-index: 13;
+`;
+
+export const confirmModalTransition = (isOpen: boolean) => css`
+  ${commitLogModalTransition(isOpen)};
+  z-index: 14;
+`;
+
+export const confimModalBox = css`
+  position: relative;
+  width: 70vw;
+  height: 20vh;
+  padding: 1.5rem;
+  text-align: left;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+`;
+
+export const confirmModalContent = css`
+  padding: 1.5rem;
+  font-weight: 500;
+`;
+
+export const confirmModalBtnAlign = css`
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+`;
+
+export const confirmModalConfirmBtn = css`
+  ${inviteModalShareBtn};
+`;
+
+export const confirmModalCancelBtn = css`
+  ${inviteModalShareBtn};
+  margin-left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
 `;
