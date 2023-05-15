@@ -303,6 +303,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:0.0.29"\
       ],\
       [\
+        "@types/lodash",\
+        "npm:4.14.194"\
+      ],\
+      [\
         "@types/ms",\
         "npm:0.7.31"\
       ],\
@@ -2251,6 +2255,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@socket.io/component-emitter", "npm:4.0.0"],\
             ["@tanstack/react-query", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
             ["@tanstack/react-query-devtools", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
+            ["@types/lodash", "npm:4.14.194"],\
             ["@types/node", "npm:18.11.18"],\
             ["@types/prettier", "npm:2.7.2"],\
             ["@types/react", "npm:18.0.26"],\
@@ -2265,6 +2270,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
             ["eslint-config-prettier", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:8.6.0"],\
             ["eslint-plugin-prettier", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.2.1"],\
+            ["lodash", "npm:4.17.21"],\
             ["msw", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.49.3"],\
             ["nanoid", "npm:4.0.1"],\
             ["next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
@@ -3168,6 +3174,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/lodash", [\
+        ["npm:4.14.194", {\
+          "packageLocation": "./.yarn/cache/@types-lodash-npm-4.14.194-f099c0742e-113f34831c.zip/node_modules/@types/lodash/",\
+          "packageDependencies": [\
+            ["@types/lodash", "npm:4.14.194"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/ms", [\
         ["npm:0.7.31", {\
           "packageLocation": "./.yarn/cache/@types-ms-npm-0.7.31-ea3b89342b-daadd354ae.zip/node_modules/@types/ms/",\
@@ -3427,6 +3442,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@socket.io/component-emitter", "npm:4.0.0"],\
             ["@tanstack/react-query", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
             ["@tanstack/react-query-devtools", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
+            ["@types/lodash", "npm:4.14.194"],\
             ["@types/node", "npm:18.11.18"],\
             ["@types/prettier", "npm:2.7.2"],\
             ["@types/react", "npm:18.0.26"],\
@@ -3441,6 +3457,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
             ["eslint-config-prettier", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:8.6.0"],\
             ["eslint-plugin-prettier", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.2.1"],\
+            ["lodash", "npm:4.17.21"],\
             ["msw", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:0.49.3"],\
             ["nanoid", "npm:4.0.1"],\
             ["next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
