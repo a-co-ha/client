@@ -6,13 +6,13 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { commitLogModalFormState } from '@/recoil/github/atom';
 import {
-  commitLogModalOrgSearchState,
-  commitLogModalRepoSearchState,
+  commitLogModalOrgsSearchState,
+  commitLogModalReposSearchState,
 } from '@/recoil/github/atom';
 import { confirmModalState } from '@/recoil/project/atom';
 import { useGithubRepoForm } from '@/hooks/form/useGithubRepoForm';
-import { useGetOrg } from '@/hooks/github/getHubOrg';
-import { useGetRepo } from '@/hooks/github/getHubRepo';
+import { useGetOrgs } from '@/hooks/github/getHubOrgs';
+import { useGetRepos } from '@/hooks/github/getHubRepos';
 import { HelpModal } from '@/hooks/useHelpModal';
 import { ConfirmModal } from '@/hooks/useConfirmModal';
 import { MODAL_KEY } from '@/utils/const';
@@ -26,15 +26,15 @@ export const CommitLogForm = ({
   channelId: string | string[] | undefined;
 }) => {
   const { socket } = useContext(SocketContext);
-  const getOrg = useGetOrg();
-  const getRepo = useGetRepo();
+  const getOrgs = useGetOrgs();
+  const getRepos = useGetRepos();
   const [selected, setSelected] = useState('organization');
   const [isFocus, setIsFocus] = useState(false);
   const [isFocusContent, setIsFocusContent] = useState('');
-  const orgSearchResponse = useRecoilValue(commitLogModalOrgSearchState);
-  const repoSearchResponse = useRecoilValue(commitLogModalRepoSearchState);
-  const resetOrgResponse = useResetRecoilState(commitLogModalOrgSearchState);
-  const resetRepoResponse = useResetRecoilState(commitLogModalRepoSearchState);
+  const orgSearchResponse = useRecoilValue(commitLogModalOrgsSearchState);
+  const repoSearchResponse = useRecoilValue(commitLogModalReposSearchState);
+  const resetOrgResponse = useResetRecoilState(commitLogModalOrgsSearchState);
+  const resetRepoResponse = useResetRecoilState(commitLogModalReposSearchState);
   const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
     commitLogModalFormState
   );
@@ -69,9 +69,9 @@ export const CommitLogForm = ({
     console.log(`searchOptions`, searchOptions);
     if (searchOptions.searchOptionsInput === 'organization') {
       console.log(searchOptions.searchOptionsInput);
-      getOrg.mutate();
+      getOrgs.mutate();
     } else {
-      getRepo.mutate();
+      getRepos.mutate();
     }
   };
 
@@ -235,7 +235,7 @@ export const CommitLogForm = ({
                         })}
                       </div>
                     </div>
-                  ) : getOrg.isLoading || getRepo.isLoading ? (
+                  ) : getOrgs.isLoading || getRepos.isLoading ? (
                     <div css={styles.errorMessage}>검색중...</div>
                   ) : (
                     <div css={styles.errorMessage}>

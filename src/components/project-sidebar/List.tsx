@@ -17,14 +17,15 @@ import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
 
 export const List = () => {
+  const router = useRouter();
+  const channelId = router.query.id;
+
   const [channelList, setChannelList] = useRecoilState(channelListState);
   const setChannelName = useSetRecoilState(channelNameState);
   const setChannelImage = useSetRecoilState(channelImageState);
   const setIsInitialUser = useSetRecoilState(initialUserState);
 
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const channelId = router.query.id;
   const { data: userData } = useGetUser();
   const closeModal = () => {
     setIsOpen(false);

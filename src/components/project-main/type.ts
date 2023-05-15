@@ -2,18 +2,29 @@ export interface CommitLogFormType {
   searchOptionsInput: string;
 }
 
-export interface CommitLogOrgResponse {
+export interface CommitLogOrgsResponse {
   desc: string | null;
   name: string;
   orgImg: string;
   orgID: number;
 }
 
-export interface CommitLogRepoResponse {
+export interface CommitLogReposResponse {
   name: string;
   isPrivate: boolean;
   desc: null | string;
   url: string;
+}
+
+export interface CommitLogOrgResponse {
+  desc: string;
+  orgImg: string;
+  orgName: string;
+  orgUrl: string;
+  repos: {
+    name: string;
+    url: string;
+  }[];
 }
 
 export interface ConfirmModalType {

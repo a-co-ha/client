@@ -1,14 +1,17 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
-import type { CommitLogOrgResponse } from '@/components/project-main/type';
-import type { CommitLogRepoResponse } from '@/components/project-main/type';
+import type {
+  CommitLogOrgsResponse,
+  CommitLogOrgResponse,
+  CommitLogReposResponse,
+} from '@/components/project-main/type';
 
 export const commitLogModalFormState = atom({
   key: `commitLogModalFormState/${nanoId()}`,
   default: false,
 });
 
-export const commitLogModalOrgSearchState = atom<CommitLogOrgResponse[]>({
+export const commitLogModalOrgsSearchState = atom<CommitLogOrgsResponse[]>({
   key: `commitLogModalOrgSearchState/${nanoId()}`,
   default: [
     // {
@@ -20,7 +23,7 @@ export const commitLogModalOrgSearchState = atom<CommitLogOrgResponse[]>({
   ],
 });
 
-export const commitLogModalRepoSearchState = atom<CommitLogRepoResponse[]>({
+export const commitLogModalReposSearchState = atom<CommitLogReposResponse[]>({
   key: `commitLogModalRepoSearchState/${nanoId()}`,
   default: [
     // desc: '',
@@ -29,4 +32,28 @@ export const commitLogModalRepoSearchState = atom<CommitLogRepoResponse[]>({
     // private: false,
     // url: '',
   ],
+});
+
+export const commitLogModalOrgSearchState = atom<CommitLogOrgResponse>({
+  key: `commitLogModalOrgSearchState/${nanoId()}`,
+  default: {
+    desc: '',
+    orgImg: '',
+    orgName: '',
+    orgUrl: '',
+    repos: [
+      {
+        name: '',
+        url: '',
+      },
+    ],
+  },
+});
+
+export const githubConnectState = atomFamily({
+  key: `githubConnectState/${nanoId()}`,
+  default: {
+    name: '',
+    type: '',
+  },
 });

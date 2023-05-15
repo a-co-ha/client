@@ -10,6 +10,7 @@ import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
 import { adminState, inviteChannelState } from '@/recoil/user/atom';
+import { githubConnectState } from '@/recoil/github/atom';
 import * as styles from '@/components/project-main/styles';
 import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
@@ -18,17 +19,18 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
   console.log(`채널@@@`, channelId);
   const setIsAdmin = useSetRecoilState(adminState(channelId));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
+  const setChannelGithubData = useSetRecoilState(githubConnectState(channelId));
   const { data: userData } = useGetUser();
   const { data: channelUsers } = useGetUsers();
 
   useEffect(() => {
     if (userData !== undefined && channelUsers !== undefined) {
       console.log(`채널 유저스`, channelUsers);
-      const admin = channelUsers.filter(
+      const myUserData = channelUsers.filter(
         (user: ChannelUser) => user.userId === userData.userId
       )[0];
-      const isAdmin = admin.admin;
-      console.log(`이즈 어드민`, admin, isAdmin);
+      const isAdmin = myUserData.admin;
+      console.log(`이즈 어드민`, myUserData, isAdmin);
       console.log('이거 인덱스 유저데이타', userData);
       const { userId, channelName, channelId } = channelUsers.filter(
         (user: ChannelUser) => user.admin === true
@@ -36,6 +38,11 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       setIsAdmin(isAdmin);
       setInviteChannelData({ userId, channelName, channelId });
       console.log(`인바이트 인포`, userId, channelName);
+      const channelGithubData = userData.channels.filter(
+        (channel) => channelId === String(channel.id)
+      )[0].orgGithubName;
+      setChannelGithubData({ name: channelGithubData, type: 'org' });
+      console.log(`채널 깃허브`, channelGithubData);
     }
   }, [channelUsers]);
 
