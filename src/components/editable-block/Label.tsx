@@ -8,6 +8,7 @@ import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { usePreviousState } from '@/hooks/usePrevious';
 import { UserInChannel } from './type';
 import { usePutLabels } from '@/hooks/queries/editable/putLabels';
+import _ from 'lodash';
 
 export default function Label() {
   const { channelId, pageId } = useGetUrlInfo();
@@ -18,10 +19,12 @@ export default function Label() {
     () => data?.map((item) => item.content) ?? [],
     [data]
   );
+
   const { data: usersInChannel } = useGetUsers();
   const users = usersInChannel?.map((x: UserInChannel) => x.name);
   const { mutate: updateLabel } = usePutLabels(channelId, pageId);
   const [selected, setSelected] = useState<string[]>(selectedUsers);
+
   const prevSelected: string[] = usePreviousState(selected) ?? [];
 
   useEffect(() => {
@@ -39,7 +42,7 @@ export default function Label() {
         );
 
   const afterLeaveHandler = () => {
-    if (selected === selectedUsers) {
+    if (_.isEqual(selected, selectedUsers)) {
       return;
     }
     updateLabel(selected);

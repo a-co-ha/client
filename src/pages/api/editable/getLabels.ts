@@ -10,7 +10,6 @@ export const getLabels = async (
       `/api/page/${pageId}?type=${type}&channel=${channelId}`
     );
     const labels: Label[] | [] = res.data.label;
-    console.log('labels', labels);
     return labels;
   } catch (err) {
     console.error(err);

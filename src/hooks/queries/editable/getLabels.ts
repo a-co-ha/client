@@ -1,6 +1,5 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getLabels } from '@/pages/api/editable/getLabels';
-import type { AxiosError } from 'axios';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 
 export interface Label {
