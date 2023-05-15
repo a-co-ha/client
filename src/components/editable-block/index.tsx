@@ -171,6 +171,23 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
+  /**
+   * 이미지태그일 때 실행되는 onclick
+   */
+  const handleImageClick = () => {
+    if (
+      contentEditable.current &&
+      contentEditable.current.childNodes[0]?.nodeName === 'IMG'
+    ) {
+      const imgNode = contentEditable.current.childNodes[0] as HTMLImageElement;
+      if (imgNode.getAttribute('style') === 'width: 100%') {
+        imgNode.removeAttribute('style');
+      } else {
+        imgNode.setAttribute('style', 'width: 100%');
+      }
+    }
+  };
+
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     try {
@@ -235,6 +252,7 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyDown={handleKeyDown}
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
+                onClick={handleImageClick}
               />
               <input
                 type="file"

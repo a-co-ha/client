@@ -34,3 +34,7 @@ export const block = (
   user-select: text;
   opacity: ${hasPlaceholder ? '0.5' : ''};
 `;
+
+export const imgStyle = () => css`
+  width: 100%;
+`;
