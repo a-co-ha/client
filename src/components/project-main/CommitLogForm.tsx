@@ -80,11 +80,19 @@ export const CommitLogForm = ({
     const button = e.target as HTMLButtonElement;
     if (button.nextElementSibling && e.key === 'ArrowDown') {
       (button.nextElementSibling as HTMLButtonElement).focus();
+      (button.nextElementSibling as HTMLButtonElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
     } else if (!button.nextElementSibling && e.key === 'ArrowDown') {
       (button.parentElement?.firstElementChild as HTMLButtonElement).focus();
     }
     if (button.previousElementSibling && e.key === 'ArrowUp') {
       (button.previousElementSibling as HTMLButtonElement).focus();
+      (button.previousElementSibling as HTMLButtonElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
     } else if (!button.previousElementSibling && e.key === 'ArrowUp') {
       (button.parentElement?.lastElementChild as HTMLButtonElement).focus();
     }
