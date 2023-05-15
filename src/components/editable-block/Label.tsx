@@ -1,28 +1,30 @@
-import { Fragment, useEffect, useState, useContext } from 'react';
+import { Fragment, useEffect, useState, useContext, useMemo } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
-import { ChannelUser } from '@/pages/api/user/type';
 import { useGetLabels } from '@/hooks/queries/editable/getLabels';
 import { SocketContext } from '../chat-page/SocketContextProvider';
-import { updateLabel } from '@/pages/api/editable/updateLabel';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { usePreviousState } from '@/hooks/usePrevious';
 import { UserInChannel } from './type';
+import { usePutLabels } from '@/hooks/queries/editable/putLabels';
 
 export default function Label() {
   const { channelId, pageId } = useGetUrlInfo();
   const { socket } = useContext(SocketContext);
   const [query, setQuery] = useState('');
   const { data } = useGetLabels(pageId);
-  const selectedUsers = data?.map((item) => item.content);
+  const selectedUsers = useMemo(
+    () => data?.map((item) => item.content) ?? [],
+    [data]
+  );
   const { data: usersInChannel } = useGetUsers();
   const users = usersInChannel?.map((x: UserInChannel) => x.name);
-  const [selected, setSelected] = useState<string[]>([]);
+  const { mutate: updateLabel } = usePutLabels(channelId, pageId);
+  const [selected, setSelected] = useState<string[]>(selectedUsers);
   const prevSelected: string[] = usePreviousState(selected) ?? [];
 
   useEffect(() => {
-    console.log('Label useeffect');
     setSelected(selectedUsers ?? []);
   }, [data]);
 
@@ -37,24 +39,30 @@ export default function Label() {
         );
 
   const afterLeaveHandler = () => {
-    updateLabel(channelId, pageId, selected);
+    if (selected === selectedUsers) {
+      return;
+    }
+    updateLabel(selected);
 
     const newSelected = selected.filter(
       (user) => prevSelected && !prevSelected.includes(user)
     );
 
     newSelected.forEach((name) => {
-      const userId = usersInChannel?.filter(
-        (user: any) => user.name === name
-      )[0].userId;
-      console.log(channelId, pageId, userId?.toString(), name);
-      socket.emit('SET_ALERT', {
-        channelId,
-        pageId,
-        targetUserId: userId?.toString(),
-        targetUserName: name,
-      });
+      const user = usersInChannel?.find(
+        (user: UserInChannel) => user.name === name
+      );
+      if (user) {
+        const { userId } = user;
+        socket.emit('SET_ALERT', {
+          channelId,
+          pageId,
+          targetUserId: userId?.toString(),
+          targetUserName: name,
+        });
+      }
     });
+
     setQuery('');
   };
 

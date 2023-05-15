@@ -1,3 +1,4 @@
+import { Label } from '@/hooks/queries/editable/getLabels';
 import { api } from '../config/api-config';
 export const getLabels = async (
   channelId: string | string[] | undefined,
@@ -8,7 +9,8 @@ export const getLabels = async (
     const res = await api.get(
       `/api/page/${pageId}?type=${type}&channel=${channelId}`
     );
-    const labels = res.data.label;
+    const labels: Label[] | [] = res.data.label;
+    console.log('labels', labels);
     return labels;
   } catch (err) {
     console.error(err);
