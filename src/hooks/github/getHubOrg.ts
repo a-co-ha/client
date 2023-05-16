@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { commitLogModalOrgSearchState } from '@/recoil/github/atom';
-import type { CommitLogOrgResponse } from '@/components/project-main/type';
+import type { CommitLogOrgResponse } from '@/pages/api/github/type';
 
 export const useGetOrg = (channelId: string | string[] | undefined) => {
   // const queryClient = useQueryClient();

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import * as styles from './styles';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   channelNameState,
   channelListState,
@@ -8,7 +8,7 @@ import {
 } from '@/recoil/project/atom';
 import { useDeleteProject } from '@/hooks/queries/project/deleteProject';
 import { useExitProject } from '@/hooks/queries/project/exitProject';
-import { useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { InviteModal } from './inviteModal';
 import { ProjectDeleteForm } from './ProjectDeleteForm';
@@ -33,7 +33,7 @@ export const ProjectMenu = () => {
   return (
     <div css={styles.projectNameBox}>
       <InviteModal />
-      <ProjectDeleteForm channelId={channelId} channelList={channelList} />
+      <ProjectDeleteForm channelId={channelId} />
       <div
         onClick={onClickHandler}
         className="relative inline-block text-left w-[200px]"

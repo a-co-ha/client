@@ -13,12 +13,13 @@ import { confirmModalState } from '@/recoil/project/atom';
 import { useGithubRepoForm } from '@/hooks/form/useGithubRepoForm';
 import { useGetOrgs } from '@/hooks/github/getHubOrgs';
 import { useGetRepos } from '@/hooks/github/getHubRepos';
+import { useRegisterHub } from '@/hooks/github/registerHub';
 import { HelpModal } from '@/hooks/useHelpModal';
 import { ConfirmModal } from '@/hooks/useConfirmModal';
 import { MODAL_KEY } from '@/utils/const';
 import Image from 'next/image';
 import * as styles from './styles';
-import type { CommitLogFormType } from './type';
+import type { CommitLogFormType } from '@/pages/api/github/type';
 
 export const CommitLogForm = ({
   channelId,
@@ -28,11 +29,16 @@ export const CommitLogForm = ({
   const { socket } = useContext(SocketContext);
   const getOrgs = useGetOrgs();
   const getRepos = useGetRepos();
+  const registerHub = useRegisterHub(channelId);
   const [selected, setSelected] = useState('organization');
   const [isFocus, setIsFocus] = useState(false);
+  const [registerHubData, setRegisterHubData] = useState({
+    repoName: '',
+    repoType: '',
+  });
   const [isFocusContent, setIsFocusContent] = useState('');
-  const orgSearchResponse = useRecoilValue(commitLogModalOrgsSearchState);
-  const repoSearchResponse = useRecoilValue(commitLogModalReposSearchState);
+  const orgsSearchResponse = useRecoilValue(commitLogModalOrgsSearchState);
+  const reposSearchResponse = useRecoilValue(commitLogModalReposSearchState);
   const resetOrgResponse = useResetRecoilState(commitLogModalOrgsSearchState);
   const resetRepoResponse = useResetRecoilState(commitLogModalReposSearchState);
   const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
@@ -119,7 +125,7 @@ export const CommitLogForm = ({
       <ConfirmModal
         title={`다음 저장소로 연결할까요?`}
         content={isFocusContent}
-        confirmFunc={() => console.log('connect')}
+        confirmFunc={() => registerHub.mutate(registerHubData)}
         cancelFunc={onCancelHandler}
       />
       <div css={styles.commitLogModalTransition(isCommitLogFormModal)}>
@@ -180,10 +186,10 @@ export const CommitLogForm = ({
                 </div>
 
                 <div>
-                  {orgSearchResponse.length !== 0 ? (
+                  {orgsSearchResponse.length !== 0 ? (
                     <div css={styles.ItemBox} onClick={() => setIsFocus(false)}>
                       <div css={styles.ItemBoxPadding}>
-                        {orgSearchResponse.map((org, i) => {
+                        {orgsSearchResponse.map((org, i) => {
                           return (
                             <button
                               key={i}
@@ -198,6 +204,10 @@ export const CommitLogForm = ({
                                     ? `${org.name} : ${org.desc}`
                                     : `${org.name}${org.desc}`
                                 );
+                                setRegisterHubData({
+                                  repoName: org.name,
+                                  repoType: 'org',
+                                });
                               }}
                             >
                               {org.orgImg !== '' ? (
@@ -216,10 +226,10 @@ export const CommitLogForm = ({
                         })}
                       </div>
                     </div>
-                  ) : repoSearchResponse.length !== 0 ? (
+                  ) : reposSearchResponse.length !== 0 ? (
                     <div css={styles.ItemBox}>
                       <div css={styles.ItemBoxPadding}>
-                        {repoSearchResponse.map((repo, i) => {
+                        {reposSearchResponse.map((repo, i) => {
                           return (
                             <button
                               key={i}
@@ -234,6 +244,10 @@ export const CommitLogForm = ({
                                     ? `${repo.name} : ${repo.desc}`
                                     : `${repo.name}${repo.desc}`
                                 );
+                                setRegisterHubData({
+                                  repoName: repo.name,
+                                  repoType: 'repo',
+                                });
                               }}
                             >
                               <span css={styles.orgName}>{repo.name}</span>

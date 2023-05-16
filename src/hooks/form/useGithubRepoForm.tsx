@@ -1,5 +1,5 @@
 import { Control, useController } from 'react-hook-form';
-import type { CommitLogFormType } from '@/components/project-main/type';
+import type { CommitLogFormType } from '@/pages/api/github/type';
 
 export const useGithubRepoForm = ({
   control,

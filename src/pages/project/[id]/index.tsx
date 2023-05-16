@@ -11,6 +11,7 @@ import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
 import { adminState, inviteChannelState } from '@/recoil/user/atom';
 import { githubConnectState } from '@/recoil/github/atom';
+import { channelNameState } from '@/recoil/project/atom';
 import * as styles from '@/components/project-main/styles';
 import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
@@ -20,6 +21,7 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
   const setIsAdmin = useSetRecoilState(adminState(channelId));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
   const setChannelGithubData = useSetRecoilState(githubConnectState(channelId));
+  const setChannelName = useSetRecoilState(channelNameState);
   const { data: userData } = useGetUser();
   const { data: channelUsers } = useGetUsers();
 
@@ -40,9 +42,13 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       console.log(`인바이트 인포`, userId, channelName);
       const channelGithubData = userData.channels.filter(
         (channel) => channelId === String(channel.id)
-      )[0].orgGithubName;
-      setChannelGithubData({ name: channelGithubData, type: 'org' });
+      )[0];
+      setChannelGithubData({
+        repoName: channelGithubData.repoName,
+        repoType: channelGithubData.repoType,
+      });
       console.log(`채널 깃허브`, channelGithubData);
+      setChannelName(myUserData.channelName);
     }
   }, [channelUsers]);
 

@@ -5,7 +5,6 @@ import type { User } from '@/pages/api/user/type';
 export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,
   default: {
-    id: 0,
     userId: 0,
     github_id: '',
     github_url: '',
@@ -17,7 +16,8 @@ export const userDataState = atom<User>({
         userId: 0,
         channelName: '',
         channelImg: '',
-        orgGithubName: '',
+        repoName: '',
+        repoType: '',
       },
     ],
   },

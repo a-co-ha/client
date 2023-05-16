@@ -10,8 +10,9 @@ import {
   commitLogModalOrgSearchState,
   githubConnectState,
 } from '@/recoil/github/atom';
-import { channelListState } from '@/recoil/project/atom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 function classNames(...classes: any) {
@@ -26,13 +27,16 @@ export const CommitLog = () => {
   const getRepo = useGetRepo(channelId);
   useLayoutEffect(() => {
     console.log(`connectdata`, githubConnectData);
-    if (githubConnectData.name !== '' && githubConnectData.type === 'org') {
-      return getOrg.mutate(githubConnectData.name);
-    } else if (
-      githubConnectData.name !== '' &&
-      githubConnectData.type === 'repo'
+    if (
+      githubConnectData.repoName !== '' &&
+      githubConnectData.repoType === 'org'
     ) {
-      return getRepo.mutate(githubConnectData.name);
+      return getOrg.mutate(githubConnectData.repoName);
+    } else if (
+      githubConnectData.repoName !== '' &&
+      githubConnectData.repoType === 'repo'
+    ) {
+      return getRepo.mutate(githubConnectData.repoName);
     }
   }, [githubConnectData]);
   useEffect(() => {}, [githubOrgData]);
@@ -94,9 +98,9 @@ export const CommitLog = () => {
     ],
   });
   return (
-    <div css={styles.contentBox} className="w-full max-w-md px-2 py-16 sm:px-0">
+    <div css={styles.commitLogBox} className="w-full max-w-md px-2 sm:px-0">
       <CommitLogForm channelId={channelId} />
-      {githubConnectData.name !== '' ? (
+      {githubConnectData.repoName !== '' ? (
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
             {githubOrgData &&
@@ -161,7 +165,50 @@ export const CommitLog = () => {
             ))}
           </Tab.Panels>
         </Tab.Group>
-      ) : null}
+      ) : (
+        <div
+          css={styles.commitLogInnerBox(
+            githubConnectData.repoName === '' ? false : true
+          )}
+          onClick={() => setIsCommitLogFormModal(true)}
+        >
+          <Tab.Group>
+            <div css={styles.commitLogTitleBox}>
+              <FontAwesomeIcon icon={faGithub} color={`#000000`} />
+              <p css={styles.commitLogTitle}>A - COHA</p>
+            </div>
+
+            <Tab.List className="flex space-x-1 rounded-b-md  p-1">
+              {[`Client`, `Server`].map((category) => (
+                // {Object.keys(categories).map((category) => (
+                <Tab
+                  key={category}
+                  className={({ selected }) =>
+                    classNames(
+                      'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+                      'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                      selected
+                        ? 'bg-white shadow'
+                        : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                    )
+                  }
+                >
+                  {category}
+                </Tab>
+              ))}
+              {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
+            </Tab.List>
+            <div css={styles.commitLogPlusBtnBox}>
+              <FontAwesomeIcon
+                icon={faSquarePlus}
+                color={`#000000`}
+                size={`2xl`}
+              />
+              <p>깃허브 연결하기</p>
+            </div>
+          </Tab.Group>
+        </div>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { confirmModalState } from '@/recoil/project/atom';
 import { MODAL_KEY } from '@/utils/const';
 import * as styles from '@/components/project-main/styles';
-import type { ConfirmModalType } from '@/components/project-main/type';
+import type { ConfirmModalType } from '@/pages/api/github/type';
 
 export const ConfirmModal = ({
   title,

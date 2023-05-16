@@ -8,19 +8,15 @@ import { useRouter } from 'next/router';
 import { channelNameState } from '@/recoil/project/atom';
 import * as styles from './styles';
 import type { ProjectDeleteName } from './type';
-import type { ChannelList } from '@/pages/api/user/type';
-import type { RefCallBack } from 'react-hook-form';
 
 export const ProjectDeleteForm = ({
   channelId,
-  channelList,
 }: {
   channelId: string | string[] | undefined;
-  channelList: ChannelList[];
 }) => {
   const channelName = useRecoilValue(channelNameState);
   const [isDeleteModal, setIsDeleteModal] = useRecoilState(deleteModalState);
-  const deleteProject = useDeleteProject(channelId, channelList);
+  const deleteProject = useDeleteProject(channelId);
 
   const onClickHandler = () => {
     methods.reset();

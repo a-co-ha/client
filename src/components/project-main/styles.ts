@@ -10,17 +10,73 @@ export const flexColumnCenter = css`
   text-align: center;
 `;
 
-export const contentBox = css`
+export const commonBoxStyle = css`
   display: flex;
   flex-direction: column;
   width: 200px;
-  height: auto;
+  min-height: 300px;
   margin: 0 auto;
-  outline: 1px solid red;
 `;
 
-export const contentBoxTitle = css`
+export const commonTitleStyle = css`
   text-align: left;
+`;
+
+export const commitLogBox = css`
+  ${commonBoxStyle};
+  // outline: 1px solid red;
+`;
+
+export const commitLogTitleBox = css`
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+  align-items: center;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.8015800070028012) 0%,
+    rgba(143, 143, 143, 0.9033189033189033) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  border-top-left-radius: 0.37rem;
+  border-top-right-radius: 0.37rem;
+`;
+
+export const commitLogTitle = css`
+  ${commonTitleStyle};
+  font-weight: 500;
+`;
+
+export const commitLogInnerBox = (isConnected: boolean) => css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &::after {
+    display: ${!isConnected ? `flex` : `none`};
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.375rem;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+  &:hover::after {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+`;
+
+export const commitLogPlusBtnBox = css`
+  padding-top: 3rem;
+  & > p {
+    padding: 0.5rem 0;
+  }
 `;
 
 export const content = css`

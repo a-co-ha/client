@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 import {
   channelListState,
   channelNameState,
@@ -21,6 +21,7 @@ export const List = () => {
   const channelId = router.query.id;
 
   const [channelList, setChannelList] = useRecoilState(channelListState);
+  const resetChannelList = useResetRecoilState(channelListState);
   const setChannelName = useSetRecoilState(channelNameState);
   const setChannelImage = useSetRecoilState(channelImageState);
   const setIsInitialUser = useSetRecoilState(initialUserState);
@@ -44,18 +45,16 @@ export const List = () => {
             userId: e.userId,
             channelName: e.channelName,
             channelImg: e.channelImg,
-            orgGithubName: e.orgGithubName,
+            repoName: e.repoName,
+            repoType: e.repoType,
           });
         });
         setChannelList(channels);
         setIsInitialUser(false);
-        const channelName = channels.filter(
-          (e) => channelId === String(e.id)
-        )[0].channelName;
-        setChannelName(channelName);
       } else {
-        setChannelList([]);
+        resetChannelList();
         setIsInitialUser(true);
+        setChannelName('');
       }
     } catch (err) {
       console.error(err);
