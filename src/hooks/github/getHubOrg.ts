@@ -11,7 +11,7 @@ export const useGetOrg = (channelId: string | string[] | undefined) => {
     [`getOrg`, channelId],
     (org: string) => getOrg(org),
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         console.log('org 하나에용', data);
         setOrg(data);
       },

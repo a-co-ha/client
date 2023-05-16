@@ -36,7 +36,11 @@ export const CommitLog = () => {
       githubConnectData.repoName !== '' &&
       githubConnectData.repoType === 'org'
     ) {
-      return getOrg.mutate(githubConnectData.repoName);
+      getOrg.mutate(githubConnectData.repoName);
+      // getOrgCommitList.mutate({
+      //   org: githubConnectData.repoName,
+      //   repo: githubOrgData.repos[0].name,
+      // });
     } else if (
       githubConnectData.repoName !== '' &&
       githubConnectData.repoType === 'repo'
@@ -51,56 +55,6 @@ export const CommitLog = () => {
   const [githubConnect, setGithubConnect] = useRecoilState(
     githubConnectState(channelId)
   );
-  let [categories] = useState({
-    Recent: [
-      {
-        id: 1,
-        title: 'Does drinking coffee make you smarter?',
-        date: '5h ago',
-        commentCount: 5,
-        shareCount: 2,
-      },
-      {
-        id: 2,
-        title: "So you've bought coffee... now what?",
-        date: '2h ago',
-        commentCount: 3,
-        shareCount: 2,
-      },
-    ],
-    Popular: [
-      {
-        id: 1,
-        title: 'Is tech making coffee better or worse?',
-        date: 'Jan 7',
-        commentCount: 29,
-        shareCount: 16,
-      },
-      {
-        id: 2,
-        title: 'The most innovative things happening in coffee',
-        date: 'Mar 19',
-        commentCount: 24,
-        shareCount: 12,
-      },
-    ],
-    Trending: [
-      {
-        id: 1,
-        title: 'Ask Me Anything: 10 answers to your questions about coffee',
-        date: '2d ago',
-        commentCount: 9,
-        shareCount: 5,
-      },
-      {
-        id: 2,
-        title: "The worst advice we've ever heard about coffee",
-        date: '4d ago',
-        commentCount: 1,
-        shareCount: 2,
-      },
-    ],
-  });
   return (
     <div css={styles.commitLogBox} className="w-full max-w-md px-2 sm:px-0">
       <CommitLogForm channelId={channelId} />
@@ -152,36 +106,32 @@ export const CommitLog = () => {
               {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
             </Tab.List>
             <Tab.Panels className="mt-2 h-2/3">
-              {Object.values(categories).map((posts, idx) => (
-                <Tab.Panel
-                  key={idx}
-                  className={classNames(
-                    'rounded-xl bg-white p-3 h-full',
-                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
-                  )}
-                >
-                  <div css={styles.commitLogItemAlign}>
-                    <ul css={styles.commitLogItemBox}>
-                      <div css={styles.commitLogLine}></div>
-                      <li
-                        css={styles.commitLogItem}
-                        onClick={() => console.log(`commit url이동`)}
-                      >
-                        <span css={styles.commitLogSphere}></span>
-                        <div>
-                          {/* data 재 가공 유틸 필요 */}
-                          <span>{githubOrgCommitData[0].payload.ref}</span>
-                          <span>{githubOrgCommitData[0].created_at}</span>
-                          <span>
-                            {
-                              githubOrgCommitData[0].payload.commits[0].author
-                                .name
-                            }
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                    {/* {posts.map((post) => (
+              {githubOrgCommitData &&
+                githubOrgCommitData.map((commit, idx) => (
+                  <Tab.Panel
+                    key={idx}
+                    className={classNames(
+                      'rounded-xl bg-white p-3 h-full',
+                      'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                    )}
+                  >
+                    <div css={styles.commitLogItemAlign}>
+                      <ul css={styles.commitLogItemBox}>
+                        <div css={styles.commitLogLine}></div>
+                        <li
+                          css={styles.commitLogItem}
+                          onClick={() => console.log(`commit url이동`)}
+                        >
+                          <span css={styles.commitLogSphere}></span>
+                          <div>
+                            {/* data 재 가공 유틸 필요 */}
+                            <span>{commit.payload.ref}</span>
+                            <span>{commit.created_at}</span>
+                            <span>{commit.payload.commits[0].author.name}</span>
+                          </div>
+                        </li>
+                      </ul>
+                      {/* {posts.map((post) => (
                       <li
                         key={post.id}
                         className="relative rounded-md p-3 hover:bg-gray-100"
@@ -208,9 +158,9 @@ export const CommitLog = () => {
                         />
                       </li>
                     ))} */}
-                  </div>
-                </Tab.Panel>
-              ))}
+                    </div>
+                  </Tab.Panel>
+                ))}
             </Tab.Panels>
           </Tab.Group>
         </div>
