@@ -171,15 +171,12 @@ export const EditableBlock = (props: editableBlock) => {
     });
   };
 
-  /**
-   * 이미지태그일 때 실행되는 onclick
-   */
   const handleImageClick = () => {
     if (
       contentEditable.current &&
-      contentEditable.current.childNodes[0]?.nodeName === 'IMG'
+      contentEditable.current.firstElementChild?.tagName === 'IMG'
     ) {
-      const imgNode = contentEditable.current.childNodes[0] as HTMLImageElement;
+      const imgNode = contentEditable.current.firstElementChild;
       if (imgNode.getAttribute('style') === 'width: 100%') {
         imgNode.removeAttribute('style');
       } else {

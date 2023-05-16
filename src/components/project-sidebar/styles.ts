@@ -127,7 +127,7 @@ export const pageNameLink = css`
   align-items: center;
   font-size: 0.875rem;
   border-radius: 0.375rem;
-  padding: 0.5rem;
+  padding: 0.3rem;
 `;
 
 export const pageNameEditBtn = css`

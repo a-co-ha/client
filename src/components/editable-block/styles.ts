@@ -35,6 +35,4 @@ export const block = (
   opacity: ${hasPlaceholder ? '0.5' : ''};
 `;
 
-export const imgStyle = () => css`
-  width: 100%;
-`;
+

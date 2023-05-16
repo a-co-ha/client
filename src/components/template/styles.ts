@@ -20,10 +20,19 @@ export const progressSection = css`
 `;
 
 export const progressInPage = css`
-  border: solid;
-  height: 5rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 8px 10px 6px 6px;
   border-radius: 5px;
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 5rem;
+`;
+
+export const d = css`
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
 `;
 
 export const gaugeContainer = css`
