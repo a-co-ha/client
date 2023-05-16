@@ -24,7 +24,6 @@ export const commonTitleStyle = css`
 
 export const commitLogBox = css`
   ${commonBoxStyle};
-  // outline: 1px solid red;
 `;
 
 export const commitLogTitleBox = css`
@@ -52,6 +51,9 @@ export const commitLogInnerBox = (isConnected: boolean) => css`
   position: relative;
   width: 100%;
   height: 100%;
+  border-radius: 0.375rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
   &::after {
     display: ${!isConnected ? `flex` : `none`};
     position: absolute;
@@ -62,9 +64,6 @@ export const commitLogInnerBox = (isConnected: boolean) => css`
     height: 100%;
     justify-content: center;
     align-items: center;
-    border-radius: 0.375rem;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-      0 8px 10px -6px rgb(0 0 0 / 0.1);
   }
   &:hover::after {
     background: rgba(0, 0, 0, 0.1);
@@ -77,6 +76,43 @@ export const commitLogPlusBtnBox = css`
   & > p {
     padding: 0.5rem 0;
   }
+`;
+
+export const commitLogItemAlign = css`
+  height: 100%;
+`;
+
+export const commitLogItemBox = css`
+  position: relative;
+  height: 100%;
+  outline: 1px solid red;
+  overflow: hidden;
+`;
+
+export const commitLogItem = css`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const commitLogLine = css`
+  display: inline-block;
+  position: absolute;
+  top: 6px;
+  left: 2px;
+  width: 2px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+`;
+
+export const commitLogSphere = css`
+  display: inline-block;
+  position: relative;
+  // z-index: 3;
+  width: 6px;
+  height: 6px;
+  background: rgba(0, 0, 255, 1);
+  border-radius: 50%;
 `;
 
 export const content = css`

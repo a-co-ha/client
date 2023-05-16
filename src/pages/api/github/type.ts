@@ -46,3 +46,28 @@ export interface CommitLogGithubRegister {
   repoName: string;
   repoType: string;
 }
+
+export interface OrgCommitList {
+  id: string;
+  created_at: string;
+  repo: {
+    id: number;
+    name: string;
+    url: string;
+  };
+  payload: {
+    ref: string;
+    commits: {
+      author: {
+        name: string;
+      };
+      message: string;
+      url: string;
+    }[];
+  };
+}
+
+export interface OrgRepoName {
+  org: string;
+  repo: string;
+}

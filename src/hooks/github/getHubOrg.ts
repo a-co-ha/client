@@ -6,7 +6,6 @@ import { commitLogModalOrgSearchState } from '@/recoil/github/atom';
 import type { CommitLogOrgResponse } from '@/pages/api/github/type';
 
 export const useGetOrg = (channelId: string | string[] | undefined) => {
-  // const queryClient = useQueryClient();
   const setOrg = useSetRecoilState(commitLogModalOrgSearchState);
   return useMutation<CommitLogOrgResponse, AxiosError, string>(
     [`getOrg`, channelId],
@@ -14,7 +13,6 @@ export const useGetOrg = (channelId: string | string[] | undefined) => {
     {
       onSuccess: (data) => {
         console.log('org 하나에용', data);
-        // queryClient.invalidateQueries([`channelPages`, channelId]);
         setOrg(data);
       },
     }

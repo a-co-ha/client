@@ -4,7 +4,3 @@ export interface PostProject {
   channelName: string;
   channelImg: null;
 }
-
-export interface ExitProject {
-  message: string;
-}

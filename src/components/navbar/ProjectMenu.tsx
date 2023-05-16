@@ -24,7 +24,7 @@ export const ProjectMenu = () => {
   const setIsInviteModal = useSetRecoilState(inviteModalState);
   const setIsDeleteModal = useSetRecoilState(deleteModalState);
 
-  const exitProject = useExitProject(channelId, channelList);
+  const exitProject = useExitProject(channelId);
   let [isOpen, setIsOpen] = useState(false);
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
