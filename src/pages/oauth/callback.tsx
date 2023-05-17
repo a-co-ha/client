@@ -45,7 +45,7 @@ export default function Callback({
 
   return (
     <div>
-      <Loading />
+      <Loading position="fixed" />
     </div>
   );
 }

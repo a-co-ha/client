@@ -4,11 +4,7 @@ import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { commitDataTransfer } from '@/utils/commitDataTransfer';
 import { githubOrgCommitState } from '@/recoil/github/atom';
-import type {
-  OrgCommitList,
-  OrgCommitTransferedData,
-  OrgRepoName,
-} from '@/pages/api/github/type';
+import type { OrgCommitList, OrgRepoName } from '@/pages/api/github/type';
 
 export const useGetOrgCommit = (channelId: string | string[] | undefined) => {
   const setOrgCommit = useSetRecoilState(githubOrgCommitState);

@@ -22,7 +22,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
      * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
      */
     <div css={styles.main}>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading position="fixed" />}>
         <ProjectSideBar />
         {type === 'normal' || type === 'progress-page' ? (
           <EditablePage

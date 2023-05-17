@@ -33,7 +33,7 @@ export const commonBoxStyle = css`
   flex-direction: column;
   width: 200px;
   min-height: 300px;
-  max-height: 400px;
+  max-height: 450px;
   margin: 0 auto;
 `;
 
@@ -66,9 +66,49 @@ export const commitLogTitleBox = css`
   }
 `;
 
+export const commitLogConnectChangeBox = css`
+  display: flex;
+  gap: 0.5rem;
+  &:hover svg {
+    display: block;
+  }
+  & svg {
+    display: none;
+  }
+  cursor: pointer;
+`;
+
 export const commitLogTitle = css`
   ${commonTitleStyle};
   font-weight: 700;
+`;
+
+export const commitLogNavBtnBox = css`
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+  padding-bottom: 0;
+  text-align: start;
+  overflow: scroll;
+  white-space: nowrap;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  & button:first-child {
+    background: #ffd6dc;
+    color: black;
+  }
+`;
+
+export const commitLogNavBtn = css`
+  padding: 0.5rem 1rem;
+  margin: 0.1rem 0.5rem 0.1rem 0;
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: black;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  transition: 0.2s;
 `;
 
 export const commitLogInnerBox = (
@@ -94,6 +134,7 @@ export const commitLogInnerBox = (
   }
   &:hover::after {
     background: rgba(0, 0, 0, 0.1);
+    border-radius: 0.375rem;
     cursor: pointer;
   }
 `;
@@ -122,7 +163,6 @@ export const commitLogItemAlign = css`
 export const commitLogItemBox = css`
   position: relative;
   height: 100%;
-  overflow: hidden;
 `;
 
 export const commitLogItem = css`

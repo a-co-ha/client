@@ -1,7 +1,9 @@
 import { registerHub } from '@/pages/api/github/registerHub';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useSetRecoilState } from 'recoil';
+import { getCookie } from 'cookies-next';
+import { useSetRecoilState, useResetRecoilState } from 'recoil';
+import { githubConnectState } from '@/recoil/github/atom';
 import type { CommitLogOrgResponse } from '@/pages/api/github/type';
 import type { CommitLogRepoResponse } from '@/pages/api/github/type';
 import type { CommitLogGithubRegister } from '@/pages/api/github/type';
@@ -11,8 +13,14 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
   queryClient.setQueryDefaults([`registerHub`, channelId], {
     staleTime: 1000 * 60 * 2,
   });
+  const setGithubConnectData = useSetRecoilState(githubConnectState(channelId));
+  const resetGithubConnectData = useResetRecoilState(
+    githubConnectState(channelId)
+  );
+  const userId = getCookie(`myUserId`);
   return useMutation<
-    CommitLogOrgResponse | CommitLogRepoResponse,
+    CommitLogOrgResponse,
+    // CommitLogOrgResponse | CommitLogRepoResponse,
     AxiosError,
     CommitLogGithubRegister
   >(
@@ -22,6 +30,8 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
     {
       onSuccess: (data) => {
         console.log('register', data);
+        setGithubConnectData({ repoName: data.orgName, repoType: 'org' });
+        queryClient.invalidateQueries([`user`, userId]);
       },
     }
   );

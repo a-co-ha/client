@@ -17,10 +17,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
+import { faRepeat } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HelpModal } from '@/hooks/useHelpModal';
+import { Loading } from '../loading/Loading';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -69,6 +71,30 @@ export const CommitLog = () => {
     }
   }, [githubOrgData]);
 
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    const parent = target.parentElement as HTMLDivElement;
+    parent
+      .querySelector(`[aria-selected='true']`)
+      ?.setAttribute(`aria-selected`, 'false');
+    target.setAttribute(`aria-selected`, 'true');
+
+    (
+      parent.querySelector(`[aria-selected='true']`) as HTMLButtonElement
+    ).style.backgroundColor = `#ffd6dc`;
+    (
+      parent.querySelector(`[aria-selected='true']`) as HTMLButtonElement
+    ).style.color = `black`;
+
+    const falseList = parent.querySelectorAll(`[aria-selected='false']`);
+    falseList.forEach(
+      (button) => (
+        ((button as HTMLButtonElement).style.backgroundColor = `white`),
+        ((button as HTMLButtonElement).style.color = `black`)
+      )
+    );
+  };
+
   return (
     <div css={styles.commitLogBox} className="w-full max-w-md px-2 sm:px-0">
       <CommitLogForm channelId={channelId} />
@@ -89,8 +115,13 @@ export const CommitLog = () => {
                   css={{ borderRadius: `50%` }}
                 />
               )}
-
-              <p css={styles.commitLogTitle}>{githubOrgData.orgName}</p>
+              <div
+                css={styles.commitLogConnectChangeBox}
+                onClick={() => setIsCommitLogFormModal(true)}
+              >
+                <p css={styles.commitLogTitle}>{githubOrgData.orgName}</p>
+                <FontAwesomeIcon icon={faRepeat} color={`white`} />
+              </div>
               <HelpModal
                 content={`프로젝트와 연결된 저장소의\n커밋기록을 볼 수 있어요`}
                 direction={`left`}
@@ -99,7 +130,6 @@ export const CommitLog = () => {
             <Tab.List className="flex space-x-1 rounded-b-md  p-1">
               {githubOrgData &&
                 githubOrgData['repos'].map((category) => (
-                  // {Object.keys(categories).map((category) => (
                   <Tab
                     key={category.name}
                     className={({ selected }) =>
@@ -121,54 +151,108 @@ export const CommitLog = () => {
                     {category.name}
                   </Tab>
                 ))}
-              {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
             </Tab.List>
+            <div css={styles.commitLogNavBtnBox}>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="true"
+              >
+                커밋
+              </button>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="false"
+              >
+                이슈
+              </button>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="false"
+              >
+                통계
+              </button>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="false"
+              >
+                기타
+              </button>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="false"
+              >
+                기타
+              </button>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="false"
+              >
+                기타
+              </button>
+              <button
+                css={styles.commitLogNavBtn}
+                onClick={onClickHandler}
+                aria-selected="false"
+              >
+                기타
+              </button>
+            </div>
             <Tab.Panels className="mt-2 h-[307px]">
               {githubOrgData['repos'].map((category, idx) => (
                 <Tab.Panel
                   key={idx}
                   className={classNames(
                     'rounded-xl bg-white p-3 h-full',
-                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none'
                   )}
                 >
                   <div css={styles.commitLogItemAlign}>
-                    <div>
-                      {githubOrgCommitData &&
-                        githubOrgCommitData.map((commit, idx) => (
-                          <div key={idx} css={styles.commitLogItemBox}>
-                            <div css={styles.commitLogLine}></div>
-                            <div
-                              css={styles.commitLogItem}
-                              onClick={() => console.log(`commit url이동`)}
-                            >
-                              <span css={styles.commitLogSphere}></span>
-                              <div css={styles.commitLogMessageBox}>
-                                <Link
-                                  css={styles.commitLogLink}
-                                  href={commit.url}
-                                  target={'_blank'}
-                                >
-                                  <span css={styles.commitLogMessage}>
-                                    {commit.message}
-                                  </span>
-                                  <div css={styles.commitLogMessageDetailBox}>
-                                    <span css={styles.commitLogBranch}>
-                                      {` - ${commit.branch}`}
+                    {getOrgCommitList.isLoading ? (
+                      <Loading position={`absolute`} />
+                    ) : (
+                      <div>
+                        {githubOrgCommitData &&
+                          githubOrgCommitData.map((commit, idx) => (
+                            <div key={idx} css={styles.commitLogItemBox}>
+                              <div css={styles.commitLogLine}></div>
+                              <div
+                                css={styles.commitLogItem}
+                                onClick={() => console.log(`commit url이동`)}
+                              >
+                                <span css={styles.commitLogSphere}></span>
+                                <div css={styles.commitLogMessageBox}>
+                                  <Link
+                                    css={styles.commitLogLink}
+                                    href={commit.url}
+                                    target={'_blank'}
+                                  >
+                                    <span css={styles.commitLogMessage}>
+                                      {commit.message}
                                     </span>
-                                    <span css={styles.commitLogAuthor}>
-                                      {commit.author}
-                                    </span>
-                                    <span css={styles.commitLogTime}>
-                                      {commit.time}
-                                    </span>
-                                  </div>
-                                </Link>
+                                    <div css={styles.commitLogMessageDetailBox}>
+                                      <span css={styles.commitLogBranch}>
+                                        {` - ${commit.branch}`}
+                                      </span>
+                                      <span css={styles.commitLogAuthor}>
+                                        {commit.author}
+                                      </span>
+                                      <span css={styles.commitLogTime}>
+                                        {commit.time}
+                                      </span>
+                                    </div>
+                                  </Link>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                    </div>
+                          ))}
+                      </div>
+                    )}
                   </div>
                 </Tab.Panel>
               ))}

@@ -112,6 +112,16 @@ export const CommitLogForm = ({
     methods.reset();
   };
 
+  const onConfirmHandler = () => {
+    registerHub.mutate(registerHubData);
+    setIsCommitLogFormModal(false);
+    setIsModalOpen(false);
+    resetOrgResponse();
+    resetRepoResponse();
+    setSelected('organization');
+    methods.reset();
+  };
+
   const onCancelHandler = () => {
     setIsFocusContent('');
   };
@@ -125,7 +135,7 @@ export const CommitLogForm = ({
       <ConfirmModal
         title={`다음 저장소로 연결할까요?`}
         content={isFocusContent}
-        confirmFunc={() => registerHub.mutate(registerHubData)}
+        confirmFunc={onConfirmHandler}
         cancelFunc={onCancelHandler}
       />
       <div css={styles.commitLogModalTransition(isCommitLogFormModal)}>
