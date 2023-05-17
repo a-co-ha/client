@@ -57,6 +57,7 @@ export interface OrgCommitList {
   };
   payload: {
     ref: string;
+    head: string;
     commits: {
       author: {
         name: string;
@@ -65,6 +66,15 @@ export interface OrgCommitList {
       url: string;
     }[];
   };
+  type: string;
+}
+
+export interface OrgCommitTransferedData {
+  message: string;
+  author: string;
+  branch: string;
+  time: string;
+  url: string;
 }
 
 export interface OrgRepoName {

@@ -24,6 +24,7 @@ export const commonTitleStyle = css`
 
 export const commitLogBox = css`
   ${commonBoxStyle};
+  width: 300px;
 `;
 
 export const commitLogTitleBox = css`
@@ -47,7 +48,10 @@ export const commitLogTitle = css`
   font-weight: 500;
 `;
 
-export const commitLogInnerBox = (isConnected: boolean) => css`
+export const commitLogInnerBox = (
+  isConnected: boolean,
+  isError?: boolean
+) => css`
   position: relative;
   width: 100%;
   height: 100%;
@@ -55,7 +59,7 @@ export const commitLogInnerBox = (isConnected: boolean) => css`
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
   &::after {
-    display: ${!isConnected ? `flex` : `none`};
+    display: ${!isConnected || isError ? `flex` : `none`};
     position: absolute;
     content: '';
     top: 0;
@@ -73,9 +77,11 @@ export const commitLogInnerBox = (isConnected: boolean) => css`
 
 export const commitLogPlusBtnBox = css`
   padding-top: 3rem;
-  & > p {
-    padding: 0.5rem 0;
-  }
+`;
+
+export const commitLogPlusAndErrorMessage = css`
+  font-size: 0.8rem;
+  padding-top: 1rem;
 `;
 
 export const commitLogItemAlign = css`
@@ -92,14 +98,14 @@ export const commitLogItemBox = css`
 export const commitLogItem = css`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.3rem;
 `;
 
 export const commitLogLine = css`
   display: inline-block;
   position: absolute;
   top: 6px;
-  left: 2px;
+  left: 4px;
   width: 2px;
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
@@ -108,11 +114,35 @@ export const commitLogLine = css`
 export const commitLogSphere = css`
   display: inline-block;
   position: relative;
-  // z-index: 3;
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
+  padding: 4px;
+  border: 1px solid white;
   background: rgba(0, 0, 255, 1);
   border-radius: 50%;
+`;
+
+export const commitLogLink = css`
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  border-radius: 0.375rem;
+`;
+
+export const commitLogMessage = css`
+  font-size: 0.7rem;
+`;
+
+export const commitLogBranch = css`
+  font-size: 0.7rem;
+`;
+
+export const commitLogTime = css`
+  font-size: 0.7rem;
+`;
+
+export const commitLogAuthor = css`
+  font-size: 0.7rem;
 `;
 
 export const content = css`
@@ -127,9 +157,12 @@ export const main = css`
 
 export const mainContentBox = css`
   display: flex;
+  max-height: auto;
   flex-wrap: wrap;
   gap: 1rem;
   padding-top: 1rem;
+  overflow: scroll;
+  white-space: pre-wrap;
 `;
 
 export const commitLogModalBackground = (isOpen: boolean) => css`

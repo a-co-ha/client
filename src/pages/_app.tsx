@@ -62,6 +62,7 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
             // refetchOnMount: false,
             refetchOnWindowFocus: false,
             // suspense: true,
+            staleTime: 1000 * 3,
           },
           mutations: {
             useErrorBoundary: true,

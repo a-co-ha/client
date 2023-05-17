@@ -11,10 +11,10 @@ import { useGetSocketPage } from '@/hooks/queries/socket/getPage';
 import { ChatSendForm } from './ChatSendForm';
 import { Message } from './Message';
 import { MessageModal } from './MessageModal';
-import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { socketMessageState } from '@/recoil/socket/atom';
+import { getTimeValue } from '@/utils/getTimeValue';
 import type { pageProps } from '@/pages/api/editable/type';
 import type { SocketMessage } from '@/pages/api/socket/type';
 import * as styles from './styles';
@@ -71,31 +71,6 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const getTimeValue = (createdAt: string) => {
-    const format = `20${createdAt.substring(0, 2)}-${createdAt.substring(
-      3,
-      5
-    )}-${createdAt.substring(6, 8)}T${createdAt.substring(9)}`;
-    const date = dayjs(format);
-    const nowDate = dayjs();
-    const hour = date.get(`hour`);
-    const minute = date.get(`minute`);
-    const displayHour =
-      hour !== 0 && hour <= 12 ? hour : hour === 0 ? 12 : hour - 12;
-    const displayminute = minute < 10 ? `0${minute}` : minute;
-    const isAm = hour < 12 ? `오전` : `오후`;
-    const isToday =
-      nowDate.isSame(date, 'day') === true
-        ? `오늘`
-        : date.isSame(nowDate.subtract(1, 'day'), 'day') === true
-        ? `어제`
-        : date.isBefore(nowDate.subtract(1, 'day')) === true
-        ? date.format(`YYYY.MM.DD`)
-        : null;
-    const time = `${isToday} ${isAm} ${displayHour}:${displayminute}`;
-    return time;
-  };
 
   const displayTime = (msg: SocketMessage[], index: number) => {
     let isDisplay = true;

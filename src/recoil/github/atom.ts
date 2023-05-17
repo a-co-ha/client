@@ -4,7 +4,7 @@ import type {
   CommitLogOrgsResponse,
   CommitLogOrgResponse,
   CommitLogReposResponse,
-  OrgCommitList,
+  OrgCommitTransferedData,
 } from '@/pages/api/github/type';
 
 export const commitLogModalFormState = atom({
@@ -59,7 +59,12 @@ export const githubConnectState = atomFamily({
   },
 });
 
-export const githubOrgCommitState = atom<OrgCommitList[]>({
+export const githubOrgCommitState = atom<OrgCommitTransferedData[]>({
   key: `githubOrgCommitState/${nanoId()}`,
   default: [],
+});
+
+export const githubCommitErrorState = atom({
+  key: `githubCommitErrorState/${nanoId()}`,
+  default: false,
 });

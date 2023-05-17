@@ -11,12 +11,15 @@ import {
   commitLogModalOrgSearchState,
   githubConnectState,
   githubOrgCommitState,
+  githubCommitErrorState,
 } from '@/recoil/github/atom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Image from 'next/image';
+import Link from 'next/link';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -30,6 +33,11 @@ export const CommitLog = () => {
   const getOrgCommitList = useGetOrgCommit(channelId);
   const githubOrgData = useRecoilValue(commitLogModalOrgSearchState);
   const githubOrgCommitData = useRecoilValue(githubOrgCommitState);
+  const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
+    commitLogModalFormState
+  );
+  const githubError = useRecoilValue(githubCommitErrorState);
+
   useLayoutEffect(() => {
     console.log(`connectdata`, githubConnectData);
     if (
@@ -37,10 +45,6 @@ export const CommitLog = () => {
       githubConnectData.repoType === 'org'
     ) {
       getOrg.mutate(githubConnectData.repoName);
-      // getOrgCommitList.mutate({
-      //   org: githubConnectData.repoName,
-      //   repo: githubOrgData.repos[0].name,
-      // });
     } else if (
       githubConnectData.repoName !== '' &&
       githubConnectData.repoType === 'repo'
@@ -49,16 +53,22 @@ export const CommitLog = () => {
     }
   }, [githubConnectData]);
 
-  const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
-    commitLogModalFormState
-  );
-  const [githubConnect, setGithubConnect] = useRecoilState(
-    githubConnectState(channelId)
-  );
+  useEffect(() => {
+    if (
+      githubConnectData.repoName !== '' &&
+      githubOrgData.repos[0].name !== ''
+    ) {
+      getOrgCommitList.mutate({
+        org: githubConnectData.repoName,
+        repo: githubOrgData.repos[0].name,
+      });
+    }
+  }, [githubOrgData]);
+
   return (
     <div css={styles.commitLogBox} className="w-full max-w-md px-2 sm:px-0">
       <CommitLogForm channelId={channelId} />
-      {githubConnectData.repoName !== '' ? (
+      {githubConnectData.repoName !== '' && !githubError ? (
         <div
           css={styles.commitLogInnerBox(
             githubConnectData.repoName === '' ? false : true
@@ -123,41 +133,26 @@ export const CommitLog = () => {
                           onClick={() => console.log(`commit url이동`)}
                         >
                           <span css={styles.commitLogSphere}></span>
-                          <div>
-                            {/* data 재 가공 유틸 필요 */}
-                            <span>{commit.payload.ref}</span>
-                            <span>{commit.created_at}</span>
-                            <span>{commit.payload.commits[0].author.name}</span>
-                          </div>
+                          <Link
+                            css={styles.commitLogLink}
+                            href={commit.url}
+                            target={'_blank'}
+                          >
+                            <span css={styles.commitLogMessage}>
+                              {commit.message}
+                            </span>
+                            <span css={styles.commitLogBranch}>
+                              {commit.branch}
+                            </span>
+                            <span css={styles.commitLogTime}>
+                              {commit.time}
+                            </span>
+                            <span css={styles.commitLogAuthor}>
+                              {commit.author}
+                            </span>
+                          </Link>
                         </li>
                       </ul>
-                      {/* {posts.map((post) => (
-                      <li
-                        key={post.id}
-                        className="relative rounded-md p-3 hover:bg-gray-100"
-                      >
-                        <h3 className="text-sm font-medium leading-5">
-                          {post.title}
-                        </h3>
-
-                        <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                          <li>{post.date}</li>
-                          <li>&middot;</li>
-                          <li>{post.commentCount} comments</li>
-                          <li>&middot;</li>
-                          <li>{post.shareCount} shares</li>
-                        </ul>
-
-                        <a
-                          onClick={() => setIsCommitLogFormModal(true)}
-                          href="#"
-                          className={classNames(
-                            'absolute inset-0 rounded-md',
-                            'ring-blue-400 focus:z-10 focus:outline-none focus:ring-2'
-                          )}
-                        />
-                      </li>
-                    ))} */}
                     </div>
                   </Tab.Panel>
                 ))}
@@ -167,9 +162,12 @@ export const CommitLog = () => {
       ) : (
         <div
           css={styles.commitLogInnerBox(
-            githubConnectData.repoName === '' ? false : true
+            githubConnectData.repoName === '' ? false : true,
+            githubError
           )}
-          onClick={() => setIsCommitLogFormModal(true)}
+          onClick={() => {
+            githubError ? null : setIsCommitLogFormModal(true);
+          }}
         >
           <Tab.Group>
             <div css={styles.commitLogTitleBox}>
@@ -198,12 +196,26 @@ export const CommitLog = () => {
               {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
             </Tab.List>
             <div css={styles.commitLogPlusBtnBox}>
-              <FontAwesomeIcon
-                icon={faSquarePlus}
-                color={`#000000`}
-                size={`2xl`}
-              />
-              <p>깃허브 연결하기</p>
+              {githubConnectData.repoName === '' ? (
+                <FontAwesomeIcon
+                  icon={faSquarePlus}
+                  color={`#000000`}
+                  size={`2xl`}
+                />
+              ) : githubError ? (
+                <FontAwesomeIcon
+                  icon={faScrewdriverWrench}
+                  color={`#000000`}
+                  size={`2xl`}
+                />
+              ) : null}
+              <p css={styles.commitLogPlusAndErrorMessage}>
+                {githubConnectData.repoName === ''
+                  ? `깃허브 연결하기`
+                  : githubError
+                  ? `일시적인 오류가 발생했어요\n 잠시 후에 다시 시도해주세요`
+                  : null}
+              </p>
             </div>
           </Tab.Group>
         </div>

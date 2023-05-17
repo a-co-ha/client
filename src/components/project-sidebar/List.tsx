@@ -9,6 +9,7 @@ import {
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { HoverModal } from '@/hooks/useHoverModal';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -18,7 +19,7 @@ import type { ChannelList } from '@/pages/api/user/type';
 
 export const List = () => {
   const router = useRouter();
-  const channelId = router.query.id;
+  const { channelId } = useGetUrlInfo();
 
   const [channelList, setChannelList] = useRecoilState(channelListState);
   const resetChannelList = useResetRecoilState(channelListState);
