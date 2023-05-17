@@ -20,6 +20,7 @@ import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Image from 'next/image';
 import Link from 'next/link';
+import { HelpModal } from '@/hooks/useHelpModal';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -36,7 +37,7 @@ export const CommitLog = () => {
   const [isCommitLogFormModal, setIsCommitLogFormModal] = useRecoilState(
     commitLogModalFormState
   );
-  const githubError = useRecoilValue(githubCommitErrorState);
+  const [githubError, setGithubError] = useRecoilState(githubCommitErrorState);
 
   useLayoutEffect(() => {
     console.log(`connectdata`, githubConnectData);
@@ -54,6 +55,9 @@ export const CommitLog = () => {
   }, [githubConnectData]);
 
   useEffect(() => {
+    if (githubOrgData === null) {
+      return setGithubError(true);
+    }
     if (
       githubConnectData.repoName !== '' &&
       githubOrgData.repos[0].name !== ''
@@ -86,7 +90,11 @@ export const CommitLog = () => {
                 />
               )}
 
-              <p css={styles.commitLogTitle}>A - COHA</p>
+              <p css={styles.commitLogTitle}>{githubOrgData.orgName}</p>
+              <HelpModal
+                content={`프로젝트와 연결된 저장소의\n커밋기록을 볼 수 있어요`}
+                direction={`left`}
+              />
             </div>
             <Tab.List className="flex space-x-1 rounded-b-md  p-1">
               {githubOrgData &&
@@ -100,7 +108,7 @@ export const CommitLog = () => {
                         'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                         selected
                           ? 'bg-white shadow'
-                          : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                          : 'text-blue-100 hover:bg-white/[0.12] hover:text-blue-700'
                       )
                     }
                     onClick={() =>
@@ -115,47 +123,55 @@ export const CommitLog = () => {
                 ))}
               {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
             </Tab.List>
-            <Tab.Panels className="mt-2 h-2/3">
-              {githubOrgCommitData &&
-                githubOrgCommitData.map((commit, idx) => (
-                  <Tab.Panel
-                    key={idx}
-                    className={classNames(
-                      'rounded-xl bg-white p-3 h-full',
-                      'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
-                    )}
-                  >
-                    <div css={styles.commitLogItemAlign}>
-                      <ul css={styles.commitLogItemBox}>
-                        <div css={styles.commitLogLine}></div>
-                        <li
-                          css={styles.commitLogItem}
-                          onClick={() => console.log(`commit url이동`)}
-                        >
-                          <span css={styles.commitLogSphere}></span>
-                          <Link
-                            css={styles.commitLogLink}
-                            href={commit.url}
-                            target={'_blank'}
-                          >
-                            <span css={styles.commitLogMessage}>
-                              {commit.message}
-                            </span>
-                            <span css={styles.commitLogBranch}>
-                              {commit.branch}
-                            </span>
-                            <span css={styles.commitLogTime}>
-                              {commit.time}
-                            </span>
-                            <span css={styles.commitLogAuthor}>
-                              {commit.author}
-                            </span>
-                          </Link>
-                        </li>
-                      </ul>
+            <Tab.Panels className="mt-2 h-[307px]">
+              {githubOrgData['repos'].map((category, idx) => (
+                <Tab.Panel
+                  key={idx}
+                  className={classNames(
+                    'rounded-xl bg-white p-3 h-full',
+                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                  )}
+                >
+                  <div css={styles.commitLogItemAlign}>
+                    <div>
+                      {githubOrgCommitData &&
+                        githubOrgCommitData.map((commit, idx) => (
+                          <div key={idx} css={styles.commitLogItemBox}>
+                            <div css={styles.commitLogLine}></div>
+                            <div
+                              css={styles.commitLogItem}
+                              onClick={() => console.log(`commit url이동`)}
+                            >
+                              <span css={styles.commitLogSphere}></span>
+                              <div css={styles.commitLogMessageBox}>
+                                <Link
+                                  css={styles.commitLogLink}
+                                  href={commit.url}
+                                  target={'_blank'}
+                                >
+                                  <span css={styles.commitLogMessage}>
+                                    {commit.message}
+                                  </span>
+                                  <div css={styles.commitLogMessageDetailBox}>
+                                    <span css={styles.commitLogBranch}>
+                                      {` - ${commit.branch}`}
+                                    </span>
+                                    <span css={styles.commitLogAuthor}>
+                                      {commit.author}
+                                    </span>
+                                    <span css={styles.commitLogTime}>
+                                      {commit.time}
+                                    </span>
+                                  </div>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                     </div>
-                  </Tab.Panel>
-                ))}
+                  </div>
+                </Tab.Panel>
+              ))}
             </Tab.Panels>
           </Tab.Group>
         </div>

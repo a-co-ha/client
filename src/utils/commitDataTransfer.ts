@@ -1,7 +1,7 @@
 import { getTimeValue } from './getTimeValue';
 import type { OrgCommitList } from '@/pages/api/github/type';
 
-export const commitDataTransfer = (commitArr: OrgCommitList[]) => {
+export const commitDataTransfer = async (commitArr: OrgCommitList[]) => {
   const transferedCommit = commitArr.map((commit) => {
     const message = commit.payload.commits[0].message;
     const author = commit.payload.commits[0].author.name;

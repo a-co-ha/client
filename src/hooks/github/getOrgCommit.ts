@@ -21,9 +21,9 @@ export const useGetOrgCommit = (channelId: string | string[] | undefined) => {
     (orgRepoName: OrgRepoName) =>
       getOrgCommit(orgRepoName.org, orgRepoName.repo),
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         console.log('orgCommits', data);
-        const commitList = commitDataTransfer(data);
+        const commitList = await commitDataTransfer(data);
         setOrgCommit(commitList);
       },
     }

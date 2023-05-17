@@ -2,6 +2,24 @@ import { css } from '@emotion/react';
 import { chatBookmarkModalContent } from '../chat-bookmark/styles';
 import { inviteModalShareBtn } from '../navbar/styles';
 
+const scrollBarStyle = css`
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    background-color: #efefef;
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+`;
+
 export const flexColumnCenter = css`
   display: flex;
   flex-direction: column;
@@ -15,6 +33,7 @@ export const commonBoxStyle = css`
   flex-direction: column;
   width: 200px;
   min-height: 300px;
+  max-height: 400px;
   margin: 0 auto;
 `;
 
@@ -25,6 +44,7 @@ export const commonTitleStyle = css`
 export const commitLogBox = css`
   ${commonBoxStyle};
   width: 300px;
+  margin-bottom: 1rem;
 `;
 
 export const commitLogTitleBox = css`
@@ -41,11 +61,14 @@ export const commitLogTitleBox = css`
   );
   border-top-left-radius: 0.37rem;
   border-top-right-radius: 0.37rem;
+  & div:last-child {
+    margin-left: auto;
+  }
 `;
 
 export const commitLogTitle = css`
   ${commonTitleStyle};
-  font-weight: 500;
+  font-weight: 700;
 `;
 
 export const commitLogInnerBox = (
@@ -76,29 +99,36 @@ export const commitLogInnerBox = (
 `;
 
 export const commitLogPlusBtnBox = css`
-  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 110px);
+  justify-content: center;
+  align-items: center;
 `;
 
 export const commitLogPlusAndErrorMessage = css`
   font-size: 0.8rem;
   padding-top: 1rem;
+  white-space: pre-wrap;
 `;
 
 export const commitLogItemAlign = css`
   height: 100%;
+  overflow: hidden scroll;
+  ${scrollBarStyle};
 `;
 
 export const commitLogItemBox = css`
   position: relative;
   height: 100%;
-  outline: 1px solid red;
   overflow: hidden;
 `;
 
 export const commitLogItem = css`
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.7rem;
 `;
 
 export const commitLogLine = css`
@@ -118,30 +148,58 @@ export const commitLogSphere = css`
   height: 8px;
   padding: 4px;
   border: 1px solid white;
-  background: rgba(0, 0, 255, 1);
+  background: #f89fab;
   border-radius: 50%;
 `;
 
 export const commitLogLink = css`
+  width: 90%;
+  padding: 0.5rem;
   &:hover {
     background: rgba(0, 0, 0, 0.1);
   }
   border-radius: 0.375rem;
 `;
 
+export const commitLogMessageBox = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+`;
+
 export const commitLogMessage = css`
-  font-size: 0.7rem;
+  display: block;
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const commitLogMessageDetailBox = css`
+  display: block;
+  text-align: start;
 `;
 
 export const commitLogBranch = css`
+  display: inline-block;
   font-size: 0.7rem;
 `;
 
 export const commitLogTime = css`
-  font-size: 0.7rem;
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 0.5rem;
 `;
 
 export const commitLogAuthor = css`
+  display: inline-block;
+  color: #f89fab;
+  font-weight: 700;
+  margin-left: 5px;
   font-size: 0.7rem;
 `;
 
@@ -159,9 +217,10 @@ export const mainContentBox = css`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  height: calc(100vh - 50px);
   padding-top: 1rem;
   overflow: hidden scroll;
-  white-space: pre-wrap;
+  ${scrollBarStyle};
 `;
 
 export const commitLogModalBackground = (isOpen: boolean) => css`
@@ -192,7 +251,6 @@ export const commitLogModalTransition = (isOpen: boolean) => css`
 `;
 
 export const commitLogModalFormBox = css`
-  // position: relative;
   width: 500px;
   height: 65vh;
   padding: 1.5rem;

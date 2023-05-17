@@ -222,11 +222,15 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
     border: 5px solid transparent;
     background-color: #efefef;
     border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
   white-space: pre-wrap;
+  cursor: auto;
 `;
 
 export const chatBookmarkFormBtn = css`
