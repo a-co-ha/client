@@ -157,11 +157,10 @@ export const main = css`
 
 export const mainContentBox = css`
   display: flex;
-  max-height: auto;
   flex-wrap: wrap;
   gap: 1rem;
   padding-top: 1rem;
-  overflow: scroll;
+  overflow: hidden scroll;
   white-space: pre-wrap;
 `;
 

@@ -22,7 +22,7 @@ export const useGetOrg = (channelId: string | string[] | undefined) => {
       onSuccess: async (data) => {
         console.log('org 하나에용', data);
         setOrg(data);
-        setError(true);
+        setError(false);
       },
       onError: async (data) => {
         setError(true);

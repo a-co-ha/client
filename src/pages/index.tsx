@@ -39,6 +39,10 @@ const IndexPage = () => {
   );
 
   useLayoutEffect(() => {
+    const div = document.getElementById(`__next`);
+    if (div !== null) {
+      div.style.overflow = `visible`;
+    }
     setLayout();
     scrollLoop();
     console.log('12');
