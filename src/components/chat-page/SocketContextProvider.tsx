@@ -19,8 +19,8 @@ interface Context {
     roomId: string;
   }) => void;
   newBookmark: (func: any) => void;
-  newMember: (func: (prev: any) => void) => void;
-  disconnectMember: (func: (prev: any) => void) => void;
+  newMember: (func: (user: any) => void) => void;
+  disconnectMember: (func: (user: any) => void) => void;
   joinChannel: (channelId: string) => void;
 }
 
@@ -116,21 +116,12 @@ export const SocketContextProvider = ({
 
   const newMember = (func: any) => {
     socket.on(`NEW_MEMBER`, (user) => {
-      func((prev: any) => {
-        const newOnUsers = prev.concat([user]);
-        return newOnUsers;
-      });
+      func(user);
     });
   };
   const disconnectMember = (func: any) => {
     socket.on(`DISCONNECT_MEMBER`, (user) => {
-      console.log(`disconnect user`, user);
-      func((prev: any) => {
-        const newOnUsers = prev.filter(
-          (prevUser: any) => prevUser.userID !== user.userID
-        );
-        return newOnUsers;
-      });
+      func(user);
     });
   };
   const joinChannel = (channelId: string) => {

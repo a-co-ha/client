@@ -8,6 +8,7 @@ import { UserModal } from './UserModal';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import * as styles from './styles';
 import type { ChannelUser } from '@/pages/api/user/type';
 
@@ -19,6 +20,26 @@ export const UserList = () => {
     channelUserModalState(1)
   );
   const { newMember, disconnectMember } = useContext(SocketContext);
+
+  const addMember = (member: any) => {
+    setOnUser((prev) => {
+      console.log(`prev`, prev);
+      const newMember = prev.concat([member]);
+      console.log(`newMember`, newMember);
+      return newMember;
+    });
+  };
+
+  const deleteMember = (member: any) => {
+    setOnUser((prev: any) => {
+      const newOnUsers = prev.filter(
+        (prevUser: any) => prevUser.userID !== member.userID
+      );
+      console.log(`deleteMember`, newOnUsers);
+      return newOnUsers;
+    });
+  };
+
   useEffect(() => {
     if (channelUsersData !== undefined) {
       setChannelUsers(channelUsersData);
@@ -26,10 +47,11 @@ export const UserList = () => {
   }, [channelUsersData]);
 
   useEffect(() => {
-    newMember(setOnUser);
+    newMember(addMember);
   }, [newMember]);
+
   useEffect(() => {
-    disconnectMember(setOnUser);
+    disconnectMember(deleteMember);
   }, [disconnectMember]);
 
   const onClickHandler = (e: any) => {
