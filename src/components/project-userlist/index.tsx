@@ -18,7 +18,7 @@ export const UserList = () => {
   const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
     channelUserModalState(1)
   );
-  const { socket } = useContext(SocketContext);
+  const { newMember, disconnectMember } = useContext(SocketContext);
   useEffect(() => {
     if (channelUsersData !== undefined) {
       setChannelUsers(channelUsersData);
@@ -26,29 +26,16 @@ export const UserList = () => {
   }, [channelUsersData]);
 
   useEffect(() => {
-    socket.on(`NEW_MEMBER`, (user) => {
-      setOnUser((prev) => {
-        const newOnUsers = prev.concat([user]);
-        return newOnUsers;
-      });
-    });
-  }, []);
+    newMember(setOnUser);
+  }, [newMember]);
   useEffect(() => {
-    socket.on(`DISCONNECT_MEMBER`, (user) => {
-      console.log(`disconnect user`, user);
-      setOnUser((prev) => {
-        const newOnUsers = prev.filter(
-          (prevUser) => prevUser.userID !== user.userID
-        );
-        return newOnUsers;
-      });
-    });
-  }, []);
+    disconnectMember(setOnUser);
+  }, [disconnectMember]);
 
   const onClickHandler = (e: any) => {
     setIsUserModalOpen(true);
   };
-
+  console.log(`온유저`, onUser);
   return (
     <div css={styles.userListBox}>
       <div css={styles.userListInnerBox}>

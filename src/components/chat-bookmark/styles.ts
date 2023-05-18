@@ -103,7 +103,7 @@ export const chatBookmarkModalTitle = css`
 
 export const chatBookmarkModalEditBtn = (isEditing: boolean) => css`
   padding: 0.5rem 1rem;
-  margin-inline: 0.5rem;
+  margin: 1rem 0.5rem 0 0.5rem;
   border-radius: 0.375rem;
   background: #eee;
   &:hover {
@@ -113,13 +113,14 @@ export const chatBookmarkModalEditBtn = (isEditing: boolean) => css`
 
 export const chatBookmarkModalDeleteBtn = css`
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin: 1rem 0 0 0;
   color: white;
   border-radius: 0.375rem;
   background: rgba(255, 0, 0, 0.65);
   &:hover {
     background: rgba(255, 0, 0, 0.8);
   }
+  justify-self: end;
 `;
 
 export const chatBookmarkModalContent = css`
@@ -150,9 +151,14 @@ export const chatBookmarkModalContent = css`
   white-space: pre-wrap;
 `;
 
+export const chatBookmarkBtnBox = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const chatBookmarkCopyBtn = (isCopied: boolean) => css`
   padding: 0.5rem 1rem;
-  margin: 1rem 0;
+  margin: 1rem 0 0 0;
   font-weight: 500;
   background-color: ${isCopied ? `rgb(226 232 240)` : `rgb(219 234 254)`};
   border-radius: 0.375rem;

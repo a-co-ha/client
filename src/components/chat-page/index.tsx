@@ -19,8 +19,8 @@ import type { pageProps } from '@/pages/api/editable/type';
 import type { SocketMessage } from '@/pages/api/socket/type';
 import * as styles from './styles';
 
-export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
-  const { sendMessage, receiveMessage, socket } = useContext(SocketContext);
+export const ChatPage = ({ pageId }: pageProps) => {
+  const { readMessage, receiveMessage, getMessage } = useContext(SocketContext);
   // const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState(pageId));
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -36,41 +36,17 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
     });
     console.log(`메세지스`, messages);
   };
-
-  // useEffect(() => {
-  //   if (socketMessage !== undefined) {
-  //     console.log(`socketMsg`, socketMessage.messages);
-  //     setMessages(socketMessage.messages);
-  //     console.log(`메세지스`, messages);
-  //   }
-  // }, [router.query.pageId, socketMessage]);
-  // useEffect(() => {
-  //   socket.emit(`READ_MESSAGE`, {
-  //     roomId: pageId,
-  //   });
-  //   console.log('보냄');
-  // }, [router.query.pageId]);
   useLayoutEffect(() => {
-    sendMessage(pageId);
-  }, [router.query.pageId]);
-
-  useEffect(() => {
-    socket.on(`GET_MESSAGE`, (data: SocketMessage[]) => {
-      console.log(`리드`, data);
-      setMessages(data);
-    });
+    readMessage(pageId);
   }, [router.query.pageId]);
 
   useEffect(() => {
     receiveMessage(addMessage);
   }, [receiveMessage]);
-  // useEffect(() => {
-  //   socket.on(`RECEIVE_MESSAGE`, (data) => {
-  //     console.log(`받습니다`);
-  //     addMessage(data.message);
-  //     console.log(`여기다`, messages);
-  //   });
-  // }, []);
+
+  useEffect(() => {
+    getMessage(setMessages);
+  }, [getMessage]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });

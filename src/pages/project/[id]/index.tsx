@@ -50,7 +50,7 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       console.log(`채널 깃허브`, channelGithubData);
       setChannelName(myUserData.channelName);
     }
-  }, [channelUsers]);
+  }, [userData, channelUsers]);
 
   return (
     <div css={styles.main}>

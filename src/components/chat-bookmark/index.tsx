@@ -26,7 +26,7 @@ export const ChatBookmark = ({
   const setChatBookmarkFormModal = useSetRecoilState(
     chatBookmarkFormModalState
   );
-  const { socket } = useContext(SocketContext);
+  const { newBookmark } = useContext(SocketContext);
 
   const addBookmark = useCallback((bookmark: any) => {
     setChatBookmark((prev) => {
@@ -43,13 +43,10 @@ export const ChatBookmark = ({
   }, [chatBookmarkList]);
 
   useEffect(() => {
-    socket.on(`NEW_BOOKMARK`, (data) => {
-      console.log(`받습니다`);
-      addBookmark(data);
-      refetch();
-      console.log(`여기다`, data);
-    });
-  }, []);
+    console.log(`받습니다`);
+    newBookmark(addBookmark);
+    refetch();
+  }, [newBookmark]);
 
   const onClickHandler = (
     id: string,

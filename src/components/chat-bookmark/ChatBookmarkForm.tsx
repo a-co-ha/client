@@ -19,7 +19,7 @@ export const ChatBookmarkForm = ({
   channelId: string;
   pageId: string;
 }) => {
-  const { socket } = useContext(SocketContext);
+  const { setBookmark } = useContext(SocketContext);
   const [isBookmarkEditing, setIsBookmarkEditing] = useRecoilState(
     isBookmarkEditingState
   );
@@ -46,11 +46,17 @@ export const ChatBookmarkForm = ({
   const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
     console.log(`submitData`, chatBookmark);
     // postBookmark.mutate(chatBookmark);
-    socket.emit(`SET_BOOKMARK`, {
+
+    setBookmark({
       bookmarkName: chatBookmark.chatBookmarkTitle,
       content: chatBookmark.chatBookmarkContent,
       roomId: pageId,
     });
+    // socket.emit(`SET_BOOKMARK`, {
+    //   bookmarkName: chatBookmark.chatBookmarkTitle,
+    //   content: chatBookmark.chatBookmarkContent,
+    //   roomId: pageId,
+    // });
     setChatBookmarkFormModal(false);
     methods.reset();
   };

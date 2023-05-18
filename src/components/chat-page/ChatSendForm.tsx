@@ -20,7 +20,7 @@ export const ChatSendForm = ({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
-  const { socket } = useContext(SocketContext);
+  const { sendMessage } = useContext(SocketContext);
 
   const methods = useForm<ChatMessage>({
     defaultValues: {
@@ -61,12 +61,12 @@ export const ChatSendForm = ({
   };
 
   const onSubmit = (chat: ChatMessage) => {
-    // sendMessage(chatMessage.chatMessage, pageId);
-    socket.emit(`SEND_MESSAGE`, {
-      content: chat.chatMessage,
-      roomId: pageId,
-      myMessage,
-    });
+    sendMessage(chat.chatMessage, pageId);
+    // socket.emit(`SEND_MESSAGE`, {
+    //   content: chat.chatMessage,
+    //   roomId: pageId,
+    //   myMessage,
+    // });
     console.log(`보냅니다`);
     methods.reset();
   };
