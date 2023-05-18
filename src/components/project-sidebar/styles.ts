@@ -96,6 +96,21 @@ export const projectCreateThumbnail = (isSelected: boolean) => css`
   &:hover > div {
     display: block;
   }
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -11px;
+    width: 4px;
+    height: 30px;
+    background: gray;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    transition: 0.3s;
+    transform: scale(${isSelected ? `1` : `0`});
+    transform-origin: center;
+  }
 `;
 
 export const projectThumbnailHoverModal = css`

@@ -6,6 +6,7 @@ import { useSetRecoilState, useResetRecoilState } from 'recoil';
 import { githubConnectState } from '@/recoil/github/atom';
 import type { CommitLogOrgResponse } from '@/pages/api/github/type';
 import type { CommitLogRepoResponse } from '@/pages/api/github/type';
+import type { CommitRegisterResponse } from '@/pages/api/github/type';
 import type { CommitLogGithubRegister } from '@/pages/api/github/type';
 
 export const useRegisterHub = (channelId: string | string[] | undefined) => {
@@ -19,8 +20,7 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
   );
   const userId = getCookie(`myUserId`);
   return useMutation<
-    CommitLogOrgResponse,
-    // CommitLogOrgResponse | CommitLogRepoResponse,
+    CommitRegisterResponse,
     AxiosError,
     CommitLogGithubRegister
   >(
@@ -30,7 +30,7 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
     {
       onSuccess: (data) => {
         console.log('register', data);
-        setGithubConnectData({ repoName: data.orgName, repoType: 'org' });
+        setGithubConnectData({ repoName: data.name, repoType: data.type });
         queryClient.invalidateQueries([`user`, userId]);
       },
     }

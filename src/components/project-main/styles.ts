@@ -52,13 +52,7 @@ export const commitLogTitleBox = css`
   gap: 1rem;
   padding: 0.5rem;
   align-items: center;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.8015800070028012) 0%,
-    rgba(143, 143, 143, 0.9033189033189033) 0%,
-    rgba(255, 255, 255, 1) 100%
-  );
+  background: rgba(0, 0, 0, 0.3);
   border-top-left-radius: 0.37rem;
   border-top-right-radius: 0.37rem;
   & div:last-child {
@@ -181,15 +175,28 @@ export const commitLogLine = css`
   background: rgba(0, 0, 0, 0.3);
 `;
 
-export const commitLogSphere = css`
+export const commitLogSphere = (type: string) => css`
   display: inline-block;
   position: relative;
-  width: 8px;
-  height: 8px;
-  padding: 4px;
+  width: ${type === `commit` ? `8px` : `1px`};
+  height: ${type === `commit` ? `8px` : `1px`};
+  padding: ${type === `commit` ? `4px` : `2px`};
   border: 1px solid white;
-  background: #f89fab;
+  background: ${type === `commit` ? `#f89fab` : `black`};
   border-radius: 50%;
+`;
+
+export const commitLogLabel = (label: string) => css`
+  display: inline-block;
+  padding: 0.1rem 0.2rem;
+  font-size: 0.7rem;
+  color: ${label === `bug` ? `white` : `black`};
+  background: ${label === `bug`
+    ? `red`
+    : label === undefined
+    ? `none`
+    : `yellowgreen`};
+  border-radius: 0.375rem;
 `;
 
 export const commitLogLink = css`
@@ -241,6 +248,21 @@ export const commitLogAuthor = css`
   font-weight: 700;
   margin-left: 5px;
   font-size: 0.7rem;
+`;
+
+export const commitLogIssueBtn = (isOpen: boolean) => css`
+  width: 100%;
+  padding: 0.625rem 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  color: ${isOpen ? `red` : `rgb(248 113 113)`};
+  background: ${isOpen ? `rgba(255,0,0,0.01)` : `white`};
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const content = css`
@@ -299,6 +321,10 @@ export const commitLogModalFormBox = css`
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+`;
+
+export const commitLogHelpModalAlign = css`
+  text-align: end;
 `;
 
 export const commitLogFormBox = css`
@@ -476,6 +502,7 @@ export const helpModalContent = (direction: string | undefined) => css`
   min-width: 200px;
   padding: 1rem;
   margin: 0.5rem 0 0 0;
+  text-align: start;
   font-size: 0.8rem;
   line-height: 1.2rem;
   background: white;
@@ -498,6 +525,7 @@ export const confirmModalTransition = (isOpen: boolean) => css`
 export const confimModalBox = css`
   position: relative;
   width: 70vw;
+  max-width: 400px;
   height: 20vh;
   padding: 1.5rem;
   text-align: left;
@@ -515,7 +543,7 @@ export const confirmModalContent = css`
 export const confirmModalBtnAlign = css`
   position: absolute;
   bottom: 1.5rem;
-  left: 1.5rem;
+  right: 1.5rem;
 `;
 
 export const confirmModalConfirmBtn = css`

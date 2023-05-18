@@ -142,6 +142,13 @@ export const inviteModalShareBtn = css`
   }
 `;
 
+export const projectDeleteInput = css`
+  border-bottom: 1px solid gray;
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const projectDeleteNameBtn = (
   inputName: string,
   channelName: string

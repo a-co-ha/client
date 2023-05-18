@@ -140,9 +140,12 @@ export const CommitLogForm = ({
       />
       <div css={styles.commitLogModalTransition(isCommitLogFormModal)}>
         <div css={styles.commitLogModalFormBox}>
-          <HelpModal
-            content={`내가 속한 organization 또는\n내가 만든 repository를 검색하고 우리의 프로젝트에 연결해 보세요!\n(단, private 저장소는 검색되지 않습니다)`}
-          />
+          <div css={styles.commitLogHelpModalAlign}>
+            <HelpModal
+              content={`내가 속한 organization 또는\n내가 만든 repository를 검색하고 우리의 프로젝트에 연결해 보세요!\n(단, private 저장소는 검색되지 않습니다)`}
+              direction={`left`}
+            />
+          </div>
           <div>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <div css={styles.commitLogFormBox}>

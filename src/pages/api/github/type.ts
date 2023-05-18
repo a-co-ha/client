@@ -18,9 +18,9 @@ export interface CommitLogReposResponse {
 
 export interface CommitLogOrgResponse {
   desc: string;
-  orgImg: string;
-  orgName: string;
-  orgUrl: string;
+  img: string;
+  name: string;
+  url: string;
   repos: {
     name: string;
     url: string;
@@ -29,8 +29,14 @@ export interface CommitLogOrgResponse {
 
 export interface CommitLogRepoResponse {
   name: string;
-  private: boolean;
   desc: string;
+  url: string;
+}
+
+export interface CommitRegisterResponse {
+  desc: string;
+  name: string;
+  type: string;
   url: string;
 }
 
@@ -69,10 +75,35 @@ export interface OrgCommitList {
   type: string;
 }
 
+export interface OrgIssueList {
+  url: string;
+  title: string;
+  user: {
+    name: string;
+  };
+  labels: {
+    name: string;
+    color: string;
+  }[];
+  state: string;
+  createAt: string;
+}
+
 export interface OrgCommitTransferedData {
   message: string;
   author: string;
   branch: string;
+  time: string;
+  url: string;
+}
+
+export interface OrgIssueTransferedData {
+  title: string;
+  author: string;
+  labels: {
+    name: string;
+    color: string;
+  }[];
   time: string;
   url: string;
 }
