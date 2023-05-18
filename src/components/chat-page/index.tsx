@@ -20,13 +20,13 @@ import type { SocketMessage } from '@/pages/api/socket/type';
 import * as styles from './styles';
 
 export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
-  const { socket } = useContext(SocketContext);
+  const { sendMessage, receiveMessage, socket } = useContext(SocketContext);
   // const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState(pageId));
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const addMessage = useCallback((message: any) => {
+  const addMessage = (message: any) => {
     console.log(`addmessage`, message);
     setMessages((prev) => {
       console.log(`prev`, prev);
@@ -35,7 +35,7 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       return newMessage;
     });
     console.log(`메세지스`, messages);
-  }, []);
+  };
 
   // useEffect(() => {
   //   if (socketMessage !== undefined) {
@@ -44,11 +44,14 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
   //     console.log(`메세지스`, messages);
   //   }
   // }, [router.query.pageId, socketMessage]);
-  useEffect(() => {
-    socket.emit(`READ_MESSAGE`, {
-      roomId: pageId,
-    });
-    console.log('보냄');
+  // useEffect(() => {
+  //   socket.emit(`READ_MESSAGE`, {
+  //     roomId: pageId,
+  //   });
+  //   console.log('보냄');
+  // }, [router.query.pageId]);
+  useLayoutEffect(() => {
+    sendMessage(pageId);
   }, [router.query.pageId]);
 
   useEffect(() => {
@@ -57,13 +60,17 @@ export const ChatPage = ({ channelId, pageId, type }: pageProps) => {
       setMessages(data);
     });
   }, [router.query.pageId]);
+
   useEffect(() => {
-    socket.on(`RECEIVE_MESSAGE`, (data) => {
-      console.log(`받습니다`);
-      addMessage(data.message);
-      console.log(`여기다`, messages);
-    });
-  }, []);
+    receiveMessage(addMessage);
+  }, [receiveMessage]);
+  // useEffect(() => {
+  //   socket.on(`RECEIVE_MESSAGE`, (data) => {
+  //     console.log(`받습니다`);
+  //     addMessage(data.message);
+  //     console.log(`여기다`, messages);
+  //   });
+  // }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });

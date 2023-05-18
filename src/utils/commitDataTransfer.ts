@@ -7,7 +7,7 @@ export const commitDataTransfer = async (arr: any) => {
       const author = item.payload.commits[0].author.name;
       const branch = item.payload.ref.substring(11);
       const time = getTimeValue(item.created_at);
-      const url = `https://github.com/${item.repo.name}/item/${item.payload.head}`;
+      const url = `https://github.com/${item.repo.name}/commit/${item.payload.head}`;
       return { message, author, branch, time, url };
     } else {
       const title = item.title;

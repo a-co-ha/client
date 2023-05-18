@@ -7,6 +7,8 @@ import { onUserState } from '@/recoil/socket/atom';
 
 interface Context {
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+  sendMessage: (pageId: string) => void;
+  receiveMessage: (func: (message: any) => void) => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -69,28 +71,36 @@ export const SocketContextProvider = ({
   //   });
 
   // })e
-  // const sendMessage = (text: string, roomId: string) => {
-  //   console.log(`소케엣`, socket);
-  //   console.log(`보냅니다`);
-  //   console.log(`메세지 데이타`, text, roomId);
-  //   socket.emit(`message-send`, {
-  //     text,
-  //     roomId,
+
+  // useEffect(() => {
+  //   socket.emit(`READ_MESSAGE`, {
+  //     roomId: pageId,
   //   });
-  // };
+  //   console.log('보냄');
+  // }, [router.query.pageId]);
+
+  const sendMessage = (pageId: string) => {
+    console.log(`소케엣`, socket);
+    console.log(`보냅니다`);
+    // console.log(`메세지 데이타`, text, roomId);
+    socket.emit(`READ_MESSAGE`, {
+      roomId: pageId,
+    });
+  };
+  const receiveMessage = (func: any) => {
+    console.log(`받습니다`);
+    socket.on(`RECEIVE_MESSAGE`, (data) => {
+      console.log(`없는듯`, data);
+      func(data.message);
+    });
+  };
+
   // useEffect(() => {
   //   socket.on(`message-receive`, (data) => {
   //     console.log(`없는듯`, data);
   //     func(data.message);
   //   });
   // },[])
-  // const receiveMessage = (func: any) => {
-  //   console.log(`받습니다`);
-  //   socket.on(`message-receive`, (data) => {
-  //     console.log(`없는듯`, data);
-  //     func(data.message);
-  //   });
-  // };
 
   //   const sendMessage = ({
   //     roomId,
@@ -107,7 +117,7 @@ export const SocketContextProvider = ({
   //     socket.on(`UPDATE_MESSAGE`, (msg) => func(msg));
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ sendMessage, receiveMessage, socket }}>
       {children}
     </SocketContext.Provider>
   );

@@ -5,5 +5,5 @@ export const postSocketPage = async (
 ) => {
   const res = await api.post(`/api/page/room?channel=${channelId}`);
   console.log(`소켓 페이지 생성`, res.data);
-  return res.data.SocketPage;
+  return res.data;
 };
