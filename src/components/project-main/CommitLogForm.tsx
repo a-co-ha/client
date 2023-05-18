@@ -26,7 +26,6 @@ export const CommitLogForm = ({
 }: {
   channelId: string | string[] | undefined;
 }) => {
-  const { socket } = useContext(SocketContext);
   const getOrgs = useGetOrgs();
   const getRepos = useGetRepos();
   const registerHub = useRegisterHub(channelId);
