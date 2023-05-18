@@ -8,6 +8,7 @@ import type { SocketMessage } from '@/pages/api/socket/type';
 
 interface Context {
   // socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+  socketDisconnect: () => void;
   readMessage: (pageId: string) => void;
   getMessage: (func: (data: SocketMessage[]) => void) => void;
   sendMessage: (message: string, pageId: string) => void;
@@ -32,7 +33,6 @@ export const SocketContextProvider = ({
 }) => {
   const setOnUser = useSetRecoilState(onUserState);
   const sessionId = getCookie(`sessionId`);
-  const userId = getCookie(`myUserId`);
 
   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
     auth: {
@@ -62,6 +62,10 @@ export const SocketContextProvider = ({
       socket.disconnect();
     };
   }, [sessionId, socket]);
+
+  const socketDisconnect = () => {
+    socket.disconnect();
+  };
 
   const readMessage = (pageId: string) => {
     console.log(`소케엣`, socket);
@@ -138,6 +142,7 @@ export const SocketContextProvider = ({
   return (
     <SocketContext.Provider
       value={{
+        socketDisconnect,
         readMessage,
         getMessage,
         sendMessage,
