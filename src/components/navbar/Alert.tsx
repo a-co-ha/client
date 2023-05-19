@@ -19,31 +19,30 @@ import { EditInactiveIcon } from '../selector-menu/EditInactiveIcon';
  *  - 해당 알림은 알림메뉴에 쌓인다  (각 알림 확인 여부가 false 이면 메뉴에 쌓인다 => 서버에서 확인 여부 체크하여 false인 알람배열만 보내준다.(프론트에서는 불가능))
  *  - 확인하지 않은 알림있다는 표시한다. (알림창 확인하지 않은 알람이 하나라도 있을 시)
  *
+ * ====> 알림 종모양 클릭시 모든 알림 읽어지는것으로 변경
+ *
  * 알림 메뉴
  * - 클릭시 해당 알림을 발생시킨 지점으로 이동 할 수 있어야한다.
  * - 클릭으로 확인한 알림은 알림 메뉴에서 사라진다.
+ *
  */
 
 /**
  * 태그한 channId, pageid, type GET_ALERT에 포함 요청  (1-1)
- * 전체알람 / 각 알람 의 확인 alert인지?
  * READ_ALERT 보내도 ALERT true이고 , string값으로옴
- * 확인하지 않은 알림 가져오고, 삭제하는 api (read, delete)
- 
  * 포스트맨 event listen 이 안됌
  */
 
 export const Alert = () => {
   const { socket } = useContext(SocketContext);
   const [isAlert, setIsAlert] = useState<boolean | null>(null);
-  const [isOpenAlert, setIsOpenAlert] = useState(false);
-  console.log('🚀 ~ file: Alert.tsx:15 ~ Alert ~ isOpenAlert:', isOpenAlert);
-  console.log('🚀 ~ file: Alert.tsx:11 ~ Alert ~ isAlert:', isAlert);
+  console.log('🚀 ~ file: Alert.tsx:39 ~ Alert ~ isAlert:', isAlert);
 
   useEffect(() => {
     socket.on('ALERT', (data: string) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);
       if (data === 'true') setIsAlert(true);
+      else setIsAlert(false);
     });
     socket.on('GET_ALERT', (data) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
@@ -78,8 +77,7 @@ export const Alert = () => {
   }, [socket]);
 
   const handleClick = () => {
-    console.log('cccc ALERT', 'status');
-    socket.emit('READ_ALRET');
+    socket.emit('READ_ALERT');
   };
 
   return (
@@ -87,7 +85,7 @@ export const Alert = () => {
       {isAlert !== null && (
         <div css={styles.alertBox}>
           <Menu as="div" className="relative inline-block text-left">
-            <div>
+            <div onClick={handleClick}>
               <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 <FontAwesomeIcon
                   icon={faBell}

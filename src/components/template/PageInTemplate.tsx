@@ -15,7 +15,7 @@ export const PageInTemplate = ({
   position,
   label,
 }: PageInTemplateProps) => {
-  //TODO: 태그된 유저에 이미지 달기
+  //TODO: 태그된 유저에 이미지 달기 게시물 찾기 api label에 유저 이미지 추가요청
   return (
     <Draggable key={pageId} draggableId={pageId} index={position}>
       {(provided, snapshot) => (
@@ -38,7 +38,7 @@ export const PageInTemplate = ({
               pageName={pageName}
               type={type}
             />
-            <>
+            <div>
               {label
                 .slice(0, 2)
                 .map((person: Labels | string, index: number) => (
@@ -73,7 +73,7 @@ export const PageInTemplate = ({
                   )}
                 </Disclosure>
               )}
-            </>
+            </div>
           </div>
         </div>
       )}
