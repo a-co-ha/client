@@ -7,6 +7,7 @@ import type {
   OrgCommitTransferedData,
   OrgIssueTransferedData,
   CommitLogRepoResponse,
+  CommitLogGithubRegister,
 } from '@/pages/api/github/type';
 
 export const commitLogModalFormState = atom({
@@ -62,7 +63,10 @@ export const commitLogModalRepoSearchState = atom<CommitLogRepoResponse>({
   },
 });
 
-export const githubConnectState = atomFamily({
+export const githubConnectState = atomFamily<
+  CommitLogGithubRegister,
+  string | string[] | undefined
+>({
   key: `githubConnectState/${nanoId()}`,
   default: {
     repoName: '',

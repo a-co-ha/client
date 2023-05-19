@@ -1006,6 +1006,7 @@ __metadata:
     remark-gfm: ^3.0.1
     sharp: ^0.31.3
     socket.io-client: ^4.6.1
+    tailwind-scrollbar-hide: ^1.1.7
     tailwindcss: ^3.2.4
     typescript: 4.9.4
   languageName: unknown
@@ -6267,6 +6268,13 @@ __metadata:
     "@pkgr/utils": ^2.3.1
     tslib: ^2.4.0
   checksum: 83e054fe4494dab42114fc4ed36a11b85e18742d304ade3f40d3afb4ba4145d76183adba1f29e2c36e9a0a453b93a83e2387505f96a0efd901f562927a968c44
+  languageName: node
+  linkType: hard
+
+"tailwind-scrollbar-hide@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "tailwind-scrollbar-hide@npm:1.1.7"
+  checksum: 2434a1db7a92fa91952ce4fbef7f80b83f121fa2fae27453cefc6030c06d368768e3172d3640ae6836fe4f813ed89b40c2f44b1f17756593ab4625259ef22a75
   languageName: node
   linkType: hard
 

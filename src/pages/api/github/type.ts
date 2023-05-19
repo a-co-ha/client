@@ -49,6 +49,7 @@ export interface ConfirmModalType {
 }
 
 export interface CommitLogGithubRegister {
+  owner?: string;
   repoName: string;
   repoType: string;
 }

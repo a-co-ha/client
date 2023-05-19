@@ -115,7 +115,8 @@ export const CommitLog = () => {
       });
     }
   };
-  console.log(`issue`, githubOrgIssueData);
+  console.log(`issue`, githubOrgCommitData.length < 1);
+
   return (
     <div css={styles.commitLogBox} className="w-full max-w-md px-2 sm:px-0">
       <CommitLogForm channelId={channelId} />
@@ -127,15 +128,17 @@ export const CommitLog = () => {
         >
           <Tab.Group>
             <div css={styles.commitLogTitleBox}>
-              {githubOrgData !== null && githubOrgData.img && (
-                <Image
-                  src={githubOrgData.img}
-                  width={20}
-                  height={20}
-                  alt={`github repo Image`}
-                  css={{ borderRadius: `50%` }}
-                />
-              )}
+              {githubConnectData.repoType === 'org' &&
+                githubOrgData !== null &&
+                githubOrgData.img && (
+                  <Image
+                    src={githubOrgData.img}
+                    width={20}
+                    height={20}
+                    alt={`github repo Image`}
+                    css={{ borderRadius: `50%` }}
+                  />
+                )}
               <div
                 css={styles.commitLogConnectChangeBox}
                 onClick={() => setIsCommitLogFormModal(true)}
@@ -152,7 +155,7 @@ export const CommitLog = () => {
                 direction={`left`}
               />
             </div>
-            <Tab.List className="flex space-x-1 rounded-b-md  p-1">
+            <Tab.List className="flex space-x-2 rounded-b-md  p-1 overflow-scroll scrollbar-hide">
               {githubConnectData.repoType === 'org' &&
                 githubOrgData &&
                 githubOrgData['repos'].map((category) => (
@@ -160,8 +163,8 @@ export const CommitLog = () => {
                     key={category.name}
                     className={({ selected }) =>
                       classNames(
-                        'w-full rounded-lg py-2.5 text-sm font-bold leading-5 text-blue-700',
-                        'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                        'max-w-[110px] rounded-lg py-2.5 px-1 text-sm font-bold leading-5 text-blue-700',
+                        'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none',
                         selected
                           ? 'bg-white shadow'
                           : 'text-blue-100 hover:bg-white/[0.12] hover:text-blue-700'
@@ -226,8 +229,26 @@ export const CommitLog = () => {
                   )}
                 >
                   <div css={styles.commitLogItemAlign}>
-                    {getOrgCommitList.isLoading || getOrgIssueList.isLoading ? (
+                    {getOrgCommitList.isLoading ||
+                    getOrgIssueList.isLoading ||
+                    getRepoCommitList.isLoading ||
+                    getRepoIssueList.isLoading ? (
                       <Loading position={`absolute`} />
+                    ) : (!isIssueOpen &&
+                        githubConnectData.repoType === 'org' &&
+                        githubOrgCommitData.length === 0) ||
+                      (!isIssueOpen &&
+                        githubConnectData.repoType === 'repo' &&
+                        githubRepoCommitData.length === 0) ||
+                      (isIssueOpen &&
+                        githubConnectData.repoType === 'org' &&
+                        githubOrgIssueData.length === 0) ||
+                      (isIssueOpen &&
+                        githubConnectData.repoType === 'repo' &&
+                        githubRepoIssueData.length === 0) ? (
+                      <div css={styles.commitLogEmptyResult}>
+                        검색된 결과가 없어요
+                      </div>
                     ) : (
                       <div>
                         {(githubConnectData.repoType === 'org' &&

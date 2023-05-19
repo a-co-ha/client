@@ -148,6 +148,11 @@ export const commitLogPlusAndErrorMessage = css`
   white-space: pre-wrap;
 `;
 
+export const commitLogEmptyResult = css`
+  color: rgba(0, 0, 0, 0.2);
+  user-select: none;
+`;
+
 export const commitLogErrorBtn = css`
   display: block;
   padding: 0.5rem 1rem;
@@ -274,7 +279,7 @@ export const commitLogIssueBtn = (isOpen: boolean) => css`
   }
   &:hover {
     color: red;
-    background: rgba(255,0,0,0.01);
+    background: rgba(255, 0, 0, 0.01);
   }
 `;
 
