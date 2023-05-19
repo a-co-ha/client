@@ -214,7 +214,7 @@ export const CommitLogForm = ({
                                 setIsFocusContent(
                                   org.desc
                                     ? `${org.name} : ${org.desc}`
-                                    : `${org.name}${org.desc}`
+                                    : `${org.name}`
                                 );
                                 setRegisterHubData({
                                   repoName: org.name,
@@ -254,7 +254,7 @@ export const CommitLogForm = ({
                                 setIsFocusContent(
                                   repo.desc
                                     ? `${repo.name} : ${repo.desc}`
-                                    : `${repo.name}${repo.desc}`
+                                    : `${repo.name}`
                                 );
                                 setRegisterHubData({
                                   repoName: repo.name,

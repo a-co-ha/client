@@ -129,7 +129,7 @@ export const commitLogInnerBox = (
   &:hover::after {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0.375rem;
-    cursor: pointer;
+    cursor: ${!isConnected ? 'pointer' : `auto`};
   }
 `;
 
@@ -146,6 +146,15 @@ export const commitLogPlusAndErrorMessage = css`
   font-size: 0.8rem;
   padding-top: 1rem;
   white-space: pre-wrap;
+`;
+
+export const commitLogErrorBtn = css`
+  display: block;
+  padding: 0.5rem 1rem;
+  z-index: 3;
+  background: white;
+  border-radius: 0.37rem;
+  cursor: pointer;
 `;
 
 export const commitLogItemAlign = css`
@@ -256,12 +265,16 @@ export const commitLogIssueBtn = (isOpen: boolean) => css`
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.25rem;
-  color: ${isOpen ? `red` : `rgb(248 113 113)`};
+  color: ${isOpen ? `red` : `rgba(255,0,0,0.1)`};
   background: ${isOpen ? `rgba(255,0,0,0.01)` : `white`};
   border-radius: 0.375rem;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
   &:focus {
     outline: none;
+  }
+  &:hover {
+    color: red;
+    background: rgba(255,0,0,0.01);
   }
 `;
 

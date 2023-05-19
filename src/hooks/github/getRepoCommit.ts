@@ -1,33 +1,33 @@
-import { getOrgCommit } from '@/pages/api/github/getOrgCommit';
+import { getRepoCommit } from '@/pages/api/github/getRepoCommit';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { commitDataTransfer } from '@/utils/commitDataTransfer';
 import {
-  githubOrgCommitState,
+  githubRepoCommitState,
   githubCommitErrorState,
 } from '@/recoil/github/atom';
 import type { CommitList, OrgRepoName } from '@/pages/api/github/type';
 
-export const useGetOrgCommit = (channelId: string | string[] | undefined) => {
-  const setOrgCommit = useSetRecoilState(githubOrgCommitState);
+export const useGetRepoCommit = (channelId: string | string[] | undefined) => {
+  const setRepoCommit = useSetRecoilState(githubRepoCommitState);
   const setError = useSetRecoilState(githubCommitErrorState);
   const queryClient = useQueryClient();
-  queryClient.setQueryDefaults([`getOrgCommit`, channelId], {
+  queryClient.setQueryDefaults([`getRepoCommit`, channelId], {
     staleTime: 1000 * 60 * 2,
   });
   return useMutation<CommitList[], AxiosError, OrgRepoName>(
-    [`getOrgCommit`, channelId],
+    [`getRepoCommit`, channelId],
     (orgRepoName: OrgRepoName) =>
-      getOrgCommit(orgRepoName.org, orgRepoName.repo),
+      getRepoCommit(orgRepoName.owner, orgRepoName.repo),
     {
       onSuccess: async (data) => {
         if (data == null) {
           setError(true);
         }
-        console.log('orgCommits', data);
+        console.log('repoCommits', data);
         const commitList = await commitDataTransfer(data);
-        setOrgCommit(commitList);
+        setRepoCommit(commitList);
       },
     }
   );

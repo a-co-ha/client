@@ -6,6 +6,7 @@ import type {
   CommitLogReposResponse,
   OrgCommitTransferedData,
   OrgIssueTransferedData,
+  CommitLogRepoResponse,
 } from '@/pages/api/github/type';
 
 export const commitLogModalFormState = atom({
@@ -52,11 +53,21 @@ export const commitLogModalOrgSearchState = atom<CommitLogOrgResponse>({
   },
 });
 
+export const commitLogModalRepoSearchState = atom<CommitLogRepoResponse>({
+  key: `commitLogModalRepoSearchState/${nanoId()}`,
+  default: {
+    desc: '',
+    name: '',
+    url: '',
+  },
+});
+
 export const githubConnectState = atomFamily({
   key: `githubConnectState/${nanoId()}`,
   default: {
     repoName: '',
     repoType: '',
+    owner: '',
   },
 });
 
@@ -67,6 +78,16 @@ export const githubOrgCommitState = atom<OrgCommitTransferedData[]>({
 
 export const githubOrgIssueState = atom<OrgIssueTransferedData[]>({
   key: `githubOrgIssueState/${nanoId()}`,
+  default: [],
+});
+
+export const githubRepoCommitState = atom<OrgCommitTransferedData[]>({
+  key: `githubRepoCommitState/${nanoId()}`,
+  default: [],
+});
+
+export const githubRepoIssueState = atom<OrgIssueTransferedData[]>({
+  key: `githubRepoIssueState/${nanoId()}`,
   default: [],
 });
 

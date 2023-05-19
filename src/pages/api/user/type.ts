@@ -11,8 +11,8 @@ export interface OauthResponseData {
 
 export interface User {
   userId: number;
-  github_id: string;
-  github_url: string;
+  githubID: string;
+  githubURL: string;
   img: string;
   name: string;
   channels: ChannelList[];

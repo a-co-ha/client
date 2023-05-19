@@ -3,6 +3,7 @@ import { getTimeValue } from './getTimeValue';
 export const commitDataTransfer = async (arr: any) => {
   const transferedCommit = arr.map((item: any) => {
     if (item.type) {
+      //commit 일때
       const message = item.payload.commits[0].message;
       const author = item.payload.commits[0].author.name;
       const branch = item.payload.ref.substring(11);
@@ -10,6 +11,7 @@ export const commitDataTransfer = async (arr: any) => {
       const url = `https://github.com/${item.repo.name}/commit/${item.payload.head}`;
       return { message, author, branch, time, url };
     } else {
+      // issue 일때
       const title = item.title;
       const author = item.user.name;
       const time = getTimeValue(item.createAt);

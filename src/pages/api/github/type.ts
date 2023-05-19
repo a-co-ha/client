@@ -53,7 +53,7 @@ export interface CommitLogGithubRegister {
   repoType: string;
 }
 
-export interface OrgCommitList {
+export interface CommitList {
   id: string;
   created_at: string;
   repo: {
@@ -75,7 +75,7 @@ export interface OrgCommitList {
   type: string;
 }
 
-export interface OrgIssueList {
+export interface IssueList {
   url: string;
   title: string;
   user: {
@@ -109,6 +109,7 @@ export interface OrgIssueTransferedData {
 }
 
 export interface OrgRepoName {
-  org: string;
+  org?: string;
+  owner?: string;
   repo: string;
 }
