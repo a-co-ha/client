@@ -7,7 +7,7 @@ import { onUserState } from '@/recoil/socket/atom';
 import type { SocketMessage } from '@/pages/api/socket/type';
 
 interface Context {
-  // socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+  socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   socketDisconnect: () => void;
   readMessage: (pageId: string) => void;
   getMessage: (func: (data: SocketMessage[]) => void) => void;
@@ -143,6 +143,7 @@ export const SocketContextProvider = ({
         newMember,
         disconnectMember,
         joinChannel,
+        socket,
       }}
     >
       {children}

@@ -43,11 +43,12 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       const channelGithubData = userData.channels.filter(
         (channel) => channelId === String(channel.id)
       )[0];
-      setChannelGithubData({
-        repoName: channelGithubData.repoName,
-        repoType: channelGithubData.repoType,
-        owner: userData.githubID,
-      });
+      channelGithubData &&
+        setChannelGithubData({
+          repoName: channelGithubData.repoName,
+          repoType: channelGithubData.repoType,
+          owner: userData.githubID,
+        });
       console.log(`채널 깃허브`, channelGithubData);
       setChannelName(myUserData.channelName);
     }

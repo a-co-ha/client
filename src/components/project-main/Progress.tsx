@@ -15,8 +15,8 @@ export const Progress = () => {
   const { data: pagePercentList } = useGetProgressPercentList(channelId);
 
   return (
-    <div css={styles.contentBox}>
-      <h3 css={styles.contentBoxTitle}>진행현황</h3>
+    <div css={styles.commonBoxStyle}>
+      <h3 css={styles.commonTitleStyle}>진행현황</h3>
       <main css={styles.content}>
         {pagePercentList &&
           pagePercentList.map((page: PageProgress) => (

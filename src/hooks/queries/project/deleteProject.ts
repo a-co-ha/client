@@ -23,11 +23,11 @@ export const useDeleteProject = (channelId: string | string[] | undefined) => {
         if (data.channels.length === 0) {
           console.log(`channel리스트 0개`, data.channels);
           resetChannelName();
-          router.push(`/main`);
+          await router.push(`/main`);
         } else {
           console.log(`channel리스트 ?개`, data.channels);
           setChannelName(data.channels[0].channelName);
-          router.push(`/project/${data.channels[0].id}`);
+          await router.push(`/project/${data.channels[0].id}`);
         }
       },
     }

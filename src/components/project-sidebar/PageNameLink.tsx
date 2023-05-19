@@ -25,15 +25,20 @@ export const PageNameLink = (props: PageNameLinkProps) => {
 
   const pageId = router.query.pageId;
 
-  const deleteEditablePage = useDeleteEditablePage(
+  const deletePage = useDeleteEditablePage(
     props.channelId,
     props.pageId,
     props.type
   );
 
+  const socketPage = useDeleteSocketPage(props.channelId, props.pageId);
   const onDelete = () => {
     if (props.type.endsWith('-page')) return deletePageInTemplate();
-    deletePage.mutate();
+    if (props.type === 'socket') {
+      socketPage.mutate();
+    } else {
+      deletePage.mutate();
+    }
   };
 
   return (
@@ -56,10 +61,7 @@ export const PageNameLink = (props: PageNameLinkProps) => {
                 style={{ color: '#efb925' }}
               />
             </button>
-            <button
-              css={styles.pageNameEditBtn}
-              onClick={() => deletePage.mutate()}
-            >
+            <button css={styles.pageNameEditBtn} onClick={onDelete}>
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
           </div>
