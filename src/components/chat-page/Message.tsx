@@ -1,18 +1,18 @@
 import Image from 'next/image';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useEffect, useRef, useLayoutEffect } from 'react';
 import {
   messageModalState,
   messageModalImgState,
   messageMoreState,
 } from '@/recoil/socket/atom';
-
-import * as styles from './styles';
-import type { MessageType } from './type';
-import { useEffect, useRef, useLayoutEffect } from 'react';
+import { getCookie } from 'cookies-next';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import * as styles from './styles';
+import type { MessageType } from './type';
 
 export const Message = ({
   name,
@@ -29,6 +29,7 @@ export const Message = ({
     setMessageModal(true);
     setMessageImgSrc(img);
   };
+  const myUserName = getCookie(`myUserName`);
 
   useEffect(() => {
     if (messageHeightRef.current?.scrollHeight) {
@@ -75,7 +76,7 @@ export const Message = ({
           <span css={styles.messageName(isDisplay)}>{name}</span>
           <span css={styles.messageTime(isDisplay)}>{currentMsgTime}</span>
         </div>
-        <div css={styles.messageContentBox}>
+        <div css={styles.messageContentBox(name === myUserName)}>
           <div css={styles.messageContentInnerBox} ref={messageHeightRef}>
             <span css={styles.message}>
               <ReactMarkdown
@@ -116,4 +117,3 @@ export const Message = ({
     </div>
   );
 };
-//"createdAt": "2023-03-19T16:09:09.401Z",

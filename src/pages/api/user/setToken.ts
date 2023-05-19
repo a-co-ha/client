@@ -1,10 +1,12 @@
 import { setCookie, getCookies } from 'cookies-next';
+import { escape } from 'lodash';
 
 export const setToken = async (
   accessToken: string,
   refreshToken: string,
   sessionID: string,
-  userId: number
+  userId: number,
+  userName: string
 ) => {
   if (accessToken !== undefined && refreshToken !== undefined) {
     setCookie('accessToken', accessToken, {
@@ -20,6 +22,10 @@ export const setToken = async (
       sameSite: 'lax',
     });
     setCookie('myUserId', userId, {
+      maxAge: 60 * 60 * 24,
+      sameSite: 'lax',
+    });
+    setCookie('myUserName', userName, {
       maxAge: 60 * 60 * 24,
       sameSite: 'lax',
     });

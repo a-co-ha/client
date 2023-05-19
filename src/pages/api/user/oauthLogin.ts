@@ -10,14 +10,14 @@ export const oauthLogin = async (
         Origin: `${process.env.NEXT_PUBLIC_ORIGIN}`,
       },
     });
-    console.log(`여기는 oauth res`, res.headers);
+    console.log(`여기는 oauth res`, res.data);
 
     const {
       token: { accessToken, refreshToken },
-      user: { userId },
+      user: { userId, name },
       sessionID,
     } = res.data;
 
-    return { accessToken, refreshToken, userId, sessionID };
+    return { accessToken, refreshToken, userId, name, sessionID };
   } else return null;
 };

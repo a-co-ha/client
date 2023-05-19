@@ -92,8 +92,11 @@ export const projectCreateThumbnail = (isSelected: boolean) => css`
   margin-top: 5px;
   border-radius: 10px;
   transform: ${isSelected ? `scale(1.15)` : `scale(1)`};
-  transition: 0.5s;
+  transition: 0.3s;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &:hover {
+    transform: ${isSelected ? `scale(1.15)` : `scale(1.08)`};
+  }
   &:hover > div {
     display: block;
   }
@@ -102,8 +105,8 @@ export const projectCreateThumbnail = (isSelected: boolean) => css`
     content: '';
     position: absolute;
     top: 5px;
-    left: -11px;
-    width: 4px;
+    left: -13px;
+    width: 5.5px;
     height: 30px;
     background: gray;
     border-top-right-radius: 0.375rem;

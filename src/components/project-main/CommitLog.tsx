@@ -32,6 +32,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { HelpModal } from '@/hooks/useHelpModal';
 import { Loading } from '../loading/Loading';
+import { getCookie } from 'cookies-next';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -39,6 +40,7 @@ function classNames(...classes: any) {
 
 export const CommitLog = () => {
   const { channelId } = useGetUrlInfo();
+  const myUserName = getCookie(`myUserName`);
   const githubConnectData = useRecoilValue(githubConnectState(channelId));
   const getOrg = useGetOrg(channelId);
   const getRepo = useGetRepo(channelId);
@@ -132,11 +134,12 @@ export const CommitLog = () => {
                 githubOrgData !== null &&
                 githubOrgData.img && (
                   <Image
+                    css={{ borderRadius: `50%` }}
                     src={githubOrgData.img}
                     width={20}
                     height={20}
                     alt={`github repo Image`}
-                    css={{ borderRadius: `50%` }}
+                    loading={`lazy`}
                   />
                 )}
               <div
@@ -163,7 +166,7 @@ export const CommitLog = () => {
                     key={category.name}
                     className={({ selected }) =>
                       classNames(
-                        'max-w-[110px] rounded-lg py-2.5 px-1 text-sm font-bold leading-5 text-blue-700',
+                        'w-full max-w-[110px] rounded-lg py-2.5 px-1 text-sm font-bold leading-5 text-blue-700',
                         'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none',
                         selected
                           ? 'bg-white shadow'
@@ -276,7 +279,11 @@ export const CommitLog = () => {
                                     <span css={styles.commitLogBranch}>
                                       {` - ${commit.branch}`}
                                     </span>
-                                    <span css={styles.commitLogAuthor}>
+                                    <span
+                                      css={styles.commitLogAuthor(
+                                        commit.author === myUserName
+                                      )}
+                                    >
                                       {commit.author}
                                     </span>
                                     <span css={styles.commitLogTime}>
@@ -316,7 +323,11 @@ export const CommitLog = () => {
                                     >
                                       {issue.labels[0]?.name}
                                     </span>
-                                    <span css={styles.commitLogAuthor}>
+                                    <span
+                                      css={styles.commitLogAuthor(
+                                        issue.author === myUserName
+                                      )}
+                                    >
                                       {issue.author}
                                     </span>
                                     <span css={styles.commitLogTime}>
@@ -375,15 +386,15 @@ export const CommitLog = () => {
             <div css={styles.commitLogPlusBtnBox}>
               {githubConnectData.repoName === '' ? (
                 <FontAwesomeIcon
+                  size={`2xl`}
                   icon={faSquarePlus}
                   color={`#000000`}
-                  size={`2xl`}
                 />
               ) : githubError ? (
                 <FontAwesomeIcon
+                  size={`2xl`}
                   icon={faScrewdriverWrench}
                   color={`#000000`}
-                  size={`2xl`}
                 />
               ) : null}
               <p css={styles.commitLogPlusAndErrorMessage}>

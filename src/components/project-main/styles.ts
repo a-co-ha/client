@@ -58,6 +58,13 @@ export const commitLogTitleBox = css`
   & div:last-child {
     margin-left: auto;
   }
+  &:hover {
+    background: #ffd6dc;
+  }
+  transition: 0.4s;
+  & svg {
+    width: 15px;
+  }
 `;
 
 export const commitLogConnectChangeBox = css`
@@ -140,6 +147,9 @@ export const commitLogPlusBtnBox = css`
   height: calc(100% - 110px);
   justify-content: center;
   align-items: center;
+  & svg {
+    width: 30px;
+  }
 `;
 
 export const commitLogPlusAndErrorMessage = css`
@@ -256,9 +266,9 @@ export const commitLogTime = css`
   font-size: 0.5rem;
 `;
 
-export const commitLogAuthor = css`
+export const commitLogAuthor = (isMe: boolean) => css`
   display: inline-block;
-  color: #f89fab;
+  color: ${isMe ? `#f4c617` : `#f89fab`};
   font-weight: 700;
   margin-left: 5px;
   font-size: 0.7rem;

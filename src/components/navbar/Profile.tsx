@@ -29,6 +29,7 @@ export const Profile = () => {
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
     deleteCookie(`myUserId`);
+    deleteCookie(`myUserName`);
     resetProfile();
     resetChannelName();
     router.replace(`/`);
