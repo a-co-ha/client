@@ -13,7 +13,7 @@ import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 export const Profile = () => {
-  const { socket } = useContext(SocketContext);
+  const { socketDisconnect } = useContext(SocketContext);
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
@@ -24,7 +24,7 @@ export const Profile = () => {
     await api.post(`/api/user/logout`, {
       sessionID,
     });
-    socket.disconnect();
+    socketDisconnect();
     deleteCookie(`refreshToken`);
     deleteCookie(`accessToken`);
     deleteCookie(`sessionId`);
@@ -40,7 +40,9 @@ export const Profile = () => {
           <div css={styles.profileImageBox}>
             <Image src={user.img} alt="" width={100} height={100} />{' '}
           </div>
-          <button css={{ fontSize: '12px' }}>{user.name}</button>
+          <button css={{ fontSize: '12px', marginRight: `auto` }}>
+            {user.name}
+          </button>
           <button css={{ marginLeft: '4px' }} onClick={onClickHandler}>
             <FontAwesomeIcon icon={faDoorOpen} />
           </button>

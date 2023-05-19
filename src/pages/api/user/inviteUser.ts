@@ -10,7 +10,7 @@ export const inviteUser = async (
     const accessToken = getCookie(`accessToken`);
     if (!accessToken) return (window.location.href = `/error`);
     const res = await api.post(
-      `/invite/${adminCode}?channelCode=${channelName}`
+      `https://acoha.store/invite/${adminCode}?channelCode=${channelName}`
     );
     return res.data;
   } catch (err) {

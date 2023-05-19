@@ -10,6 +10,8 @@ import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
 import { adminState, inviteChannelState } from '@/recoil/user/atom';
+import { githubConnectState } from '@/recoil/github/atom';
+import { channelNameState } from '@/recoil/project/atom';
 import * as styles from '@/components/project-main/styles';
 import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
@@ -18,24 +20,38 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
   console.log(`채널@@@`, channelId);
   const setIsAdmin = useSetRecoilState(adminState(channelId));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
+  const setChannelGithubData = useSetRecoilState(githubConnectState(channelId));
+  const setChannelName = useSetRecoilState(channelNameState);
   const { data: userData } = useGetUser();
   const { data: channelUsers } = useGetUsers();
 
   useEffect(() => {
     if (userData !== undefined && channelUsers !== undefined) {
       console.log(`채널 유저스`, channelUsers);
-      const isAdmin = channelUsers.filter(
+      const myUserData = channelUsers.filter(
         (user: ChannelUser) => user.userId === userData.userId
-      )[0].admin;
+      )[0];
+      const isAdmin = myUserData.admin;
+      console.log(`이즈 어드민`, myUserData, isAdmin);
       console.log('이거 인덱스 유저데이타', userData);
-      const { userId, channelName } = channelUsers.filter(
+      const { userId, channelName, channelId } = channelUsers.filter(
         (user: ChannelUser) => user.admin === true
       )[0];
       setIsAdmin(isAdmin);
-      setInviteChannelData({ userId, channelName });
+      setInviteChannelData({ userId, channelName, channelId });
       console.log(`인바이트 인포`, userId, channelName);
+      const channelGithubData = userData.channels.filter(
+        (channel) => channelId === String(channel.id)
+      )[0];
+      setChannelGithubData({
+        repoName: channelGithubData.repoName,
+        repoType: channelGithubData.repoType,
+        owner: userData.githubID,
+      });
+      console.log(`채널 깃허브`, channelGithubData);
+      setChannelName(myUserData.channelName);
     }
-  }, [channelUsers]);
+  }, [userData, channelUsers]);
 
   return (
     <div css={styles.main}>

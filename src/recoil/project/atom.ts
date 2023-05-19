@@ -52,7 +52,17 @@ export const channelListState = atom<ChannelList[]>({
 
 export const channelNameState = atom({
   key: `channelNameState/${nanoId()}`,
-  default: 'A - COHA',
+  default: '',
+});
+
+export const channelImageState = atom({
+  key: `channelImageState/${nanoId()}`,
+  default: '',
+});
+
+export const channelSidebarOpenState = atom({
+  key: `channelSidebarOpenState/${nanoId()}`,
+  default: true,
 });
 
 export const deleteModalState = atom({
@@ -68,4 +78,9 @@ export const pageNameEditToggle = atomFamily({
 export const pageNameShare = atomFamily({
   key: `pageNameShare/${nanoId()}`,
   default: '',
+});
+
+export const confirmModalState = atomFamily({
+  key: `confirmModalState/${nanoId()}`,
+  default: false,
 });

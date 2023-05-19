@@ -21,6 +21,11 @@ export interface SocketMessage {
   createdAt: string;
 }
 
+export interface ChatBookmarkList {
+  _id: string;
+  bookmarkList: ChatBookmark[];
+}
+
 export interface ChatBookmark {
   _id: string;
   channelId: number;
@@ -40,6 +45,18 @@ export interface PutSocketPage {
   pageName: string;
   type: string;
   categories: string;
+  bookmarkList: ChatBookmark[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface PostSocketPage {
+  channelId: number;
+  pageName: string;
+  type: string;
+  categories: string;
+  _id: string;
   bookmarkList: ChatBookmark[];
   createdAt: string;
   updatedAt: string;

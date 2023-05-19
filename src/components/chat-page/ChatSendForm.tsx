@@ -20,7 +20,7 @@ export const ChatSendForm = ({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
-  const { socket } = useContext(SocketContext);
+  const { sendMessage } = useContext(SocketContext);
 
   const methods = useForm<ChatMessage>({
     defaultValues: {
@@ -44,6 +44,11 @@ export const ChatSendForm = ({
     chatMessage.style.height = `auto`;
     chatMessage.style.maxHeight = `${window.innerHeight / 2}px`;
     chatMessage.style.height = `${chatMessage.scrollHeight}px`;
+    if (value == '```js') {
+      chatMessage.style.color = `green`;
+    } else {
+      chatMessage.style.color = `black`;
+    }
     onChange(value);
     scrollToBottom();
   };
@@ -56,12 +61,12 @@ export const ChatSendForm = ({
   };
 
   const onSubmit = (chat: ChatMessage) => {
-    // sendMessage(chatMessage.chatMessage, pageId);
-    socket.emit(`SEND_MESSAGE`, {
-      content: chat.chatMessage,
-      roomId: pageId,
-      myMessage,
-    });
+    sendMessage(chat.chatMessage, pageId);
+    // socket.emit(`SEND_MESSAGE`, {
+    //   content: chat.chatMessage,
+    //   roomId: pageId,
+    //   myMessage,
+    // });
     console.log(`보냅니다`);
     methods.reset();
   };
@@ -90,7 +95,6 @@ export const ChatSendForm = ({
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div css={styles.chatFormInputBox}>
           <textarea
-            wrap="hard"
             autoFocus
             spellCheck={false}
             css={styles.chatFormInput}

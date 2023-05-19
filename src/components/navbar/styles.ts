@@ -9,18 +9,21 @@ const flexCenterNavBar = css`
 `;
 
 export const navBar = css`
+  position: relative;
   display: flex;
   width: 100%;
+  z-index: 3;
 `;
 
 export const profileBox = css`
   ${flexCenterNavBar}
-  width: 200px;
+  min-width: 200px;
   box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const titleBox = css`
   ${flexCenterNavBar}
+  width: 310px;
   flex-grow: 1;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
@@ -33,15 +36,14 @@ export const alertBox = css`
 
 export const loginBox = css`
   ${flexCenterNavBar};
-  width: 200px;
+  min-width: 200px;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const projectNameBox = css`
   ${flexCenterNavBar}
   justify-content: flex-end;
-  width: 250px;
-  // border-radius: 0.375rem;
+  min-width: 260px;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
@@ -131,6 +133,28 @@ export const inviteModalCopyBtn = (isCopied: boolean) => css`
   }
 `;
 
+export const inviteModalShareBtn = css`
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: rgba(248, 93, 117, 0.9);
+  border-radius: 0.375rem;
+  &:hover {
+    background-color: rgba(248, 93, 117, 1);
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const projectDeleteInput = css`
+  border-bottom: 1px solid gray;
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const projectDeleteNameBtn = (
   inputName: string,
   channelName: string
@@ -161,6 +185,8 @@ export const loginLogo = css`
 
 export const profileInnerBox = css`
   display: flex;
+  width: 100%;
+  padding-inline: 1rem;
   gap: 0.5rem;
   cursor: pointer;
 `;

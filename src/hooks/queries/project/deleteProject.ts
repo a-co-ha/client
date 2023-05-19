@@ -1,32 +1,33 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { deleteProject } from '@/pages/api/project/deleteProject';
-import { useSetRecoilState, useResetRecoilState } from 'recoil';
+import { useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
 import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
 import type { AxiosError } from 'axios';
-import type { DeleteProject } from '@/pages/api/project/type';
-import type { ChannelList } from '@/pages/api/user/type';
+import type { User } from '@/pages/api/user/type';
 
-export const useDeleteProject = (
-  channelId: string | string[] | undefined,
-  channelList: ChannelList[]
-) => {
+export const useDeleteProject = (channelId: string | string[] | undefined) => {
   const queryClient = useQueryClient();
   const setChannelName = useSetRecoilState(channelNameState);
   const resetChannelName = useResetRecoilState(channelNameState);
   const router = useRouter();
+  const userId = getCookie(`myUserId`);
 
-  return useMutation<DeleteProject, AxiosError>(
+  return useMutation<User, AxiosError>(
     [`deleteProject`, channelId],
     () => deleteProject(channelId),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries([`user`]);
-        if (channelList.length === 0) {
+      onSuccess: async (data) => {
+        await queryClient.invalidateQueries([`user`, userId]);
+        if (data.channels.length === 0) {
+          console.log(`channel리스트 0개`, data.channels);
           resetChannelName();
+          router.push(`/main`);
         } else {
-          setChannelName(channelList[0].channelName);
-          router.replace(`/project/${channelList[0].id}`);
+          console.log(`channel리스트 ?개`, data.channels);
+          setChannelName(data.channels[0].channelName);
+          router.push(`/project/${data.channels[0].id}`);
         }
       },
     }

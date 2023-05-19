@@ -1,24 +1,33 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { channelListState, channelNameState } from '@/recoil/project/atom';
+import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
+import {
+  channelListState,
+  channelNameState,
+  channelImageState,
+} from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
+import { HoverModal } from '@/hooks/useHoverModal';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import githubChannelImg from '@/images/github_channel.png';
 import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
 
-import { api } from '@/pages/api/config/api-config';
-
 export const List = () => {
-  const [channelList, setChannelList] = useRecoilState(channelListState);
-  const setChannelName = useSetRecoilState(channelNameState);
-  const setIsInitialUser = useSetRecoilState(initialUserState);
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { channelId } = useGetUrlInfo();
+
+  const [channelList, setChannelList] = useRecoilState(channelListState);
+  const resetChannelList = useResetRecoilState(channelListState);
+  const setChannelName = useSetRecoilState(channelNameState);
+  const setChannelImage = useSetRecoilState(channelImageState);
+  const setIsInitialUser = useSetRecoilState(initialUserState);
+
+  const [isOpen, setIsOpen] = useState(false);
   const { data: userData } = useGetUser();
   const closeModal = () => {
     setIsOpen(false);
@@ -37,14 +46,16 @@ export const List = () => {
             userId: e.userId,
             channelName: e.channelName,
             channelImg: e.channelImg,
+            repoName: e.repoName,
+            repoType: e.repoType,
           });
         });
         setChannelList(channels);
         setIsInitialUser(false);
       } else {
-        setChannelList([]);
+        resetChannelList();
         setIsInitialUser(true);
-        // router.push(`/main`);
+        setChannelName('');
       }
     } catch (err) {
       console.error(err);
@@ -53,30 +64,26 @@ export const List = () => {
 
   console.log('채널리스트 ', channelList);
 
-  const onClickHandler = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    channelId: number,
-    channelName: string
-  ) => {
-    setChannelName(channelName);
-    console.log(channelName);
-    router.push(`/project/${channelId}`);
-  };
-
-  const deleteAllHandler = () => {
-    channelList.map((e) => {
-      const channelId = e.id as unknown as string;
-      api.delete(`/api/channel/admin?channel=${channelId}`);
-    });
+  const onClickHandler = (channelData: ChannelList) => {
+    setChannelName(channelData.channelName);
+    setChannelImage(channelData.channelImg);
+    console.log(channelData.channelName);
+    router.push(`/project/${channelData.id}`);
   };
 
   return (
     <div css={styles.list}>
       {channelList.map((channel) => (
-        <div key={channel.id} css={styles.projectCreateThumbnail}>
+        <div
+          key={channel.id}
+          css={styles.projectCreateThumbnail(
+            String(channel.id) === channelId ? true : false
+          )}
+        >
+          <HoverModal content={channel.channelName} />
           <button
             css={{ position: `relative`, width: `100%`, height: `100%` }}
-            onClick={(e) => onClickHandler(e, channel.id, channel.channelName)}
+            onClick={() => onClickHandler(channel)}
           >
             <Image
               src={channel.channelImg ? channel.channelImg : githubChannelImg}
@@ -85,6 +92,7 @@ export const List = () => {
               alt={`channelImg`}
               placeholder="blur"
               blurDataURL={`...Loading`}
+              style={{ borderRadius: `10px` }}
             />
           </button>
         </div>
@@ -95,13 +103,7 @@ export const List = () => {
         css={styles.projectCreatePlusBtn}
       >
         +
-      </button>
-      <button
-        type="button"
-        onClick={deleteAllHandler}
-        css={styles.listAllDelete}
-      >
-        임시 전체삭제
+        <HoverModal content={`프로젝트 생성하기`} />
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>

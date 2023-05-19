@@ -10,10 +10,9 @@ export interface OauthResponseData {
 // type UserType = Omit<OauthResponseData, 'accessToken' | 'refreshToken'>;
 
 export interface User {
-  id: number;
   userId: number;
-  github_id: string;
-  github_url: string;
+  githubID: string;
+  githubURL: string;
   img: string;
   name: string;
   channels: ChannelList[];
@@ -24,6 +23,8 @@ export interface ChannelList {
   userId: number;
   channelName: string;
   channelImg: string;
+  repoName: string;
+  repoType: string;
 }
 
 export interface ChannelUser {

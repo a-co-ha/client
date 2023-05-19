@@ -10,30 +10,64 @@ const flexRowCenter = css`
   display: flex;
 `;
 
-export const projectSideBarBox = css`
+export const projectSideBarBox = (isOpen: boolean) => css`
   ${flexRowCenter}
-  width: 250px;
+  width: ${isOpen ? `260px` : `85px`};
   height: calc(100vh - 50px);
-  // outline: 1px solid limegreen;
-  // box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  transition-delay: ${isOpen ? `0s` : `0.5s`};
 `;
 
 export const list = css`
   ${flexColumnCenter}
-  width: 75px;
+  min-width: 70px;
   height: calc(100vh - 50px);
   padding-top: 1rem;
-  box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
-    0 4px 8px -4px rgb(0 0 0 / 0.2);
+  z-index: 2;
+  // box-shadow: inset 0 5px 5px -3px rgb(0 0 0 / 0.2),
+  //   0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
-export const channel = css`
+export const channel = (isOpen: boolean) => css`
   ${flexColumnCenter}
-  width: 250px;
+  position: relative;
+  width: 260px;
   height: calc(100vh - 50px);
   margin: 0 0.3rem 0.3rem 0;
-  // background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  transform: translate3d(${isOpen ? `0, 0, 0` : `-100%,0,0`});
+  transition: 0.5s;
+  transition-delay: ${isOpen ? `0s` : `0.5s`};
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &:hover > button {
+    display: block;
+  }
+  & > *:not(button:nth-of-type(1)) {
+    opacity: ${isOpen ? `1` : `0`};
+    transition: 0.5s;
+  }
+`;
+
+export const channelSidbarMoreBtn = (isOpen: boolean) => css`
+  display: ${isOpen ? `none` : `block`};
+  position: ${isOpen ? `absolute` : `fixed`};
+  top: 50%;
+  left: ${isOpen ? `calc(100% - 10px)` : `100%`};
+  width: ${isOpen ? `20px` : `40px`};
+  height: ${isOpen ? `60px` : `40px`};
+  z-index: 4 !important;
+  transform: translate3d(-50%, -50%, 0) ${isOpen ? null : `rotate(180deg)`};
+  transition: 0.5s;
+  background: ${isOpen ? `transparent` : `white`};
+  border: 1px solid ${isOpen ? `rgb(0 0 0 / 0.2)` : `rgb(0 0 0 / 0)`};
+  border-right: none;
+  border-radius: ${isOpen ? `4px 0 0 4px` : `50%`};
+  box-shadow: ${isOpen
+    ? undefined
+    : `-5px 0 5px -3px rgb(0 0 0 / 0.2),
+-6px 0 6px -4px rgb(0 0 0 / 0.2)`};
+  line-height: 42px;
+  text-indent: ${isOpen ? `0` : `-10px`};
 `;
 
 export const pageCreateBtnBox = css`
@@ -51,20 +85,82 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const projectCreateThumbnail = css`
+export const projectCreateThumbnail = (isSelected: boolean) => css`
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 10px;
+  transform: ${isSelected ? `scale(1.15)` : `scale(1)`};
+  transition: 0.5s;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &:hover > div {
+    display: block;
+  }
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -11px;
+    width: 4px;
+    height: 30px;
+    background: gray;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    transition: 0.3s;
+    transform: scale(${isSelected ? `1` : `0`});
+    transform-origin: center;
+  }
+`;
+
+export const projectThumbnailHoverModal = css`
+  display: none;
+  position: absolute;
+  top: 5%;
+  left: 125%;
+  min-width: 50px;
+  padding: 0.5rem;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  background: gray;
+  border-radius: 0.375rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  white-space: nowrap;
+`;
+
+export const projectThumbnailModalLeftArrow = css`
+  position: absolute;
+  top: 45%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  background: gray;
+`;
+
+export const projectCreatePlusBtn = css`
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  border: 1px solid black;
+  &:hover > div {
+    display: block;
+  }
+`;
+export const listAllDelete = css`
   width: 40px;
   height: 40px;
   margin-top: 5px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
-`;
-export const projectCreatePlusBtn = css`
-  ${projectCreateThumbnail};
-  border: 1px solid black;
-`;
-export const listAllDelete = css`
-  ${projectCreateThumbnail};
   border: 1px solid black;
   font-size: 0.5rem;
 `;

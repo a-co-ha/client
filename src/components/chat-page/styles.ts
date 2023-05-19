@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 export const chatPage = css`
   position: relative;
-  // min-width: 840px;
+  min-width: 310px;
   text-align: center;
   flex-basis: 0;
   flex-grow: 1;
@@ -37,21 +37,27 @@ export const chatFormBtn = css`
 export const chatFormInput = css`
   display: block;
   flex-grow: 1;
-  font-size: 1rem;
-  line-height: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
   padding: 0.5rem;
   background: transparent;
   resize: none;
+  white-space: pre-wrap;
+  word-break: break-word;
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    font-size: 1rem;
   }
 `;
 
 export const messageBox = css`
   text-align: right;
   position: relative;
+  padding-right: 44px;
   padding-bottom: 1rem;
-  overflow-y: scroll;
+  overflow: hidden scroll;
   &::-webkit-scrollbar {
     width: 15px;
   }
@@ -72,9 +78,8 @@ export const messageAlign = (isDisplay: boolean) => css`
   margin-top: ${isDisplay ? `1.5rem` : `0`};
 `;
 
-export const message = css`
-  display: inline-block;
-  max-width: 180px;
+export const messageContentBox = css`
+  max-width: 815px;
   padding: 0.5rem;
   margin: 0.375rem 0 0 0.7rem;
   line-height: 1rem;
@@ -85,7 +90,55 @@ export const message = css`
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+export const messageContentInnerBox = css`
+  max-height: 310px;
+  overflow: hidden;
+`;
+
+export const message = css`
+  display: inline-block;
   white-space: pre-wrap;
+  line-height: 1.1rem;
+  word-break: break-word;
+  & code {
+    font-size: 0.7rem;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+  & code span {
+    min-width: 0 !important;
+  }
+`;
+
+export const messageMoreBox = css`
+  display: none;
+  text-align: center;
+  user-select: none;
+`;
+
+export const messageMoreSpan = css`
+  font-size: 1.5rem;
+  color: gray;
+  padding: 0.375rem 0;
+`;
+
+export const messageMoreBtn = css`
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0;
+  margin: 0 auto;
+  color: gray;
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+  &:focus {
+    outline: none;
+  }
+  line-height: 1.2rem;
+  border-radius: 0.375rem;
 `;
 
 export const messageNameAlign = css`
@@ -113,7 +166,7 @@ export const messageTime = (isDisplay: boolean) => css`
 
 export const messageImgBox = (isDisplay: boolean) => css`
   display: block;
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   margin-left: 1rem;
   opacity: ${isDisplay ? `1` : `0`};

@@ -9,7 +9,7 @@ export default function Main() {
     <div css={main}>
       <ProjectSideBar />
       <Guide />
-      <UserList />
+      {/* <UserList /> */}
     </div>
   );
 }

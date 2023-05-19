@@ -2,38 +2,62 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
+import { channelUserState, channelUserModalState } from '@/recoil/user/atom';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
+import { UserModal } from './UserModal';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import * as styles from './styles';
 import type { ChannelUser } from '@/pages/api/user/type';
-import { getUsers } from '@/pages/api/user/getUsers';
 
 export const UserList = () => {
-  const { data: channelUsers } = useGetUsers();
+  const { data: channelUsersData } = useGetUsers();
   const [onUser, setOnUser] = useRecoilState(onUserState);
-  const { socket } = useContext(SocketContext);
-  useEffect(() => {
-    socket.on(`NEW_MEMBER`, (user) => {
-      setOnUser((prev) => {
-        const newOnUsers = prev.concat([user]);
-        return newOnUsers;
-      });
-    });
-  }, []);
-  useEffect(() => {
-    socket.on(`DISCONNECT_MEMBER`, (user) => {
-      console.log(`disconnect user`, user);
-      setOnUser((prev) => {
-        const newOnUsers = prev.filter(
-          (prevUser) => prevUser.userID !== user.userID
-        );
-        return newOnUsers;
-      });
-    });
-  }, []);
+  const [channelUsers, setChannelUsers] = useRecoilState(channelUserState);
+  const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
+    channelUserModalState(1)
+  );
+  const { newMember, disconnectMember } = useContext(SocketContext);
 
+  const addMember = (member: any) => {
+    setOnUser((prev) => {
+      console.log(`prev`, prev);
+      const newMember = prev.concat([member]);
+      console.log(`newMember`, newMember);
+      return newMember;
+    });
+  };
+
+  const deleteMember = (member: any) => {
+    setOnUser((prev: any) => {
+      const newOnUsers = prev.filter(
+        (prevUser: any) => prevUser.userID !== member.userID
+      );
+      console.log(`deleteMember`, newOnUsers);
+      return newOnUsers;
+    });
+  };
+
+  useEffect(() => {
+    if (channelUsersData !== undefined) {
+      setChannelUsers(channelUsersData);
+    }
+  }, [channelUsersData]);
+
+  useEffect(() => {
+    newMember(addMember);
+  }, [newMember]);
+
+  useEffect(() => {
+    disconnectMember(deleteMember);
+  }, [disconnectMember]);
+
+  const onClickHandler = (e: any) => {
+    setIsUserModalOpen(true);
+  };
+  console.log(`온유저`, onUser);
   return (
     <div css={styles.userListBox}>
       <div css={styles.userListInnerBox}>
@@ -44,8 +68,8 @@ export const UserList = () => {
             );
             const isAdmin = member.admin;
             return (
-              <div key={i}>
-                {/* <Image src={user.img} width={40} height={40} alt={`onUserList`} /> */}
+              <div key={i} css={styles.user} onClick={onClickHandler}>
+                <UserModal userId={member.userId} />
                 <span css={styles.isUserOnline(isOnUser, isAdmin)}></span>
                 <span css={styles.userName}>{member.name}</span>
                 <span css={styles.adminCrown(isAdmin)}>

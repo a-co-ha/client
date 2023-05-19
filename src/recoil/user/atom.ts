@@ -2,18 +2,9 @@ import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
 import type { User } from '@/pages/api/user/type';
 
-// export const userProfile = atom({
-//   key: `userProfile/${nanoId()}`,
-//   default: {
-//     id: '',
-//     avartarUrl: '',
-//   },
-// });
-
 export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,
   default: {
-    id: 0,
     userId: 0,
     github_id: '',
     github_url: '',
@@ -25,6 +16,8 @@ export const userDataState = atom<User>({
         userId: 0,
         channelName: '',
         channelImg: '',
+        repoName: '',
+        repoType: '',
       },
     ],
   },
@@ -50,10 +43,21 @@ export const inviteChannelState = atom({
   default: {
     userId: 0,
     channelName: '',
+    channelId: '',
   },
 });
 
 export const inviteModalState = atom({
   key: `inviteModalState/${nanoId()}`,
+  default: false,
+});
+
+export const channelUserState = atom({
+  key: `channelUserState/${nanoId()}`,
+  default: [],
+});
+
+export const channelUserModalState = atomFamily({
+  key: `channelUserModalState/${nanoId()}`,
   default: false,
 });

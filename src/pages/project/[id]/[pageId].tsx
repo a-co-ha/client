@@ -14,6 +14,7 @@ import { getSocketPage } from '@/pages/api/socket/getPage';
 import type { pageProps } from '@/pages/api/editable/type';
 import { TemplatePage } from '@/components/template';
 import { TemplateNormalPage } from '@/components/template-normal';
+import { channel } from '../../../components/project-sidebar/styles';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   resetServerContext();
@@ -22,7 +23,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
      * 여기서 템플릿 페이지도 조건별로 렌더링 시켜야 함
      */
     <div css={styles.main}>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading position="fixed" />}>
         <ProjectSideBar />
         {type === 'normal' ||
         type === 'progress-page' ||
@@ -34,7 +35,13 @@ export default function Page({ channelId, pageId, type }: pageProps) {
           />
         ) : null}
         {type === 'socket' ? (
-          <ChatPage channelId={channelId} pageId={pageId} type={type} />
+          <>
+            <ChatPage channelId={channelId} pageId={pageId} type={type} />
+            <div>
+              <UserList />
+              <ChatBookmark channelId={channelId} pageId={pageId} />
+            </div>
+          </>
         ) : null}
         {type === 'template-progress' ? (
           <TemplatePage channelId={channelId} pageId={pageId} type={type} />
@@ -61,10 +68,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         await queryClient.prefetchQuery([`editablePage`, pageId], () =>
           getEditablePage(channelId, pageId, type)
         );
-      } else if (type === `socket`) {
-        await queryClient.prefetchQuery([`socketPage`, pageId], () =>
-          getSocketPage(pageId)
-        );
+        // } else if (type === `socket`) {
+        //   await queryClient.prefetchQuery([`socketPage`, pageId], () =>
+        //     getSocketPage(pageId)
+        //   );
       }
     }
 

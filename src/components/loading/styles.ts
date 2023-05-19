@@ -1,7 +1,7 @@
 import { css, keyframes } from '@emotion/react';
 
-export const loadingBackground = css`
-  position: fixed;
+export const loadingBackground = (position: string) => css`
+  position: ${position};
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);

@@ -93,6 +93,7 @@ export const chatBookmarkModalBox = css`
 
 export const chatBookmarkModalTitleBox = css`
   display: flex;
+  align-items: center;
   margin-bottom: 1rem;
 `;
 
@@ -102,30 +103,29 @@ export const chatBookmarkModalTitle = css`
 
 export const chatBookmarkModalEditBtn = (isEditing: boolean) => css`
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin: 1rem 0.5rem 0 0.5rem;
   border-radius: 0.375rem;
-  // cursor: pointer;
   background: #eee;
   &:hover {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
   }
 `;
 
 export const chatBookmarkModalDeleteBtn = css`
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin: 1rem 0 0 0;
   color: white;
   border-radius: 0.375rem;
   background: rgba(255, 0, 0, 0.65);
   &:hover {
     background: rgba(255, 0, 0, 0.8);
   }
+  justify-self: end;
 `;
 
 export const chatBookmarkModalContent = css`
-  white-space: pre-wrap;
+  width: 100%;
   max-height: 63.5vh;
-  overflow-y: auto;
   &::-webkit-scrollbar {
     width: 15px;
   }
@@ -134,15 +134,31 @@ export const chatBookmarkModalContent = css`
     border: 5px solid transparent;
     background-color: #efefef;
     border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
+  & code {
+    font-size: 0.8rem;
+  }
+  & code span {
+    min-width: 0 !important;
+  }
+  overflow: auto;
+  white-space: pre-wrap;
+`;
+
+export const chatBookmarkBtnBox = css`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const chatBookmarkCopyBtn = (isCopied: boolean) => css`
   padding: 0.5rem 1rem;
-  margin: 1rem 0;
+  margin: 1rem 0 0 0;
   font-weight: 500;
   background-color: ${isCopied ? `rgb(226 232 240)` : `rgb(219 234 254)`};
   border-radius: 0.375rem;
@@ -195,8 +211,8 @@ export const chatBookmarkFormTitleInput = (
 export const chatBookmarkFormInput = (isEditing: boolean) => css`
   flex-grow: 1;
   font-size: 1rem;
-  line-height: 1rem;
-  height: ${isEditing ? `auto` : `calc(65vh - 176px)`};
+  line-height: 1.2rem;
+  height: calc(65vh - 176px);
   padding: 0.5rem;
   margin-bottom: 1rem;
   background: transparent;
@@ -204,6 +220,23 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
   &:focus {
     outline: none;
   }
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    background-color: #efefef;
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  white-space: pre-wrap;
+  cursor: auto;
 `;
 
 export const chatBookmarkFormBtn = css`
@@ -217,5 +250,11 @@ export const chatBookmarkFormBtn = css`
     0 4px 6px -4px rgb(0 0 0 / 0.2);
   &:hover {
     background: #eee;
+  }
+`;
+
+export const markdownStyle = css`
+  & a {
+    color: red;
   }
 `;
