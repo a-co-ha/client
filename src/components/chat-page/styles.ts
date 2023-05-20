@@ -88,7 +88,7 @@ export const messageContentBox = (isMyMessage: boolean) => css`
   text-align: start;
   background: ${isMyMessage
     ? `
-#FFCE6B`
+#bddc95`
     : `#ffd6dc`};
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;

@@ -268,7 +268,7 @@ export const commitLogTime = css`
 
 export const commitLogAuthor = (isMe: boolean) => css`
   display: inline-block;
-  color: ${isMe ? `#f4c617` : `#f89fab`};
+  color: ${isMe ? `#84af4e` : `#f89fab`};
   font-weight: 700;
   margin-left: 5px;
   font-size: 0.7rem;
