@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
@@ -21,6 +21,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
+  const page = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setBlocks(fetchedBlocks);
@@ -30,6 +31,8 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     if (fetchedBlocks !== blocks) {
       handlers.updatePageOnserver(blocks, pageId, channelId);
     }
+    const contentElement = page.current;
+    if (contentElement) contentElement.scrollTop = contentElement.scrollHeight;
   }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
@@ -58,7 +61,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <div css={styles.contentBox}>
+          <div css={styles.contentBox} ref={page}>
             {isNewPage && <Notice status="SUCCESS" />}
             <Label />
             <DragDropContext onDragEnd={onDragEndHandler}>

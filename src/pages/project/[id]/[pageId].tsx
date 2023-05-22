@@ -53,7 +53,7 @@ export default function Page({ channelId, pageId, type }: pageProps) {
             type={type}
           />
         ) : null}
-        <UserList />
+        {/* <UserList /> */}
       </Suspense>
     </div>
   );

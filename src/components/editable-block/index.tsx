@@ -239,7 +239,6 @@ export const EditableBlock = (props: editableBlock) => {
                 key={props.id}
                 css={styles.block(
                   snapshot.isDragging,
-                  snapshot.dropAnimation,
                   state.placeholder
                 )}
                 data-position={props.position}
