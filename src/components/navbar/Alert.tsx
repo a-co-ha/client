@@ -39,6 +39,7 @@ export const Alert = () => {
   console.log('🚀 ~ file: Alert.tsx:39 ~ Alert ~ isAlert:', isAlert);
 
   useEffect(() => {
+    //FIXME: 태그 후 ALERT 다시 호출하여 바로 반영되게 하기 현재 새로고침해야 반양됨
     socket.on('ALERT', (data: string) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);
       if (data === 'true') setIsAlert(true);
