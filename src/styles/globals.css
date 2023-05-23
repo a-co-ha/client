@@ -141,11 +141,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-img {
+/* img {
   max-width: 100%;
   height: auto;
   border: 0;
-}
+} */
 button {
   border: 0;
   background: transparent;
@@ -173,4 +173,20 @@ code {
   background-color: #f1f1f1;
   padding: 2px;
   font-size: 105%;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  border: 5px solid transparent;
+  background-color: #efefef;
+  border-radius: 0.5rem;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }
