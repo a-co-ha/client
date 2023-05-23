@@ -5,19 +5,31 @@ import {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import { throttle } from 'lodash';
 import * as styles from '../styles/styles';
-// import { Error } from './error';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComments, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faListCheck } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { IconOne } from '../components/project-sidebar/Icons';
 
 const IndexPage = () => {
   const IntroSection = useRef<any>(null);
   const messageBox = useRef<HTMLDivElement>(null);
+  const subMessage = useRef<HTMLDivElement>(null);
   const messageA = useRef<HTMLDivElement>(null);
   const messageB = useRef<HTMLDivElement>(null);
   const messageC = useRef<HTMLDivElement>(null);
   const messageD = useRef<HTMLDivElement>(null);
   const messageBackground = useRef<HTMLDivElement>(null);
+  const introMonitorBox = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [clickItem, setClickItem] = useState('');
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -28,6 +40,10 @@ const IndexPage = () => {
   let rafId;
   let rafState;
 
+  useEffect(() => {
+    // AOS.init();
+  }, []);
+
   const throttledScroll = useMemo(
     () =>
       throttle(() => {
@@ -37,7 +53,11 @@ const IndexPage = () => {
       }, 30),
     []
   );
-
+  useEffect(() => {
+    window.addEventListener(`load`, () => {
+      setIsLoading(false);
+    });
+  }, [isLoading]);
   useLayoutEffect(() => {
     const div = document.getElementById(`__next`);
     if (div !== null) {
@@ -45,6 +65,7 @@ const IndexPage = () => {
     }
     setLayout();
     scrollLoop();
+
     console.log('12');
   }, []);
 
@@ -56,6 +77,17 @@ const IndexPage = () => {
     };
   }, [throttledScroll]);
 
+  const introClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget as HTMLDivElement;
+    const targetValue = target.textContent;
+    if (targetValue !== null) {
+      console.log(`targetValue`, targetValue === '기록');
+      targetValue === clickItem ? setClickItem('') : setClickItem(targetValue);
+    }
+    console.log(`girok`, clickItem === '기록');
+    console.log(`targetValue`, targetValue);
+  };
+
   const sceneInfo = [
     {
       type: 'sticky',
@@ -64,14 +96,19 @@ const IndexPage = () => {
       objs: {
         container: IntroSection,
         messageBox: messageBox,
+        subMessage: subMessage,
         messageA: messageA,
         messageB: messageB,
         messageC: messageC,
         messageD: messageD,
         messageBackground: messageBackground,
+        // introMonitorBox: introMonitorBox,
       },
       values: {
         messageBox_translateY_in: [-50, -250, { start: 0.4, end: 0.6 }],
+        messageBox_colorR_in: [255, 0, { start: 0.05, end: 0.3 }],
+        messageBox_colorG_in: [150, 0, { start: 0.05, end: 0.3 }],
+        messageBox_colorB_in: [166, 0, { start: 0.05, end: 0.3 }],
         messageBackground_translateY_in: [100, 0, { start: 0.2, end: 0.3 }],
         messageB_translateX_in: [-100, 0, { start: 0.05, end: 0.3 }],
         messageC_translateX_in: [-100, 0, { start: 0.05, end: 0.3 }],
@@ -80,13 +117,15 @@ const IndexPage = () => {
         messageB_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
         messageC_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
         messageD_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
-        messageB_translateX_out: [0, -100, { start: 0.05, end: 0.3 }],
-        messageC_translateX_out: [0, -100, { start: 0.05, end: 0.3 }],
-        messageD_translateX_out: [0, -80, { start: 0.05, end: 0.3 }],
+        // introMonitorBox_translateY_in: [-50, -100, { start: 0.05, end: 0.3 }],
+        // messageB_translateX_out: [0, -100, { start: 0.05, end: 0.3 }],
+        // messageC_translateX_out: [0, -100, { start: 0.05, end: 0.3 }],
+        // messageD_translateX_out: [0, -80, { start: 0.05, end: 0.3 }],
         messageA_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
         messageB_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
         messageC_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
         messageD_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
+        subMessage_opacity_in: [1, 0, { start: 0.05, end: 0.15 }],
         messageBackground_opacity_in: [0, 1, { start: 0.2, end: 0.3 }],
         messageB_opacity_in: [0, 1, { start: 0.15, end: 0.3 }],
         messageD_opacity_in: [0, 1, { start: 0.15, end: 0.3 }],
@@ -167,21 +206,34 @@ const IndexPage = () => {
         // 	objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         if (
           objs.messageBox.current &&
+          objs.subMessage.current &&
           objs.messageBackground.current &&
           objs.messageA.current &&
           objs.messageB.current &&
           objs.messageC.current &&
           objs.messageD.current
+          // objs.introMonitorBox.current
         ) {
           if (scrollRatio <= 0.62) {
             console.log(`y`, objs.messageA.current);
-            objs.messageBox.current.style.transform = `translate3d(-50%,${calcValues(
+            objs.messageBox.current.style.transform = `translate3d(0,${calcValues(
               values.messageBox_translateY_in,
               currentYOffset
             )}%,0) scale(${calcValues(
               values.messageBox_scale_in,
               currentYOffset
             )})`;
+            objs.messageBox.current.style.color = `rgba(${calcValues(
+              values.messageBox_colorR_in,
+              currentYOffset
+            )},${calcValues(
+              values.messageBox_colorG_in,
+              currentYOffset
+            )},${calcValues(values.messageBox_colorB_in, currentYOffset)},1)`;
+            objs.subMessage.current.style.opacity = `${calcValues(
+              values.subMessage_opacity_in,
+              currentYOffset
+            )}`;
             objs.messageBackground.current.style.transform = `translate3d(0,${calcValues(
               values.messageBackground_translateY_in,
               currentYOffset
@@ -211,6 +263,10 @@ const IndexPage = () => {
               values.messageD_opacity_in,
               currentYOffset
             )}`;
+            // objs.introMonitorBox.current.style.transform = `translate3d(0,${calcValues(
+            //   values.introMonitorBox_translateY_in,
+            //   currentYOffset
+            // )}%, 0)`;
             // in
           }
           // } else {
@@ -234,15 +290,10 @@ const IndexPage = () => {
           //     values.messageC_translateY_out,
           //     currentYOffset
           //   )}%, 0)`;
-          //   objs.messageD.current.style.transform = `translate3d(${calcValues(
-          //     values.messageD_translateX_out,
           //     currentYOffset
           //   )}%, ${calcValues(
-          //     values.messageD_translateY_out,
           //     currentYOffset
           //   )}%, 0)`;
-          //   // objs.messageD.current.style.opacity = `${calcValues(
-          //   //   values.messageD_opacity_out,
           //   //   currentYOffset
           //   // )}`;
           // }
@@ -282,41 +333,95 @@ const IndexPage = () => {
     playAnimation();
   };
 
+  const aos = {
+    'data-aos': `fade-up`,
+    'data-aos-offset': '0',
+    // 'data-aos-delay': '50',
+    'data-aos-duration': '800',
+    // 'data-aos-easing': 'ease-in-out',
+    // 'data-aos-mirror': 'true',
+    'data-aos-once': 'true',
+    'data-aos-anchor-placement': 'top-center',
+  };
   return (
     <div css={styles.flexRowCenter}>
-      <section
-        ref={IntroSection}
-        css={{
-          outline: `2px solid limegreen`,
-          width: `100%`,
-          // background: `#eee`,
-        }}
-      >
-        <div css={styles.mainTitleBox}>
-          <h1>프로젝트 진행 상황을 한눈에</h1>
-          <p css={styles.mainTitleDesc}>
-            아코하아코하아코하아코하아코하아코하아코하아코하아코하아코하아코하아코하
-            아코하 아코하 아코하 아코하 아코하 아코하 아코하 아코하 아코하
-            아코하 아코하아코하 아코하 아코하 아코하 아코하 아코하 아코하 아코하
-            아코하 아코하
-          </p>
-        </div>
-        <div ref={messageBox} css={styles.messageBox}>
-          <div ref={messageA} css={styles.messages}>
-            아코
+      {isLoading ? (
+        <section ref={IntroSection} css={styles.mainTitleSection}>
+          <div css={styles.mainTitleBox}>
+            <div css={styles.mainTitleDesc}>
+              <h1 ref={subMessage}>프로젝트의 시작과 끝,</h1>
+            </div>
+            <div ref={messageBox} css={styles.messageBox}>
+              <div ref={messageA} css={styles.messages}>
+                아코
+              </div>
+              <div ref={messageB} css={styles.messages}>
+                딩
+              </div>
+              <div ref={messageC} css={styles.messages}>
+                하
+              </div>
+              <div ref={messageD} css={styles.messages}>
+                고싶다
+              </div>
+              <div ref={messageBackground} css={styles.messageBackground}></div>
+            </div>
+            <div css={styles.introMonitorBox}>
+              <div
+                css={styles.introMonitorItem(clickItem === `기록`, clickItem)}
+                onClick={introClickHandler}
+              >
+                <FontAwesomeIcon
+                  icon={faPenToSquare}
+                  css={styles.introMonitorItemSvg}
+                />
+                기록
+              </div>
+              <div
+                css={styles.introMonitorItem(clickItem === `채팅`, clickItem)}
+                onClick={introClickHandler}
+              >
+                <FontAwesomeIcon
+                  icon={faComments}
+                  css={styles.introMonitorItemSvg}
+                />
+                채팅
+              </div>
+              <div
+                css={styles.introMonitorItem(
+                  clickItem === `커밋로그`,
+                  clickItem
+                )}
+                onClick={introClickHandler}
+              >
+                <FontAwesomeIcon
+                  icon={faGithub}
+                  css={styles.introMonitorItemSvg}
+                />
+                커밋로그
+              </div>
+              <div
+                css={styles.introMonitorItem(
+                  clickItem === `진행상황`,
+                  clickItem
+                )}
+                onClick={introClickHandler}
+              >
+                <FontAwesomeIcon
+                  icon={faListCheck}
+                  css={styles.introMonitorItemSvg}
+                />
+                진행상황
+              </div>
+              <div css={styles.arrowDownSvg}>
+                {/* <FontAwesomeIcon icon={faChevronDown} /> */}
+              </div>
+            </div>
           </div>
-          <div ref={messageB} css={styles.messages}>
-            딩
-          </div>
-          <div ref={messageC} css={styles.messages}>
-            하
-          </div>
-          <div ref={messageD} css={styles.messages}>
-            고싶다
-          </div>
-          <div ref={messageBackground} css={styles.messageBackground}></div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <Loading position="fixed" />
+      )}
     </div>
   );
 };
