@@ -112,24 +112,24 @@ export const messageBox = css`
 
 export const messages = css`
   z-index: 2;
-  &:nth-child(4) {
+  &:nth-of-type(4) {
   }
-  &:nth-child(3) {
+  &:nth-of-type(3) {
     transform: translate3d(-100%, 0, 0);
   }
-  &:nth-child(4) {
+  &:nth-of-type(4) {
     transform: translate3d(-100%, 0, 0);
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     opacity: 0;
   }
-  &:nth-child(5) {
+  &:nth-of-type(5) {
     opacity: 0;
   }
-  &:nth-child(6) {
+  &:nth-of-type(6) {
     opacity: 0;
   }
-  &:nth-child(7) {
+  &:nth-of-type(7) {
     opacity: 0;
   }
 `;
@@ -178,21 +178,21 @@ export const introMonitorBox = css`
   animation: ${introMonitorBoxAniIn} 0.6s 0.5s forwards,
     ${introMonitorBoxAniOut} 1s 1.6s forwards;
 
-  & > div:nth-child(1) {
+  & > div:nth-of-type(1) {
     top: 0;
     left: 0;
     transform-origin: top left;
   }
-  & > div:nth-child(2) {
+  & > div:nth-of-type(2) {
     right: 0;
     transform-origin: top right;
   }
-  & > div:nth-child(3) {
+  & > div:nth-of-type(3) {
     left: 0;
     bottom: 0;
     transform-origin: bottom left;
   }
-  & > div:nth-child(4) {
+  & > div:nth-of-type(4) {
     right: 0;
     bottom: 0;
     transform-origin: bottom right;
@@ -222,7 +222,7 @@ export const introMonitorItem = (isClicked: boolean, clickItem: string) => css`
     font-size: 1.5rem;
     gap: 1rem;
   }
-  & > div:first-child {
+  & > div:first-of-type {
     position: absolute;
     top: ${isClicked ? `20%` : `50%`};
     left: ${isClicked ? `15%` : `50%`};

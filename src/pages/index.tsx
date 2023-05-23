@@ -1,4 +1,5 @@
 import { Loading } from '@/components/loading/Loading';
+import React from 'react';
 import {
   useCallback,
   useEffect,
@@ -61,9 +62,10 @@ const IndexPage = () => {
   );
   useLayoutEffect(() => {
     window.addEventListener(`load`, () => {
-      setIsLoading(false);
+      setLayout();
+      scrollLoop();
     });
-  }, [isLoading]);
+  }, []);
   useLayoutEffect(() => {
     const div = document.getElementById(`__next`);
     if (div !== null) {
@@ -71,7 +73,6 @@ const IndexPage = () => {
     }
     setLayout();
     scrollLoop();
-
     console.log('12');
   }, []);
 
@@ -383,128 +384,118 @@ const IndexPage = () => {
   };
   return (
     <div css={styles.flexRowCenter}>
-      {isLoading ? (
-        <section ref={IntroSection} css={styles.mainTitleSection}>
-          <div css={styles.mainTitleBox}>
-            <div css={styles.mainTitleDesc}>
-              <h1 ref={subMessage}>프로젝트의 시작과 끝,</h1>
+      <section ref={IntroSection} css={styles.mainTitleSection}>
+        <div css={styles.mainTitleBox}>
+          <div css={styles.mainTitleDesc}>
+            <h1 ref={subMessage}>프로젝트의 시작과 끝,</h1>
+          </div>
+          <div ref={messageBox} css={styles.messageBox}>
+            <div ref={messageA} css={styles.messages}>
+              아코
             </div>
-            <div ref={messageBox} css={styles.messageBox}>
-              <div ref={messageA} css={styles.messages}>
-                아코
-              </div>
-              <div ref={messageB} css={styles.messages}>
-                딩
-              </div>
-              <div ref={messageC} css={styles.messages}>
-                하
-              </div>
-              <div ref={messageD} css={styles.messages}>
-                고싶다
-              </div>
-              <div ref={messageBackground} css={styles.messageBackground}></div>
+            <div ref={messageB} css={styles.messages}>
+              딩
             </div>
-            <div ref={introMonitorBox}>
-              <div css={styles.introMonitorBox}>
-                <div
-                  css={styles.introMonitorItem(clickItem === `기록`, clickItem)}
-                  onClick={introClickHandler}
-                >
-                  <div css={styles.introMonitorItemSvgBox}>
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      css={styles.introMonitorItemSvg}
-                    />
-                    기록
-                  </div>
-                  <div
-                    css={styles.introMonitorItemSvgText(clickItem === `기록`)}
-                  >{`프로젝트의 아이디어 공유나\n 희의록을 공유할 수 있어요`}</div>
-                </div>
-                <div
-                  css={styles.introMonitorItem(clickItem === `채팅`, clickItem)}
-                  onClick={introClickHandler}
-                >
-                  <div css={styles.introMonitorItemSvgBox}>
-                    <FontAwesomeIcon
-                      icon={faComments}
-                      css={styles.introMonitorItemSvg}
-                    />
-                    채팅
-                  </div>
-                  <div
-                    css={styles.introMonitorItemSvgText(clickItem === `채팅`)}
-                  >{`팀원들과 실시간 채팅으로 소통할 수 있어요`}</div>
-                </div>
-                <div
-                  css={styles.introMonitorItem(
-                    clickItem === `커밋로그`,
-                    clickItem
-                  )}
-                  onClick={introClickHandler}
-                >
-                  <div css={styles.introMonitorItemSvgBox}>
-                    <FontAwesomeIcon
-                      icon={faGithub}
-                      css={styles.introMonitorItemSvg}
-                    />
-                    커밋로그
-                  </div>
-                  <div
-                    css={styles.introMonitorItemSvgText(
-                      clickItem === `커밋로그`
-                    )}
-                  >{`프로젝트를 깃허브 저장소와 연결해서\n 커밋로그 및 이슈를 확인할 수 있어요`}</div>
-                </div>
-                <div
-                  css={styles.introMonitorItem(
-                    clickItem === `진행상황`,
-                    clickItem
-                  )}
-                  onClick={introClickHandler}
-                >
-                  <div css={styles.introMonitorItemSvgBox}>
-                    <FontAwesomeIcon
-                      icon={faListCheck}
-                      css={styles.introMonitorItemSvg}
-                    />
-                    진행상황
-                  </div>
-                  <div
-                    css={styles.introMonitorItemSvgText(
-                      clickItem === `진행상황`
-                    )}
-                  >{`체크리스트를 만들어 진행상황을 %로 확인할 수 있어요`}</div>
-                </div>
-                <div css={styles.arrowDownSvg}></div>
-              </div>
+            <div ref={messageC} css={styles.messages}>
+              하
             </div>
-            <div ref={introChatImgBox} css={styles.introChatBox}>
-              <div css={styles.introChatBox}>
-                <div css={styles.introChatImgBox}>
-                  <Image
-                    ref={introChatImg}
-                    css={styles.introChatImg}
-                    src={chat}
-                    width={300}
-                    height={200}
-                    alt={`intro chat img`}
+            <div ref={messageD} css={styles.messages}>
+              고싶다
+            </div>
+            <div ref={messageBackground} css={styles.messageBackground}></div>
+          </div>
+          <div ref={introMonitorBox}>
+            <div css={styles.introMonitorBox}>
+              <div
+                css={styles.introMonitorItem(clickItem === `기록`, clickItem)}
+                onClick={introClickHandler}
+              >
+                <div css={styles.introMonitorItemSvgBox}>
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    css={styles.introMonitorItemSvg}
                   />
-                  <div
-                    ref={introChatReplyBox}
-                    css={styles.introChatImgReplyBox}
-                  >
-                    <div>{`팀원을 초대하고\n프로젝트를 시작해 볼까요?`}</div>
-                  </div>
+                  기록
                 </div>
-                <div></div>
+                <div
+                  css={styles.introMonitorItemSvgText(clickItem === `기록`)}
+                >{`프로젝트의 아이디어 공유나\n 희의록을 공유할 수 있어요`}</div>
               </div>
+              <div
+                css={styles.introMonitorItem(clickItem === `채팅`, clickItem)}
+                onClick={introClickHandler}
+              >
+                <div css={styles.introMonitorItemSvgBox}>
+                  <FontAwesomeIcon
+                    icon={faComments}
+                    css={styles.introMonitorItemSvg}
+                  />
+                  채팅
+                </div>
+                <div
+                  css={styles.introMonitorItemSvgText(clickItem === `채팅`)}
+                >{`팀원들과 실시간 채팅으로 소통할 수 있어요`}</div>
+              </div>
+              <div
+                css={styles.introMonitorItem(
+                  clickItem === `커밋로그`,
+                  clickItem
+                )}
+                onClick={introClickHandler}
+              >
+                <div css={styles.introMonitorItemSvgBox}>
+                  <FontAwesomeIcon
+                    icon={faGithub}
+                    css={styles.introMonitorItemSvg}
+                  />
+                  커밋로그
+                </div>
+                <div
+                  css={styles.introMonitorItemSvgText(clickItem === `커밋로그`)}
+                >{`프로젝트를 깃허브 저장소와 연결해서\n 커밋로그 및 이슈를 확인할 수 있어요`}</div>
+              </div>
+              <div
+                css={styles.introMonitorItem(
+                  clickItem === `진행상황`,
+                  clickItem
+                )}
+                onClick={introClickHandler}
+              >
+                <div css={styles.introMonitorItemSvgBox}>
+                  <FontAwesomeIcon
+                    icon={faListCheck}
+                    css={styles.introMonitorItemSvg}
+                  />
+                  진행상황
+                </div>
+                <div
+                  css={styles.introMonitorItemSvgText(clickItem === `진행상황`)}
+                >{`체크리스트를 만들어 진행상황을 %로 확인할 수 있어요`}</div>
+              </div>
+              <div css={styles.arrowDownSvg}></div>
             </div>
           </div>
-        </section>
-      ) : (
-        <Loading position="fixed" />
-      )}
+          <div ref={introChatImgBox} css={styles.introChatBox}>
+            <div css={styles.introChatBox}>
+              <div css={styles.introChatImgBox}>
+                <Image
+                  priority
+                  ref={introChatImg}
+                  css={styles.introChatImg}
+                  src={chat}
+                  width={300}
+                  height={200}
+                  alt={`intro chat img`}
+                />
+                <div ref={introChatReplyBox} css={styles.introChatImgReplyBox}>
+                  <div>{`팀원을 초대하고\n프로젝트를 시작해 볼까요?`}</div>
+                </div>
+              </div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
