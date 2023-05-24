@@ -65,13 +65,13 @@ export const introSectionBox = css`
   justify-content: center;
   top: 35%;
   left: 50%;
-  width: 50%;
+  width: 55%;
   height: 50px;
   opacity: 1;
   transform: translate3d(-50%, -50%, 0);
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
-  }
+  // @media screen and (max-width: 768px) {
+  //   font-size: 1rem;
+  // }
 `;
 
 export const mainTitleDesc = css`
@@ -240,18 +240,17 @@ export const introMonitorItem = (isClicked: boolean) => css`
   width: 50%;
   height: 50%;
   z-index: ${isClicked ? `1` : `auto`};
+  font-size: 1rem;
   font-weight: 500;
   background: white;
   border: 1px solid black;
   border-radius: 4px;
   transition: 0.3s;
-  // cursor: pointer;
   transform: scale(${isClicked ? `2` : `1`});
   &:hover {
     color: rgba(255, 0, 0, 0.5);
   }
   @media screen and (min-width: 1024px) {
-    font-size: 1.5rem;
     gap: 1rem;
   }
   & > div:first-of-type {
@@ -260,6 +259,9 @@ export const introMonitorItem = (isClicked: boolean) => css`
     left: ${isClicked ? `15%` : `50%`};
     transition: 0.5s;
     transform: translate3d(-50%, -50%, 0) scale(${isClicked ? `0.5` : `1`});
+    @media screen and (max-width: 420px) {
+      transform: translate3d(-50%, -50%, 0) scale(${isClicked ? `0.4` : `1`});
+    }
   }
 `;
 
@@ -270,6 +272,9 @@ export const introMonitorItemSvgBox = css`
   justify-content: center;
   gap: 0.5rem;
   user-select: none;
+  @media screen and (min-width: 1024px) {
+    font-size: 1.5rem;
+  }
   @media screen and (max-width: 520px) {
     font-size: 0.8rem;
   }
@@ -277,15 +282,17 @@ export const introMonitorItemSvgBox = css`
 
 export const introMonitorItemSvgText = (isClicked: boolean) => css`
   transition: 0.2s;
-  width: 80%;
+  width: 90%;
   margin-top: 1rem;
-  font-size: 1rem;
   opacity: ${isClicked ? `1` : `0`};
   @media screen and (max-width: 1024px) {
     font-size: 0.8rem;
   }
   @media screen and (max-width: 768px) {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
+  }
+  @media screen and (max-width: 420px) {
+    transform: scale(0.8);
   }
 `;
 export const arrowDownSvg = css`

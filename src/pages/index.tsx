@@ -134,7 +134,7 @@ const IndexPage = () => {
         messageBox_colorR_in: [255, 0, { start: 0.05, end: 0.3 }],
         messageBox_colorG_in: [150, 0, { start: 0.05, end: 0.3 }],
         messageBox_colorB_in: [166, 0, { start: 0.05, end: 0.3 }],
-        messageBox_translateX_in: [0, 35, { start: 0.05, end: 0.75 }],
+        messageBox_translateX_in: [0, 40, { start: 0.05, end: 0.75 }],
         messageB_translateX_in: [-100, 0, { start: 0.05, end: 0.3 }],
         messageC_translateX_in: [-100, 0, { start: 0.05, end: 0.3 }],
         messageD_translateX_in: [-80, 0, { start: 0.05, end: 0.3 }],
@@ -353,9 +353,22 @@ const IndexPage = () => {
             )}`;
           }
           if (scrollRatio >= 0.95) {
+            console.log(
+              `scrollbar`,
+              window.innerWidth - document.body.clientWidth
+            );
             objs.content.current.style.position = `static`;
-            objs.content.current.style.marginTop = `${scrollHeight * 0.81}px`;
-            objs.content.current.style.transform = `translate3d(0,-50%,0)`;
+            objs.content.current.style.marginTop = `${
+              scrollHeight * 0.8 + 37
+            }px`;
+            if (window.innerWidth < 480) {
+              objs.content.current.style.transform = `translate3d(0,-50%,0)`;
+            } else {
+              objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
+            }
+            objs.content.current.style.width = `${
+              window.innerWidth * 0.55 - 7
+            }px`;
           } else {
             objs.content.current.style.position = `fixed`;
             objs.content.current.style.marginTop = `0`;
@@ -440,7 +453,9 @@ const IndexPage = () => {
                 </div>
                 <div
                   css={styles.introMonitorItemSvgText(clickItem === `ㅤ기록ㅤ`)}
-                >{`프로젝트의 아이디어 공유나\n 희의록을 공유할 수 있어요`}</div>
+                >
+                  프로젝트의 아이디어 공유나 희의록을 공유할 수 있어요
+                </div>
               </div>
               <div
                 ref={introMonitorItemB}
@@ -453,7 +468,9 @@ const IndexPage = () => {
                 </div>
                 <div
                   css={styles.introMonitorItemSvgText(clickItem === `ㅤ채팅ㅤ`)}
-                >{`팀원들과 실시간 채팅으로 소통할 수 있어요`}</div>
+                >
+                  팀원들과 실시간 채팅으로 소통할 수 있어요
+                </div>
               </div>
               <div
                 ref={introMonitorItemC}
@@ -466,7 +483,10 @@ const IndexPage = () => {
                 </div>
                 <div
                   css={styles.introMonitorItemSvgText(clickItem === `커밋로그`)}
-                >{`프로젝트를 깃허브 저장소와 연결해서\n 커밋로그 및 이슈를 확인할 수 있어요`}</div>
+                >
+                  프로젝트를 깃허브와 연결해서 커밋로그 및 이슈를 확인할 수
+                  있어요
+                </div>
               </div>
               <div
                 ref={introMonitorItemD}
@@ -479,7 +499,9 @@ const IndexPage = () => {
                 </div>
                 <div
                   css={styles.introMonitorItemSvgText(clickItem === `진행상황`)}
-                >{`체크리스트를 만들어 진행상황을 %로 확인할 수 있어요`}</div>
+                >
+                  체크리스트를 만들어 진행상황을 %로 확인할 수 있어요
+                </div>
               </div>
               <div css={styles.arrowDownSvg}></div>
             </div>
