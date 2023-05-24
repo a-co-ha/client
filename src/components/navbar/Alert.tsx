@@ -28,53 +28,19 @@ import { EditInactiveIcon } from '../selector-menu/EditInactiveIcon';
  */
 
 /**
+ * //FIXME: 태그 후 ALERT 다시 호출하여 바로 반영되게 하기 현재 새로고침해야 반양됨 GET_ALERT 후 해당 유저에게 ALERT 바로 보내기
  * 태그한 channId, pageid, type GET_ALERT에 포함 요청  (1-1)
  * READ_ALERT 보내도 ALERT true이고 , string값으로옴
  * 포스트맨 event listen 이 안됌
  */
 
 export const Alert = () => {
-  const { socket } = useContext(SocketContext);
+  const { socket, getAlert, alertSocket } = useContext(SocketContext);
   const [isAlert, setIsAlert] = useState<boolean | null>(null);
   console.log('🚀 ~ file: Alert.tsx:39 ~ Alert ~ isAlert:', isAlert);
-
   useEffect(() => {
-    //FIXME: 태그 후 ALERT 다시 호출하여 바로 반영되게 하기 현재 새로고침해야 반양됨
-    socket.on('ALERT', (data: string) => {
-      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);
-      if (data === 'true') setIsAlert(true);
-      else setIsAlert(false);
-    });
-    socket.on('GET_ALERT', (data) => {
-      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
-      toast.info(
-        <>
-          <div>
-            {`${data.channelName}프로젝트의 ${
-              data.subPageName ? `${data.subPageName} 페이지의` : ''
-            }
-            ${data.pageName} 페이지에서 나(${data.targetUserName})를
-            태그하였습니다.`}
-          </div>
-          {/* <PageNameLink
-            channelId={channelId}
-            pageId={page._id}
-            pageName={data.pageName}
-            type={'template-progress'}
-          /> */}
-        </>,
-        {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        }
-      );
-    });
+    alertSocket(setIsAlert);
+    getAlert();
   }, [socket]);
 
   const handleClick = () => {

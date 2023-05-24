@@ -15,7 +15,6 @@ export const PageInTemplate = ({
   position,
   label,
 }: PageInTemplateProps) => {
-  //TODO: 태그된 유저에 이미지 달기 게시물 찾기 api label에 유저 이미지 추가요청
   return (
     <Draggable key={pageId} draggableId={pageId} index={position}>
       {(provided, snapshot) => (

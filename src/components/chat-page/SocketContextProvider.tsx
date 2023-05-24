@@ -1,10 +1,17 @@
-import { createContext, useEffect, useLayoutEffect } from 'react';
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { getCookie } from 'cookies-next';
 import { useSetRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 import type { SocketMessage } from '@/pages/api/socket/type';
+import { toast } from 'react-toastify';
 
 interface Context {
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
@@ -22,6 +29,8 @@ interface Context {
   newMember: (func: (user: any) => void) => void;
   disconnectMember: (func: (user: any) => void) => void;
   joinChannel: (channelId: string) => void;
+  getAlert: () => void;
+  alertSocket: (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -130,6 +139,49 @@ export const SocketContextProvider = ({
     });
   };
 
+  const getAlert = () => {
+    socket.on('GET_ALERT', (data) => {
+      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
+      toast.info(
+        <>
+          <div>
+            {`${data.channelName}프로젝트의 ${
+              data.subPageName ? `${data.subPageName} 페이지의` : ''
+            }
+            ${data.pageName} 페이지에서 나(${data.targetUserName})를
+            태그하였습니다.`}
+          </div>
+          {/* <PageNameLink
+            channelId={channelId}
+            pageId={page._id}
+            pageName={data.pageName}
+            type={'template-progress'}
+          /> */}
+        </>,
+        {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }
+      );
+    });
+  };
+
+  const alertSocket = (
+    setIsAlert: Dispatch<SetStateAction<boolean | null>>
+  ) => {
+    socket.on('ALERT', (data: string) => {
+      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);
+      if (data === 'true') setIsAlert(true);
+      else setIsAlert(false);
+    });
+  };
+
   return (
     <SocketContext.Provider
       value={{
@@ -144,6 +196,8 @@ export const SocketContextProvider = ({
         disconnectMember,
         joinChannel,
         socket,
+        getAlert,
+        alertSocket,
       }}
     >
       {children}
