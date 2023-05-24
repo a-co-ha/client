@@ -28,7 +28,6 @@ import { EditInactiveIcon } from '../selector-menu/EditInactiveIcon';
  */
 
 /**
- * //FIXME: 태그 후 ALERT 다시 호출하여 바로 반영되게 하기 현재 새로고침해야 반양됨 GET_ALERT 후 해당 유저에게 ALERT 바로 보내기
  * 태그한 channId, pageid, type GET_ALERT에 포함 요청  (1-1)
  * READ_ALERT 보내도 ALERT true이고 , string값으로옴
  * 포스트맨 event listen 이 안됌
@@ -53,14 +52,10 @@ export const Alert = () => {
         <div css={styles.alertBox}>
           <Menu as="div" className="relative inline-block text-left">
             <div onClick={handleClick}>
-              <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+              <Menu.Button>
                 <FontAwesomeIcon
                   icon={faBell}
                   style={{ color: isAlert ? '#ffee38' : 'grey' }}
-                  aria-hidden="true"
-                />
-                <ChevronDownIcon
-                  className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"
                 />
               </Menu.Button>
