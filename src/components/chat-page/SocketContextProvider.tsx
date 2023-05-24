@@ -29,7 +29,7 @@ interface Context {
   newMember: (func: (user: any) => void) => void;
   disconnectMember: (func: (user: any) => void) => void;
   joinChannel: (channelId: string) => void;
-  getAlert: () => void;
+  getAlert: (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => void;
   alertSocket: (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => void;
 }
 
@@ -139,7 +139,7 @@ export const SocketContextProvider = ({
     });
   };
 
-  const getAlert = () => {
+  const getAlert = (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => {
     socket.on('GET_ALERT', (data) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
       toast.info(
@@ -169,6 +169,7 @@ export const SocketContextProvider = ({
           theme: 'light',
         }
       );
+      setIsAlert(true);
     });
   };
 

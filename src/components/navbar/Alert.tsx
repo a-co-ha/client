@@ -40,7 +40,7 @@ export const Alert = () => {
   console.log('🚀 ~ file: Alert.tsx:39 ~ Alert ~ isAlert:', isAlert);
   useEffect(() => {
     alertSocket(setIsAlert);
-    getAlert();
+    getAlert(setIsAlert);
   }, [socket]);
 
   const handleClick = () => {
