@@ -23,7 +23,9 @@ import commitLog from '@/images/landingPage/commitLog.png';
 import chat from '@/images/landingPage/chat.svg';
 
 const IndexPage = () => {
-  const IntroSection = useRef<any>(null);
+  //introSection
+  const introSection = useRef<any>(null);
+  const introSectionBox = useRef<HTMLDivElement>(null);
   const messageBox = useRef<HTMLDivElement>(null);
   const subMessage = useRef<HTMLDivElement>(null);
   const messageA = useRef<HTMLDivElement>(null);
@@ -32,9 +34,17 @@ const IndexPage = () => {
   const messageD = useRef<HTMLDivElement>(null);
   const messageBackground = useRef<HTMLDivElement>(null);
   const introMonitorBox = useRef<HTMLDivElement>(null);
+  const introMonitorItemA = useRef<HTMLDivElement>(null);
+  const introMonitorItemB = useRef<HTMLDivElement>(null);
+  const introMonitorItemC = useRef<HTMLDivElement>(null);
+  const introMonitorItemD = useRef<HTMLDivElement>(null);
   const introChatImgBox = useRef<HTMLDivElement>(null);
   const introChatImg = useRef<HTMLImageElement>(null);
   const introChatReplyBox = useRef<HTMLDivElement>(null);
+  //mainItemSectionA
+  const mainItemSectionA = useRef<any>(null);
+  const mainItemSectionABox = useRef<HTMLDivElement>(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [clickItem, setClickItem] = useState('');
   console.log(`위messageA`, messageA);
@@ -55,6 +65,7 @@ const IndexPage = () => {
     () =>
       throttle(() => {
         if (!messageA.current) return;
+        yOffset = window.pageYOffset;
         scrollLoop();
         // console.log(`scrollLoop`);
       }, 30),
@@ -98,10 +109,11 @@ const IndexPage = () => {
   const sceneInfo = [
     {
       type: 'sticky',
-      heightNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
+      heightNum: 4, // 브라우저 높이의 5배로 scrollHeight 세팅
       scrollHeight: 0,
       objs: {
-        container: IntroSection,
+        container: introSection,
+        content: introSectionBox,
         messageBox: messageBox,
         subMessage: subMessage,
         messageA: messageA,
@@ -110,6 +122,10 @@ const IndexPage = () => {
         messageD: messageD,
         messageBackground: messageBackground,
         introMonitorBox: introMonitorBox,
+        introMonitorItemA: introMonitorItemA,
+        introMonitorItemB: introMonitorItemB,
+        introMonitorItemC: introMonitorItemC,
+        introMonitorItemD: introMonitorItemD,
         introChatImgBox: introChatImgBox,
         introChatImg: introChatImg,
         introChatReplyBox: introChatReplyBox,
@@ -118,41 +134,42 @@ const IndexPage = () => {
         messageBox_colorR_in: [255, 0, { start: 0.05, end: 0.3 }],
         messageBox_colorG_in: [150, 0, { start: 0.05, end: 0.3 }],
         messageBox_colorB_in: [166, 0, { start: 0.05, end: 0.3 }],
-        messageBox_translateX_in: [0, 35, { start: 0.05, end: 0.6 }],
+        messageBox_translateX_in: [0, 35, { start: 0.05, end: 0.75 }],
         messageB_translateX_in: [-100, 0, { start: 0.05, end: 0.3 }],
         messageC_translateX_in: [-100, 0, { start: 0.05, end: 0.3 }],
         messageD_translateX_in: [-80, 0, { start: 0.05, end: 0.3 }],
-        introChatImg_translateX_in: [0, -40, { start: 0.22, end: 0.6 }],
+        introChatImg_translateX_in: [0, -40, { start: 0.22, end: 0.75 }],
         messageBackground_translateY_in: [100, 0, { start: 0.2, end: 0.3 }],
-        messageBox_translateY_in: [-50, 160, { start: 0.4, end: 0.6 }],
-        messageA_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
-        messageB_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
-        messageC_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
-        messageD_translateY_in: [0, -40, { start: 0.4, end: 0.6 }],
+        messageBox_translateY_in: [-50, 160, { start: 0.4, end: 0.75 }],
+        messageA_translateY_in: [0, -40, { start: 0.4, end: 0.75 }],
+        messageB_translateY_in: [0, -40, { start: 0.4, end: 0.75 }],
+        messageC_translateY_in: [0, -40, { start: 0.4, end: 0.75 }],
+        messageD_translateY_in: [0, -40, { start: 0.4, end: 0.75 }],
         introChatImgBox_translateY_in: [50, 15, { start: 0.22, end: 0.4 }],
-        introChatImg_translateY_in: [25, -20, { start: 0.22, end: 0.6 }],
-        introChatReplyBox_translateY_in: [25, 0, { start: 0.65, end: 0.75 }],
-        // introMonitorBox_translateY_in: [-50, -100, { start: 0.05, end: 0.3 }],
-        // messageB_translateX_out: [0, -100, { start: 0.05, end: 0.3 }],
-        // messageC_translateX_out: [0, -100, { start: 0.05, end: 0.3 }],
-        // messageD_translateX_out: [0, -80, { start: 0.05, end: 0.3 }],
-        messageA_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
-        messageB_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
-        messageC_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
-        messageD_translateY_out: [-40, 0, { start: 0.7, end: 0.9 }],
+        introChatImg_translateY_in: [25, -20, { start: 0.22, end: 0.75 }],
+        introChatReplyBox_translateY_in: [25, 0, { start: 0.8, end: 0.85 }],
         subMessage_opacity_in: [1, 0, { start: 0.05, end: 0.15 }],
         messageBackground_opacity_in: [0, 1, { start: 0.2, end: 0.3 }],
         messageB_opacity_in: [0, 1, { start: 0.15, end: 0.3 }],
         messageD_opacity_in: [0, 1, { start: 0.15, end: 0.3 }],
         introMonitorBox_opacity_out: [1, 0, { start: 0.05, end: 0.2 }],
-        messageB_opacity_out: [1, 0, { start: 0.4, end: 0.6 }],
-        messageD_opacity_out: [1, 0, { start: 0.4, end: 0.6 }],
+        messageB_opacity_out: [1, 0, { start: 0.4, end: 0.75 }],
+        messageD_opacity_out: [1, 0, { start: 0.4, end: 0.75 }],
         introChatImgBox_opacity_in: [0, 1, { start: 0.22, end: 0.3 }],
-        introChatReplyBox_opacity_in: [0, 1, { start: 0.65, end: 0.75 }],
-        // introChatImgBox_opacity_out: [1, 0, { start: 0.05, end: 0.2 }],
-        messageBox_scale_in: [1, 0.7, { start: 0.4, end: 0.6 }],
-        introChatImg_width_in: [150, 250, { start: 0.42, end: 0.6 }],
+        introChatReplyBox_opacity_in: [0, 1, { start: 0.8, end: 0.9 }],
+        messageBox_scale_in: [1, 0.7, { start: 0.4, end: 0.85 }],
+        introChatImg_width_in: [150, 250, { start: 0.42, end: 0.85 }],
       },
+    },
+    {
+      type: 'normal',
+      heightNum: 0,
+      scrollHeight: 0,
+      objs: {
+        container: mainItemSectionA,
+        content: mainItemSectionABox,
+      },
+      values: {},
     },
   ];
 
@@ -160,6 +177,10 @@ const IndexPage = () => {
     for (let i = 0; i < sceneInfo.length; i++) {
       if (sceneInfo[i].type === 'sticky') {
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+      } else if (sceneInfo[i].type === 'normal') {
+        sceneInfo[i].scrollHeight =
+          (sceneInfo[i].objs.content?.current?.offsetHeight as number) +
+          window.innerHeight * 0.5;
       }
       if (sceneInfo[i].objs.container) {
         sceneInfo[i].objs.container.current.style.height = `${
@@ -167,17 +188,17 @@ const IndexPage = () => {
         }px`;
       }
     }
-    // yOffset = window.pageYOffset;
-    // console.log(`여기 y`, yOffset);
-    // let totalScrollHeight = 0;
-    // for (let i = 0; i < sceneInfo.length; i++) {
-    //   totalScrollHeight += sceneInfo[i].scrollHeight;
-    //   if (totalScrollHeight >= yOffset) {
-    //     currentScene = i;
-    //     console.log(`currentScene`, currentScene);
-    //     break;
-    //   }
-    // }
+
+    yOffset = window.pageYOffset;
+    let totalScrollHeight = 0;
+    for (let i = 0; i < sceneInfo.length; i++) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+      if (totalScrollHeight >= yOffset) {
+        currentScene = i;
+        console.log(`currentScene`, currentScene);
+        break;
+      }
+    }
     console.log('setLayout');
   }, []);
 
@@ -210,9 +231,8 @@ const IndexPage = () => {
     return rv;
   }, []);
 
-  const playAnimation = async () => {
+  const playAnimation = useCallback(() => {
     const objs = sceneInfo[currentScene].objs;
-    console.log(`objs`, objs);
     const values = sceneInfo[currentScene].values;
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
@@ -220,12 +240,9 @@ const IndexPage = () => {
 
     switch (currentScene) {
       case 0:
-        // console.log('0 play');
-        // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-        // objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-        // 	objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         if (
-          objs.messageBox.current &&
+          objs.content.current &&
+          objs.messageBox?.current &&
           objs.subMessage.current &&
           objs.messageBackground.current &&
           objs.messageA.current &&
@@ -233,12 +250,16 @@ const IndexPage = () => {
           objs.messageC.current &&
           objs.messageD.current &&
           objs.introMonitorBox.current &&
+          objs.introMonitorItemA.current &&
+          objs.introMonitorItemB.current &&
+          objs.introMonitorItemC.current &&
+          objs.introMonitorItemD.current &&
           objs.introChatImgBox.current &&
           objs.introChatImg.current &&
           objs.introChatReplyBox.current
         ) {
           console.log(`scroll`, scrollRatio);
-          if (scrollRatio <= 0.62) {
+          if (scrollRatio <= 0.77) {
             objs.messageBox.current.style.transform = `translate3d(${calcValues(
               values.messageBox_translateX_in,
               currentYOffset
@@ -268,11 +289,6 @@ const IndexPage = () => {
               values.messageBackground_opacity_in,
               currentYOffset
             )}`;
-            objs.introMonitorBox.current.style.userSelect = `auto`;
-            objs.introMonitorBox.current.style.opacity = `${calcValues(
-              values.introMonitorBox_opacity_out,
-              currentYOffset
-            )}`;
             objs.messageA.current.style.transform = `translate3d(0, 0, 0)`;
             objs.messageB.current.style.transform = `translate3d(${calcValues(
               values.messageB_translateX_in,
@@ -294,9 +310,16 @@ const IndexPage = () => {
               values.messageD_opacity_in,
               currentYOffset
             )}`;
+
+            objs.introMonitorBox.current.style.opacity = `${calcValues(
+              values.introMonitorBox_opacity_out,
+              currentYOffset
+            )}`;
             if (scrollRatio >= 0.22) {
-              objs.introChatImgBox.current.style.display = `block`;
+              objs.introChatImgBox.current.style.display = `flex`;
+              objs.introMonitorBox.current.style.cursor = `unset`;
             } else {
+              objs.introMonitorBox.current.style.cursor = `pointer`;
               objs.introChatImgBox.current.style.display = `none`;
             }
             objs.introChatImgBox.current.style.transform = `translate3d(0,${calcValues(
@@ -318,16 +341,8 @@ const IndexPage = () => {
               values.introChatImg_width_in,
               currentYOffset
             )}%`;
-
-            // objs.introMonitorBox.current.style.transform = `translate3d(0,${calcValues(
-            //   values.introMonitorBox_translateY_in,
-            //   currentYOffset
-            // )}%, 0)`;
-            // in
-          } else if (scrollRatio >= 0.22) {
-            objs.introMonitorBox.current.style.userSelect = `none`;
           }
-          if (scrollRatio <= 0.77) {
+          if (scrollRatio <= 0.92) {
             objs.introChatReplyBox.current.style.transform = `translate3d(0,${calcValues(
               values.introChatReplyBox_translateY_in,
               currentYOffset
@@ -337,40 +352,48 @@ const IndexPage = () => {
               currentYOffset
             )}`;
           }
+          if (scrollRatio >= 0.95) {
+            objs.content.current.style.position = `static`;
+            objs.content.current.style.marginTop = `${scrollHeight * 0.81}px`;
+            objs.content.current.style.transform = `translate3d(0,-50%,0)`;
+          } else {
+            objs.content.current.style.position = `fixed`;
+            objs.content.current.style.marginTop = `0`;
+            objs.content.current.style.transform = `translate3d(-50%,-50%,0)`;
+          }
         }
-        // 	if (scrollRatio <= 0.42) {
-        // 		// in
-        // 		objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
-        // 		objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
-        // 	} else {
-        // 		// out
-        // 		objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
-        // 		objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
-        // 	}
-
         break;
+      case 1:
+        if (mainItemSectionA.current && mainItemSectionABox.current) {
+        }
     }
-  };
+  }, [yOffset]);
 
-  const scrollLoop = () => {
+  const scrollLoop = useCallback(() => {
+    enterNewScene = false;
     prevScrollHeight = 0;
     for (let i = 0; i < currentScene; i++) {
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
-    yOffset = window.pageYOffset;
     console.log(`여기 y`, yOffset);
-    let totalScrollHeight = 0;
-    for (let i = 0; i < sceneInfo.length; i++) {
-      totalScrollHeight += sceneInfo[i].scrollHeight;
-      if (totalScrollHeight >= yOffset) {
-        currentScene = i;
-        console.log(`currentScene`, currentScene);
-        break;
+    if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+      enterNewScene = true;
+      if (currentScene < sceneInfo.length - 1) {
+        currentScene++;
       }
     }
-
+    if (yOffset < prevScrollHeight) {
+      if (currentScene === 0) return;
+      if (yOffset - prevScrollHeight < 0) {
+        currentScene--;
+        return;
+      }
+      console.log(`커렌트씬`, currentScene);
+      currentScene--;
+    }
+    if (enterNewScene) return;
     playAnimation();
-  };
+  }, [yOffset]);
 
   const aos = {
     'data-aos': `fade-up`,
@@ -384,8 +407,8 @@ const IndexPage = () => {
   };
   return (
     <div css={styles.flexRowCenter}>
-      <section ref={IntroSection} css={styles.mainTitleSection}>
-        <div css={styles.mainTitleBox}>
+      <section ref={introSection} css={styles.introSection}>
+        <div ref={introSectionBox} css={styles.introSectionBox}>
           <div css={styles.mainTitleDesc}>
             <h1 ref={subMessage}>프로젝트의 시작과 끝,</h1>
           </div>
@@ -407,47 +430,38 @@ const IndexPage = () => {
           <div ref={introMonitorBox}>
             <div css={styles.introMonitorBox}>
               <div
-                css={styles.introMonitorItem(clickItem === `기록`, clickItem)}
+                ref={introMonitorItemA}
+                css={styles.introMonitorItem(clickItem === `ㅤ기록ㅤ`)}
                 onClick={introClickHandler}
               >
                 <div css={styles.introMonitorItemSvgBox}>
-                  <FontAwesomeIcon
-                    icon={faPenToSquare}
-                    css={styles.introMonitorItemSvg}
-                  />
-                  기록
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                  ㅤ기록ㅤ
                 </div>
                 <div
-                  css={styles.introMonitorItemSvgText(clickItem === `기록`)}
+                  css={styles.introMonitorItemSvgText(clickItem === `ㅤ기록ㅤ`)}
                 >{`프로젝트의 아이디어 공유나\n 희의록을 공유할 수 있어요`}</div>
               </div>
               <div
-                css={styles.introMonitorItem(clickItem === `채팅`, clickItem)}
+                ref={introMonitorItemB}
+                css={styles.introMonitorItem(clickItem === `ㅤ채팅ㅤ`)}
                 onClick={introClickHandler}
               >
                 <div css={styles.introMonitorItemSvgBox}>
-                  <FontAwesomeIcon
-                    icon={faComments}
-                    css={styles.introMonitorItemSvg}
-                  />
-                  채팅
+                  <FontAwesomeIcon icon={faComments} />
+                  ㅤ채팅ㅤ
                 </div>
                 <div
-                  css={styles.introMonitorItemSvgText(clickItem === `채팅`)}
+                  css={styles.introMonitorItemSvgText(clickItem === `ㅤ채팅ㅤ`)}
                 >{`팀원들과 실시간 채팅으로 소통할 수 있어요`}</div>
               </div>
               <div
-                css={styles.introMonitorItem(
-                  clickItem === `커밋로그`,
-                  clickItem
-                )}
+                ref={introMonitorItemC}
+                css={styles.introMonitorItem(clickItem === `커밋로그`)}
                 onClick={introClickHandler}
               >
                 <div css={styles.introMonitorItemSvgBox}>
-                  <FontAwesomeIcon
-                    icon={faGithub}
-                    css={styles.introMonitorItemSvg}
-                  />
+                  <FontAwesomeIcon icon={faGithub} />
                   커밋로그
                 </div>
                 <div
@@ -455,17 +469,12 @@ const IndexPage = () => {
                 >{`프로젝트를 깃허브 저장소와 연결해서\n 커밋로그 및 이슈를 확인할 수 있어요`}</div>
               </div>
               <div
-                css={styles.introMonitorItem(
-                  clickItem === `진행상황`,
-                  clickItem
-                )}
+                ref={introMonitorItemD}
+                css={styles.introMonitorItem(clickItem === `진행상황`)}
                 onClick={introClickHandler}
               >
                 <div css={styles.introMonitorItemSvgBox}>
-                  <FontAwesomeIcon
-                    icon={faListCheck}
-                    css={styles.introMonitorItemSvg}
-                  />
+                  <FontAwesomeIcon icon={faListCheck} />
                   진행상황
                 </div>
                 <div
@@ -479,13 +488,13 @@ const IndexPage = () => {
             <div css={styles.introChatBox}>
               <div css={styles.introChatImgBox}>
                 <Image
-                  priority
                   ref={introChatImg}
                   css={styles.introChatImg}
                   src={chat}
                   width={300}
                   height={200}
                   alt={`intro chat img`}
+                  priority
                 />
                 <div ref={introChatReplyBox} css={styles.introChatImgReplyBox}>
                   <div>{`팀원을 초대하고\n프로젝트를 시작해 볼까요?`}</div>
@@ -495,6 +504,9 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section ref={mainItemSectionA} css={styles.mainItemSectionA}>
+        <div ref={mainItemSectionABox} css={styles.mainItemSectionABox}></div>
       </section>
     </div>
   );

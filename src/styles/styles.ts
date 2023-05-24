@@ -25,21 +25,41 @@ const introMonitorBoxAniOut = keyframes`
   }
 `;
 
+const introMonitorItemTopAni = keyframes`
+  50% {
+    top: -50%;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+`;
+const introMonitorItemBottomAni = keyframes`
+  50% {
+    top: -25%;
+  }
+  100% {
+    opacity: 1;
+    bottom: 0;
+  }
+`;
+
 export const flexRowCenter = css`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
 `;
 
-export const mainTitleSection = css`
+export const introSection = css`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 `;
 
-export const mainTitleBox = css`
+export const introSectionBox = css`
   display: flex;
   position: fixed;
   justify-content: center;
@@ -64,6 +84,7 @@ export const mainTitleDesc = css`
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
   }
+  user-select: none;
   animation: ${subTitleAni} 0.7s 1.8s forwards;
 `;
 
@@ -79,6 +100,7 @@ export const messageBox = css`
   z-index: 1;
   white-space: nowrap;
   opacity: 0;
+  user-select: none;
   animation: ${mainTitleAni} 0.7s 2.3s forwards;
   @media screen and (max-width: 1280px) {
     font-size: 3.8rem;
@@ -171,7 +193,6 @@ export const introMonitorBox = css`
     height: 200px;
   }
   @media screen and (max-width: 1024px) {
-    margin-top: 1.5;
     height: 40vw;
   }
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
@@ -179,30 +200,40 @@ export const introMonitorBox = css`
     ${introMonitorBoxAniOut} 1s 1.6s forwards;
 
   & > div:nth-of-type(1) {
-    top: 0;
+    top: 50%;
     left: 0;
+    opacity: 0;
     transform-origin: top left;
+    animation: ${introMonitorItemTopAni} 0.8s 0.6s forwards;
   }
   & > div:nth-of-type(2) {
+    top: 50%;
     right: 0;
+    opacity: 0;
     transform-origin: top right;
+    animation: ${introMonitorItemTopAni} 0.8s 0.65s forwards;
   }
   & > div:nth-of-type(3) {
+    top: 50%;
     left: 0;
     bottom: 0;
+    opacity: 0;
     transform-origin: bottom left;
+    animation: ${introMonitorItemBottomAni} 0.8s 0.7s forwards;
   }
   & > div:nth-of-type(4) {
+    top: 50%;
     right: 0;
     bottom: 0;
+    opacity: 0;
     transform-origin: bottom right;
+    animation: ${introMonitorItemBottomAni} 0.8s 0.75s forwards;
   }
 `;
 
-export const introMonitorItem = (isClicked: boolean, clickItem: string) => css`
+export const introMonitorItem = (isClicked: boolean) => css`
   position: absolute;
   display: flex;
-
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -214,6 +245,7 @@ export const introMonitorItem = (isClicked: boolean, clickItem: string) => css`
   border: 1px solid black;
   border-radius: 4px;
   transition: 0.3s;
+  // cursor: pointer;
   transform: scale(${isClicked ? `2` : `1`});
   &:hover {
     color: rgba(255, 0, 0, 0.5);
@@ -237,18 +269,9 @@ export const introMonitorItemSvgBox = css`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-`;
-
-export const introMonitorItemSvg = css`
-  font-size: 4rem;
-  @media screen and (min-width: 1024px) {
-    font-size: 5rem;
-  }
-  @media screen and (max-width: 1023px) {
-    font-size: 3.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    font-size: 2.5rem;
+  user-select: none;
+  @media screen and (max-width: 520px) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -356,6 +379,7 @@ export const introChatImgReplyBox = css`
   border-radius: 0.7rem;
   border-top-right-radius: 0.2rem;
   white-space: pre-wrap;
+  user-select: none;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   @media screen and (max-width: 1280px) {
     font-size: 2.1rem;
@@ -386,3 +410,13 @@ export const introChatImgReplyBox = css`
     margin: 0;
   }
 `;
+
+export const mainItemSectionA = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #f1f1f2;
+`;
+
+export const mainItemSectionABox = css``;
