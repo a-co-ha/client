@@ -15,17 +15,12 @@ export default function Label() {
   const { socket } = useContext(SocketContext);
   const [query, setQuery] = useState('');
   const { data } = useGetLabels(pageId);
-  console.log('🚀 ~ file: Label.tsx:18 ~ Label ~ data:', data);
   const selectedUsers = useMemo(
     () => data?.map((item) => item.content) ?? [],
     [data]
   );
-
   const { data: usersInChannel } = useGetUsers();
-  console.log(
-    '🚀 ~ file: Label.tsx:24 ~ Label ~ usersInChannel:',
-    usersInChannel
-  );
+
   const users = usersInChannel?.map((x: UserInChannel) => x.name);
   const { mutate: updateLabel } = usePutLabels(channelId, pageId);
   const [selected, setSelected] = useState<string[]>(selectedUsers);
