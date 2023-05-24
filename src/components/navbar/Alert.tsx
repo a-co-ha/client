@@ -2,13 +2,10 @@ import { Fragment, useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import * as styles from './styles';
-import { toast } from 'react-toastify';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { PageNameLink } from '../project-sidebar/PageNameLink';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { EditActiveIcon } from '../selector-menu/EditActiveIcon';
-import { EditInactiveIcon } from '../selector-menu/EditInactiveIcon';
+
 
 /**
  * 알림은 toast를 통해 화면에 띄워진다
@@ -78,17 +75,6 @@ export const Alert = () => {
                           active ? 'bg-violet-500 text-white' : 'text-gray-900'
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                       >
-                        {active ? (
-                          <EditActiveIcon
-                            className="mr-2 h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <EditInactiveIcon
-                            className="mr-2 h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        )}
                         Edit
                       </button>
                     )}

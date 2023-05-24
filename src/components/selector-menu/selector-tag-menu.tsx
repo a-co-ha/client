@@ -1,8 +1,6 @@
 import { Menu } from '@headlessui/react';
 import { useEffect } from 'react';
 import type { TagSelectorMenuProps } from '../editable-block/type';
-import { EditActiveIcon } from './EditActiveIcon';
-import { EditInactiveIcon } from './EditInactiveIcon';
 
 const menuItemTag = [
   { tag: 'h1', label: 'h1' },
@@ -60,17 +58,6 @@ export default function TagSelectorMenu({
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                       onClick={() => handleTagSelection(item.tag)}
                     >
-                      {active ? (
-                        <EditActiveIcon
-                          className="mr-2 h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <EditInactiveIcon
-                          className="mr-2 h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      )}
                       {item.label}
                     </button>
                   )}
