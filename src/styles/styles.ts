@@ -69,9 +69,6 @@ export const introSectionBox = css`
   height: 50px;
   opacity: 1;
   transform: translate3d(-50%, -50%, 0);
-  // @media screen and (max-width: 768px) {
-  //   font-size: 1rem;
-  // }
 `;
 
 export const mainTitleDesc = css`
@@ -421,9 +418,516 @@ export const introChatImgReplyBox = css`
 export const mainItemSectionA = css`
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 100%;
   background: #f1f1f2;
 `;
 
-export const mainItemSectionABox = css``;
+export const mainItemSectionABox = css`
+  width: 100%;
+`;
+
+export const mainItemPreviewBox = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const mainItemPreviewTitle = css`
+  padding: 1rem;
+  font-size: 2.5rem;
+  font-weight: 900;
+  white-space: pre-wrap;
+`;
+
+export const mainItemLayoutBox = css`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 55%;
+  height: 50vh;
+  background: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  @media screen and (min-width: 1280px) {
+    height: 70vh;
+  }
+  @media screen and (max-width: 768px) {
+    height: 50vh;
+  }
+  @media screen and (max-width: 520px) {
+    overflow-x: scroll;
+  }
+`;
+
+export const mainItemPreview = css`
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  border: 0.5vw solid black;
+  outline: 1.5px solid gray;
+  border-radius: 2vw;
+  transform: translate3d(0, 30%, 0);
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 520px) {
+    width: 130%;
+    transform: translate3d(15%, 30%, 0);
+  }
+`;
+
+export const previewNav = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 8%;
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 768px) {
+    height: 6%;
+  }
+`;
+
+export const previewNavAlert = css`
+  margin-left: auto;
+  margin-right: 0.5rem;
+  width: 1.2vw;
+`;
+
+export const previewNavItemA = css`
+  display: flex;
+  align-items: center;
+  width: 28%;
+  height: 100%;
+  font-size: 1vw;
+  text-indent: 3vw;
+  padding-inline: 1rem;
+  white-space: nowrap;
+  & span {
+    margin-left: auto;
+    width: 1.5vw;
+  }
+  box-shadow: 3px 0px 3px -3px rgb(0 0 0 / 0.1);
+`;
+
+export const previewNavItemB = css`
+  display: flex;
+  align-items: center;
+  width: 17%;
+  height: 100%;
+  font-size: 1vw;
+  padding-inline: 0.5rem;
+  white-space: nowrap;
+  & > div {
+    display: flex;
+    align-items: center;
+    & > span:nth-of-type(2) {
+      display: inline-block;
+      font-size: 0.9vw;
+      @media screen and (max-width: 768px) {
+        transform: scale(0.8);
+      }
+      @media screen and (max-width: 520px) {
+        transform: scale(0.7);
+      }
+    }
+  }
+  box-shadow: -3px 0px 3px -3px rgb(0 0 0 / 0.1);
+`;
+
+export const previewNavItemBImg = css`
+  display: inline-block;
+  width: 2vw;
+  height: 1vw;
+  border-radius: 50%;
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const previewSidebar = css`
+  display: flex;
+  height: 100%;
+  & > div:nth-of-type(1) {
+    width: 8%;
+    height: 100%;
+  }
+  & > div:nth-of-type(2) {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 8px -4px rgb(0 0 0 / 0.2);
+    width: 20%;
+    height: 100%;
+  }
+  & > div:nth-of-type(3) {
+    width: 55%;
+    height: 100%;
+  }
+  & > div:nth-of-type(4) {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 8px -4px rgb(0 0 0 / 0.2);
+    width: 17%;
+    height: 30%;
+  }
+`;
+
+export const previewList = css``;
+
+export const previewChannelImgBox = css`
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.3vw;
+  overflow: hidden;
+  width: 100%;
+  &::before {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 1.2vw;
+    left: -0.3vw;
+    width: calc(3vw / 5);
+    height: 2vw;
+    background: gray;
+    border-radius: 1vw;
+  }
+  & img:nth-of-type(1) {
+    margin-top: 1vw;
+  }
+  & img {
+    width: 2.5vw;
+    height: 2.5vw;
+    border-radius: 0.7vw;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  }
+  & > div:nth-of-type(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5vw;
+    height: 2.5vw;
+    font-size: 0.8rem;
+    border: 0.1px solid black;
+    border-radius: 0.7vw;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  }
+`;
+
+export const previewChannel = css``;
+
+export const previewChannelMenuBox = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-inline: 1vw;
+  margin-top: 5vw;
+  font-size: 0.9vw;
+`;
+
+export const previewChannelMenu = css`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  font-weight: 500;
+  & > div:nth-of-type(2) {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.7vw;
+    padding: 0.5vw;
+  }
+  @media screen and (max-width: 768px) {
+    & > div:nth-of-type(2) {
+      transform: scale(0.9);
+    }
+  }
+  @media screen and (max-width: 520px) {
+    & > div:nth-of-type(2) {
+      transform: scale(0.8);
+    }
+  }
+`;
+
+export const previewChannelMenuTab = css`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #6b279e;
+  & > span:nth-of-type(1) {
+    margin-left: auto;
+    width: 1.1vw;
+  }
+  & > span:nth-of-type(2) {
+    margin-left: 1vw;
+  }
+`;
+
+export const previewMain = css`
+  position: relative;
+  display: flex;
+`;
+
+export const previewMainItemBox = css`
+  display: flex;
+  width: 100%;
+`;
+
+export const previewProgressBar = css`
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0.1vw;
+  font-size: 0.9vw;
+  & > span:nth-of-type(2) {
+    font-size: 0.8vw;
+    @media screen and (max-width: 520px) {
+      transform: scale(0.8);
+    }
+  }
+`;
+
+export const previewProgressBarSpan = css`
+  position: relative;
+  width: 7vw;
+  height: 0.7vw;
+  background: white;
+  border: 0.05vw solid rgb(255, 0, 0, 0.8);
+  border-radius: 1vw;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 100%;
+    display: black;
+    background: red;
+    border-radius: 1vw;
+  }
+`;
+
+export const previewProgressTabBox = css`
+  padding: 2vw 1vw;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.9vw;
+`;
+
+export const previewProgressTab = css`
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  font-size: 0.9vw;
+  & > span:nth-of-type(1) {
+    font-size: 0.7vw;
+  }
+  & > div:nth-of-type(1) {
+    width: 100%;
+    padding: 0.3vw;
+    margin-bottom: 0.3vw;
+    font-size: 0.7vw;
+    color: rgba(0, 0, 0, 0.5);
+    border: 0.05vw solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.4vw;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
+  }
+  @media screen and (max-width: 768px) {
+    & > div:nth-of-type(1),
+    span:nth-of-type(1) {
+      transform: scale(0.8);
+    }
+  }
+  @media screen and (max-width: 520px) {
+    & > div:nth-of-type(1),
+    span:nth-of-type(1) {
+      transform: scale(0.7);
+    }
+  }
+`;
+
+export const previewCommitLog = css`
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 100%;
+  font-size: 0.9vw;
+  transform: translate3d(-25%, -50%, 0);
+`;
+
+export const previewCommitBox = css`
+  width: 50%;
+  height: 10vw;
+  border-bottom-left-radius: 0.5vw;
+  border-bottom-right-radius: 0.5vw;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 768px) {
+    height: 15vw;
+  }
+  @media screen and (max-width: 520px) {
+    height: 20vw;
+  }
+`;
+
+export const previewCommitLogTitle = css`
+  display: flex;
+  font-weight: 700;
+  padding: 0.3vw;
+  background: rgba(0, 0, 0, 0.3);
+  border-top-left-radius: 0.5vw;
+  border-top-right-radius: 0.5vw;
+  & > img {
+    width: 20px;
+    height: 10px;
+  }
+  & > span {
+    margin-left: 0.2vw;
+    font-size: 0.7vw;
+    @media screen and (max-width: 768px) {
+      transform: scale(0.8);
+    }
+    @media screen and (max-width: 520px) {
+      transform: scale(0.7);
+    }
+  }
+`;
+
+export const previewCommitLogContent = css`
+  width: 100%;
+  font-size: 0.8vw;
+  font-weight: 500;
+
+  & > span:nth-of-type(1),
+  span:nth-of-type(2) {
+    display: inline-block;
+    width: 48%;
+    padding: 0.3vw;
+    margin: 0.1vw;
+    text-align: center;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 4px;
+  }
+  & > span:nth-of-type(1) {
+    color: #3c66dd;
+  }
+  & > span:nth-of-type(2) {
+    color: rgba(0, 0, 255, 0.2);
+  }
+`;
+
+export const previewCommitLogBtnBox = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5vw;
+  font-size: 0.9vw;
+  font-weight: 500;
+  transform: translate3d(0, 75%, 0);
+`;
+
+export const previewCommitLogBtn = css`
+  position: relative;
+  font-size: 1vw;
+  font-weight: 900;
+  &::before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 50%;
+    width: 220%;
+    height: 100%;
+    border: 0.15vw solid black;
+    border-radius: 0.3vw;
+    transform: translate3d(-50%, -50%, 0);
+  }
+  @media screen and (max-width: 768px) {
+    transform: scale(0.9);
+  }
+  @media screen and (max-width: 520px) {
+    transform: scale(0.7);
+  }
+`;
+
+export const previewUserList = css`
+  height: 50%;
+`;
+
+export const previewUserBox = css`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1vw 0.3vw;
+  font-size: 0.9vw;
+`;
+
+export const previewUser = css`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  padding: 0.2vw;
+  &:nth-of-type(3) {
+    & > span:nth-of-type(1) {
+      background: gray;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    transform: scale(0.8);
+  }
+  @media screen and (max-width: 520px) {
+    transform: scale(0.7);
+  }
+`;
+
+export const previewUserOn = css`
+  width: 4px;
+  height: 4px;
+  background: limegreen;
+  border-radius: 50%;
+  margin-left: 0.5vw;
+`;
+
+export const previewBookmark = css`
+  position: absolute;
+  top: 40%;
+  right: 0;
+  width: 17%;
+  height: 40%;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+`;
+
+export const previewBookmarkContent = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8vw;
+
+  & > div:nth-of-type(1) {
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    & > div {
+      @media screen and (max-width: 768px) {
+        transform: scale(0.9);
+      }
+      @media screen and (max-width: 520px) {
+        transform: scale(0.7);
+      }
+    }
+  }
+  & > div:nth-of-type(2) {
+    margin-top: 1vw;
+    @media screen and (max-width: 768px) {
+      transform: scale(0.9);
+    }
+    @media screen and (max-width: 520px) {
+      transform: scale(0.7);
+    }
+  }
+`;

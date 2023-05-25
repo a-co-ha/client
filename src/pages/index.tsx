@@ -13,15 +13,23 @@ import * as styles from '../styles/styles';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComments, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import {
+  faComments,
+  faPenToSquare,
+  faSquarePlus,
+} from '@fortawesome/free-regular-svg-icons';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { IconOne } from '../components/project-sidebar/Icons';
-import Image from 'next/image';
 import commitLog from '@/images/landingPage/commitLog.png';
 import chat from '@/images/landingPage/chat.svg';
-
+import Image from 'next/image';
+import previewRed from '@/images/channelImg/1.png';
+import previewGreen from '@/images/channelImg/6.png';
+import previewPurple from '@/images/channelImg/7.png';
+import previewGithub from '@/images/githubLogo.png';
+import { ChevronDownIcon, BellAlertIcon } from '@heroicons/react/20/solid';
 const IndexPage = () => {
   //introSection
   const introSection = useRef<any>(null);
@@ -41,6 +49,7 @@ const IndexPage = () => {
   const introChatImgBox = useRef<HTMLDivElement>(null);
   const introChatImg = useRef<HTMLImageElement>(null);
   const introChatReplyBox = useRef<HTMLDivElement>(null);
+  const introArrowDown = useRef<HTMLDivElement>(null);
   //mainItemSectionA
   const mainItemSectionA = useRef<any>(null);
   const mainItemSectionABox = useRef<HTMLDivElement>(null);
@@ -69,7 +78,7 @@ const IndexPage = () => {
         scrollLoop();
         // console.log(`scrollLoop`);
       }, 30),
-    []
+    [yOffset]
   );
   useLayoutEffect(() => {
     window.addEventListener(`load`, () => {
@@ -129,6 +138,7 @@ const IndexPage = () => {
         introChatImgBox: introChatImgBox,
         introChatImg: introChatImg,
         introChatReplyBox: introChatReplyBox,
+        introArrowDown: introArrowDown,
       },
       values: {
         messageBox_colorR_in: [255, 0, { start: 0.05, end: 0.3 }],
@@ -157,13 +167,14 @@ const IndexPage = () => {
         messageD_opacity_out: [1, 0, { start: 0.4, end: 0.75 }],
         introChatImgBox_opacity_in: [0, 1, { start: 0.22, end: 0.3 }],
         introChatReplyBox_opacity_in: [0, 1, { start: 0.8, end: 0.9 }],
+        introArrowDown_opacity_in: [0, 1, { start: 0.8, end: 0.9 }],
         messageBox_scale_in: [1, 0.7, { start: 0.4, end: 0.85 }],
         introChatImg_width_in: [150, 250, { start: 0.42, end: 0.85 }],
       },
     },
     {
       type: 'normal',
-      heightNum: 0,
+      heightNum: 3,
       scrollHeight: 0,
       objs: {
         container: mainItemSectionA,
@@ -175,13 +186,10 @@ const IndexPage = () => {
 
   const setLayout = useCallback(() => {
     for (let i = 0; i < sceneInfo.length; i++) {
-      if (sceneInfo[i].type === 'sticky') {
+      if (sceneInfo[i].type === 'sticky' || sceneInfo[i].type === 'normal') {
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
-      } else if (sceneInfo[i].type === 'normal') {
-        sceneInfo[i].scrollHeight =
-          (sceneInfo[i].objs.content?.current?.offsetHeight as number) +
-          window.innerHeight * 0.5;
       }
+
       if (sceneInfo[i].objs.container) {
         sceneInfo[i].objs.container.current.style.height = `${
           sceneInfo[i].scrollHeight + window.innerHeight
@@ -256,7 +264,8 @@ const IndexPage = () => {
           objs.introMonitorItemD.current &&
           objs.introChatImgBox.current &&
           objs.introChatImg.current &&
-          objs.introChatReplyBox.current
+          objs.introChatReplyBox.current &&
+          objs.introArrowDown.current
         ) {
           console.log(`scroll`, scrollRatio);
           if (scrollRatio <= 0.77) {
@@ -351,6 +360,10 @@ const IndexPage = () => {
               values.introChatReplyBox_opacity_in,
               currentYOffset
             )}`;
+            objs.introArrowDown.current.style.opacity = `${calcValues(
+              values.introArrowDown_opacity_in,
+              currentYOffset
+            )}`;
           }
           if (scrollRatio >= 0.95) {
             console.log(
@@ -367,7 +380,7 @@ const IndexPage = () => {
               objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
             }
             objs.content.current.style.width = `${
-              window.innerWidth * 0.55 - 7
+              window.innerWidth * 0.55 - 7.5
             }px`;
           } else {
             objs.content.current.style.position = `fixed`;
@@ -406,7 +419,7 @@ const IndexPage = () => {
     }
     if (enterNewScene) return;
     playAnimation();
-  }, [yOffset]);
+  }, []);
 
   const aos = {
     'data-aos': `fade-up`,
@@ -519,16 +532,189 @@ const IndexPage = () => {
                   priority
                 />
                 <div ref={introChatReplyBox} css={styles.introChatImgReplyBox}>
-                  <div>{`팀원을 초대하고\n프로젝트를 시작해 볼까요?`}</div>
+                  <div>팀원을 초대하고 프로젝트를 시작해 볼까요?</div>
                 </div>
               </div>
-              <div></div>
+              <div ref={introArrowDown} css={styles.arrowDownSvg}></div>
             </div>
           </div>
         </div>
       </section>
       <section ref={mainItemSectionA} css={styles.mainItemSectionA}>
-        <div ref={mainItemSectionABox} css={styles.mainItemSectionABox}></div>
+        <div ref={mainItemSectionABox} css={styles.mainItemSectionABox}>
+          <div css={styles.mainItemPreviewBox}>
+            <h2 css={styles.mainItemPreviewTitle}>
+              {`아코하를 먼저\n👀 살펴볼까요?`}
+            </h2>
+            <div css={styles.mainItemLayoutBox}>
+              {/* <div>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+              </div> */}
+              <div css={styles.mainItemPreview}>
+                <div css={styles.previewNav}>
+                  <div css={styles.previewNavItemA}>
+                    아코하
+                    <span>
+                      <ChevronDownIcon />
+                    </span>
+                  </div>
+                  <div css={styles.previewNavAlert}>
+                    <BellAlertIcon />
+                  </div>
+                  <div css={styles.previewNavItemB}>
+                    <div>
+                      <span css={styles.previewNavItemBImg}>
+                        <Image
+                          src={previewGithub}
+                          width={25}
+                          height={25}
+                          alt={`preview commitLogImg`}
+                        />
+                      </span>
+                      <span>FE 김코딩</span>
+                    </div>
+                  </div>
+                </div>
+                <div css={styles.previewSidebar}>
+                  <div css={styles.previewList}>
+                    <div css={styles.previewChannelImgBox}>
+                      <Image
+                        quality={100}
+                        src={previewRed}
+                        width={25}
+                        height={25}
+                        alt={`preview channelImg`}
+                      />
+                      <Image
+                        quality={100}
+                        src={previewGreen}
+                        width={25}
+                        height={25}
+                        alt={`preview channelImg`}
+                      />
+                      <Image
+                        quality={100}
+                        src={previewPurple}
+                        width={25}
+                        height={25}
+                        alt={`preview channelImg`}
+                      />
+                      <div>+</div>
+                    </div>
+                  </div>
+                  <div css={styles.previewChannel}>
+                    <div css={styles.previewChannelMenuBox}>
+                      <div css={styles.previewChannelMenu}>
+                        <div css={styles.previewChannelMenuTab}>
+                          일반
+                          <span>
+                            <ChevronDownIcon />
+                          </span>
+                          <span>+</span>
+                        </div>
+                        <div>
+                          <div>희의록</div>
+                          <div>아이디어 공유</div>
+                        </div>
+                      </div>
+                      <div css={styles.previewChannelMenu}>
+                        <div css={styles.previewChannelMenuTab}>
+                          채팅
+                          <span>
+                            <ChevronDownIcon />
+                          </span>
+                          <span>+</span>
+                        </div>
+                        <div>
+                          <div>프론트엔드</div>
+                          <div>백엔드</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div css={styles.previewMain}>
+                    <div css={styles.previewMainItemBox}>
+                      <div css={styles.previewProgressBar}>
+                        <span css={styles.previewProgressBarSpan}></span>
+                        <span>25%</span>
+                      </div>
+                      <div css={styles.previewProgressTabBox}>
+                        <div css={styles.previewProgressTab}>
+                          <h3>todo</h3>
+                          <div>게시판 만들기</div>
+                          <span>+ 새로 만들기</span>
+                        </div>
+                        <div css={styles.previewProgressTab}>
+                          <h3>preogress</h3>
+                          <div>회원가입 API 만들기</div>
+                          <span>+ 새로 만들기</span>
+                        </div>
+                        <div css={styles.previewProgressTab}>
+                          <h3>complete</h3>
+                          <div>프로젝트 세팅</div>
+                          <span>+ 새로 만들기</span>
+                        </div>
+                      </div>
+                      <div css={styles.previewCommitLog}>
+                        <div css={styles.previewCommitBox}>
+                          <div css={styles.previewCommitLogTitle}>
+                            <Image
+                              src={previewGithub}
+                              width={25}
+                              height={25}
+                              alt={`preview commitLogImg`}
+                            />
+                            <span>A - COHA</span>
+                          </div>
+                          <div css={styles.previewCommitLogContent}>
+                            <span>Client</span>
+                            <span>Server</span>
+                          </div>
+                          <div css={styles.previewCommitLogBtnBox}>
+                            <span css={styles.previewCommitLogBtn}>+</span>
+                            깃허브 연결하기
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div css={styles.previewUserList}>
+                    <div css={styles.previewUserBox}>
+                      <div css={styles.previewUser}>
+                        <span css={styles.previewUserOn}></span>
+                        <span>FE 김코딩</span>
+                        <span>👑</span>
+                      </div>
+                      <div css={styles.previewUser}>
+                        <span css={styles.previewUserOn}></span>
+                        <span>FE 리액트</span>
+                      </div>
+                      <div css={styles.previewUser}>
+                        <span css={styles.previewUserOn}></span>
+                        <span>BE 자바마스터</span>
+                      </div>
+                      <div css={styles.previewUser}>
+                        <span css={styles.previewUserOn}></span>
+                        <span>BE 파이썬</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div css={styles.previewBookmark}>
+                    <div css={styles.previewBookmarkContent}>
+                      <div>
+                        <div>+ 북마크</div>
+                      </div>
+                      <div>북마크 공유</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
