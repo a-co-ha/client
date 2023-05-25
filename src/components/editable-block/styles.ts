@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { DropAnimation } from 'react-beautiful-dnd';
 
 export const draggable = css`
   display: block;

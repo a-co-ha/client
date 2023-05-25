@@ -204,7 +204,6 @@ export const EditableBlock = (props: editableBlock) => {
     } catch (err) {}
   };
 
-
   return (
     <>
       {state.openTagSelectorMenu && (
@@ -253,7 +252,7 @@ export const EditableBlock = (props: editableBlock) => {
                   backgroundColor: contentEditable?.current?.classList.contains(
                     'selected'
                   )
-                    ? 'yellow'
+                    ? '#ccd7f0'
                     : '',
                 }}
               />

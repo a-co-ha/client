@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
@@ -15,21 +15,24 @@ import { Error } from '../error-boundary/Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import Selecto from 'react-selecto';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
-  console.log('🚀 ~ file: index.tsx:23 ~ EditablePage ~ blocks:', blocks);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
   const page = useRef<HTMLDivElement | null>(null);
+  const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
 
   useEffect(() => {
     setBlocks(fetchedBlocks);
   }, [fetchedBlocks, pageId]);
 
   useDidMountEffect(() => {
+    setSelectedBlocks([]);
     if (fetchedBlocks !== blocks) {
       handlers.updatePageOnserver(blocks, pageId, channelId);
     }
@@ -59,13 +62,17 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   };
   const isNewPage = router.query.initial === 'true';
 
-  const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
-
-  const handleDeleteBlocks = (e: React.KeyboardEvent) => {
-    if (e.key === 'Delete' && confirm('선택된 블럭을 삭제하시겠습니까?')) {
-      const curBlocks = blocks.filter((block) => !selectedBlocks.includes(block.blockId));
+  function deleteSelectBlock() {
+    if (confirm('선택된 블럭을 삭제하시겠습니까?')) {
+      const curBlocks = blocks.filter(
+        (block) => !selectedBlocks.includes(block.blockId)
+      );
       setBlocks(curBlocks);
     }
+  }
+
+  const handleDeleteBlocks = (e: React.KeyboardEvent) => {
+    e.key === 'Delete' && deleteSelectBlock();
   };
 
   return (
@@ -74,7 +81,14 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
         <ErrorBoundary fallback={Error} onReset={reset}>
           <div css={styles.contentBox} ref={page}>
             {isNewPage && <Notice status="SUCCESS" />}
-            <Label />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Label />
+              {selectedBlocks.length > 0 && (
+                <button onClick={deleteSelectBlock}>
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              )}
+            </div>
             <DragDropContext onDragEnd={onDragEndHandler}>
               <Droppable key={pageId} droppableId={pageId}>
                 {(provided) => (
