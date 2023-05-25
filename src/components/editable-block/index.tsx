@@ -204,6 +204,7 @@ export const EditableBlock = (props: editableBlock) => {
     } catch (err) {}
   };
 
+
   return (
     <>
       {state.openTagSelectorMenu && (
@@ -232,16 +233,15 @@ export const EditableBlock = (props: editableBlock) => {
                 <Image src={DragHandleIcon} alt="Icon" />
               </span>
               <div
+                className="list"
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
                 ref={contentEditable}
                 key={props.id}
-                css={styles.block(
-                  snapshot.isDragging,
-                  state.placeholder
-                )}
+                css={styles.block(snapshot.isDragging, state.placeholder)}
                 data-position={props.position}
+                data-id={props.id}
                 data-tag={state.tag}
                 onInput={handleChange}
                 onFocus={handleFocus}
@@ -249,6 +249,13 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
                 onClick={handleImageClick}
+                style={{
+                  backgroundColor: contentEditable?.current?.classList.contains(
+                    'selected'
+                  )
+                    ? 'yellow'
+                    : '',
+                }}
               />
               <input
                 type="file"

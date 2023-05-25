@@ -61,7 +61,8 @@
     "lodash": "^4.17.21",
     "msw": "^0.49.3",
     "postcss": "^8.4.21",
-    "postcss-loader": "^7.0.2"
+    "postcss-loader": "^7.0.2",
+    "react-selecto": "^1.22.3"
   },
   "resolutions": {
     "@headlessui/react@^1.7.7": "patch:@headlessui/react@npm%3A1.7.7#./.yarn/patches/@headlessui-react-npm-1.7.7-23b64271f9.patch",

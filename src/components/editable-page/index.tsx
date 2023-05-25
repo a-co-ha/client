@@ -14,11 +14,13 @@ import { ErrorBoundary } from '../error-boundary/index';
 import { Error } from '../error-boundary/Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
+import Selecto from 'react-selecto';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
+  console.log('🚀 ~ file: index.tsx:23 ~ EditablePage ~ blocks:', blocks);
   const [_, setCurrentBlockId] = useRecoilState(currentBlockIdState);
   const router = useRouter();
   const page = useRef<HTMLDivElement | null>(null);
@@ -57,6 +59,15 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   };
   const isNewPage = router.query.initial === 'true';
 
+  const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
+
+  const handleDeleteBlocks = (e: React.KeyboardEvent) => {
+    if (e.key === 'Delete' && confirm('선택된 블럭을 삭제하시겠습니까?')) {
+      const curBlocks = blocks.filter((block) => !selectedBlocks.includes(block.blockId));
+      setBlocks(curBlocks);
+    }
+  };
+
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
@@ -67,7 +78,34 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
             <DragDropContext onDragEnd={onDragEndHandler}>
               <Droppable key={pageId} droppableId={pageId}>
                 {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="container"
+                    onKeyDown={handleDeleteBlocks}
+                  >
+                    <Selecto
+                      dragContainer={'.container'}
+                      selectableTargets={['.list']}
+                      hitRate={0}
+                      selectByClick={false}
+                      selectFromInside={true}
+                      continueSelect={false}
+                      continueSelectWithoutDeselect={true}
+                      ratio={0}
+                      onSelect={(e) => {
+                        e.added.forEach((el) => {
+                          el.classList.add('selected');
+                          setSelectedBlocks((prev: any) => {
+                            return [...prev, el.dataset['id']];
+                          });
+                        });
+                        e.removed.forEach((el) => {
+                          el.classList.remove('selected');
+                          setSelectedBlocks([]);
+                        });
+                      }}
+                    ></Selecto>
                     {blocks &&
                       blocks.map((block) => {
                         const position = blocks
