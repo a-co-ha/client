@@ -1,5 +1,6 @@
 import { css, keyframes } from '@emotion/react';
 
+//introSection animation
 const subTitleAni = keyframes`
   to {
     opacity: 1;
@@ -41,6 +42,24 @@ const introMonitorItemBottomAni = keyframes`
   100% {
     opacity: 1;
     bottom: 0;
+  }
+`;
+//mainItemSection animation
+// const previewTitleAni = keyframes`
+//   to {
+//     top: 0;
+//     opacity: 1;
+//   }
+// `;
+
+export const ani = css`
+  [data-aos='newAni'] {
+    opacity: 0;
+    transition-property: opacity;
+
+    &.aos-animate {
+      opacity: 1;
+    }
   }
 `;
 
@@ -250,9 +269,6 @@ export const introMonitorItem = (isClicked: boolean) => css`
   &:hover {
     color: rgba(255, 0, 0, 0.5);
   }
-  @media screen and (min-width: 1024px) {
-    gap: 1rem;
-  }
   & > div:first-of-type {
     position: absolute;
     top: ${isClicked ? `20%` : `50%`};
@@ -261,6 +277,14 @@ export const introMonitorItem = (isClicked: boolean) => css`
     transform: translate3d(-50%, -50%, 0) scale(${isClicked ? `0.5` : `1`});
     @media screen and (max-width: 420px) {
       transform: translate3d(-50%, -50%, 0) scale(${isClicked ? `0.4` : `1`});
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    gap: 1rem;
+  }
+  @media screen and (max-width: 361px) {
+    & > div:first-of-type {
+      transform: translate3d(-50%, -50%, 0) scale(${isClicked ? `0.3` : `0.9`});
     }
   }
 `;
@@ -434,6 +458,9 @@ export const mainItemPreviewBox = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  & * {
+    user-select: none;
+  }
 `;
 
 export const mainItemPreviewTitle = css`
@@ -441,6 +468,7 @@ export const mainItemPreviewTitle = css`
   font-size: 2.5rem;
   font-weight: 900;
   white-space: pre-wrap;
+  transition: 0.7s ease-out;
 `;
 
 export const mainItemLayoutBox = css`
@@ -459,6 +487,7 @@ export const mainItemLayoutBox = css`
     height: 50vh;
   }
   @media screen and (max-width: 520px) {
+    width: 80%;
     overflow-x: scroll;
   }
   @media screen and (max-width: 360px) {
@@ -472,18 +501,17 @@ export const mainItemPreview = css`
   height: 100%;
   border: 0.5vw solid black;
   outline: 1.5px solid gray;
-  border-radius: 2vw;
+  border-radius: 1.5vh;
+  transition: 0.7s ease-out;
   transform: translate3d(0, 30%, 0);
   @media screen and (max-width: 768px) {
     width: 100%;
   }
   @media screen and (max-width: 520px) {
     width: 130%;
-    transform: translate3d(15%, 30%, 0);
   }
   @media screen and (max-width: 360px) {
     width: 150%;
-    transform: translate3d(18%, 30%, 0);
   }
 `;
 
@@ -502,7 +530,10 @@ export const previewNav = css`
 export const previewNavAlert = css`
   margin-left: auto;
   margin-right: 0.5rem;
-  width: 1.5vw;
+  width: 1.3vh;
+  @media screen and (min-width: 1280px) {
+    width: 2vh;
+  }
 `;
 
 export const previewNavItemA = css`
@@ -510,15 +541,22 @@ export const previewNavItemA = css`
   align-items: center;
   width: 28%;
   height: 100%;
-  font-size: 1vw;
-  text-indent: 3vw;
+  font-size: 1vh;
+  text-indent: 2vh;
   padding-inline: 1rem;
   white-space: nowrap;
   & span {
     margin-left: auto;
-    width: 1.5vw;
+    width: 1.5vh;
   }
   box-shadow: 3px 0px 3px -3px rgb(0 0 0 / 0.1);
+  @media screen and (min-width: 1280px) {
+    font-size: 1.5vh;
+    & span {
+      margin-left: auto;
+      width: 2vh;
+    }
+  }
 `;
 
 export const previewNavItemB = css`
@@ -526,7 +564,7 @@ export const previewNavItemB = css`
   align-items: center;
   width: 17%;
   height: 100%;
-  font-size: 1vw;
+  font-size: 1vh;
   padding-inline: 0.5rem;
   white-space: nowrap;
   & > div {
@@ -534,12 +572,25 @@ export const previewNavItemB = css`
     align-items: center;
     & > span:nth-of-type(2) {
       display: inline-block;
-      font-size: 0.9vw;
+      font-size: 0.9vh;
       @media screen and (max-width: 768px) {
         transform: scale(0.8);
       }
       @media screen and (max-width: 520px) {
         transform: scale(0.7);
+      }
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    & > div {
+      display: flex;
+      align-items: center;
+      & > span:nth-of-type(1) {
+        width: 4.5vh;
+        height: 2.5vh;
+      }
+      & > span:nth-of-type(2) {
+        font-size: 1.5vh;
       }
     }
   }
@@ -551,8 +602,8 @@ export const previewNavItemB = css`
 
 export const previewNavItemBImg = css`
   display: inline-block;
-  width: 2.5vw;
-  height: 1.25vw;
+  width: 2.5vh;
+  height: 1.25vh;
   border-radius: 50%;
   & > img {
     width: 100%;
@@ -592,41 +643,53 @@ export const previewChannelImgBox = css`
   position: relative;
   align-items: center;
   flex-direction: column;
-  gap: 0.3vw;
+  gap: 0.3vh;
   overflow: hidden;
   width: 100%;
   &::before {
     display: block;
     position: absolute;
     content: '';
-    top: 1.2vw;
-    left: -0.3vw;
-    width: calc(3vw / 5);
-    height: 2vw;
+    top: 1.2vh;
+    left: -0.3vh;
+    width: calc(3vh / 5);
+    height: 2vh;
     background: gray;
-    border-radius: 1vw;
+    border-radius: 1vh;
   }
-  & img:nth-of-type(1) {
-    margin-top: 1vw;
+  & > img:nth-of-type(1) {
+    margin-top: 1vh;
   }
-  & img {
-    width: 2.5vw;
-    height: 2.5vw;
-    border-radius: 0.7vw;
+  & > img {
+    width: 2.5vh;
+    height: 2.5vh;
+    border-radius: 0.7vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   }
   & > div:nth-of-type(1) {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 2.5vh;
+    height: 2.5vh;
     font-size: 0.8rem;
     border: 0.1px solid black;
-    border-radius: 0.7vw;
+    border-radius: 0.7vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
     @media screen and (max-width: 520px) {
       font-size: 0.5rem;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    & > img,
+    & > div:nth-of-type(1) {
+      width: 3.5vh;
+      height: 3.5vh;
+    }
+    &::before {
+      top: 1.3vh;
+      width: calc(3.5vh / 5);
+      height: 3vh;
     }
   }
 `;
@@ -636,11 +699,15 @@ export const previewChannel = css``;
 export const previewChannelMenuBox = css`
   display: flex;
   flex-direction: column;
+  gap: 1vh;
   align-items: center;
   width: 100%;
-  padding-inline: 1vw;
-  margin-top: 5vw;
-  font-size: 0.9vw;
+  padding-inline: 1vh;
+  margin-top: 5vh;
+  font-size: 0.9vh;
+  @media screen and (min-width: 1280px) {
+    font-size: 1.5vh;
+  }
 `;
 
 export const previewChannelMenu = css`
@@ -650,8 +717,13 @@ export const previewChannelMenu = css`
   font-weight: 500;
   & > div:nth-of-type(2) {
     color: rgba(0, 0, 0, 0.5);
-    font-size: 0.7vw;
-    padding: 0.5vw;
+    font-size: 0.7vh;
+    padding: 0.5vh;
+  }
+  @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(2) {
+      font-size: 1.3vh;
+    }
   }
   @media screen and (max-width: 768px) {
     & > div:nth-of-type(2) {
@@ -672,10 +744,19 @@ export const previewChannelMenuTab = css`
   color: #6b279e;
   & > span:nth-of-type(1) {
     margin-left: auto;
-    width: 1.1vw;
+    width: 1.1vh;
   }
   & > span:nth-of-type(2) {
-    margin-left: 1vw;
+    margin-left: 1vh;
+  }
+  @media screen and (min-width: 1280px) {
+    & > span:nth-of-type(1),
+    span:nth-of-type(2) {
+      width: 2vh;
+    }
+    & > span:nth-of-type(2) {
+      margin-left: 1.5vh;
+    }
   }
 `;
 
@@ -695,23 +776,28 @@ export const previewProgressBar = css`
   right: 0;
   display: flex;
   align-items: center;
-  padding: 0.1vw;
-  font-size: 0.9vw;
+  padding: 0.1vh;
+  font-size: 0.9vh;
   & > span:nth-of-type(2) {
-    font-size: 0.8vw;
+    font-size: 0.8vh;
     @media screen and (max-width: 520px) {
       transform: scale(0.8);
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    & > span:nth-of-type(2) {
+      font-size: 1.5vh;
     }
   }
 `;
 
 export const previewProgressBarSpan = css`
   position: relative;
-  width: 7vw;
-  height: 0.7vw;
+  width: 7vh;
+  height: 0.7vh;
   background: white;
-  border: 0.05vw solid rgb(255, 0, 0, 0.8);
-  border-radius: 1vw;
+  border: 0.05vh solid rgb(255, 0, 0, 0.8);
+  border-radius: 1vh;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   &::before {
     position: absolute;
@@ -722,38 +808,55 @@ export const previewProgressBarSpan = css`
     height: 100%;
     display: black;
     background: red;
-    border-radius: 1vw;
+    border-radius: 1vh;
+  }
+  @media screen and (min-width: 1280px) {
+    width: 10vh;
+    height: 1vh;
   }
 `;
 
 export const previewProgressTabBox = css`
-  padding: 2vw 1vw;
+  padding: 2vh 1vh;
   display: flex;
   justify-content: space-between;
   width: 100%;
-  font-size: 0.9vw;
+  font-size: 0.9vh;
+  @media screen and (min-width: 1280px) {
+    padding: 4vh 2vh;
+  }
 `;
 
 export const previewProgressTab = css`
   display: flex;
   flex-direction: column;
   width: 30%;
-  font-size: 0.9vw;
+  font-size: 0.9vh;
   & > h3:nth-of-type(1) {
     white-space: nowrap;
   }
   & > span:nth-of-type(1) {
-    font-size: 0.7vw;
+    font-size: 0.7vh;
   }
   & > div:nth-of-type(1) {
     width: 100%;
-    padding: 0.3vw;
-    margin-bottom: 0.3vw;
-    font-size: 0.7vw;
+    padding: 0.3vh;
+    margin-bottom: 0.3vh;
+    font-size: 0.7vh;
     color: rgba(0, 0, 0, 0.5);
-    border: 0.05vw solid rgba(0, 0, 0, 0.5);
-    border-radius: 0.4vw;
+    border: 0.05vh solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.4vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 1.5vh;
+    & > span:nth-of-type(1) {
+      font-size: 1.2vh;
+    }
+    & > div:nth-of-type(1) {
+      font-size: 1.2vh;
+      padding: 1vh;
+    }
   }
   @media screen and (max-width: 768px) {
     & > div:nth-of-type(1),
@@ -779,41 +882,38 @@ export const previewCommitLog = css`
   top: 40%;
   left: 50%;
   width: 100%;
-  font-size: 0.9vw;
-  transform: translate3d(-25%, -50%, 0);
+  font-size: 0.9vh;
+  transform: translate3d(-50%, -40%, 0);
 `;
 
 export const previewCommitBox = css`
+  position: absolute;
+  left: 50%;
   width: 50%;
-  height: 10vw;
-  border-bottom-left-radius: 0.5vw;
-  border-bottom-right-radius: 0.5vw;
+  height: 20vh;
+  transform: translate3d(-50%, -40%, 0);
+  border-bottom-left-radius: 0.5vh;
+  border-bottom-right-radius: 0.5vh;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
   @media screen and (max-width: 768px) {
-    height: 15vw;
-  }
-  @media screen and (max-width: 520px) {
-    height: 20vw;
-  }
-  @media screen and (max-width: 360px) {
-    height: 25vw;
+    height: 15vh;
   }
 `;
 
 export const previewCommitLogTitle = css`
   display: flex;
   font-weight: 700;
-  padding: 0.3vw;
+  padding: 0.3vh;
   background: rgba(0, 0, 0, 0.3);
-  border-top-left-radius: 0.5vw;
-  border-top-right-radius: 0.5vw;
+  border-top-left-radius: 0.5vh;
+  border-top-right-radius: 0.5vh;
   & > img {
     width: 20px;
     height: 10px;
   }
   & > span {
-    margin-left: 0.2vw;
-    font-size: 0.7vw;
+    margin-left: 0.2vh;
+    font-size: 0.7vh;
     @media screen and (max-width: 768px) {
       transform: scale(0.8);
     }
@@ -821,19 +921,29 @@ export const previewCommitLogTitle = css`
       transform: scale(0.7);
     }
   }
+  @media screen and (min-width: 1280px) {
+    & > img {
+      width: 30px;
+      height: 15px;
+    }
+    & > span {
+      font-size: 1.5vh;
+    }
+  }
 `;
 
 export const previewCommitLogContent = css`
+  position: relative;
   width: 100%;
-  font-size: 0.8vw;
+  font-size: 0.8vh;
   font-weight: 500;
 
   & > span:nth-of-type(1),
   span:nth-of-type(2) {
     display: inline-block;
     width: 48%;
-    padding: 0.3vw;
-    margin: 0.1vw;
+    padding: 0.3vh;
+    margin: 0.1vh;
     text-align: center;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     border-radius: 4px;
@@ -844,25 +954,41 @@ export const previewCommitLogContent = css`
   & > span:nth-of-type(2) {
     color: rgba(0, 0, 255, 0.2);
   }
+  @media screen and (min-width: 1280px) {
+    font-size: 1.5vh;
+    & > span:nth-of-type(1),
+    span:nth-of-type(2) {
+      padding: 0.6vh;
+    }
+  }
 `;
 
 export const previewCommitLogBtnBox = css`
+  position: absolute;
+  top: 60%;
+  left: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.5vw;
-  font-size: 0.9vw;
+  gap: 0.5vh;
+  font-size: 1.5vh;
   font-weight: 500;
-  transform: translate3d(0, 75%, 0);
+  transform: translate3d(-50%, -40%, 0);
+  & > span:nth-of-type(2) {
+    white-space: nowrap;
+  }
+  @media screen and (max-width: 1280px) {
+    font-size: 0.9vh;
+  }
   @media screen and (max-width: 520px) {
-    transform: translate3d(0, 55%, 0) scale(0.7);
+    scale(0.7);
   }
 `;
 
 export const previewCommitLogBtn = css`
   position: relative;
-  font-size: 1vw;
+  font-size: 1vh;
   font-weight: 900;
   &::before {
     position: absolute;
@@ -871,9 +997,16 @@ export const previewCommitLogBtn = css`
     left: 50%;
     width: 220%;
     height: 100%;
-    border: 0.15vw solid black;
-    border-radius: 0.3vw;
+    border: 0.15vh solid black;
+    border-radius: 0.3vh;
     transform: translate3d(-50%, -50%, 0);
+  }
+
+  @media screen and (min-width: 1280px) {
+    &::before {
+      width: 230%;
+    }
+    font-size: 2vh;
   }
   @media screen and (max-width: 768px) {
     transform: scale(0.9);
@@ -891,10 +1024,14 @@ export const previewUserBox = css`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 1vw 0.3vw;
-  font-size: 0.9vw;
+  padding: 1vh 0.3vw;
+  font-size: 0.9vh;
+  @media screen and (min-width: 1280px) {
+    padding: 1vh 1vh;
+    font-size: 1.5vh;
+  }
   @media screen and (max-width: 520px) {
-    padding: 0.3vw 0vw;
+    padding: 0.3vh 0vh;
   }
 `;
 
@@ -903,12 +1040,13 @@ export const previewUser = css`
   justify-content: start;
   align-items: center;
   gap: 5px;
-  padding: 0.2vw;
+  padding: 0.2vh;
   &:nth-of-type(3) {
     & > span:nth-of-type(1) {
       background: gray;
     }
   }
+
   @media screen and (max-width: 768px) {
     transform: scale(0.8);
   }
@@ -922,7 +1060,7 @@ export const previewUserOn = css`
   height: 4px;
   background: limegreen;
   border-radius: 50%;
-  margin-left: 0.5vw;
+  margin-left: 0.5vh;
 `;
 
 export const previewBookmark = css`
@@ -939,11 +1077,13 @@ export const previewBookmarkContent = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 0.8vw;
+  font-size: 0.8vh;
 
   & > div:nth-of-type(1) {
     text-align: center;
+    font-weight: 500;
     width: 100%;
+    padding: 1vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
     & > div {
       @media screen and (max-width: 768px) {
@@ -955,12 +1095,20 @@ export const previewBookmarkContent = css`
     }
   }
   & > div:nth-of-type(2) {
-    margin-top: 1vw;
+    margin-top: 1vh;
     @media screen and (max-width: 768px) {
       transform: scale(0.9);
     }
     @media screen and (max-width: 520px) {
       transform: scale(0.7);
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(1) {
+      font-size: 1.5vh;
+    }
+    & > div:nth-of-type(2) {
+      font-size: 1.2vh;
     }
   }
 `;

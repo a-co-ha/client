@@ -53,6 +53,8 @@ const IndexPage = () => {
   //mainItemSectionA
   const mainItemSectionA = useRef<any>(null);
   const mainItemSectionABox = useRef<HTMLDivElement>(null);
+  const mainItemPreviewTitle = useRef<HTMLDivElement>(null);
+  const mainItemPreview = useRef<HTMLDivElement>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [clickItem, setClickItem] = useState('');
@@ -67,7 +69,7 @@ const IndexPage = () => {
   let rafState;
 
   useEffect(() => {
-    // AOS.init();
+    AOS.init();
   }, []);
 
   const throttledScroll = useMemo(
@@ -179,8 +181,15 @@ const IndexPage = () => {
       objs: {
         container: mainItemSectionA,
         content: mainItemSectionABox,
+        mainItemPreviewTitle: mainItemPreviewTitle,
+        mainItemPreview: mainItemPreview,
       },
-      values: {},
+      values: {
+        // mainItemPreviewTitle_translateY_in: [25, 0, { start: 0, end: 0.01 }],
+        // mainItemPreview_translateY_in: [25, 0, { start: 0.05, end: 0.05 }],
+        // mainItemPreviewTitle_opacity_in: [0, 1, { start: 0, end: 0.01 }],
+        // mainItemPreview_opacity_in: [0, 1, { start: 0.05, end: 0.3 }],
+      },
     },
   ];
 
@@ -232,9 +241,9 @@ const IndexPage = () => {
         rv = values[0];
       } else if (currentYOffset > partScrollEnd) {
         rv = values[1];
-      } else {
-        rv = scrollRatio * (values[1] - values[0]) + values[0];
       }
+    } else {
+      rv = scrollRatio * (values[1] - values[0]) + values[0];
     }
     return rv;
   }, []);
@@ -396,8 +405,44 @@ const IndexPage = () => {
         }
         break;
       case 1:
-        if (mainItemSectionA.current && mainItemSectionABox.current) {
+        if (
+          objs.mainItemPreviewTitle?.current &&
+          objs.mainItemPreview.current
+        ) {
+          console.log(`scene2`, scrollRatio);
+          if (scrollRatio > 0.03) {
+            objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
+            if (window.innerWidth < 520) {
+              objs.mainItemPreview.current.style.transform = `translate3d(12%,30%,0)`;
+            } else if (window.innerWidth < 361) {
+              objs.mainItemPreview.current.style.transform = `translate3d(18%,30%,0)`;
+            } else {
+              objs.mainItemPreview.current.style.transform = `translate3d(0,30%,0)`;
+            }
+            objs.mainItemPreviewTitle.current.style.opacity = `1`;
+            objs.mainItemPreview.current.style.opacity = `1`;
+          } else {
+            objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,25%,0)`;
+            if (window.innerWidth < 520) {
+              objs.mainItemPreview.current.style.transform = `translate3d(12%,55%,0)`;
+            } else if (window.innerWidth < 361) {
+              objs.mainItemPreview.current.style.transform = `translate3d(18%,55%,0)`;
+            } else {
+              objs.mainItemPreview.current.style.transform = `translate3d(0,55%,0)`;
+            }
+            objs.mainItemPreviewTitle.current.style.opacity = `0`;
+            objs.mainItemPreview.current.style.opacity = `0`;
+          }
+          // objs.mainItemPreview.current.style.transform = `translate3d(0,${calcValues(
+          //   values.mainItemPreview_translateY_in,
+          //   currentYOffset
+          // )}%,0)`;
+          // objs.mainItemPreview.current.style.opacity = `${calcValues(
+          //   values.mainItemPreview_opacity_in,
+          //   currentYOffset
+          // )}`;
         }
+        break;
     }
   }, [yOffset]);
 
@@ -429,13 +474,13 @@ const IndexPage = () => {
 
   const aos = {
     'data-aos': `fade-up`,
-    'data-aos-offset': '0',
-    // 'data-aos-delay': '50',
-    'data-aos-duration': '800',
-    // 'data-aos-easing': 'ease-in-out',
+    'data-aos-offset': `-25`,
+    'data-aos-delay': '0',
+    'data-aos-duration': `600`,
+    'data-aos-easing': 'ease',
     // 'data-aos-mirror': 'true',
-    'data-aos-once': 'true',
-    'data-aos-anchor-placement': 'top-center',
+    'data-aos-once': `false`,
+    'data-aos-anchor-placement': 'top-bottom',
   };
   return (
     <div css={styles.flexRowCenter}>
@@ -538,7 +583,7 @@ const IndexPage = () => {
                   priority
                 />
                 <div ref={introChatReplyBox} css={styles.introChatImgReplyBox}>
-                  <div>팀원을 초대하고 프로젝트를 시작해 볼까요?</div>
+                  <div>팀원을 초대하고 프로젝트를 시작해 봅시다!</div>
                 </div>
               </div>
               <div ref={introArrowDown} css={styles.arrowDownSvg}></div>
@@ -549,7 +594,7 @@ const IndexPage = () => {
       <section ref={mainItemSectionA} css={styles.mainItemSectionA}>
         <div ref={mainItemSectionABox} css={styles.mainItemSectionABox}>
           <div css={styles.mainItemPreviewBox}>
-            <h2 css={styles.mainItemPreviewTitle}>
+            <h2 ref={mainItemPreviewTitle} css={styles.mainItemPreviewTitle}>
               {`아코하를 먼저\n👀 살펴볼까요?`}
             </h2>
             <div css={styles.mainItemLayoutBox}>
@@ -559,7 +604,7 @@ const IndexPage = () => {
                 <span>3</span>
                 <span>4</span>
               </div> */}
-              <div css={styles.mainItemPreview}>
+              <div ref={mainItemPreview} css={styles.mainItemPreview}>
                 <div css={styles.previewNav}>
                   <div css={styles.previewNavItemA}>
                     아코하
@@ -681,7 +726,7 @@ const IndexPage = () => {
                           </div>
                           <div css={styles.previewCommitLogBtnBox}>
                             <span css={styles.previewCommitLogBtn}>+</span>
-                            깃허브 연결하기
+                            <span>깃허브 연결하기</span>
                           </div>
                         </div>
                       </div>
