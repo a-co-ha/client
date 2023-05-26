@@ -12,6 +12,8 @@ import { useSetRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 import type { SocketMessage } from '@/pages/api/socket/type';
 import { toast } from 'react-toastify';
+import { PageNameLink } from '../project-sidebar/PageNameLink';
+import Link from 'next/link';
 
 interface Context {
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
@@ -144,19 +146,17 @@ export const SocketContextProvider = ({
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
       toast.info(
         <>
-          <div>
-            {`${data.channelName}프로젝트의 ${
-              data.subPageName ? `${data.subPageName} 페이지의` : ''
-            }
-            ${data.pageName} 페이지에서 나(${data.targetUserName})를
-            태그하였습니다.`}
-          </div>
-          {/* <PageNameLink
-            channelId={channelId}
-            pageId={page._id}
-            pageName={data.pageName}
-            type={'template-progress'}
-          /> */}
+          <Link
+            href={`/project/${data.channelId}/${data.pageId}?name=${data.pageName}&type=${data.type}`}
+          >
+            <div>
+              {`${data.channelName}프로젝트의 ${
+                data.subPageName ? `${data.subPageName} 페이지의` : ''
+              }
+          ${data.pageName} 페이지에서 나(${data.targetUserName})를
+          태그하였습니다.`}
+            </div>
+          </Link>
         </>,
         {
           position: 'top-right',
