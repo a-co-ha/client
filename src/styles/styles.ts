@@ -69,8 +69,8 @@ export const introSectionBox = css`
   height: 50px;
   opacity: 1;
   transform: translate3d(-50%, -50%, 0);
-  @media screen and (max-width: 340px) {
-    width: 65%;
+  @media screen and (max-width: 360px) {
+    width: 70%;
   }
 `;
 
@@ -461,7 +461,7 @@ export const mainItemLayoutBox = css`
   @media screen and (max-width: 520px) {
     overflow-x: scroll;
   }
-  @media screen and (max-width: 340px) {
+  @media screen and (max-width: 360px) {
     width: 80%;
   }
 `;
@@ -481,7 +481,7 @@ export const mainItemPreview = css`
     width: 130%;
     transform: translate3d(15%, 30%, 0);
   }
-  @media screen and (max-width: 340px) {
+  @media screen and (max-width: 360px) {
     width: 150%;
     transform: translate3d(18%, 30%, 0);
   }
@@ -543,7 +543,7 @@ export const previewNavItemB = css`
       }
     }
   }
-  @media screen and (max-width: 340px) {
+  @media screen and (max-width: 360px) {
     padding-inline: 0rem;
   }
   box-shadow: -3px 0px 3px -3px rgb(0 0 0 / 0.1);
@@ -767,7 +767,7 @@ export const previewProgressTab = css`
       transform: scale(0.7);
     }
   }
-  @media screen and (max-width: 340px) {
+  @media screen and (max-width: 360px) {
     & > h3:nth-of-type(1) {
       transform: scale(0.8);
     }
@@ -795,7 +795,7 @@ export const previewCommitBox = css`
   @media screen and (max-width: 520px) {
     height: 20vw;
   }
-  @media screen and (max-width: 340px) {
+  @media screen and (max-width: 360px) {
     height: 25vw;
   }
 `;

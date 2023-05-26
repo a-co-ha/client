@@ -372,11 +372,9 @@ const IndexPage = () => {
             );
             objs.content.current.style.position = `static`;
             objs.content.current.style.marginTop = `${scrollHeight * 0.805}px`;
-            if (window.innerWidth < 480) {
+            if (window.innerWidth < 361) {
               objs.content.current.style.transform = `translate3d(0,-50%,0)`;
-              objs.content.current.style.width = `${
-                window.innerWidth * 0.55
-              }px`;
+              objs.content.current.style.width = `${window.innerWidth * 0.7}px`;
             } else {
               objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
               objs.content.current.style.width = `${
@@ -387,6 +385,13 @@ const IndexPage = () => {
             objs.content.current.style.position = `fixed`;
             objs.content.current.style.marginTop = `0`;
             objs.content.current.style.transform = `translate3d(-50%,-50%,0)`;
+            if (window.innerWidth < 361) {
+              objs.content.current.style.width = `${window.innerWidth * 0.7}px`;
+            } else {
+              objs.content.current.style.width = `${
+                window.innerWidth * 0.55 - 7.5
+              }px`;
+            }
           }
         }
         break;
