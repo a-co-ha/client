@@ -63,6 +63,21 @@ export const ani = css`
   }
 `;
 
+const beforeStyle = css`
+  display: block;
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: transparent;
+  cursor: pointer;
+  &:hover {
+  }
+`;
+
 export const flexRowCenter = css`
   display: flex;
   flex-direction: column;
@@ -88,7 +103,7 @@ export const introSectionBox = css`
   height: 50px;
   opacity: 1;
   transform: translate3d(-50%, -50%, 0);
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 361px) {
     width: 70%;
   }
 `;
@@ -490,7 +505,7 @@ export const mainItemLayoutBox = css`
     width: 80%;
     overflow-x: scroll;
   }
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 361px) {
     width: 80%;
   }
 `;
@@ -499,19 +514,23 @@ export const mainItemPreview = css`
   position: absolute;
   width: 90%;
   height: 100%;
-  border: 0.5vw solid black;
+  border: 0.5vh solid black;
   outline: 1.5px solid gray;
   border-radius: 1.5vh;
   transition: 0.7s ease-out;
   transform: translate3d(0, 30%, 0);
+  overflow: hidden;
   @media screen and (max-width: 768px) {
     width: 100%;
   }
   @media screen and (max-width: 520px) {
     width: 130%;
   }
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 361px) {
     width: 150%;
+  }
+  & > * {
+    background: rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -527,16 +546,51 @@ export const previewNav = css`
   }
 `;
 
-export const previewNavAlert = css`
+export const previewNavAlert = (clickLabel: string) => css`
+  position: relative;
   margin-left: auto;
   margin-right: 0.5rem;
-  width: 1.3vh;
+  width: 1.9vh;
+  padding: 0.4vh;
+  background: ${clickLabel === `previewNavAlert` ? `white` : `transparent`};
+  border-radius: 0.375rem;
+  cursor: pointer;
   @media screen and (min-width: 1280px) {
-    width: 2vh;
+    width: 2.5vh;
+  }
+  &:hover {
+    background: white;
   }
 `;
 
-export const previewNavItemA = css`
+export const previewNavAlertClick = css`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 1vh;
+  top: 120%;
+  right: 0;
+  width: 15vh;
+  padding: 1vh;
+  font-size: 1vh;
+  z-index: 3;
+  text-align: start;
+  background: white;
+  border-radius: 0.375rem;
+  text-indent: 0;
+  & > div > span {
+    color: rgba(0, 0, 255, 0.8);
+  }
+  @media screen and (min-width: 1280px) {
+    width: 20vh;
+    font-size: 1.5vh;
+  }
+`;
+
+export const previewNavItemA = (clickLabel: string) => css`
+  position: relative;
   display: flex;
   align-items: center;
   width: 28%;
@@ -544,7 +598,9 @@ export const previewNavItemA = css`
   font-size: 1vh;
   text-indent: 2vh;
   padding-inline: 1rem;
+  background: ${clickLabel === `previewNavName` ? `white` : `transparent`};
   white-space: nowrap;
+  cursor: pointer;
   & span {
     margin-left: auto;
     width: 1.5vh;
@@ -557,9 +613,34 @@ export const previewNavItemA = css`
       width: 2vh;
     }
   }
+  &:hover {
+    background: white;
+  }
+`;
+
+export const previewNavName = css`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 1vh;
+  top: 120%;
+  right: 0;
+  width: 90%;
+  padding: 1vh;
+  z-index: 3;
+  text-align: start;
+  background: white;
+  border-radius: 0.375rem;
+  text-indent: 0;
+  & > div:nth-of-type(3) {
+    color: red;
+  }
 `;
 
 export const previewNavItemB = css`
+  position: relative;
   display: flex;
   align-items: center;
   width: 17%;
@@ -594,7 +675,7 @@ export const previewNavItemB = css`
       }
     }
   }
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 361px) {
     padding-inline: 0rem;
   }
   box-shadow: -3px 0px 3px -3px rgb(0 0 0 / 0.1);
@@ -638,7 +719,7 @@ export const previewSidebar = css`
 
 export const previewList = css``;
 
-export const previewChannelImgBox = css`
+export const previewChannelImgBox = (clickLabel: string) => css`
   display: flex;
   position: relative;
   align-items: center;
@@ -661,21 +742,30 @@ export const previewChannelImgBox = css`
     margin-top: 1vh;
   }
   & > img {
+    position: relative;
     width: 2.5vh;
     height: 2.5vh;
     border-radius: 0.7vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   }
   & > div:nth-of-type(1) {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 2.5vh;
     height: 2.5vh;
     font-size: 0.8rem;
+    background: ${clickLabel === `previewChannelPlus`
+      ? `white`
+      : `transparent`};
     border: 0.1px solid black;
     border-radius: 0.7vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    &:hover {
+      background: white;
+    }
     @media screen and (max-width: 520px) {
       font-size: 0.5rem;
     }
@@ -691,6 +781,41 @@ export const previewChannelImgBox = css`
       width: calc(3.5vh / 5);
       height: 3vh;
     }
+  }
+`;
+
+export const previewChannelImgPlus = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  width: 50%;
+  height: 20%;
+  z-index: 3;
+  background: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  transform: translate3d(-50%, -35%, 0);
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1vh;
+    width: 80%;
+    font-size: 1vh;
+    @media screen and (min-width: 1280px) {
+      font-size: 2vh;
+    }
+  }
+  & > div > input {
+    text-align: center;
+    width: 100%;
+    padding: 0.3vh;
+    font-size: 1vh;
+    border: 0.1px solid black;
+    border-radius: 0.2rem;
   }
 `;
 
@@ -736,8 +861,7 @@ export const previewChannelMenu = css`
     }
   }
 `;
-
-export const previewChannelMenuTab = css`
+export const previewChannelMenuTab = (clickLabel: string) => css`
   display: flex;
   align-items: center;
   width: 100%;
@@ -747,7 +871,16 @@ export const previewChannelMenuTab = css`
     width: 1.1vh;
   }
   & > span:nth-of-type(2) {
+    position: relative;
+    padding: 0.1vh 0.3vh;
     margin-left: 1vh;
+    text-align: center;
+    background: ${clickLabel === `previewPage` ? `white` : `transparent`};
+    border-radius: 0.375rem;
+    cursor: pointer;
+    &:hover {
+      background: white;
+    }
   }
   @media screen and (min-width: 1280px) {
     & > span:nth-of-type(1),
@@ -770,7 +903,7 @@ export const previewMainItemBox = css`
   width: 100%;
 `;
 
-export const previewProgressBar = css`
+export const previewProgressBar = (clickLabel: string) => css`
   position: absolute;
   top: 0;
   right: 0;
@@ -778,11 +911,17 @@ export const previewProgressBar = css`
   align-items: center;
   padding: 0.1vh;
   font-size: 0.9vh;
+  background: ${clickLabel === `previewProgressBar` ? `wthie` : `transparent`};
+  border-radius: 0.2rem;
+  cursor: pointer;
   & > span:nth-of-type(2) {
     font-size: 0.8vh;
     @media screen and (max-width: 520px) {
       transform: scale(0.8);
     }
+  }
+  &:hover {
+    background: white;
   }
   @media screen and (min-width: 1280px) {
     & > span:nth-of-type(2) {
@@ -795,7 +934,6 @@ export const previewProgressBarSpan = css`
   position: relative;
   width: 7vh;
   height: 0.7vh;
-  background: white;
   border: 0.05vh solid rgb(255, 0, 0, 0.8);
   border-radius: 1vh;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
@@ -870,7 +1008,7 @@ export const previewProgressTab = css`
       transform: scale(0.7);
     }
   }
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 361px) {
     & > h3:nth-of-type(1) {
       transform: scale(0.8);
     }
@@ -886,15 +1024,98 @@ export const previewCommitLog = css`
   transform: translate3d(-50%, -40%, 0);
 `;
 
-export const previewCommitBox = css`
+export const previewCommitLogClick = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: -10%;
+  left: 30%;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  transform: translate3d(-50%, -35%, 0);
+  & > div:nth-of-type(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+    width: 100%;
+    font-size: 0.9vh;
+    @media screen and (min-width: 1280px) {
+      font-size: 1.5vh;
+      padding-bottom: 1vh;
+    }
+    & > span {
+      padding: 0.3vh;
+      border-radius: 0.1rem;
+      box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2),
+        0 -2px 5px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    }
+    & > span:nth-of-type(1) {
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+    }
+    & > span:nth-of-type(3) > svg {
+      width: 1vh;
+      height: 1vh;
+      @media screen and (min-width: 1280px) {
+        width: 1.5vh;
+        height: 1.5vh;
+      }
+    }
+  }
+  & > div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 1vh;
+    width: 100%;
+    height: 60%;
+    & > span {
+      font-size: 1vh;
+    }
+  }
+  & > div:nth-of-type(3) {
+    text-align: center;
+    width: 90%;
+    padding: 0.3vh;
+    font-size: 1vh;
+    color: white;
+    background: rgba(248, 93, 117, 1);
+    border-radius: 0.1rem;
+  }
+  @media screen and (max-width: 768px) {
+    & > div:nth-of-type(1) {
+      transform: scale(0.8);
+    }
+    & > div:nth-of-type(2) {
+      transform: scale(0.8);
+    }
+    & > div:nth-of-type(3) {
+      transform: scale(0.8);
+    }
+  }
+`;
+
+export const previewCommitBox = (clickLabel: string) => css`
   position: absolute;
   left: 50%;
   width: 50%;
   height: 20vh;
-  transform: translate3d(-50%, -40%, 0);
-  border-bottom-left-radius: 0.5vh;
-  border-bottom-right-radius: 0.5vh;
+  background: ${clickLabel === `previewCommitLog` ? `white` : `transparent`};
+  border-radius: 0.5vh;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
+  transform: translate3d(-50%, -40%, 0);
+  cursor: pointer;
+  &:hover {
+    background: white;
+  }
   @media screen and (max-width: 768px) {
     height: 15vh;
   }
@@ -1072,19 +1293,24 @@ export const previewBookmark = css`
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
-export const previewBookmarkContent = css`
+export const previewBookmarkContent = (clickLabel: string) => css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 0.8vh;
-
   & > div:nth-of-type(1) {
+    position: relative;
     text-align: center;
     font-weight: 500;
     width: 100%;
-    padding: 1vh;
+    padding: 0.5vh 1vh;
+    background: ${clickLabel === `previewBookmark` ? `white` : `transparent`};
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    &:hover {
+      background: white;
+    }
     & > div {
       @media screen and (max-width: 768px) {
         transform: scale(0.9);

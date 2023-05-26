@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { throttle } from 'lodash';
+import { divide, throttle } from 'lodash';
 import * as styles from '../styles/styles';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -23,6 +23,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { IconOne } from '../components/project-sidebar/Icons';
 import commitLog from '@/images/landingPage/commitLog.png';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import chat from '@/images/landingPage/chat.svg';
 import Image from 'next/image';
 import previewRed from '@/images/channelImg/1.png';
@@ -58,6 +59,7 @@ const IndexPage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [clickItem, setClickItem] = useState('');
+  const [clickLabel, setClickLabel] = useState('');
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -110,11 +112,23 @@ const IndexPage = () => {
     const target = e.currentTarget as HTMLDivElement;
     const targetValue = target.firstElementChild?.textContent;
     if (targetValue !== undefined && targetValue !== null) {
-      console.log(`targetValue`, targetValue === '기록');
       targetValue === clickItem ? setClickItem('') : setClickItem(targetValue);
     }
-    console.log(`girok`, clickItem === '기록');
-    console.log(`targetValue`, targetValue);
+  };
+
+  const previewClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget as HTMLDivElement | HTMLSpanElement;
+    const targetLabel = target.ariaLabel;
+    if (targetLabel !== undefined && targetLabel !== null) {
+      if (targetLabel === clickLabel) {
+        // target.style.backgroundColor = `transparent`;
+        setClickLabel('');
+      } else {
+        // target.style.backgroundColor = `white`;
+        setClickLabel(targetLabel);
+      }
+      console.log(targetLabel);
+    }
   };
 
   const sceneInfo = [
@@ -413,9 +427,9 @@ const IndexPage = () => {
           if (scrollRatio > 0.03) {
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
             if (window.innerWidth < 520) {
-              objs.mainItemPreview.current.style.transform = `translate3d(12%,30%,0)`;
+              objs.mainItemPreview.current.style.transform = `translate3d(17%,30%,0)`;
             } else if (window.innerWidth < 361) {
-              objs.mainItemPreview.current.style.transform = `translate3d(18%,30%,0)`;
+              objs.mainItemPreview.current.style.transform = `translate3d(20%,30%,0)`;
             } else {
               objs.mainItemPreview.current.style.transform = `translate3d(0,30%,0)`;
             }
@@ -424,9 +438,9 @@ const IndexPage = () => {
           } else {
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,25%,0)`;
             if (window.innerWidth < 520) {
-              objs.mainItemPreview.current.style.transform = `translate3d(12%,55%,0)`;
+              objs.mainItemPreview.current.style.transform = `translate3d(17%,55%,0)`;
             } else if (window.innerWidth < 361) {
-              objs.mainItemPreview.current.style.transform = `translate3d(18%,55%,0)`;
+              objs.mainItemPreview.current.style.transform = `translate3d(20%,55%,0)`;
             } else {
               objs.mainItemPreview.current.style.transform = `translate3d(0,55%,0)`;
             }
@@ -606,14 +620,36 @@ const IndexPage = () => {
               </div> */}
               <div ref={mainItemPreview} css={styles.mainItemPreview}>
                 <div css={styles.previewNav}>
-                  <div css={styles.previewNavItemA}>
+                  <div
+                    aria-label={`previewNavName`}
+                    css={styles.previewNavItemA(clickLabel)}
+                    onClick={previewClickHandler}
+                  >
                     아코하
                     <span>
                       <ChevronDownIcon />
                     </span>
+                    {clickLabel === `previewNavName` ? (
+                      <div css={styles.previewNavName}>
+                        <div>프로젝트 정보</div>
+                        <div>프로젝트 초대하기</div>
+                        <div>프로젝트 삭제하기</div>
+                      </div>
+                    ) : null}
                   </div>
-                  <div css={styles.previewNavAlert}>
+                  <div
+                    aria-label={`previewNavAlert`}
+                    css={styles.previewNavAlert(clickLabel)}
+                    onClick={previewClickHandler}
+                  >
                     <BellAlertIcon />
+                    {clickLabel === `previewNavAlert` ? (
+                      <div css={styles.previewNavAlertClick}>
+                        <div>
+                          <span>BE 자바마스터님</span>께서 태그하셨습니다
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                   <div css={styles.previewNavItemB}>
                     <div>
@@ -631,7 +667,7 @@ const IndexPage = () => {
                 </div>
                 <div css={styles.previewSidebar}>
                   <div css={styles.previewList}>
-                    <div css={styles.previewChannelImgBox}>
+                    <div css={styles.previewChannelImgBox(clickLabel)}>
                       <Image
                         quality={100}
                         src={previewRed}
@@ -653,18 +689,39 @@ const IndexPage = () => {
                         height={25}
                         alt={`preview channelImg`}
                       />
-                      <div>+</div>
+                      <div
+                        aria-label={`previewChannelPlus`}
+                        onClick={previewClickHandler}
+                      >
+                        +
+                        {clickLabel === `previewChannelPlus` ? (
+                          <div css={styles.previewChannelImgPlus}>
+                            <div>
+                              <span>프로젝트 생성하기</span>
+                              <input
+                                type="text"
+                                placeholder="프로젝트 이름을 입력해주세요"
+                              />
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                   <div css={styles.previewChannel}>
                     <div css={styles.previewChannelMenuBox}>
                       <div css={styles.previewChannelMenu}>
-                        <div css={styles.previewChannelMenuTab}>
+                        <div css={styles.previewChannelMenuTab(clickLabel)}>
                           일반
                           <span>
                             <ChevronDownIcon />
                           </span>
-                          <span>+</span>
+                          <span
+                            aria-label={`previewPage`}
+                            onClick={previewClickHandler}
+                          >
+                            +
+                          </span>
                         </div>
                         <div>
                           <div>희의록</div>
@@ -672,12 +729,17 @@ const IndexPage = () => {
                         </div>
                       </div>
                       <div css={styles.previewChannelMenu}>
-                        <div css={styles.previewChannelMenuTab}>
+                        <div css={styles.previewChannelMenuTab(clickLabel)}>
                           채팅
                           <span>
                             <ChevronDownIcon />
                           </span>
-                          <span>+</span>
+                          <span
+                            aria-label={`previewPage`}
+                            onClick={previewClickHandler}
+                          >
+                            +
+                          </span>
                         </div>
                         <div>
                           <div>프론트엔드</div>
@@ -688,7 +750,11 @@ const IndexPage = () => {
                   </div>
                   <div css={styles.previewMain}>
                     <div css={styles.previewMainItemBox}>
-                      <div css={styles.previewProgressBar}>
+                      <div
+                        aria-label={`previewProgressBar`}
+                        css={styles.previewProgressBar(clickLabel)}
+                        onClick={previewClickHandler}
+                      >
                         <span css={styles.previewProgressBarSpan}></span>
                         <span>25%</span>
                       </div>
@@ -710,7 +776,30 @@ const IndexPage = () => {
                         </div>
                       </div>
                       <div css={styles.previewCommitLog}>
-                        <div css={styles.previewCommitBox}>
+                        <div
+                          aria-label={`previewCommitLog`}
+                          css={styles.previewCommitBox(clickLabel)}
+                          onClick={previewClickHandler}
+                        >
+                          {clickLabel === `previewCommitLog` ? (
+                            <div css={styles.previewCommitLogClick}>
+                              <div>
+                                <span>organization</span>
+                                <span>repo</span>
+                                <span>
+                                  <FontAwesomeIcon
+                                    icon={faMagnifyingGlass}
+                                    style={{ color: '#f85d75' }}
+                                  />
+                                </span>
+                              </div>
+                              <div>
+                                <span>we-ching 우리 모두의 칭찬</span>
+                                <span>a-co-ha 프로젝트</span>
+                              </div>
+                              <div>Connect</div>
+                            </div>
+                          ) : null}
                           <div css={styles.previewCommitLogTitle}>
                             <Image
                               src={previewGithub}
@@ -754,9 +843,14 @@ const IndexPage = () => {
                     </div>
                   </div>
                   <div css={styles.previewBookmark}>
-                    <div css={styles.previewBookmarkContent}>
+                    <div css={styles.previewBookmarkContent(clickLabel)}>
                       <div>
-                        <div>+ 북마크</div>
+                        <div
+                          aria-label={`previewBookmark`}
+                          onClick={previewClickHandler}
+                        >
+                          + 북마크
+                        </div>
                       </div>
                       <div>북마크 공유</div>
                     </div>
