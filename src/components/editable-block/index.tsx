@@ -125,7 +125,11 @@ export const EditableBlock = (props: editableBlock) => {
       e.preventDefault();
 
       props.deleteBlock(props.id);
-      if (contentEditable.current && contentEditable.current.parentElement) {
+      if (
+        contentEditable.current &&
+        contentEditable.current.parentElement &&
+        props.position !== 0
+      ) {
         const prevBlock = contentEditable.current.parentElement
           .previousElementSibling.childNodes[1] as HTMLDivElement;
         focusContentEditableTextToEnd(prevBlock);

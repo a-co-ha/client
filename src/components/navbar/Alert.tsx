@@ -6,7 +6,6 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { PageNameLink } from '../project-sidebar/PageNameLink';
 import { Menu, Transition } from '@headlessui/react';
 
-
 /**
  * 알림은 toast를 통해 화면에 띄워진다
  * 1. 알림을 클릭 했을 때  (READ_ALERT 발생)
@@ -26,7 +25,6 @@ import { Menu, Transition } from '@headlessui/react';
 
 /**
  * 태그한 channId, pageid, type GET_ALERT에 포함 요청  (1-1)
- * READ_ALERT 보내도 ALERT true이고 , string값으로옴
  * 포스트맨 event listen 이 안됌
  */
 
