@@ -371,17 +371,18 @@ const IndexPage = () => {
               window.innerWidth - document.body.clientWidth
             );
             objs.content.current.style.position = `static`;
-            objs.content.current.style.marginTop = `${
-              scrollHeight * 0.8 + 37
-            }px`;
+            objs.content.current.style.marginTop = `${scrollHeight * 0.805}px`;
             if (window.innerWidth < 480) {
               objs.content.current.style.transform = `translate3d(0,-50%,0)`;
+              objs.content.current.style.width = `${
+                window.innerWidth * 0.55
+              }px`;
             } else {
               objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
+              objs.content.current.style.width = `${
+                window.innerWidth * 0.55 - 7.5
+              }px`;
             }
-            objs.content.current.style.width = `${
-              window.innerWidth * 0.55 - 7.5
-            }px`;
           } else {
             objs.content.current.style.position = `fixed`;
             objs.content.current.style.marginTop = `0`;

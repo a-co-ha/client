@@ -44,7 +44,10 @@ export const Profile = () => {
           <button css={{ fontSize: '12px', marginRight: `auto` }}>
             {user.name}
           </button>
-          <button css={{ marginLeft: '4px' }} onClick={onClickHandler}>
+          <button
+            css={{ marginLeft: '4px', width: '20px' }}
+            onClick={onClickHandler}
+          >
             <FontAwesomeIcon icon={faDoorOpen} />
           </button>
         </div>

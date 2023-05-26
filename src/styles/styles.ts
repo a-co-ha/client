@@ -69,6 +69,9 @@ export const introSectionBox = css`
   height: 50px;
   opacity: 1;
   transform: translate3d(-50%, -50%, 0);
+  @media screen and (max-width: 340px) {
+    width: 65%;
+  }
 `;
 
 export const mainTitleDesc = css`
@@ -458,6 +461,9 @@ export const mainItemLayoutBox = css`
   @media screen and (max-width: 520px) {
     overflow-x: scroll;
   }
+  @media screen and (max-width: 340px) {
+    width: 80%;
+  }
 `;
 
 export const mainItemPreview = css`
@@ -474,6 +480,10 @@ export const mainItemPreview = css`
   @media screen and (max-width: 520px) {
     width: 130%;
     transform: translate3d(15%, 30%, 0);
+  }
+  @media screen and (max-width: 340px) {
+    width: 150%;
+    transform: translate3d(18%, 30%, 0);
   }
 `;
 
@@ -492,7 +502,7 @@ export const previewNav = css`
 export const previewNavAlert = css`
   margin-left: auto;
   margin-right: 0.5rem;
-  width: 1.2vw;
+  width: 1.5vw;
 `;
 
 export const previewNavItemA = css`
@@ -533,13 +543,16 @@ export const previewNavItemB = css`
       }
     }
   }
+  @media screen and (max-width: 340px) {
+    padding-inline: 0rem;
+  }
   box-shadow: -3px 0px 3px -3px rgb(0 0 0 / 0.1);
 `;
 
 export const previewNavItemBImg = css`
   display: inline-block;
-  width: 2vw;
-  height: 1vw;
+  width: 2.5vw;
+  height: 1.25vw;
   border-radius: 50%;
   & > img {
     width: 100%;
@@ -612,6 +625,9 @@ export const previewChannelImgBox = css`
     border: 0.1px solid black;
     border-radius: 0.7vw;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+    @media screen and (max-width: 520px) {
+      font-size: 0.5rem;
+    }
   }
 `;
 
@@ -723,6 +739,9 @@ export const previewProgressTab = css`
   flex-direction: column;
   width: 30%;
   font-size: 0.9vw;
+  & > h3:nth-of-type(1) {
+    white-space: nowrap;
+  }
   & > span:nth-of-type(1) {
     font-size: 0.7vw;
   }
@@ -748,6 +767,11 @@ export const previewProgressTab = css`
       transform: scale(0.7);
     }
   }
+  @media screen and (max-width: 340px) {
+    & > h3:nth-of-type(1) {
+      transform: scale(0.8);
+    }
+  }
 `;
 
 export const previewCommitLog = css`
@@ -770,6 +794,9 @@ export const previewCommitBox = css`
   }
   @media screen and (max-width: 520px) {
     height: 20vw;
+  }
+  @media screen and (max-width: 340px) {
+    height: 25vw;
   }
 `;
 
@@ -828,6 +855,9 @@ export const previewCommitLogBtnBox = css`
   font-size: 0.9vw;
   font-weight: 500;
   transform: translate3d(0, 75%, 0);
+  @media screen and (max-width: 520px) {
+    transform: translate3d(0, 55%, 0) scale(0.7);
+  }
 `;
 
 export const previewCommitLogBtn = css`
@@ -863,6 +893,9 @@ export const previewUserBox = css`
   flex-direction: column;
   padding: 1vw 0.3vw;
   font-size: 0.9vw;
+  @media screen and (max-width: 520px) {
+    padding: 0.3vw 0vw;
+  }
 `;
 
 export const previewUser = css`
@@ -880,7 +913,7 @@ export const previewUser = css`
     transform: scale(0.8);
   }
   @media screen and (max-width: 520px) {
-    transform: scale(0.7);
+    transform: scale(0.6);
   }
 `;
 
