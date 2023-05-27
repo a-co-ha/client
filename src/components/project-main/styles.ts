@@ -287,6 +287,10 @@ export const content = css`
   height: 150px;
   border: 1.5px solid gray;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const progressTitleGuage = css`
@@ -583,5 +587,23 @@ export const confirmModalCancelBtn = css`
   background: rgba(0, 0, 0, 0.2);
   &:hover {
     background: rgba(0, 0, 0, 0.3);
+  }
+`;
+
+export const svgButtonStyles = css`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const svgIconStyles = css`
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
   }
 `;
