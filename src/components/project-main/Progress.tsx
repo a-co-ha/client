@@ -3,6 +3,7 @@ import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { PageNameLink } from '../project-sidebar/PageNameLink';
 import { ProgressGauge } from '../template/progressGauge';
 import * as styles from './styles';
+import Link from 'next/link';
 
 export interface PageProgress {
   pageName: string;
@@ -21,13 +22,16 @@ export const Progress = () => {
         {pagePercentList &&
           pagePercentList.map((page: PageProgress) => (
             <div key={page._id} css={styles.gaugeContainer}>
-              <PageNameLink
-                channelId={channelId}
-                pageId={page._id}
-                pageName={page.pageName}
-                type={'template-progress'}
-              />
-              <ProgressGauge pageId={page._id} />
+              <Link
+                href={`/project/${channelId}/${page._id}?name=${
+                  page.pageName
+                }&type=${'template-progress'}`}
+              >
+                <div css={styles.progressTitleGuage}>
+                  <ProgressGauge pageId={page._id} />
+                  {page.pageName}
+                </div>
+              </Link>
             </div>
           ))}
       </main>

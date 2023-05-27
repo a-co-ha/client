@@ -289,6 +289,10 @@ export const content = css`
   border-radius: 4px;
 `;
 
+export const progressTitleGuage = css`
+  display: flex;
+`;
+
 export const gaugeContainer = css`
 &:hover {
   background: rgb(241 245 249);

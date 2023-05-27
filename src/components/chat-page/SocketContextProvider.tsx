@@ -12,7 +12,6 @@ import { useSetRecoilState } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 import type { SocketMessage } from '@/pages/api/socket/type';
 import { toast } from 'react-toastify';
-import { PageNameLink } from '../project-sidebar/PageNameLink';
 import Link from 'next/link';
 
 interface Context {
