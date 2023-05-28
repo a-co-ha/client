@@ -40,27 +40,31 @@ export const gaugeContainer = css`
   display: flex;
 `;
 
-// export const progress = (dealt: number) => css`
-//   width: 10rem;
-//   height: 1rem;
-//   background-color: white;
-//   border: ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'};
-//   box-shadow: 0 0 2px
-//     ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'};
-//   margin-right: 1rem;
-//   border-radius: 1rem;
-//   ${dealt === 100
-//     ? `filter: drop-shadow(0 0 2px ${
-//         dealt >= 80 ? '#57a1de' : dealt >= 50 ? '#dcde57' : '#de5760'
-//       })`
-//     : ''}
-// `;
-// export const dealt = (dealt: number) => css`
-//   width: ${dealt + '%'};
-//   height: 100%;
-//   border-radius: 1rem;
-//   background-color: ${dealt >= 80 ? '#57a1de' : dealt >= 50 ? 'yellow' : 'red'};
-// `;
+export const progress = (dealt: number) => css`
+  width: 10rem;
+  height: 1rem;
+  background-color: white;
+  border: ${dealt >= 80 ? '#3c9ee5' : dealt >= 50 ? '#4CC790' : '#ff9f00'};
+  box-shadow: 0 0 2px
+    ${dealt >= 80 ? '#3c9ee5' : dealt >= 50 ? '#4CC790' : '#ff9f00'};
+  margin-right: 1rem;
+  border-radius: 1rem;
+  ${dealt === 100
+    ? `filter: drop-shadow(0 0 2px ${
+        dealt >= 80 ? '#3c9ee5' : dealt >= 50 ? '#4CC790' : '#ff9f00'
+      })`
+    : ''}
+`;
+export const dealt = (dealt: number) => css`
+  width: ${dealt + '%'};
+  height: 100%;
+  border-radius: 1rem;
+  background-color: ${dealt >= 80
+    ? '#3c9ee5'
+    : dealt >= 50
+    ? '#4CC790'
+    : '#ff9f00'};
+`;
 
 export const singleChart = () => css`
   width: 8rem;
@@ -80,18 +84,18 @@ export const circleBg = () => css`
   stroke-width: 3.8;
 `;
 
-export const circle = (dealt: number) => css`
-  fill: none;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  animation: progress 1s ease-out forwards;
-  stroke: ${dealt >= 80 ? '#3c9ee5' : dealt >= 50 ? '#4CC790' : '#ff9f00'};
-`;
-
 const progressKeyframes = keyframes`
   0% {
     stroke-dasharray: 0 100;
   }
+`;
+
+export const circle = (dealt: number) => css`
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation: ${progressKeyframes} 1s ease-out forwards;
+  stroke: ${dealt >= 80 ? '#3c9ee5' : dealt >= 50 ? '#4CC790' : '#ff9f00'};
 `;
 
 export const percentage = css`

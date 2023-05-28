@@ -18,26 +18,28 @@ export const Progress = () => {
   return (
     <div css={styles.commonBoxStyle}>
       <h3 css={styles.commonTitleStyle}>진행현황</h3>
-      <main css={styles.content}>
-        {pagePercentList && pagePercentList.length > 0 ? (
-          pagePercentList.map((page: PageProgress) => (
-            <div key={page._id} css={styles.gaugeContainer}>
-              <Link
-                href={`/project/${channelId}/${page._id}?name=${
-                  page.pageName
-                }&type=${'template-progress'}`}
-              >
-                <div css={styles.progressTitleGuage}>
-                  <ProgressGauge pageId={page._id} />
-                  {page.pageName}
-                </div>
-              </Link>
-            </div>
-          ))
-        ) : (
-          <CreateProgressTemplate />
-        )}
-      </main>
+      {pagePercentList && (
+        <main css={styles.content}>
+          {pagePercentList.length > 0 ? (
+            pagePercentList.map((page: PageProgress) => (
+              <div key={page._id} css={styles.gaugeContainer}>
+                <Link
+                  href={`/project/${channelId}/${page._id}?name=${
+                    page.pageName
+                  }&type=${'template-progress'}`}
+                >
+                  <div css={styles.progressTitleGuage}>
+                    <ProgressGauge pageId={page._id} />
+                    {page.pageName}
+                  </div>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <CreateProgressTemplate />
+          )}
+        </main>
+      )}
     </div>
   );
 };
