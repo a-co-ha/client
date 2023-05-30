@@ -85,6 +85,7 @@ export const commitLogTitle = css`
 `;
 
 export const commitLogNavBtnBox = css`
+  position: absolute;
   display: flex;
   align-items: center;
   padding: 0.5rem 0.25rem;

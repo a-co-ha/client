@@ -44,39 +44,6 @@ const introMonitorItemBottomAni = keyframes`
     bottom: 0;
   }
 `;
-//mainItemSection animation
-// const previewTitleAni = keyframes`
-//   to {
-//     top: 0;
-//     opacity: 1;
-//   }
-// `;
-
-export const ani = css`
-  [data-aos='newAni'] {
-    opacity: 0;
-    transition-property: opacity;
-
-    &.aos-animate {
-      opacity: 1;
-    }
-  }
-`;
-
-const beforeStyle = css`
-  display: block;
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background: transparent;
-  cursor: pointer;
-  &:hover {
-  }
-`;
 
 export const flexRowCenter = css`
   display: flex;
@@ -457,6 +424,15 @@ export const introChatImgReplyBox = css`
   }
 `;
 
+const mainItemTitleStyle = css`
+  padding: 1rem;
+  margin: 2rem 0;
+  font-size: 2.5rem;
+  font-weight: 900;
+  white-space: pre-wrap;
+  transition: 0.7s ease-out;
+`;
+
 export const mainItemSectionA = css`
   display: flex;
   justify-content: center;
@@ -476,14 +452,11 @@ export const mainItemPreviewBox = css`
   & * {
     user-select: none;
   }
+  padding-bottom: 8rem;
 `;
 
 export const mainItemPreviewTitle = css`
-  padding: 1rem;
-  font-size: 2.5rem;
-  font-weight: 900;
-  white-space: pre-wrap;
-  transition: 0.7s ease-out;
+  ${mainItemTitleStyle};
 `;
 
 export const mainItemLayoutBox = css`
@@ -504,10 +477,170 @@ export const mainItemLayoutBox = css`
   @media screen and (max-width: 520px) {
     width: 80%;
     overflow-x: scroll;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
   }
   @media screen and (max-width: 361px) {
     width: 80%;
   }
+`;
+
+export const mainItemLayoutInnerBox = css`
+  width: 100%;
+`;
+
+export const mainItemPreviewScrollBoxTitle = css`
+  position: relative;
+  top: 5%;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  padding: 0.4vh; 0;
+  color: #59a0cd;
+  font-size: 1.25rem;
+  margin: 1vh auto 0;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 0.375rem;
+  transition: 0.7s ease-out;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  &:hover {
+    color: #60c1ff;
+  }
+`;
+
+export const mainItemPreviewScrollBox = css`
+  position: relative;
+  top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10vh;
+`;
+
+export const mainItemPreviewScrollArrowLeftBox = css`
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  width: 30px;
+  height: 30px;
+  transform: translate3d(0, -50%, 0);
+  cursor: pointer;
+`;
+
+export const mainItemPreviewScrollArrowLeft = css`
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  width: 17px;
+  height: 4px;
+  background: black;
+  border-radius: 2px;
+  transform: translate3d(0, -50%, 0) rotate(-45deg);
+  box-shadow: 0px 3px 5px 1px rgb(0 0 0 / 0.15);
+  &::after {
+    position: absolute;
+    content: '';
+    left: -50%;
+    bottom: -180%;
+    width: 18px;
+    height: 4px;
+    background: black;
+    border-radius: 4px;
+    transform: rotate(-90deg);
+    box-shadow: -3px -2px 4px 1px rgb(0 0 0 / 0.15);
+  }
+`;
+
+export const mainItemPreviewScrollArrowRightBox = css`
+  position: absolute;
+  top: 50%;
+  right: 15%;
+  width: 30px;
+  height: 30px;
+  transform: translate3d(0, -50%, 0);
+  cursor: pointer;
+`;
+
+export const mainItemPreviewScrollArrowRight = css`
+  position: absolute;
+  top: 25%;
+  right: 15%;
+  width: 17px;
+  height: 4px;
+  background: black;
+  border-radius: 2px;
+  transform: translate3d(0, -50%, 0) rotate(45deg);
+  box-shadow: 0px 3px 5px 1px rgb(0 0 0 / 0.15);
+  &::after {
+    position: absolute;
+    content: '';
+    right: -50%;
+    bottom: -180%;
+    width: 18px;
+    height: 4px;
+    background: black;
+    border-radius: 4px;
+    transform: rotate(90deg);
+    box-shadow: 3px -2px 4px 1px rgb(0 0 0 / 0.15);
+  }
+`;
+
+export const mainItemPreviewScrollItemBox = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  text-align: center;
+  transform: translate3d(-50%, -50%, 0);
+  transition: 0.5s;
+  white-space: nowrap;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+`;
+
+const mainItemPreviewScrollItemClick = css`
+  display: inline-block;
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 1vh;
+  cursor: pointer;
+  transition: 0.2s;
+`;
+
+export const mainItemPreviewScrollItemNav = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewNavName` ? `1.3` : `1`});
+`;
+export const mainItemPreviewScrollItemAlert = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewNavAlert` ? `1.3` : `1`});
+`;
+export const mainItemPreviewScrollItemChannelPlus = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewChannelPlus` ? `1.3` : `1`});
+`;
+export const mainItemPreviewScrollItemPage = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewPage` ? `1.3` : `1`});
+`;
+export const mainItemPreviewScrollItemProgress = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewProgressBar` ? `1.3` : `1`});
+`;
+export const mainItemPreviewScrollItemCommitLog = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewCommitLog` ? `1.3` : `1`});
+`;
+export const mainItemPreviewScrollItemBookmark = (clickLabel: string) => css`
+  ${mainItemPreviewScrollItemClick};
+  transform: scale(${clickLabel === `previewBookmark` ? `1.3` : `1`});
 `;
 
 export const mainItemPreview = css`
@@ -579,6 +712,7 @@ export const previewNavAlertClick = css`
   text-align: start;
   background: white;
   border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   text-indent: 0;
   & > div > span {
     color: rgba(0, 0, 255, 0.8);
@@ -633,6 +767,7 @@ export const previewNavName = css`
   text-align: start;
   background: white;
   border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   text-indent: 0;
   & > div:nth-of-type(3) {
     color: red;
@@ -893,6 +1028,62 @@ export const previewChannelMenuTab = (clickLabel: string) => css`
   }
 `;
 
+export const previewChannelMenuTabClick = css`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 1vh;
+  top: 0;
+  left: 150%;
+  width: 20vh;
+  padding: 1vh;
+  color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  background: white;
+  border-radius: 0.375rem;
+  & > div {
+    display: flex;
+    gap: 1vh;
+    width: 100%;
+    text-align: start;
+    & > div {
+      width: 70%;
+      & > h3 {
+        font-size: 0.9vh;
+        color: black;
+      }
+      & > span {
+        font-size: 0.9vh;
+      }
+    }
+  }
+  & > div > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5vh;
+    height: 2.5vh;
+    background: #75b4af;
+    border-radius: 4px;
+    & > svg {
+      width: 1.5vh;
+      color: white;
+      background: transparent;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    width: 25vh;
+    padding: 2vh;
+  }
+  @media screen and (max-width: 768px) {
+    & > div {
+      transform: scale(0.8);
+    }
+  }
+`;
+
 export const previewMain = css`
   position: relative;
   display: flex;
@@ -923,10 +1114,35 @@ export const previewProgressBar = (clickLabel: string) => css`
   &:hover {
     background: white;
   }
+  &:hover + div > div > div {
+    background: white;
+  }
   @media screen and (min-width: 1280px) {
     & > span:nth-of-type(2) {
       font-size: 1.5vh;
     }
+  }
+`;
+
+export const previewProgressBarClick = css`
+  position: absolute;
+  gap: 1vh;
+  top: 100%;
+  right: 0;
+  width: 20vh;
+  padding: 1vh;
+  font-size: 0.9vh;
+  color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  background: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  & > span {
+    color: rgba(0, 0, 255, 0.8);
+  }
+  @media screen and (min-width: 1280px) {
+    width: 25vh;
+    font-size: 1.5vh;
   }
 `;
 
@@ -1294,13 +1510,13 @@ export const previewBookmark = css`
 `;
 
 export const previewBookmarkContent = (clickLabel: string) => css`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 0.8vh;
   & > div:nth-of-type(1) {
-    position: relative;
     text-align: center;
     font-weight: 500;
     width: 100%;
@@ -1336,5 +1552,215 @@ export const previewBookmarkContent = (clickLabel: string) => css`
     & > div:nth-of-type(2) {
       font-size: 1.2vh;
     }
+  }
+`;
+
+export const previewBookmarkContentClick = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5vh;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 40%;
+  height: 15%;
+  padding: 1vh;
+  z-index: 3;
+  background: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  transform: translate3d(-50%, -30%, 0);
+  cursor: pointer;
+  & > h3 {
+    margin-right: auto;
+  }
+  & > span {
+    margin-right: auto;
+  }
+  & > div {
+    width: 100%;
+    display: flex;
+  }
+  & > div > span {
+    padding: 0.5vh;
+    background: rgb(219 234 254);
+    border-radius: 4px;
+  }
+  & > div > div {
+    margin-left: auto;
+    & > span:nth-of-type(1),
+    span:nth-of-type(2) {
+      display: inline-block;
+      padding: 0.5vh;
+      border-radius: 4px;
+    }
+    & > span:nth-of-type(1) {
+      margin-right: 0.5vh;
+      background: rgba(0, 0, 0, 0.1);
+    }
+    & > span:nth-of-type(2) {
+      margin-right: 0.5vh;
+      color: white;
+      background: rgba(255, 0, 0, 0.5);
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 1.5vh;
+  }
+  @media screen and (max-width: 768px) {
+    & < * {
+      transform: scale(0.9);
+    }
+    left: 35%;
+  }
+  @media screen and (max-width: 520px) {
+    & < * {
+      transform: scale(0.8);
+    }
+    left: 35%;
+  }
+`;
+
+const mainItemEditableStyle = css`
+  position: absolute;
+  width: 70%;
+  height: 100%;
+  border-radius: 1.7vh;
+  background: rgba(0, 0, 0, 0.4);
+  transition: 0.7s ease-out;
+  transform: translate3d(0, 30%, 0);
+  overflow: hidden;
+  box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+    2px 4px 8px -4px rgb(0 0 0 / 0.2);
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 520px) {
+    width: 130%;
+  }
+  @media screen and (max-width: 361px) {
+    width: 150%;
+  }
+`;
+
+export const mainItemEditableBox = css`
+  ${mainItemPreviewBox};
+  background: white;
+`;
+
+export const mainItemEditableTitle = css`
+  ${mainItemTitleStyle};
+`;
+
+export const mainItemEditableSubTitle = css`
+  ${mainItemPreviewScrollBoxTitle};
+`;
+
+export const mainItemEditableLayoutBox = css`
+  ${mainItemLayoutBox};
+  background: #f1f1f2;
+`;
+
+export const mainItemEditableLayoutInnerBox = css`
+  width: 100%;
+`;
+
+export const mainItemEditableDescBox = css`
+  ${mainItemPreviewScrollBox};
+  transition: 0.7s ease-out;
+  & > h3 > span {
+    font-weight: 500;
+  }
+`;
+
+const mainItemEditableAaniIn = keyframes`
+  50% {
+    opacity: 1;
+    transform: translate3d(0,30%,0);
+  }
+  100% {
+    opacity: .5;
+    transform: translate3d(0,30%,0);
+  }
+`;
+
+const mainItemEditableAaniOut = keyframes`
+  to {
+    transform: translate3d(-90%,30%,0);
+  }
+`;
+
+const mainItemEditableAImgAni = keyframes`
+  to {
+    transform: translate3d(0%,-40%,0);
+  }
+`;
+
+const mainItemEditableBani = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(15%,30%,0);
+  }
+`;
+
+const mainItemEditableBImgAni = keyframes`
+  to {
+    transform: translate3d(0%,-10%,0);
+  }
+`;
+
+export const mainItemEditableA = (isAni: boolean) => css`
+  ${mainItemEditableStyle};
+  background: white;
+  border-radius: 2.5vh;
+  opacity: 0;
+  transform: translate3d(0, 60%, 0);
+  animation: ${isAni ? mainItemEditableAaniIn : null} 3s forwards,
+    ${isAni ? mainItemEditableAaniOut : null} 1.5s 3s forwards;
+  & > img {
+    animation: ${isAni ? mainItemEditableAImgAni : null} 1s 1.5s forwards;
+  }
+`;
+
+export const mainItemEditableB = (isAni: boolean) => css`
+  ${mainItemEditableStyle};
+  background: white;
+  opacity: 0;
+  transform: translate3d(15%, 45%, 0);
+  animation: ${isAni ? mainItemEditableBani : null} 1s 3.6s forwards;
+  & > img {
+    object-fit: contain;
+    animation: ${isAni ? mainItemEditableBImgAni : null} 1s 4.5s forwards;
+  }
+`;
+
+export const mainItemChatBox = css`
+  ${mainItemPreviewBox};
+  background: #f1f1f2;
+`;
+
+export const mainItemChatTitle = css`
+  ${mainItemTitleStyle};
+`;
+
+export const mainItemChatSubTitle = css`
+  ${mainItemPreviewScrollBoxTitle};
+`;
+
+export const mainItemChatLayoutBox = css`
+  ${mainItemLayoutBox};
+`;
+
+export const mainItemChatLayoutInnerBox = css`
+  width: 100%;
+`;
+
+export const mainItemChatDescBox = css`
+  ${mainItemPreviewScrollBox};
+  transition: 0.7s ease-out;
+  & > h3 > span {
+    font-weight: 500;
   }
 `;

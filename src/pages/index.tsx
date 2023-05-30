@@ -30,7 +30,18 @@ import previewRed from '@/images/channelImg/1.png';
 import previewGreen from '@/images/channelImg/6.png';
 import previewPurple from '@/images/channelImg/7.png';
 import previewGithub from '@/images/githubLogo.png';
-import { ChevronDownIcon, BellAlertIcon } from '@heroicons/react/20/solid';
+import {
+  ChevronDownIcon,
+  BellAlertIcon,
+  DocumentIcon,
+  ListBulletIcon,
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@heroicons/react/20/solid';
+import editableA from '@/images/landingPage/editableA.png';
+import editableB from '@/images/landingPage/editableB.png';
+
 const IndexPage = () => {
   //introSection
   const introSection = useRef<any>(null);
@@ -56,10 +67,21 @@ const IndexPage = () => {
   const mainItemSectionABox = useRef<HTMLDivElement>(null);
   const mainItemPreviewTitle = useRef<HTMLDivElement>(null);
   const mainItemPreview = useRef<HTMLDivElement>(null);
+  const mainItemPreviewScrollItemBox = useRef<HTMLDivElement>(null);
+  const mainItemPreviewScrollBoxTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemEditableTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemEditableSubTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemEditableDescBox = useRef<HTMLDivElement>(null);
+  const mainItemEditableA = useRef<HTMLDivElement>(null);
+  const mainItemEditableB = useRef<HTMLDivElement>(null);
+  const mainItemChatTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemChatSubTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemChatDescBox = useRef<HTMLDivElement>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [clickItem, setClickItem] = useState('');
   const [clickLabel, setClickLabel] = useState('');
+  const [isAni, setIsAni] = useState(false);
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -69,6 +91,7 @@ const IndexPage = () => {
   let delayedYOffset = 0;
   let rafId;
   let rafState;
+  let scrollToCount = 1;
 
   useEffect(() => {
     AOS.init();
@@ -121,13 +144,39 @@ const IndexPage = () => {
     const targetLabel = target.ariaLabel;
     if (targetLabel !== undefined && targetLabel !== null) {
       if (targetLabel === clickLabel) {
-        // target.style.backgroundColor = `transparent`;
         setClickLabel('');
       } else {
-        // target.style.backgroundColor = `white`;
         setClickLabel(targetLabel);
       }
       console.log(targetLabel);
+    }
+  };
+
+  const arrowClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget as HTMLDivElement;
+    const targetLabel = target.ariaLabel;
+    const scrollBox = mainItemPreviewScrollItemBox.current as HTMLDivElement;
+    if (targetLabel === `ArrowLeft` && scrollBox) {
+      scrollToCount--;
+      scrollBox.scrollTo({
+        left: scrollBox.offsetWidth * scrollToCount,
+        behavior: 'smooth',
+      });
+      if (scrollToCount === 0) {
+        scrollToCount = 7;
+      }
+      console.log(`left`, scrollBox.offsetWidth);
+      console.log(`scCount`, scrollToCount);
+    } else if (targetLabel === `ArrowRight` && scrollBox) {
+      scrollToCount++;
+      scrollBox.scrollTo({
+        left: scrollBox.offsetWidth * scrollToCount,
+        behavior: 'smooth',
+      });
+      if (scrollToCount === 7) {
+        scrollToCount = 1;
+      }
+      console.log(`scCount`, scrollToCount);
     }
   };
 
@@ -197,6 +246,15 @@ const IndexPage = () => {
         content: mainItemSectionABox,
         mainItemPreviewTitle: mainItemPreviewTitle,
         mainItemPreview: mainItemPreview,
+        mainItemPreviewScrollBoxTitle: mainItemPreviewScrollBoxTitle,
+        mainItemEditableTitle: mainItemEditableTitle,
+        mainItemEditableSubTitle: mainItemEditableSubTitle,
+        mainItemEditableDescBox: mainItemEditableDescBox,
+        mainItemEditableA: mainItemEditableA,
+        mainItemEditableB: mainItemEditableB,
+        mainItemChatTitle: mainItemChatTitle,
+        mainItemChatSubTitle: mainItemChatSubTitle,
+        mainItemChatDescBox: mainItemChatDescBox,
       },
       values: {
         // mainItemPreviewTitle_translateY_in: [25, 0, { start: 0, end: 0.01 }],
@@ -237,7 +295,7 @@ const IndexPage = () => {
     let rv;
 
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
-    const scrollRatio = currentYOffset / scrollHeight;
+    const scrollRatio = Number((currentYOffset / scrollHeight).toFixed(6));
     if (values.length === 3) {
       const partScrollStart = values[2].start * scrollHeight;
       const partScrollEnd = values[2].end * scrollHeight;
@@ -267,7 +325,7 @@ const IndexPage = () => {
     const values = sceneInfo[currentScene].values;
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
-    const scrollRatio = currentYOffset / scrollHeight;
+    const scrollRatio = Number((currentYOffset / scrollHeight).toFixed(6));
 
     switch (currentScene) {
       case 0:
@@ -421,11 +479,18 @@ const IndexPage = () => {
       case 1:
         if (
           objs.mainItemPreviewTitle?.current &&
-          objs.mainItemPreview.current
+          objs.mainItemPreview.current &&
+          objs.mainItemPreviewScrollBoxTitle.current &&
+          objs.mainItemEditableTitle.current &&
+          objs.mainItemEditableSubTitle.current &&
+          objs.mainItemEditableDescBox.current &&
+          objs.mainItemEditableA.current &&
+          objs.mainItemEditableB.current
         ) {
           console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemPreviewScrollBoxTitle.current.style.transform = `translate3d(0,0,0)`;
             if (window.innerWidth < 520) {
               objs.mainItemPreview.current.style.transform = `translate3d(17%,30%,0)`;
             } else if (window.innerWidth < 361) {
@@ -434,9 +499,11 @@ const IndexPage = () => {
               objs.mainItemPreview.current.style.transform = `translate3d(0,30%,0)`;
             }
             objs.mainItemPreviewTitle.current.style.opacity = `1`;
+            objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `1`;
             objs.mainItemPreview.current.style.opacity = `1`;
           } else {
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemPreviewScrollBoxTitle.current.style.transform = `translate3d(0,25%,0)`;
             if (window.innerWidth < 520) {
               objs.mainItemPreview.current.style.transform = `translate3d(17%,55%,0)`;
             } else if (window.innerWidth < 361) {
@@ -445,16 +512,26 @@ const IndexPage = () => {
               objs.mainItemPreview.current.style.transform = `translate3d(0,55%,0)`;
             }
             objs.mainItemPreviewTitle.current.style.opacity = `0`;
+            objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `0`;
             objs.mainItemPreview.current.style.opacity = `0`;
           }
-          // objs.mainItemPreview.current.style.transform = `translate3d(0,${calcValues(
-          //   values.mainItemPreview_translateY_in,
-          //   currentYOffset
-          // )}%,0)`;
-          // objs.mainItemPreview.current.style.opacity = `${calcValues(
-          //   values.mainItemPreview_opacity_in,
-          //   currentYOffset
-          // )}`;
+          if (scrollRatio > 0.37) {
+            objs.mainItemEditableTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,0,0)`;
+            setIsAni(true);
+            objs.mainItemEditableTitle.current.style.opacity = `1`;
+            objs.mainItemEditableSubTitle.current.style.opacity = `1`;
+            objs.mainItemEditableDescBox.current.style.opacity = `1`;
+          } else {
+            setIsAni(false);
+            objs.mainItemEditableTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemEditableTitle.current.style.opacity = `0`;
+            objs.mainItemEditableSubTitle.current.style.opacity = `0`;
+            objs.mainItemEditableDescBox.current.style.opacity = `0`;
+          }
         }
         break;
     }
@@ -612,12 +689,89 @@ const IndexPage = () => {
               {`아코하를 먼저\n👀 살펴볼까요?`}
             </h2>
             <div css={styles.mainItemLayoutBox}>
-              {/* <div>
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-              </div> */}
+              <div css={styles.mainItemLayoutInnerBox}>
+                <h3
+                  ref={mainItemPreviewScrollBoxTitle}
+                  css={styles.mainItemPreviewScrollBoxTitle}
+                >
+                  기능을 선택해 보세요
+                </h3>
+                <div css={styles.mainItemPreviewScrollBox}>
+                  <div
+                    aria-label={`ArrowLeft`}
+                    css={styles.mainItemPreviewScrollArrowLeftBox}
+                    onClick={arrowClickHandler}
+                  >
+                    <span css={styles.mainItemPreviewScrollArrowLeft}></span>
+                  </div>
+                  <div
+                    aria-label={`ArrowRight`}
+                    css={styles.mainItemPreviewScrollArrowRightBox}
+                    onClick={arrowClickHandler}
+                  >
+                    <span css={styles.mainItemPreviewScrollArrowRight}></span>
+                  </div>
+                  <div
+                    ref={mainItemPreviewScrollItemBox}
+                    css={styles.mainItemPreviewScrollItemBox}
+                  >
+                    <span
+                      aria-label={`previewNavName`}
+                      css={styles.mainItemPreviewScrollItemNav(clickLabel)}
+                      onClick={previewClickHandler}
+                    >
+                      프로젝트 메뉴
+                    </span>
+                    <span
+                      aria-label={`previewNavAlert`}
+                      css={styles.mainItemPreviewScrollItemAlert(clickLabel)}
+                      onClick={previewClickHandler}
+                    >
+                      알림
+                    </span>
+                    <span
+                      aria-label={`previewChannelPlus`}
+                      css={styles.mainItemPreviewScrollItemChannelPlus(
+                        clickLabel
+                      )}
+                      onClick={previewClickHandler}
+                    >
+                      프로젝트 생성
+                    </span>
+                    <span
+                      aria-label={`previewPage`}
+                      css={styles.mainItemPreviewScrollItemPage(clickLabel)}
+                      onClick={previewClickHandler}
+                    >
+                      페이지 생성
+                    </span>
+                    <span
+                      aria-label={`previewProgressBar`}
+                      css={styles.mainItemPreviewScrollItemProgress(clickLabel)}
+                      onClick={previewClickHandler}
+                    >
+                      진행상황
+                    </span>
+                    <span
+                      aria-label={`previewCommitLog`}
+                      css={styles.mainItemPreviewScrollItemCommitLog(
+                        clickLabel
+                      )}
+                      onClick={previewClickHandler}
+                    >
+                      커밋/이슈
+                    </span>
+                    <span
+                      aria-label={`previewBookmark`}
+                      css={styles.mainItemPreviewScrollItemBookmark(clickLabel)}
+                      onClick={previewClickHandler}
+                    >
+                      북마크
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* <CommitLogNavbar /> */}
               <div ref={mainItemPreview} css={styles.mainItemPreview}>
                 <div css={styles.previewNav}>
                   <div
@@ -721,6 +875,43 @@ const IndexPage = () => {
                             onClick={previewClickHandler}
                           >
                             +
+                            {clickLabel === `previewPage` ? (
+                              <div css={styles.previewChannelMenuTabClick}>
+                                <div>
+                                  <span>
+                                    <DocumentIcon />
+                                  </span>
+                                  <div>
+                                    <h3>기본</h3>
+                                    <span>기본 페이지 입니다</span>
+                                  </div>
+                                </div>
+                                <div>
+                                  <span>
+                                    <CalendarIcon />
+                                  </span>
+                                  <div>
+                                    <h3>프로젝트</h3>
+                                    <span>
+                                      팀을 위한 프로젝트 관리 템플릿입니다.
+                                      프로젝트별로 작업을 정리하고 팀 전반에
+                                      걸쳐 진행 상황을 트래킹하세요
+                                    </span>
+                                  </div>
+                                </div>
+                                <div>
+                                  <span>
+                                    <ListBulletIcon />
+                                  </span>
+                                  <div>
+                                    <h3>문서</h3>
+                                    <span>
+                                      한 곳에서 팀 문서를 정리하고 협업하세요
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : null}
                           </span>
                         </div>
                         <div>
@@ -757,6 +948,12 @@ const IndexPage = () => {
                       >
                         <span css={styles.previewProgressBarSpan}></span>
                         <span>25%</span>
+                        {clickLabel === `previewProgressBar` ? (
+                          <div css={styles.previewProgressBarClick}>
+                            <span>Todo List</span>를 만들고 진행률을 확인할 수
+                            있습니다
+                          </div>
+                        ) : null}
                       </div>
                       <div css={styles.previewProgressTabBox}>
                         <div css={styles.previewProgressTab}>
@@ -844,17 +1041,84 @@ const IndexPage = () => {
                   </div>
                   <div css={styles.previewBookmark}>
                     <div css={styles.previewBookmarkContent(clickLabel)}>
-                      <div>
-                        <div
-                          aria-label={`previewBookmark`}
-                          onClick={previewClickHandler}
-                        >
-                          + 북마크
-                        </div>
+                      <div
+                        aria-label={`previewBookmark`}
+                        onClick={previewClickHandler}
+                      >
+                        <div>+ 북마크</div>
+                        {clickLabel === `previewBookmark` ? (
+                          <div css={styles.previewBookmarkContentClick}>
+                            <h3>북마크 레퍼런스</h3>
+                            <span>https://github.com/a-co-ha/client</span>
+                            <div>
+                              <span>Copy</span>
+                              <div>
+                                <span>Edit</span>
+                                <span>Delete</span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : null}
                       </div>
                       <div>북마크 공유</div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div css={styles.mainItemEditableBox}>
+            <h2 ref={mainItemEditableTitle} css={styles.mainItemEditableTitle}>
+              {`게시글 작성으로 \n손쉬운 문서화📄`}
+            </h2>
+            <div css={styles.mainItemEditableLayoutBox}>
+              <div css={styles.mainItemEditableLayoutInnerBox}>
+                <h3
+                  ref={mainItemEditableSubTitle}
+                  css={styles.mainItemEditableSubTitle}
+                >
+                  희의록 or 정보공유
+                </h3>
+                <div
+                  ref={mainItemEditableDescBox}
+                  css={styles.mainItemEditableDescBox}
+                >
+                  <h3>
+                    페이지를 생성<span>하고 정보를 공유해 보세요</span>
+                  </h3>
+                </div>
+              </div>
+              <div
+                ref={mainItemEditableA}
+                css={styles.mainItemEditableA(isAni)}
+              >
+                <Image src={editableA} fill alt={`editable image A`} />
+              </div>
+              <div
+                ref={mainItemEditableB}
+                css={styles.mainItemEditableB(isAni)}
+              >
+                <Image src={editableB} fill alt={`editable image B`} />
+              </div>
+            </div>
+          </div>
+          <div css={styles.mainItemChatBox}>
+            <h2 ref={mainItemChatTitle} css={styles.mainItemChatTitle}>
+              {`실시간 채팅으로\n팀원들과 소통하며 \n좀 더 ⚡빠르게 개발해보세요!`}
+            </h2>
+            <div css={styles.mainItemChatLayoutBox}>
+              <div css={styles.mainItemChatLayoutInnerBox}>
+                <h3
+                  ref={mainItemChatSubTitle}
+                  css={styles.mainItemChatSubTitle}
+                >
+                  채팅 and 북마크
+                </h3>
+                <div ref={mainItemChatDescBox} css={styles.mainItemChatDescBox}>
+                  <h3>
+                    <span>중요한 내용을 </span>북마크에 저장
+                    <span>하고 편하게 꺼내볼 수 있어요</span>
+                  </h3>
                 </div>
               </div>
             </div>
