@@ -508,6 +508,9 @@ export const mainItemPreviewScrollBoxTitle = css`
   &:hover {
     color: #60c1ff;
   }
+  @media screen and (max-width: 361px) {
+    font-size: 2vh;
+  }
 `;
 
 export const mainItemPreviewScrollBox = css`
@@ -648,11 +651,11 @@ export const mainItemPreview = css`
   width: 90%;
   height: 100%;
   border: 0.5vh solid black;
-  outline: 1.5px solid gray;
+  // outline: 1.5px solid gray;
   border-radius: 1.5vh;
   transition: 0.7s ease-out;
   transform: translate3d(0, 30%, 0);
-  overflow: hidden;
+  // overflow: hidden;
   @media screen and (max-width: 768px) {
     width: 100%;
   }
@@ -665,6 +668,16 @@ export const mainItemPreview = css`
   & > * {
     background: rgba(0, 0, 0, 0.15);
   }
+  &::before {
+    position: absolute;
+    content: '';
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    border: 1.5px solid gray;
+    border-radius: 1.7vh;
+  }
 `;
 
 export const previewNav = css`
@@ -673,6 +686,8 @@ export const previewNav = css`
   align-items: center;
   width: 100%;
   height: 8%;
+  border-top-left-radius: 1vh;
+  border-top-right-radius: 1vh;
   box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   @media screen and (max-width: 768px) {
     height: 6%;
@@ -732,6 +747,7 @@ export const previewNavItemA = (clickLabel: string) => css`
   font-size: 1vh;
   text-indent: 2vh;
   padding-inline: 1rem;
+  border-top-left-radius: 1vh;
   background: ${clickLabel === `previewNavName` ? `white` : `transparent`};
   white-space: nowrap;
   cursor: pointer;
@@ -1669,9 +1685,14 @@ export const mainItemEditableLayoutInnerBox = css`
 
 export const mainItemEditableDescBox = css`
   ${mainItemPreviewScrollBox};
+  width: 90%;
+  margin: 0 auto;
   transition: 0.7s ease-out;
   & > h3 > span {
     font-weight: 500;
+  }
+  @media screen and (max-width: 361px) {
+    font-size: 1.8vh;
   }
 `;
 
@@ -1713,14 +1734,18 @@ const mainItemEditableBImgAni = keyframes`
 
 export const mainItemEditableA = (isAni: boolean) => css`
   ${mainItemEditableStyle};
+
   background: white;
   border-radius: 2.5vh;
   opacity: 0;
   transform: translate3d(0, 60%, 0);
-  animation: ${isAni ? mainItemEditableAaniIn : null} 3s forwards,
+  -webkit-animation: ${isAni ? mainItemEditableAaniIn : null} 3s forwards,
     ${isAni ? mainItemEditableAaniOut : null} 1.5s 3s forwards;
   & > img {
     animation: ${isAni ? mainItemEditableAImgAni : null} 1s 1.5s forwards;
+  }
+  @media screen and (max-width: 580px) {
+    transform: translate3d(0, 60%, 0) scale(0.8);
   }
 `;
 

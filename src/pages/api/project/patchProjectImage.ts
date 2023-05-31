@@ -2,7 +2,7 @@ import { api } from '../config/api-config';
 
 export const patchProjectImage = async (channelId: number) => {
   try {
-    const randomCount = Math.floor(Math.random() * 8 + 1);
+    const randomCount = Math.floor(Math.random() * 11 + 1);
     const formData = new FormData();
     await fetch(`/images/channelImg/${randomCount}.png`)
       .then((res) => res.blob())
