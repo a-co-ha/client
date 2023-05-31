@@ -41,6 +41,9 @@ import {
 } from '@heroicons/react/20/solid';
 import editableA from '@/images/landingPage/editableA.png';
 import editableB from '@/images/landingPage/editableB.png';
+import acohaAI from '@/images/landingPage/ai.png';
+import chatPink from '@/images/channelImg/9.png';
+import chatYellow from '@/images/channelImg/5.png';
 
 const IndexPage = () => {
   //introSection
@@ -77,6 +80,12 @@ const IndexPage = () => {
   const mainItemChatTitle = useRef<HTMLHeadingElement>(null);
   const mainItemChatSubTitle = useRef<HTMLHeadingElement>(null);
   const mainItemChatDescBox = useRef<HTMLDivElement>(null);
+  const mainItemCommitLogTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemCommitLogSubTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemCommitLogDescBox = useRef<HTMLDivElement>(null);
+  const mainItemProgressTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemProgressSubTitle = useRef<HTMLHeadingElement>(null);
+  const mainItemProgressDescBox = useRef<HTMLDivElement>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [clickItem, setClickItem] = useState('');
@@ -255,6 +264,12 @@ const IndexPage = () => {
         mainItemChatTitle: mainItemChatTitle,
         mainItemChatSubTitle: mainItemChatSubTitle,
         mainItemChatDescBox: mainItemChatDescBox,
+        mainItemCommitLogTitle: mainItemCommitLogTitle,
+        mainItemCommitLogSubTitle: mainItemCommitLogSubTitle,
+        mainItemCommitLogDescBox: mainItemCommitLogDescBox,
+        mainItemProgressTitle: mainItemProgressTitle,
+        mainItemProgressSubTitle: mainItemProgressSubTitle,
+        mainItemProgressDescBox: mainItemProgressDescBox,
       },
       values: {
         // mainItemPreviewTitle_translateY_in: [25, 0, { start: 0, end: 0.01 }],
@@ -484,8 +499,12 @@ const IndexPage = () => {
           objs.mainItemEditableTitle.current &&
           objs.mainItemEditableSubTitle.current &&
           objs.mainItemEditableDescBox.current &&
-          objs.mainItemEditableA.current &&
-          objs.mainItemEditableB.current
+          objs.mainItemCommitLogTitle.current &&
+          objs.mainItemCommitLogSubTitle.current &&
+          objs.mainItemCommitLogDescBox.current &&
+          objs.mainItemProgressTitle.current &&
+          objs.mainItemProgressSubTitle.current &&
+          objs.mainItemProgressDescBox.current
         ) {
           console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
@@ -800,7 +819,7 @@ const IndexPage = () => {
                     {clickLabel === `previewNavAlert` ? (
                       <div css={styles.previewNavAlertClick}>
                         <div>
-                          <span>BE 자바마스터님</span>께서 태그하셨습니다
+                          <span>BE 노드마스터님</span>께서 태그하셨습니다
                         </div>
                       </div>
                     ) : null}
@@ -1031,7 +1050,7 @@ const IndexPage = () => {
                       </div>
                       <div css={styles.previewUser}>
                         <span css={styles.previewUserOn}></span>
-                        <span>BE 자바마스터</span>
+                        <span>BE 노드마스터</span>
                       </div>
                       <div css={styles.previewUser}>
                         <span css={styles.previewUserOn}></span>
@@ -1069,7 +1088,7 @@ const IndexPage = () => {
           </div>
           <div css={styles.mainItemEditableBox}>
             <h2 ref={mainItemEditableTitle} css={styles.mainItemEditableTitle}>
-              {`게시글 작성으로 \n손쉬운 문서화📄`}
+              {`게시글 작성으로 \n손쉽게 문서화📄`}
             </h2>
             <div css={styles.mainItemEditableLayoutBox}>
               <div css={styles.mainItemEditableLayoutInnerBox}>
@@ -1104,7 +1123,7 @@ const IndexPage = () => {
           </div>
           <div css={styles.mainItemChatBox}>
             <h2 ref={mainItemChatTitle} css={styles.mainItemChatTitle}>
-              {`실시간 채팅으로\n팀원들과 소통하며 \n좀 더 ⚡빠르게 개발해보세요!`}
+              {`실시간 채팅으로\n팀원들과 소통하며\n좀 더 ⚡빠르게 개발해보세요!`}
             </h2>
             <div css={styles.mainItemChatLayoutBox}>
               <div css={styles.mainItemChatLayoutInnerBox}>
@@ -1112,9 +1131,97 @@ const IndexPage = () => {
                   ref={mainItemChatSubTitle}
                   css={styles.mainItemChatSubTitle}
                 >
-                  채팅 and 북마크
+                  채팅
                 </h3>
                 <div ref={mainItemChatDescBox} css={styles.mainItemChatDescBox}>
+                  <h3>
+                    실시간 채팅
+                    <span>으로 대화와함께 코드도 공유 할 수 있어요</span>
+                  </h3>
+                </div>
+              </div>
+              <div css={styles.mainItemChatA}>
+                <div css={styles.mainItemChatAInnerBox}>
+                  <div css={styles.mainItemChatImageBoxA}>
+                    <Image src={chatPink} fill alt="chatPink image" />
+                  </div>
+                  <div css={styles.mainItemChatMessageBox}>
+                    <div>
+                      <span>FE 김코딩</span>
+                      <span>오늘 오후 7:07</span>
+                    </div>
+                    <span>코드 공유 드릴게요!</span>
+                  </div>
+                </div>
+                <div css={styles.mainItemChatAInnerBox}>
+                  <div css={styles.mainItemChatImageBoxA}>
+                    <Image src={chatPink} fill alt="chatPink image" />
+                  </div>
+                  <div css={styles.mainItemChatMessageBox}>
+                    <div>
+                      <span>FE 김코딩</span>
+                      <span>오늘 오후 7:07</span>
+                    </div>
+                    <span>
+                      <span css={styles.mainItemChatMessageCode}>
+                        <i>1</i>
+                        <span>const</span> acoha<span>=</span>
+                        <span>`welcome`;</span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div css={styles.mainItemChatAInnerBox}>
+                  <div css={styles.mainItemChatImageBoxA}>
+                    <Image src={chatYellow} fill alt="chatPink image" />
+                  </div>
+                  <div css={styles.mainItemChatMessageBox}>
+                    <div>
+                      <span>FE 리액트</span>
+                      <span>오늘 오후 7:08</span>
+                    </div>
+                    <span>감사합니다. 북마크에 저장해놓을게요!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div css={styles.mainItemChatLayoutBox}>
+              <div css={styles.mainItemChatLayoutInnerBox}>
+                <h3
+                  ref={mainItemChatSubTitle}
+                  css={styles.mainItemChatSubTitle}
+                >
+                  북마크
+                </h3>
+                <div ref={mainItemChatDescBox} css={styles.mainItemChatDescBox}>
+                  <h3>
+                    <span>중요한 내용을 </span>북마크에 저장
+                    <span>하고 원할 때 꺼내볼 수 있어요</span>
+                  </h3>
+                </div>
+              </div>
+              <div css={styles.mainItemChatBookmark}></div>
+            </div>
+          </div>
+          <div css={styles.mainItemCommitLogBox}>
+            <h2
+              ref={mainItemCommitLogTitle}
+              css={styles.mainItemCommitLogTitle}
+            >
+              {`커밋로그!`}
+            </h2>
+            <div css={styles.mainItemCommitLogLayoutBox}>
+              <div css={styles.mainItemCommitLogLayoutInnerBox}>
+                <h3
+                  ref={mainItemCommitLogSubTitle}
+                  css={styles.mainItemCommitLogSubTitle}
+                >
+                  커밋 or 이슈 로그
+                </h3>
+                <div
+                  ref={mainItemCommitLogDescBox}
+                  css={styles.mainItemCommitLogDescBox}
+                >
                   <h3>
                     <span>중요한 내용을 </span>북마크에 저장
                     <span>하고 편하게 꺼내볼 수 있어요</span>
@@ -1123,7 +1230,48 @@ const IndexPage = () => {
               </div>
             </div>
           </div>
+          <div css={styles.mainItemProgressBox}>
+            <h2 ref={mainItemProgressTitle} css={styles.mainItemProgressTitle}>
+              {`진행상황`}
+            </h2>
+            <div css={styles.mainItemProgressLayoutBox}>
+              <div css={styles.mainItemProgressLayoutInnerBox}>
+                <h3
+                  ref={mainItemProgressSubTitle}
+                  css={styles.mainItemProgressSubTitle}
+                >
+                  커밋 or 이슈 로그
+                </h3>
+                <div
+                  ref={mainItemProgressDescBox}
+                  css={styles.mainItemProgressDescBox}
+                >
+                  <h3>
+                    <span>중요한 내용을 </span>북마크에 저장
+                    <span>하고 편하게 꺼내볼 수 있어요</span>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div css={styles.bannerBox}>
+            <div css={styles.bannerLayoutBox}>
+              <div css={styles.bannerLayoutInnerBox}>
+                <div css={styles.bannerImageBox}>
+                  <div></div>
+                  <div>
+                    <div>새로운 프로젝트를 시작해 보세요!</div>{' '}
+                  </div>
+                  <button css={styles.bannerBtn}>지금 시작하기</button>
+                  <Image src={acohaAI} fill alt="acoha ai image" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+      <section>
+        <div></div>
       </section>
     </div>
   );

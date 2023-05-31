@@ -431,13 +431,21 @@ const mainItemTitleStyle = css`
   font-weight: 900;
   white-space: pre-wrap;
   transition: 0.7s ease-out;
+  @media screen and (max-width: 361px) {
+    font-size: 2rem;
+  }
 `;
 
 export const mainItemSectionA = css`
   display: flex;
   justify-content: center;
   width: 100%;
-  background: #f1f1f2;
+  background: rgb(190, 192, 231);
+  background: linear-gradient(
+    90deg,
+    rgba(190, 192, 231, 0.3) 0%,
+    rgba(246, 203, 209, 0.5) 79%
+  );
 `;
 
 export const mainItemSectionABox = css`
@@ -1677,6 +1685,8 @@ export const mainItemEditableSubTitle = css`
 export const mainItemEditableLayoutBox = css`
   ${mainItemLayoutBox};
   background: #f1f1f2;
+  box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+    2px 4px 8px -4px rgb(0 0 0 / 0.2);
 `;
 
 export const mainItemEditableLayoutInnerBox = css`
@@ -1690,6 +1700,9 @@ export const mainItemEditableDescBox = css`
   transition: 0.7s ease-out;
   & > h3 > span {
     font-weight: 500;
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 2.5vh;
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
@@ -1726,6 +1739,30 @@ const mainItemEditableBani = keyframes`
   }
 `;
 
+const itemAmediaAniIn = keyframes`
+  50% {
+    opacity: 1;
+    transform: translate3d(0,20%,0) scale(0.8);
+  }
+  100% {
+    opacity: .5;
+    transform: translate3d(0,20%,0) scale(0.8);
+  }
+`;
+
+const itemAmediaAniOut = keyframes`
+  to {
+    transform: translate3d(-90%,20%,0) scale(0.8);
+  }
+`;
+
+const itemBmediaAni = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(5%,20%,0) scale(0.8);
+  }
+`;
+
 const mainItemEditableBImgAni = keyframes`
   to {
     transform: translate3d(0%,-10%,0);
@@ -1734,7 +1771,6 @@ const mainItemEditableBImgAni = keyframes`
 
 export const mainItemEditableA = (isAni: boolean) => css`
   ${mainItemEditableStyle};
-
   background: white;
   border-radius: 2.5vh;
   opacity: 0;
@@ -1746,6 +1782,11 @@ export const mainItemEditableA = (isAni: boolean) => css`
   }
   @media screen and (max-width: 580px) {
     transform: translate3d(0, 60%, 0) scale(0.8);
+    -webkit-animation: ${isAni ? itemAmediaAniIn : null} 3s forwards,
+      ${isAni ? itemAmediaAniOut : null} 1.5s 3s forwards;
+    & > img {
+      animation: ${isAni ? mainItemEditableAImgAni : null} 1s 1.5s forwards;
+    }
   }
 `;
 
@@ -1759,15 +1800,37 @@ export const mainItemEditableB = (isAni: boolean) => css`
     object-fit: contain;
     animation: ${isAni ? mainItemEditableBImgAni : null} 1s 4.5s forwards;
   }
+  @media screen and (max-width: 580px) {
+    transform: translate3d(5%, 45%, 0) scale(0.8);
+    animation: ${isAni ? itemBmediaAni : null} 1s 3.6s forwards;
+    & > img {
+      object-fit: contain;
+      animation: null;
+    }
+  }
 `;
 
 export const mainItemChatBox = css`
   ${mainItemPreviewBox};
-  background: #f1f1f2;
+  background: rgb(246, 203, 209);
+  background: linear-gradient(
+    90deg,
+    rgba(246, 203, 209, 1) 0%,
+    rgba(254, 251, 227, 1) 81%
+  );
+  & > div:nth-of-type(2) {
+    margin-top: 1.5rem;
+  }
 `;
 
 export const mainItemChatTitle = css`
   ${mainItemTitleStyle};
+  @media screen and (max-width: 768px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 361px) {
+    font-size: 1.9rem;
+  }
 `;
 
 export const mainItemChatSubTitle = css`
@@ -1776,6 +1839,7 @@ export const mainItemChatSubTitle = css`
 
 export const mainItemChatLayoutBox = css`
   ${mainItemLayoutBox};
+  background: #f1f1f2;
 `;
 
 export const mainItemChatLayoutInnerBox = css`
@@ -1784,8 +1848,301 @@ export const mainItemChatLayoutInnerBox = css`
 
 export const mainItemChatDescBox = css`
   ${mainItemPreviewScrollBox};
+  width: 90%;
+  margin: 0 auto;
   transition: 0.7s ease-out;
   & > h3 > span {
     font-weight: 500;
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 2.5vh;
+  }
+  @media screen and (max-width: 361px) {
+    font-size: 1.8vh;
+  }
+`;
+
+export const mainItemChatA = css`
+  ${mainItemEditableStyle};
+  background: white;
+  box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+    2px 4px 8px -4px rgb(0 0 0 / 0.2);
+  transform: translate3d(0, 35%, 0);
+  & > div:nth-of-type(2) {
+    padding-top: 0;
+    transform: translate3d(0, -30%, 0);
+    & > div:nth-of-type(1) {
+      opacity: 0;
+    }
+    & > div:nth-of-type(2) > div {
+      opacity: 0;
+    }
+    & > div:nth-of-type(2) > span {
+      padding: 1rem;
+    }
+  }
+  & > div:nth-of-type(3) {
+    & > div:nth-of-type(2) > span {
+      background: #ffd6dc;
+    }
+  }
+  @media screen and (max-width: 361px) {
+    width: 100%;
+  }
+`;
+
+export const mainItemChatAInnerBox = css`
+  display: flex;
+  padding: 1rem;
+`;
+
+export const mainItemChatImageBoxA = css`
+  position: absolute;
+  width: 4.5vh;
+  height: 4.5vh;
+  border-radius: 50%;
+  overflow: hidden;
+  @media screen and (min-width: 1280px) {
+    width: 5.5vh;
+    height: 5.5vh;
+  }
+`;
+
+export const mainItemChatMessageBox = css`
+  display: flex;
+  flex-direction: column;
+  margin-left: 2.7rem;
+  line-height: 2vh;
+  & > div > span:nth-of-type(1) {
+    font-size: 1.5vh;
+  }
+  & > div > span:nth-of-type(2) {
+    font-size: 1.5vh;
+    color: gray;
+    margin-left: 0.25rem;
+  }
+  & > span:nth-of-type(1) {
+    width: fit-content;
+    padding: 1vh;
+    font-size: 1.7vh;
+    font-weight: 500;
+    background: #bddc95;
+    border-radius: 0.8rem;
+    border-top-left-radius: 4px;
+    box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+      2px 4px 8px -4px rgb(0 0 0 / 0.2);
+  }
+  @media screen and (min-width: 1280px) {
+    margin-left: 3.5rem;
+    & > span:nth-of-type(1) {
+      padding: 2vh;
+      font-size: 2.5vh;
+    }
+    & > div > span:nth-of-type(1) {
+      font-size: 1.75vh;
+    }
+    & > div > span:nth-of-type(2) {
+      font-size: 1.75vh;
+      color: gray;
+      margin-left: 0.5rem;
+    }
+  }
+`;
+
+export const mainItemChatMessageCode = css`
+  padding: 1vh;
+  color: #3c89da;
+  background: #f3f3f3;
+  border-radius: 0.5vh;
+  & > i {
+    color: gray;
+    padding-right: 1vh;
+  }
+  & > span:nth-of-type(1) {
+    color: #c443f9;
+  }
+  & > span:nth-of-type(2) {
+    color: black;
+  }
+  & > span:nth-of-type(3) {
+    color: #69c968;
+  }
+`;
+
+export const mainItemChatBookmark = css`
+  ${mainItemEditableStyle};
+  background: white;
+`;
+
+export const mainItemCommitLogBox = css`
+  ${mainItemPreviewBox};
+  background: white;
+`;
+
+export const mainItemCommitLogLayoutBox = css`
+  ${mainItemLayoutBox};
+  background: #f1f1f2;
+`;
+
+export const mainItemCommitLogLayoutInnerBox = css`
+  width: 100%;
+`;
+
+export const mainItemCommitLogTitle = css`
+  ${mainItemTitleStyle};
+`;
+
+export const mainItemCommitLogSubTitle = css`
+  ${mainItemPreviewScrollBoxTitle};
+`;
+
+export const mainItemCommitLogDescBox = css`
+  ${mainItemPreviewScrollBox};
+  width: 90%;
+  margin: 0 auto;
+  transition: 0.7s ease-out;
+  & > h3 > span {
+    font-weight: 500;
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 2.5vh;
+  }
+  @media screen and (max-width: 361px) {
+    font-size: 1.8vh;
+  }
+`;
+
+export const mainItemProgressBox = css`
+  ${mainItemPreviewBox};
+  background: rgb(235, 235, 235);
+  background: linear-gradient(
+    90deg,
+    rgba(235, 235, 235, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+`;
+
+export const mainItemProgressLayoutBox = css`
+  ${mainItemLayoutBox};
+`;
+
+export const mainItemProgressLayoutInnerBox = css`
+  width: 100%;
+`;
+
+export const mainItemProgressTitle = css`
+  ${mainItemTitleStyle};
+`;
+
+export const mainItemProgressSubTitle = css`
+  ${mainItemPreviewScrollBoxTitle};
+`;
+
+export const mainItemProgressDescBox = css`
+  ${mainItemPreviewScrollBox};
+  width: 90%;
+  margin: 0 auto;
+  transition: 0.7s ease-out;
+  & > h3 > span {
+    font-weight: 500;
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 2.5vh;
+  }
+  @media screen and (max-width: 361px) {
+    font-size: 1.8vh;
+  }
+`;
+
+export const bannerBox = css`
+  ${mainItemPreviewBox};
+  background: rgb(235, 235, 235);
+  background: linear-gradient(
+    90deg,
+    rgba(235, 235, 235, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+`;
+
+export const bannerLayoutBox = css`
+  ${mainItemLayoutBox};
+  background: transparent;
+`;
+
+export const bannerLayoutInnerBox = css`
+  width: 100%;
+`;
+
+export const bannerImageBox = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  & > img {
+    object-fit: cover;
+  }
+  & > div:nth-of-type(1) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.25);
+  }
+  & > div:nth-of-type(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    transform: translate3d(-50%, -50%, 0);
+    & > div {
+      position: absolute;
+      top: 30%;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(2) {
+      font-size: 3rem;
+    }
+  }
+  @media screen and (max-width: 361px) {
+    & > div:nth-of-type(2) {
+      & > div {
+        font-size: 1.3rem;
+      }
+    }
+  }
+`;
+
+export const bannerBtn = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  padding: 1.5vh 3vh;
+  background: black;
+  color: white;
+  font-weight: 700;
+  border-radius: 8px;
+  transform: translate3d(-50%, -50%, 0);
+  box-shadow: 3px -1px 5px 1px rgb(0 0 0 / 0.2);
+  transition: 0.5s;
+  &:hover {
+    background: white;
+    color: black;
+  }
+  @media screen and (min-width: 1280px) {
+    padding: 2.5vh 4vh;
+    font-size: 2.5vh;
   }
 `;
