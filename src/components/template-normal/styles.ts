@@ -9,7 +9,7 @@ export const progressContainer = css`
 `;
 
 export const progressSection = css`
-  flex-basis: 30%;
+  flex-basis: 50%;
 `;
 
 export const progressInPage = css`

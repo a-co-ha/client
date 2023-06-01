@@ -4,9 +4,12 @@ import { ProgressBar } from './ProgressBar';
 import { ProgressCircle } from './ProgressCircle';
 import { gaugeContainer } from './styles';
 
-export const ProgressGauge = ({ pageId = '' }) => {
-  const { data: progressPercent } = useGetProgressPercent(pageId);
+interface ProgressGaugeProps {
+  pageId: string;
+}
+export const ProgressGauge = ({ pageId }: ProgressGaugeProps) => {
   const { type: inTemplate } = useGetUrlInfo();
+  const { data: progressPercent } = useGetProgressPercent(pageId, inTemplate);
 
   return progressPercent ? (
     <div css={gaugeContainer}>

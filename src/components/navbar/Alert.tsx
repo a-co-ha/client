@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import * as styles from './styles';
 import { SocketContext } from '../chat-page/SocketContextProvider';
-import { PageNameLink } from '../project-sidebar/PageNameLink';
 import { Menu, Transition } from '@headlessui/react';
 
 /**
@@ -20,12 +19,26 @@ import { Menu, Transition } from '@headlessui/react';
  * 알림 메뉴
  * - 클릭시 해당 알림을 발생시킨 지점으로 이동 할 수 있어야한다.
  * - 클릭으로 확인한 알림은 알림 메뉴에서 사라진다.
+ * 
+ *  
+ *  알림 메뉴 생성위한 알림 목록 api 
+ *  *  key : 태그한 페이지의 channelId, pageId, pageName, type, subPageName
+ * 
+ * 메뉴에 넣을 dom
+ *  <>
+          <Link
+            href={`/project/${data.channelId}/${data.pageId}?name=${data.pageName}&type=${data.type}`}
+          >
+            <div>
+              {`${data.channelName}프로젝트의 ${
+                data.subPageName ? `${data.subPageName} 페이지의` : ''
+              }
+          ${data.pageName} 페이지에서 나(${data.targetUserName})를
+          태그하였습니다.`}
+            </div>
+          </Link>
+        </>,
  *
- */
-
-/**
- * 태그한 channId, pageid, type GET_ALERT에 포함 요청  (1-1)
- * 포스트맨 event listen 이 안됌
  */
 
 export const Alert = () => {

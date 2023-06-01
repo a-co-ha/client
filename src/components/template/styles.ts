@@ -67,7 +67,7 @@ export const dealt = (dealt: number) => css`
 `;
 
 export const singleChart = () => css`
-  width: 8rem;
+  width: 7rem;
   justify-content: space-around;
 `;
 

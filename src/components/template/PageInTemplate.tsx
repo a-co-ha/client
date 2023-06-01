@@ -38,13 +38,14 @@ export const PageInTemplate = ({
               type={type}
             />
             <div>
-              {label
-                .slice(0, 2)
-                .map((person: Labels | string, index: number) => (
-                  <div key={index} css={styles.d}>
-                    {typeof person === 'string' ? person : person.content}
-                  </div>
-                ))}
+              {
+                label
+                  .slice(0, 2)
+                  .map((person: Labels | string, index: number) => (
+                    <div key={index} css={styles.d}>
+                      {typeof person === 'string' ? person : person.content}
+                    </div>
+                  ))}
               {label.length > 2 && (
                 <Disclosure>
                   {({ open }) => (

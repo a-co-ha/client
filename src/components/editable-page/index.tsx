@@ -76,78 +76,88 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   };
 
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary fallback={Error} onReset={reset}>
-          <div css={styles.contentBox} ref={page}>
-            {isNewPage && <Notice status="SUCCESS" />}
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Label />
-              {selectedBlocks.length > 0 && (
-                <button onClick={deleteSelectBlock}>
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </button>
-              )}
-            </div>
-            <DragDropContext onDragEnd={onDragEndHandler}>
-              <Droppable key={pageId} droppableId={pageId}>
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    className="container"
-                    onKeyDown={handleDeleteBlocks}
-                  >
-                    <Selecto
-                      dragContainer={'.container'}
-                      selectableTargets={['.list']}
-                      hitRate={0}
-                      selectByClick={false}
-                      selectFromInside={true}
-                      continueSelect={false}
-                      continueSelectWithoutDeselect={true}
-                      ratio={0}
-                      onSelect={(e) => {
-                        e.added.forEach((el) => {
-                          el.classList.add('selected');
-                          setSelectedBlocks((prev: any) => {
-                            return [...prev, el.dataset['id']];
-                          });
-                        });
-                        e.removed.forEach((el) => {
-                          el.classList.remove('selected');
-                          setSelectedBlocks([]);
-                        });
-                      }}
-                    ></Selecto>
-                    {blocks &&
-                      blocks.map((block) => {
-                        const position = blocks
-                          .map((b) => b.blockId)
-                          .indexOf(block.blockId);
-                        return (
-                          <EditableBlock
-                            key={block.blockId}
-                            position={position}
-                            id={block.blockId}
-                            tag={block.tag}
-                            html={block.html}
-                            imgUrl={block.imgUrl}
-                            pageId={pageId}
-                            addBlock={addBlockHandler}
-                            updateBlock={updateBlockHandler}
-                            deleteBlock={deleteBlockHandler}
-                          />
-                        );
-                      })}
-                    {provided.placeholder}
-                  </div>
+    <div
+      style={{
+        ...(type !== 'normal'
+          ? {
+              width: '60%',
+            }
+          : { width: '100%' }),
+      }}
+    >
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary fallback={Error} onReset={reset}>
+            <div css={styles.contentBox} ref={page}>
+              {isNewPage && <Notice status="SUCCESS" />}
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Label />
+                {selectedBlocks.length > 0 && (
+                  <button onClick={deleteSelectBlock}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </button>
                 )}
-              </Droppable>
-            </DragDropContext>
-          </div>
-        </ErrorBoundary>
-      )}
-    </QueryErrorResetBoundary>
+              </div>
+              <DragDropContext onDragEnd={onDragEndHandler}>
+                <Droppable key={pageId} droppableId={pageId}>
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className="container"
+                      onKeyDown={handleDeleteBlocks}
+                    >
+                      <Selecto
+                        dragContainer={'.container'}
+                        selectableTargets={['.list']}
+                        hitRate={0}
+                        selectByClick={false}
+                        selectFromInside={true}
+                        continueSelect={false}
+                        continueSelectWithoutDeselect={true}
+                        ratio={0}
+                        onSelect={(e) => {
+                          e.added.forEach((el) => {
+                            el.classList.add('selected');
+                            setSelectedBlocks((prev: any) => {
+                              return [...prev, el.dataset['id']];
+                            });
+                          });
+                          e.removed.forEach((el) => {
+                            el.classList.remove('selected');
+                            setSelectedBlocks([]);
+                          });
+                        }}
+                      ></Selecto>
+                      {blocks &&
+                        blocks.map((block) => {
+                          const position = blocks
+                            .map((b) => b.blockId)
+                            .indexOf(block.blockId);
+                          return (
+                            <EditableBlock
+                              key={block.blockId}
+                              position={position}
+                              id={block.blockId}
+                              tag={block.tag}
+                              html={block.html}
+                              imgUrl={block.imgUrl}
+                              pageId={pageId}
+                              addBlock={addBlockHandler}
+                              updateBlock={updateBlockHandler}
+                              deleteBlock={deleteBlockHandler}
+                            />
+                          );
+                        })}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
+    </div>
   );
 };

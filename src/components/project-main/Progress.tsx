@@ -5,6 +5,9 @@ import * as styles from './styles';
 import Link from 'next/link';
 import { CreateProgressTemplate } from './CreateProgressTemplate';
 import { Icon } from '../project-sidebar/Icons';
+import { useRecoilValue } from 'recoil';
+import { pageNameShare } from '@/recoil/project/atom';
+import { useMemo } from 'react';
 
 export interface PageProgress {
   pageName: string;
@@ -15,10 +18,6 @@ export interface PageProgress {
 export const Progress = () => {
   const { channelId } = useGetUrlInfo();
   const { data: pagePercentList } = useGetProgressPercentList(channelId);
-  console.log(
-    '🚀 ~ file: Progress.tsx:17 ~ Progress ~ pagePercentList:',
-    pagePercentList
-  );
 
   return (
     <div css={styles.progressCommonBoxStyle}>

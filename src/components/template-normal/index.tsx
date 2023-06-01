@@ -16,12 +16,21 @@ export const TemplateNormalPage = ({
   pageId,
   type,
 }: TemplatePageProps) => {
-  const { mutate: createPage } = useCreateTemplateInPage();
+  console.log('🚀 ~ file: index.tsx:19 ~ type:', type);
+  const { mutate: createPage } = useCreateTemplateInPage(
+    channelId,
+    pageId,
+    type
+  );
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
   const { mutate: upatePageList } = useUpadatePageList();
 
   const [pageArr, setPageArr] = useState(pageList);
   console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
+
+  useEffect(() => {
+    localStorage.setItem('parentPageId', pageId);
+  }, []);
 
   useDidMountEffect(() => {
     // 마운트 시 실행되지 않지만 마운트 후 상태값이 바뀌면서 리랜더링이 일어나 그떄부터 실행되어 첫 랜더링 때 실행되는것처럼 보임
@@ -44,7 +53,7 @@ export const TemplateNormalPage = ({
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <main css={styles.progressContainer}>
+          <main css={styles.progressContainer} style={{ width: '40%' }}>
             <DragDropContext onDragEnd={onDragEndHandler}>
               <section css={styles.progressSection}>
                 <Droppable droppableId={pageId}>
