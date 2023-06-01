@@ -1,6 +1,6 @@
 import { css, keyframes } from '@emotion/react';
 
-//introSection animation
+//introSection Animation
 const subTitleAni = keyframes`
   to {
     opacity: 1;
@@ -44,6 +44,202 @@ const introMonitorItemBottomAni = keyframes`
     bottom: 0;
   }
 `;
+// mainItemEditable Animation
+
+const mainItemEditableAaniIn = keyframes`
+  50% {
+    opacity: 1;
+    transform: translate3d(0,30%,0);
+  }
+  100% {
+    opacity: .5;
+    transform: translate3d(0,30%,0);
+  }
+`;
+
+const mainItemEditableAaniOut = keyframes`
+  to {
+    transform: translate3d(-90%,30%,0);
+  }
+`;
+
+const mainItemEditableAImgAni = keyframes`
+  to {
+    transform: translate3d(0%,-40%,0);
+  }
+`;
+
+const mainItemEditableBani = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(15%,30%,0);
+  }
+`;
+
+const itemAmediaAniIn = keyframes`
+  50% {
+    opacity: 1;
+    transform: translate3d(0,20%,0) scale(0.8);
+  }
+  100% {
+    opacity: .5;
+    transform: translate3d(0,20%,0) scale(0.8);
+  }
+`;
+
+const itemAmediaAniOut = keyframes`
+  to {
+    transform: translate3d(-90%,20%,0) scale(0.8);
+  }
+`;
+
+const itemBmediaAni = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(5%,20%,0) scale(0.8);
+  }
+`;
+
+const mainItemEditableBImgAni = keyframes`
+  to {
+    transform: translate3d(0%,-10%,0);
+  }
+`;
+
+//mainItemChat Animation
+
+const mainItemChatAani = keyframes`
+to {
+  opacity: 1;
+  transform: translate3d(0,35%,0);
+}`;
+
+const chatOpacity = keyframes`
+  to {
+    opacity: 1;
+  }
+`;
+
+const bookmarkBlinkAni = keyframes`
+  to {
+    left: 200%;
+  }
+`;
+
+const bookmarkToWhiteAni = keyframes`
+  10% {
+    background: white;
+  }
+  95% {
+    background: white;
+    box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+  100% {
+    background: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 8px -4px rgb(0 0 0 / 0.2);
+  }
+`;
+
+const bookmarkToGrayAni = keyframes`
+  to {
+    background: transparent;
+  }
+`;
+
+const mainItemChatBookmarkAaniIn = keyframes`
+  to {
+    opacity: 0.5;
+    transform: translate3d(-97.5%,35%,0);
+  }
+`;
+
+const mainItemChatBookmarkAaniOut = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(0,35%,0);
+  }
+`;
+
+const mainItemChatBookmarkBaniIn = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(5%,35%,0);
+  }
+`;
+
+const mainItemChatBookmarkBaniOut = keyframes`
+  to {
+    opacity: 0.5;
+    transform: translate3d(110%,35%,0);
+  }
+`;
+
+const bookmarkTitleAttrAni = keyframes`
+  to {
+    content: 'welcome acoha!';
+    color: black;
+  }
+`;
+
+const bookmarkContentAttrAni = keyframes`
+  to {
+    content: 'const acoha = \`welcome\`';
+    color: black;
+  }
+`;
+
+const bookmarkSubmitBlinkAni = keyframes`
+to {
+  left: 200%;
+}
+`;
+
+const bookmarkSubmitClickAni = keyframes`
+ 95% {
+    box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+  100% {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 8px -4px rgb(0 0 0 / 0.2);
+  }
+`;
+
+const bookmarkAddAni = keyframes`
+  49% {
+    opacity: 1;
+    transform: translate3d(0,0,0);
+  }
+  50% {
+    opacity: 1;
+    color: white;
+    transform: translate3d(0,0,0);
+  }
+  100% {
+    opacity: 1;
+    color: black;
+    transform: translate3d(0,0,0);
+  }
+`;
+
+const bookmarkAddClickAni = keyframes`
+  95% {
+    box-shadow: inset 0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+  100% {
+    box-shadow: none;
+  }
+`;
+
+const bookmarkModalAni = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(0,0,0);
+  }
+`;
 
 export const flexRowCenter = css`
   display: flex;
@@ -51,6 +247,7 @@ export const flexRowCenter = css`
   justify-content: center;
   align-items: center;
   height: 100%;
+  max-height: 10365px;
 `;
 
 export const introSection = css`
@@ -426,9 +623,10 @@ export const introChatImgReplyBox = css`
 
 const mainItemTitleStyle = css`
   padding: 1rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
   font-size: 2.5rem;
   font-weight: 900;
+  text-align: start;
   white-space: pre-wrap;
   transition: 0.7s ease-out;
   @media screen and (max-width: 361px) {
@@ -1698,6 +1896,10 @@ export const mainItemEditableDescBox = css`
   width: 90%;
   margin: 0 auto;
   transition: 0.7s ease-out;
+  text-align: center;
+  & > h3 {
+    width: 60%;
+  }
   & > h3 > span {
     font-weight: 500;
   }
@@ -1706,66 +1908,6 @@ export const mainItemEditableDescBox = css`
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
-  }
-`;
-
-const mainItemEditableAaniIn = keyframes`
-  50% {
-    opacity: 1;
-    transform: translate3d(0,30%,0);
-  }
-  100% {
-    opacity: .5;
-    transform: translate3d(0,30%,0);
-  }
-`;
-
-const mainItemEditableAaniOut = keyframes`
-  to {
-    transform: translate3d(-90%,30%,0);
-  }
-`;
-
-const mainItemEditableAImgAni = keyframes`
-  to {
-    transform: translate3d(0%,-40%,0);
-  }
-`;
-
-const mainItemEditableBani = keyframes`
-  to {
-    opacity: 1;
-    transform: translate3d(15%,30%,0);
-  }
-`;
-
-const itemAmediaAniIn = keyframes`
-  50% {
-    opacity: 1;
-    transform: translate3d(0,20%,0) scale(0.8);
-  }
-  100% {
-    opacity: .5;
-    transform: translate3d(0,20%,0) scale(0.8);
-  }
-`;
-
-const itemAmediaAniOut = keyframes`
-  to {
-    transform: translate3d(-90%,20%,0) scale(0.8);
-  }
-`;
-
-const itemBmediaAni = keyframes`
-  to {
-    opacity: 1;
-    transform: translate3d(5%,20%,0) scale(0.8);
-  }
-`;
-
-const mainItemEditableBImgAni = keyframes`
-  to {
-    transform: translate3d(0%,-10%,0);
   }
 `;
 
@@ -1826,7 +1968,7 @@ export const mainItemChatBox = css`
 export const mainItemChatTitle = css`
   ${mainItemTitleStyle};
   @media screen and (max-width: 768px) {
-    width: 70%;
+    // width: 70%;
   }
   @media screen and (max-width: 361px) {
     font-size: 1.9rem;
@@ -1840,6 +1982,7 @@ export const mainItemChatSubTitle = css`
 export const mainItemChatLayoutBox = css`
   ${mainItemLayoutBox};
   background: #f1f1f2;
+  transition: 0.7s ease-out;
 `;
 
 export const mainItemChatLayoutInnerBox = css`
@@ -1850,6 +1993,10 @@ export const mainItemChatDescBox = css`
   ${mainItemPreviewScrollBox};
   width: 90%;
   margin: 0 auto;
+  text-align: center;
+  & > h3 {
+    width: 70%;
+  }
   transition: 0.7s ease-out;
   & > h3 > span {
     font-weight: 500;
@@ -1862,15 +2009,23 @@ export const mainItemChatDescBox = css`
   }
 `;
 
-export const mainItemChatA = css`
+export const mainItemChatA = (isAni: boolean) => css`
   ${mainItemEditableStyle};
   background: white;
   box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
     2px 4px 8px -4px rgb(0 0 0 / 0.2);
-  transform: translate3d(0, 35%, 0);
+  opacity: 0;
+  transform: translate3d(0, 60%, 0);
+  animation: ${isAni ? mainItemChatAani : null} 1.5s forwards;
+  & > div:nth-of-type(1) {
+    opacity: 0;
+    animation: ${isAni ? chatOpacity : null} 0.1s 1.6s forwards;
+  }
   & > div:nth-of-type(2) {
     padding-top: 0;
+    opacity: 0;
     transform: translate3d(0, -30%, 0);
+    animation: ${isAni ? chatOpacity : null} 0.1s 2.2s forwards;
     & > div:nth-of-type(1) {
       opacity: 0;
     }
@@ -1882,8 +2037,15 @@ export const mainItemChatA = css`
     }
   }
   & > div:nth-of-type(3) {
+    opacity: 0;
+    animation: ${isAni ? chatOpacity : null} 0.1s 2.8s forwards;
     & > div:nth-of-type(2) > span {
       background: #ffd6dc;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(1) {
+      padding
     }
   }
   @media screen and (max-width: 361px) {
@@ -1894,6 +2056,9 @@ export const mainItemChatA = css`
 export const mainItemChatAInnerBox = css`
   display: flex;
   padding: 1rem;
+  @media screen and (min-width: 1280px) {
+    padding-top: 2rem;
+  }
 `;
 
 export const mainItemChatImageBoxA = css`
@@ -1965,13 +2130,282 @@ export const mainItemChatMessageCode = css`
     color: black;
   }
   & > span:nth-of-type(3) {
-    color: #69c968;
+    color: #7fb37e;
   }
 `;
 
-export const mainItemChatBookmark = css`
+export const mainItemChatBookmarkA = (isAni: boolean) => css`
   ${mainItemEditableStyle};
   background: white;
+  transform: translate3d(0, 35%, 0);
+  // transform: translate3d(0, 125%, 0);
+  animation: ${isAni ? mainItemChatBookmarkAaniIn : null} 1.5s 2.7s forwards,
+    ${isAni ? mainItemChatBookmarkAaniOut : null} 1.5s 6.7s forwards;
+  & > div:nth-of-type(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    background: rgba(0, 0, 0, 0.1);
+    & > div:nth-of-type(1) {
+      width: 50%;
+      height: 100%;
+      transform: translate3d(0, 20%, 0);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 8px -4px rgb(0 0 0 / 0.2);
+      & > div:nth-of-type(1) {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 15%;
+        font-weight: 500;
+        background: inherit;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 8px -4px rgb(0 0 0 / 0.2);
+        overflow: hidden;
+        animation: ${isAni ? bookmarkToWhiteAni : null} 0.2s 2s forwards,
+          ${isAni ? bookmarkToGrayAni : null} 0.2s 4s forwards;
+        &::before {
+          position: absolute;
+          content: '';
+          top: -50%;
+          left: -30%;
+          width: 2%;
+          height: 200%;
+          z-index: 3;
+          background: white;
+          transform: rotate(45deg);
+          animation: ${isAni ? bookmarkBlinkAni : null} 2s 1s forwards;
+        }
+        &::after {
+          position: absolute;
+          content: '';
+          top: -50%;
+          left: -20%;
+          width: 5%;
+          height: 200%;
+          z-index: 3;
+          background: white;
+          transform: rotate(45deg);
+          animation: ${isAni ? bookmarkBlinkAni : null} 2s 1s forwards;
+        }
+      }
+      & > div:nth-of-type(2) {
+        padding: 1rem 0;
+        & > div:nth-of-type(1),
+        div:nth-of-type(2),
+        div:nth-of-type(3) {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem 1rem;
+          font-size: 1.7vh;
+          color: gray;
+        }
+        & > div:nth-of-type(3) {
+          color: white;
+          opacity: 0;
+          background: white;
+          transform: translate3d(0, -310%, 0);
+          animation: ${isAni ? bookmarkAddAni : null} 2s 8s forwards,
+            ${isAni ? bookmarkAddClickAni : null} 0.2s 9.8s forwards;
+        }
+      }
+    }
+    & > div:nth-of-type(2) {
+      position: absolute;
+      z-index: 4;
+      width: 80%;
+      height: 40%;
+      padding: 1rem;
+      background: white;
+      border-radius: 1.5vh;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 8px -4px rgb(0 0 0 / 0.2);
+      opacity: 0;
+      transform: translate3d(0, 25%, 0);
+      animation: ${isAni ? bookmarkModalAni : null} 1s 10.5s forwards;
+      & > h3 {
+        height: 15%;
+        margin-right: auto;
+        font-size: 2.5vh;
+      }
+      & > span {
+        display: flex;
+        align-items: center;
+        height: 70%;
+        margin-right: auto;
+        & > span {
+          width: 100%;
+        }
+      }
+      & > div {
+        width: 100%;
+        height: 15%;
+      }
+      & > div > div:nth-of-type(1) {
+        display: flex;
+        & > span:nth-of-type(1) {
+          display: inline-block;
+          padding: 0.5vh;
+          margin-right: auto;
+          background: rgb(219 234 254);
+          border-radius: 4px;
+          box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+            2px 4px 8px -4px rgb(0 0 0 / 0.2);
+        }
+        & > span:nth-of-type(2),
+        span:nth-of-type(3) {
+          display: inline-block;
+          padding: 0.5vh;
+          border-radius: 4px;
+        }
+        & > span:nth-of-type(2) {
+          margin-right: 0.5vh;
+          background: rgba(0, 0, 0, 0.1);
+          box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+            2px 4px 8px -4px rgb(0 0 0 / 0.2);
+        }
+        & > span:nth-of-type(3) {
+          margin-right: 0.5vh;
+          color: white;
+          background: rgba(255, 0, 0, 0.5);
+          box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
+            2px 4px 8px -4px rgb(0 0 0 / 0.2);
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(1) {
+      & > div:nth-of-type(1) {
+        & > div:nth-of-type(2) {
+          & > div:nth-of-type(1),
+          div:nth-of-type(2),
+          div:nth-of-type(3) {
+            padding: 1rem 2rem;
+          }
+        }
+      }
+      & > div:nth-of-type(2) {
+        & > h3 {
+          font-size: 3.5vh;
+        }
+        & > div > div:nth-of-type(1) {
+          font-size: 2vh;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 361px) {
+    & > div:nth-of-type(1) {
+      & > div:nth-of-type(2) {
+        width: 60%;
+      }
+    }
+  }
+`;
+
+export const mainItemChatBookmarkB = (isAni: boolean) => css`
+  ${mainItemEditableStyle};
+  background: white;
+  opacity: 0.5;
+  transform: translate3d(110%, 35%, 0);
+  // transform: translate3d(0%, 35%, 0);
+  animation: ${isAni ? mainItemChatBookmarkBaniIn : null} 1.5s 2.7s forwards,
+    ${isAni ? mainItemChatBookmarkBaniOut : null} 1.5s 6.7s forwards;
+  & > div:nth-of-type(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    background: rgba(0, 0, 0, 0.1);
+    & > div {
+      width: 80%;
+      height: 70%;
+      padding: 1rem;
+      background: white;
+      border-radius: 1.5vh;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 8px -4px rgb(0 0 0 / 0.2);
+      & > div:nth-of-type(1) {
+        position: relative;
+        height: 15%;
+        color: gray;
+        border-bottom: 0.1px solid gray;
+        &::before {
+          position: absolute;
+          content: attr(aria-label);
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          animation: ${isAni ? bookmarkTitleAttrAni : null} 1s 4s forwards;
+        }
+      }
+      & > div:nth-of-type(2) {
+        position: relative;
+        height: calc(70% - 1rem);
+        margin-top: 1rem;
+        color: gray;
+        &::before {
+          position: absolute;
+          content: attr(aria-label);
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          animation: ${isAni ? bookmarkContentAttrAni : null} 1s 4.5s forwards;
+        }
+      }
+      & > div:nth-of-type(3) {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 15%;
+        box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2),
+          0 -2px 3px -3px rgb(0 0 0 / 0.2), 0 2px 6px -4px rgb(0 0 0 / 0.2);
+        overflow: hidden;
+        animation: ${isAni ? bookmarkSubmitClickAni : null} 0.2s 5.7s forwards;
+        &::after {
+          position: absolute;
+          content: '';
+          top: -50%;
+          left: -20%;
+          width: 5%;
+          height: 200%;
+          z-index: 3;
+          background: white;
+          transform: rotate(45deg);
+          animation: ${isAni ? bookmarkSubmitBlinkAni : null} 2s 4.8s forwards;
+        }
+        & > svg {
+          width: 2vh;
+          height: 2vh;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(1) {
+      & > div {
+        & > div:nth-of-type(1) {
+          &::before {
+            font-size: 2.5vh;
+          }
+        }
+        & > div:nth-of-type(2) {
+          &::before {
+            font-size: 2.5vh;
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const mainItemCommitLogBox = css`
@@ -2001,6 +2435,10 @@ export const mainItemCommitLogDescBox = css`
   width: 90%;
   margin: 0 auto;
   transition: 0.7s ease-out;
+  text-align: center;
+  & > h3 {
+    width: 60%;
+  }
   & > h3 > span {
     font-weight: 500;
   }
@@ -2043,6 +2481,10 @@ export const mainItemProgressDescBox = css`
   width: 90%;
   margin: 0 auto;
   transition: 0.7s ease-out;
+  text-align: center;
+  & > h3 {
+    width: 60%;
+  }
   & > h3 > span {
     font-weight: 500;
   }

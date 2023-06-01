@@ -17,6 +17,7 @@ import {
   faComments,
   faPenToSquare,
   faSquarePlus,
+  faPaperPlane,
 } from '@fortawesome/free-regular-svg-icons';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -80,6 +81,7 @@ const IndexPage = () => {
   const mainItemChatTitle = useRef<HTMLHeadingElement>(null);
   const mainItemChatSubTitle = useRef<HTMLHeadingElement>(null);
   const mainItemChatDescBox = useRef<HTMLDivElement>(null);
+  const mainItemChatBookmark = useRef<HTMLDivElement>(null);
   const mainItemCommitLogTitle = useRef<HTMLHeadingElement>(null);
   const mainItemCommitLogSubTitle = useRef<HTMLHeadingElement>(null);
   const mainItemCommitLogDescBox = useRef<HTMLDivElement>(null);
@@ -90,7 +92,9 @@ const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [clickItem, setClickItem] = useState('');
   const [clickLabel, setClickLabel] = useState('');
-  const [isAni, setIsAni] = useState(false);
+  const [isEditableAni, setIsEditableAni] = useState(false);
+  const [isChatAni, setIsChatAni] = useState(false);
+  const [isChatBookmarkAni, setIsChatBookmarkAni] = useState(false);
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -116,12 +120,6 @@ const IndexPage = () => {
       }, 30),
     [yOffset]
   );
-  useLayoutEffect(() => {
-    window.addEventListener(`load`, () => {
-      setLayout();
-      scrollLoop();
-    });
-  }, []);
   useLayoutEffect(() => {
     const div = document.getElementById(`__next`);
     if (div !== null) {
@@ -248,7 +246,7 @@ const IndexPage = () => {
     },
     {
       type: 'normal',
-      heightNum: 3,
+      heightNum: 5.5,
       scrollHeight: 0,
       objs: {
         container: mainItemSectionA,
@@ -264,6 +262,7 @@ const IndexPage = () => {
         mainItemChatTitle: mainItemChatTitle,
         mainItemChatSubTitle: mainItemChatSubTitle,
         mainItemChatDescBox: mainItemChatDescBox,
+        mainItemChatBookmark: mainItemChatBookmark,
         mainItemCommitLogTitle: mainItemCommitLogTitle,
         mainItemCommitLogSubTitle: mainItemCommitLogSubTitle,
         mainItemCommitLogDescBox: mainItemCommitLogDescBox,
@@ -286,10 +285,13 @@ const IndexPage = () => {
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
       }
 
-      if (sceneInfo[i].objs.container) {
-        sceneInfo[i].objs.container.current.style.height = `${
-          sceneInfo[i].scrollHeight + window.innerHeight
+      if (sceneInfo[0].objs.container) {
+        sceneInfo[0].objs.container.current.style.height = `${
+          sceneInfo[0].scrollHeight + window.innerHeight
         }px`;
+      } else if (sceneInfo[1].objs.container) {
+        sceneInfo[1].objs.container.current.style.height = `${sceneInfo[1].scrollHeight}px`;
+        // sceneInfo[1].objs.container.current.style.height = `8289.5px`;
       }
     }
 
@@ -310,7 +312,7 @@ const IndexPage = () => {
     let rv;
 
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
-    const scrollRatio = Number((currentYOffset / scrollHeight).toFixed(6));
+    const scrollRatio = currentYOffset / scrollHeight;
     if (values.length === 3) {
       const partScrollStart = values[2].start * scrollHeight;
       const partScrollEnd = values[2].end * scrollHeight;
@@ -340,7 +342,7 @@ const IndexPage = () => {
     const values = sceneInfo[currentScene].values;
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
-    const scrollRatio = Number((currentYOffset / scrollHeight).toFixed(6));
+    const scrollRatio = currentYOffset / scrollHeight;
 
     switch (currentScene) {
       case 0:
@@ -462,10 +464,6 @@ const IndexPage = () => {
             )}`;
           }
           if (scrollRatio >= 0.95) {
-            console.log(
-              `scrollbar`,
-              window.innerWidth - document.body.clientWidth
-            );
             objs.content.current.style.position = `static`;
             objs.content.current.style.marginTop = `${scrollHeight * 0.805}px`;
             if (window.innerWidth < 361) {
@@ -499,6 +497,10 @@ const IndexPage = () => {
           objs.mainItemEditableTitle.current &&
           objs.mainItemEditableSubTitle.current &&
           objs.mainItemEditableDescBox.current &&
+          objs.mainItemChatTitle.current &&
+          objs.mainItemChatSubTitle.current &&
+          objs.mainItemChatDescBox.current &&
+          objs.mainItemChatBookmark.current &&
           objs.mainItemCommitLogTitle.current &&
           objs.mainItemCommitLogSubTitle.current &&
           objs.mainItemCommitLogDescBox.current &&
@@ -534,22 +536,48 @@ const IndexPage = () => {
             objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `0`;
             objs.mainItemPreview.current.style.opacity = `0`;
           }
-          if (scrollRatio > 0.37) {
+          if (scrollRatio > 0.185) {
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,0,0)`;
-            setIsAni(true);
+            setIsEditableAni(true);
             objs.mainItemEditableTitle.current.style.opacity = `1`;
             objs.mainItemEditableSubTitle.current.style.opacity = `1`;
             objs.mainItemEditableDescBox.current.style.opacity = `1`;
           } else {
-            setIsAni(false);
+            setIsEditableAni(false);
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemEditableTitle.current.style.opacity = `0`;
             objs.mainItemEditableSubTitle.current.style.opacity = `0`;
             objs.mainItemEditableDescBox.current.style.opacity = `0`;
+          }
+          if (scrollRatio > 0.345) {
+            objs.mainItemChatTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemChatSubTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemChatDescBox.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemChatTitle.current.style.opacity = `1`;
+            objs.mainItemChatSubTitle.current.style.opacity = `1`;
+            objs.mainItemChatDescBox.current.style.opacity = `1`;
+            setIsChatAni(true);
+          } else {
+            objs.mainItemChatTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemChatSubTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemChatDescBox.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemChatTitle.current.style.opacity = `0`;
+            objs.mainItemChatSubTitle.current.style.opacity = `0`;
+            objs.mainItemChatDescBox.current.style.opacity = `0`;
+            setIsChatAni(false);
+          }
+          if (scrollRatio > 0.485) {
+            objs.mainItemChatBookmark.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemChatBookmark.current.style.opacity = `1`;
+            setIsChatBookmarkAni(true);
+          } else {
+            objs.mainItemChatBookmark.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemChatBookmark.current.style.opacity = `0`;
+            setIsChatBookmarkAni(false);
           }
         }
         break;
@@ -1109,13 +1137,13 @@ const IndexPage = () => {
               </div>
               <div
                 ref={mainItemEditableA}
-                css={styles.mainItemEditableA(isAni)}
+                css={styles.mainItemEditableA(isEditableAni)}
               >
                 <Image src={editableA} fill alt={`editable image A`} />
               </div>
               <div
                 ref={mainItemEditableB}
-                css={styles.mainItemEditableB(isAni)}
+                css={styles.mainItemEditableB(isEditableAni)}
               >
                 <Image src={editableB} fill alt={`editable image B`} />
               </div>
@@ -1123,7 +1151,7 @@ const IndexPage = () => {
           </div>
           <div css={styles.mainItemChatBox}>
             <h2 ref={mainItemChatTitle} css={styles.mainItemChatTitle}>
-              {`실시간 채팅으로\n팀원들과 소통하며\n좀 더 ⚡빠르게 개발해보세요!`}
+              {`실시간 채팅으로\n팀원들과 소통하며\n좀 더 ⚡빠르게\n개발해보세요!`}
             </h2>
             <div css={styles.mainItemChatLayoutBox}>
               <div css={styles.mainItemChatLayoutInnerBox}>
@@ -1140,7 +1168,7 @@ const IndexPage = () => {
                   </h3>
                 </div>
               </div>
-              <div css={styles.mainItemChatA}>
+              <div css={styles.mainItemChatA(isChatAni)}>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
                     <Image src={chatPink} fill alt="chatPink image" />
@@ -1165,7 +1193,7 @@ const IndexPage = () => {
                     <span>
                       <span css={styles.mainItemChatMessageCode}>
                         <i>1</i>
-                        <span>const</span> acoha<span>=</span>
+                        <span>const</span> acoha<span> = </span>
                         <span>`welcome`;</span>
                       </span>
                     </span>
@@ -1185,22 +1213,61 @@ const IndexPage = () => {
                 </div>
               </div>
             </div>
-            <div css={styles.mainItemChatLayoutBox}>
+
+            <div ref={mainItemChatBookmark} css={styles.mainItemChatLayoutBox}>
               <div css={styles.mainItemChatLayoutInnerBox}>
-                <h3
-                  ref={mainItemChatSubTitle}
-                  css={styles.mainItemChatSubTitle}
-                >
-                  북마크
-                </h3>
-                <div ref={mainItemChatDescBox} css={styles.mainItemChatDescBox}>
+                <h3 css={styles.mainItemChatSubTitle}>북마크</h3>
+                <div css={styles.mainItemChatDescBox}>
                   <h3>
                     <span>중요한 내용을 </span>북마크에 저장
                     <span>하고 원할 때 꺼내볼 수 있어요</span>
                   </h3>
                 </div>
               </div>
-              <div css={styles.mainItemChatBookmark}></div>
+              <div css={styles.mainItemChatBookmarkA(isChatBookmarkAni)}>
+                <div>
+                  <div>
+                    <div>+ 북마크</div>
+                    <div>
+                      <div>프론트 컨벤션</div>
+                      <div>백엔드 API</div>
+                      <div>welcome acoha!</div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3>welcome!</h3>
+                    <span>
+                      <span css={styles.mainItemChatMessageCode}>
+                        <i>1</i>
+                        <span>const</span> acoha<span> = </span>
+                        <span>`welcome`;</span>
+                      </span>
+                    </span>
+                    <div>
+                      <div>
+                        <span>Copy</span>
+                        <span>Edit</span>
+                        <span>Delete</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div css={styles.mainItemChatBookmarkB(isChatBookmarkAni)}>
+                <div>
+                  <div>
+                    <div aria-label="제목"></div>
+                    <div aria-label="내용을 입력해주세요"></div>
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faPaperPlane}
+                        style={{ color: '#f85d75' }}
+                        fill={`true`}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div css={styles.mainItemCommitLogBox}>
