@@ -241,6 +241,48 @@ const bookmarkModalAni = keyframes`
   }
 `;
 
+// CommitLog Animation
+const commitLogTranslateAniIn = keyframes`
+to {
+  transform: translate3d(-100%,0,0) scale(0.8);
+  opacity: 0.3;
+}
+`;
+
+const commitLogTranslateAniOut = keyframes`
+to {
+  transform: translate3d(-120%,0,0) scale(0.8);
+  opacity: 0.3;
+}
+`;
+
+const commitLogCommitAniIn = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(0,0,0) scale(1);
+  }
+`;
+
+const commitLogCommitAniOut = keyframes`
+  to {
+    opacity: 0.5;
+    transform: translate3d(-70%,0,0) scale(0.7);
+  }
+`;
+
+const commitLogIssueAniIn = keyframes`
+  to {
+    transform: translate3d(73.5%,0,0) scale(0.7);
+  }
+`;
+
+const commitLogIssueAniOut = keyframes`
+  to {
+    opacity: 1;
+    transform: translate3d(0%,0,0) scale(1);
+  }
+`;
+
 export const flexRowCenter = css`
   display: flex;
   flex-direction: column;
@@ -810,6 +852,11 @@ export const mainItemPreviewScrollItemBox = css`
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
+  }
+  @media screen and (max-width: 361px) {
+    & > span {
+      font-size: 1.2rem;
+    }
   }
 `;
 
@@ -1856,6 +1903,9 @@ const mainItemEditableStyle = css`
   overflow: hidden;
   box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
     2px 4px 8px -4px rgb(0 0 0 / 0.2);
+  @media screen and (max-width: 1280px) {
+    width: 70%;
+  }
   @media screen and (max-width: 768px) {
     width: 100%;
   }
@@ -1930,6 +1980,9 @@ export const mainItemEditableA = (isAni: boolean) => css`
       animation: ${isAni ? mainItemEditableAImgAni : null} 1s 1.5s forwards;
     }
   }
+  @media screen and (max-width: 361px) {
+    width: 130%;
+  }
 `;
 
 export const mainItemEditableB = (isAni: boolean) => css`
@@ -1950,6 +2003,9 @@ export const mainItemEditableB = (isAni: boolean) => css`
       animation: null;
     }
   }
+  @media screen and (max-width: 361px) {
+    width: 130%;
+  }
 `;
 
 export const mainItemChatBox = css`
@@ -1967,9 +2023,6 @@ export const mainItemChatBox = css`
 
 export const mainItemChatTitle = css`
   ${mainItemTitleStyle};
-  @media screen and (max-width: 768px) {
-    // width: 70%;
-  }
   @media screen and (max-width: 361px) {
     font-size: 1.9rem;
   }
@@ -2050,6 +2103,9 @@ export const mainItemChatA = (isAni: boolean) => css`
   }
   @media screen and (max-width: 361px) {
     width: 100%;
+     & > div:nth-of-type(3) {
+        padding-top: 0;
+     }
   }
 `;
 
@@ -2132,13 +2188,15 @@ export const mainItemChatMessageCode = css`
   & > span:nth-of-type(3) {
     color: #7fb37e;
   }
+  @media screen and (max-width: 361px) {
+    font-size: 0.7rem;
+  }
 `;
 
 export const mainItemChatBookmarkA = (isAni: boolean) => css`
   ${mainItemEditableStyle};
   background: white;
   transform: translate3d(0, 35%, 0);
-  // transform: translate3d(0, 125%, 0);
   animation: ${isAni ? mainItemChatBookmarkAaniIn : null} 1.5s 2.7s forwards,
     ${isAni ? mainItemChatBookmarkAaniOut : null} 1.5s 6.7s forwards;
   & > div:nth-of-type(1) {
@@ -2303,6 +2361,9 @@ export const mainItemChatBookmarkA = (isAni: boolean) => css`
     & > div:nth-of-type(1) {
       & > div:nth-of-type(2) {
         width: 60%;
+        & > div > div:nth-of-type(1) {
+          font-size: 0.7rem;
+        }
       }
     }
   }
@@ -2313,7 +2374,6 @@ export const mainItemChatBookmarkB = (isAni: boolean) => css`
   background: white;
   opacity: 0.5;
   transform: translate3d(110%, 35%, 0);
-  // transform: translate3d(0%, 35%, 0);
   animation: ${isAni ? mainItemChatBookmarkBaniIn : null} 1.5s 2.7s forwards,
     ${isAni ? mainItemChatBookmarkBaniOut : null} 1.5s 6.7s forwards;
   & > div:nth-of-type(1) {
@@ -2406,6 +2466,14 @@ export const mainItemChatBookmarkB = (isAni: boolean) => css`
       }
     }
   }
+  @media screen and (max-width: 361px) {
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 60%;
+        transform: translate3d(-8%, 0, 0);
+      }
+    }
+  }
 `;
 
 export const mainItemCommitLogBox = css`
@@ -2424,6 +2492,14 @@ export const mainItemCommitLogLayoutInnerBox = css`
 
 export const mainItemCommitLogTitle = css`
   ${mainItemTitleStyle};
+
+  @media screen and (max-width: 768px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 361px) {
+    width: 85%;
+    font-size: 1.9rem;
+  }
 `;
 
 export const mainItemCommitLogSubTitle = css`
@@ -2434,10 +2510,10 @@ export const mainItemCommitLogDescBox = css`
   ${mainItemPreviewScrollBox};
   width: 90%;
   margin: 0 auto;
-  transition: 0.7s ease-out;
   text-align: center;
+  transition: 0.7s ease-out;
   & > h3 {
-    width: 60%;
+    width: 70%;
   }
   & > h3 > span {
     font-weight: 500;
@@ -2448,6 +2524,123 @@ export const mainItemCommitLogDescBox = css`
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
   }
+`;
+
+export const mainItemCommitLogA = css`
+  ${mainItemEditableStyle};
+  background: white;
+  transform: translate3d(0, 35%, 0);
+  & > div:nth-of-type(1) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    background: rgba(0, 0, 0, 0.1);
+`;
+
+export const mainItemCommitLogConnectBox = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 70%;
+  transform: translate3d(-50%, -50%, 0);
+`;
+
+export const mainItemCommitLogConnectInnerBox = (isAni: boolean) => css`
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: white;
+  border-radius: 0.5vh;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
+  transform: translate3d(50%, 0, 0);
+  overflow: hidden;
+  animation: ${isAni ? bookmarkSubmitClickAni : null} 0.2s 1.5s forwards,
+    ${isAni ? commitLogTranslateAniIn : null} 1.5s 2.3s forwards,
+    ${isAni ? commitLogTranslateAniOut : null} 1.5s 5.15s forwards;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -50%;
+    left: -80%;
+    width: 2%;
+    height: 200%;
+    z-index: 3;
+    background: white;
+    transform: rotate(45deg);
+    animation: ${isAni ? bookmarkBlinkAni : null} 0.5s 1s forwards;
+  }
+  &::after {
+    position: absolute;
+    content: '';
+    top: -50%;
+    left: -70%;
+    width: 5%;
+    height: 200%;
+    z-index: 3;
+    background: white;
+    transform: rotate(45deg);
+    animation: ${isAni ? bookmarkBlinkAni : null} 0.5s 1s forwards;
+  }
+`;
+
+export const mainItemCommitLogConnectTitle = css`
+  ${previewCommitLogTitle};
+`;
+
+export const mainItemCommitLogContent = css`
+  ${previewCommitLogContent};
+`;
+
+export const mainItemCommitLogBtnBox = css`
+  ${previewCommitLogBtnBox};
+`;
+
+export const mainItemCommitLogBtn = css`
+  ${previewCommitLogBtn};
+`;
+
+export const mainItemCommitLogImageBox = (isAni: boolean) => css`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translate3d(100%, 0, 0) scale(0.7);
+  animation: ${isAni ? commitLogCommitAniIn : null} 1.5s 2.2s forwards,
+    ${isAni ? commitLogCommitAniOut : null} 1.5s 5.2s forwards;
+`;
+
+export const mainItemIssueLogImageBox = (isAni: boolean) => css`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  transform: translate3d(100%, 0, 0) scale(0.7);
+  animation: ${isAni ? commitLogIssueAniIn : null} 1.2s 2.75s forwards,
+    ${isAni ? commitLogIssueAniOut : null} 1.5s 5.25s forwards;
+`;
+
+export const mainItemCommitLogImageInnerBox = css`
+  position: absolute;
+  top: -10%;
+  width: 50%;
+  height: 126.5%;
+  background: white;
+  border-radius: 0.5vh;
+  box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.1),
+    2px 4px 8px -4px rgb(0 0 0 / 0.1);
+  transform: translate3d(50%, 0, 0);
+  overflow: hidden;
+  & > img {
+    object-fit: contain;
+  }
+`;
+
+export const mainItemIsuueLogImageInnerBox = css`
+  ${mainItemCommitLogImageInnerBox};
+  height: 125%;
 `;
 
 export const mainItemProgressBox = css`
@@ -2579,9 +2772,38 @@ export const bannerBtn = css`
   transform: translate3d(-50%, -50%, 0);
   box-shadow: 3px -1px 5px 1px rgb(0 0 0 / 0.2);
   transition: 0.5s;
+  overflow: hidden;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -50%;
+    left: -30%;
+    width: 2%;
+    height: 200%;
+    z-index: 3;
+    background: white;
+    transform: rotate(45deg);
+  }
+  &::after {
+    position: absolute;
+    content: '';
+    top: -50%;
+    left: -20%;
+    width: 5%;
+    height: 200%;
+    z-index: 3;
+    background: white;
+    transform: rotate(45deg);
+  }
   &:hover {
     background: white;
     color: black;
+    &::before {
+      animation: ${bookmarkBlinkAni} 1s forwards;
+    }
+    &::after {
+      animation: ${bookmarkBlinkAni} 1s forwards;
+    }
   }
   @media screen and (min-width: 1280px) {
     padding: 2.5vh 4vh;

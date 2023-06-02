@@ -23,7 +23,6 @@ import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { IconOne } from '../components/project-sidebar/Icons';
-import commitLog from '@/images/landingPage/commitLog.png';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import chat from '@/images/landingPage/chat.svg';
 import Image from 'next/image';
@@ -45,6 +44,8 @@ import editableB from '@/images/landingPage/editableB.png';
 import acohaAI from '@/images/landingPage/ai.png';
 import chatPink from '@/images/channelImg/9.png';
 import chatYellow from '@/images/channelImg/5.png';
+import commitLog from '@/images/landingPage/commit.png';
+import issueLog from '@/images/landingPage/issue.png';
 
 const IndexPage = () => {
   //introSection
@@ -95,6 +96,7 @@ const IndexPage = () => {
   const [isEditableAni, setIsEditableAni] = useState(false);
   const [isChatAni, setIsChatAni] = useState(false);
   const [isChatBookmarkAni, setIsChatBookmarkAni] = useState(false);
+  const [isCommitLogAni, setIsCommitLogAni] = useState(false);
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -137,6 +139,14 @@ const IndexPage = () => {
       window.addEventListener(`scroll`, throttledScroll);
     };
   }, [throttledScroll]);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        window.location.reload();
+      }
+    });
+  });
 
   const introClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.currentTarget as HTMLDivElement;
@@ -343,7 +353,38 @@ const IndexPage = () => {
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
     const scrollRatio = currentYOffset / scrollHeight;
-
+    let mediaScrollRatioA;
+    let mediaScrollRatioB;
+    let mediaScrollRatioC;
+    let mediaScrollRatioD;
+    if (window.innerHeight > 800) {
+      mediaScrollRatioA = 0.22;
+    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+      mediaScrollRatioA = 0.19;
+    } else if (window.innerHeight < 361) {
+      mediaScrollRatioA = 0.19;
+    }
+    if (window.innerHeight > 800) {
+      mediaScrollRatioB = 0.43;
+    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+      mediaScrollRatioB = 0.345;
+    } else if (window.innerHeight < 361) {
+      mediaScrollRatioB = 0.335;
+    }
+    if (window.innerHeight > 800) {
+      mediaScrollRatioC = 0.595;
+    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+      mediaScrollRatioC = 0.485;
+    } else if (window.innerHeight < 361) {
+      mediaScrollRatioC = 0.455;
+    }
+    if (window.innerHeight > 800) {
+      mediaScrollRatioD = 0.765;
+    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+      mediaScrollRatioD = 0.63;
+    } else if (window.innerHeight < 361) {
+      mediaScrollRatioD = 0.605;
+    }
     switch (currentScene) {
       case 0:
         if (
@@ -506,7 +547,11 @@ const IndexPage = () => {
           objs.mainItemCommitLogDescBox.current &&
           objs.mainItemProgressTitle.current &&
           objs.mainItemProgressSubTitle.current &&
-          objs.mainItemProgressDescBox.current
+          objs.mainItemProgressDescBox.current &&
+          mediaScrollRatioA &&
+          mediaScrollRatioB &&
+          mediaScrollRatioC &&
+          mediaScrollRatioD
         ) {
           console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
@@ -536,24 +581,24 @@ const IndexPage = () => {
             objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `0`;
             objs.mainItemPreview.current.style.opacity = `0`;
           }
-          if (scrollRatio > 0.185) {
+          if (scrollRatio > mediaScrollRatioA) {
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,0,0)`;
-            setIsEditableAni(true);
             objs.mainItemEditableTitle.current.style.opacity = `1`;
             objs.mainItemEditableSubTitle.current.style.opacity = `1`;
             objs.mainItemEditableDescBox.current.style.opacity = `1`;
+            setIsEditableAni(true);
           } else {
-            setIsEditableAni(false);
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemEditableTitle.current.style.opacity = `0`;
             objs.mainItemEditableSubTitle.current.style.opacity = `0`;
             objs.mainItemEditableDescBox.current.style.opacity = `0`;
+            setIsEditableAni(false);
           }
-          if (scrollRatio > 0.345) {
+          if (scrollRatio > mediaScrollRatioB) {
             objs.mainItemChatTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -570,7 +615,7 @@ const IndexPage = () => {
             objs.mainItemChatDescBox.current.style.opacity = `0`;
             setIsChatAni(false);
           }
-          if (scrollRatio > 0.485) {
+          if (scrollRatio > mediaScrollRatioC) {
             objs.mainItemChatBookmark.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatBookmark.current.style.opacity = `1`;
             setIsChatBookmarkAni(true);
@@ -578,6 +623,23 @@ const IndexPage = () => {
             objs.mainItemChatBookmark.current.style.transform = `translate3d(0,25%,0)`;
             objs.mainItemChatBookmark.current.style.opacity = `0`;
             setIsChatBookmarkAni(false);
+          }
+          if (scrollRatio > mediaScrollRatioD) {
+            objs.mainItemCommitLogTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemCommitLogSubTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemCommitLogDescBox.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemCommitLogTitle.current.style.opacity = `1`;
+            objs.mainItemCommitLogSubTitle.current.style.opacity = `1`;
+            objs.mainItemCommitLogDescBox.current.style.opacity = `1`;
+            setIsCommitLogAni(true);
+          } else {
+            objs.mainItemCommitLogTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemCommitLogSubTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemCommitLogDescBox.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemCommitLogTitle.current.style.opacity = `0`;
+            objs.mainItemCommitLogSubTitle.current.style.opacity = `0`;
+            objs.mainItemCommitLogDescBox.current.style.opacity = `0`;
+            setIsCommitLogAni(false);
           }
         }
         break;
@@ -1275,7 +1337,7 @@ const IndexPage = () => {
               ref={mainItemCommitLogTitle}
               css={styles.mainItemCommitLogTitle}
             >
-              {`커밋로그!`}
+              {`깃허브 저장소를\n연결하고 커밋과 이슈\n기록들을 한 눈에!`}
             </h2>
             <div css={styles.mainItemCommitLogLayoutBox}>
               <div css={styles.mainItemCommitLogLayoutInnerBox}>
@@ -1290,9 +1352,58 @@ const IndexPage = () => {
                   css={styles.mainItemCommitLogDescBox}
                 >
                   <h3>
-                    <span>중요한 내용을 </span>북마크에 저장
-                    <span>하고 편하게 꺼내볼 수 있어요</span>
+                    <span>팀원들의</span> 개발상황<span>이나 </span>
+                    트러블슈팅<span>을 버튼 하나로 확인해 보세요</span>
                   </h3>
+                </div>
+              </div>
+              <div css={styles.mainItemCommitLogA}>
+                <div>
+                  <div css={styles.mainItemCommitLogConnectBox}>
+                    <div
+                      css={styles.mainItemCommitLogConnectInnerBox(
+                        isCommitLogAni
+                      )}
+                    >
+                      <div css={styles.mainItemCommitLogConnectTitle}>
+                        <Image
+                          src={previewGithub}
+                          width={25}
+                          height={25}
+                          alt={`mainItem commitLogImg`}
+                        />
+                        <span>A - COHA</span>
+                      </div>
+                      <div css={styles.mainItemCommitLogContent}>
+                        <span>Client</span>
+                        <span>Server</span>
+                      </div>
+                      <div css={styles.mainItemCommitLogBtnBox}>
+                        <span css={styles.mainItemCommitLogBtn}>+</span>
+                        <span>깃허브 연결하기</span>
+                      </div>
+                    </div>
+                    <div css={styles.mainItemCommitLogImageBox(isCommitLogAni)}>
+                      <div css={styles.mainItemCommitLogImageInnerBox}>
+                        <Image
+                          src={commitLog}
+                          fill
+                          alt={`mainItem commitLogImg`}
+                          quality={100}
+                        />
+                      </div>
+                    </div>
+                    <div css={styles.mainItemIssueLogImageBox(isCommitLogAni)}>
+                      <div css={styles.mainItemIsuueLogImageInnerBox}>
+                        <Image
+                          src={issueLog}
+                          fill
+                          alt={`mainItem issueLog Image`}
+                          quality={100}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
