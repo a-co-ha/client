@@ -46,6 +46,7 @@ import chatPink from '@/images/channelImg/9.png';
 import chatYellow from '@/images/channelImg/5.png';
 import commitLog from '@/images/landingPage/commit.png';
 import issueLog from '@/images/landingPage/issue.png';
+import check from '@/images/landingPage/check.png';
 
 const IndexPage = () => {
   //introSection
@@ -97,6 +98,7 @@ const IndexPage = () => {
   const [isChatAni, setIsChatAni] = useState(false);
   const [isChatBookmarkAni, setIsChatBookmarkAni] = useState(false);
   const [isCommitLogAni, setIsCommitLogAni] = useState(false);
+  const [isProgressAni, setIsProgressAni] = useState(false);
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -357,33 +359,41 @@ const IndexPage = () => {
     let mediaScrollRatioB;
     let mediaScrollRatioC;
     let mediaScrollRatioD;
-    if (window.innerHeight > 800) {
+    let mediaScrollRatioE;
+    if (window.innerWidth > 768) {
       mediaScrollRatioA = 0.22;
-    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+    } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioA = 0.19;
-    } else if (window.innerHeight < 361) {
+    } else if (window.innerWidth < 361) {
       mediaScrollRatioA = 0.19;
     }
-    if (window.innerHeight > 800) {
+    if (window.innerWidth > 768) {
       mediaScrollRatioB = 0.43;
-    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+    } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioB = 0.345;
-    } else if (window.innerHeight < 361) {
+    } else if (window.innerWidth < 361) {
       mediaScrollRatioB = 0.335;
     }
-    if (window.innerHeight > 800) {
-      mediaScrollRatioC = 0.595;
-    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+    if (window.innerWidth > 768) {
+      mediaScrollRatioC = 0.583;
+    } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioC = 0.485;
-    } else if (window.innerHeight < 361) {
+    } else if (window.innerWidth < 361) {
       mediaScrollRatioC = 0.455;
     }
-    if (window.innerHeight > 800) {
+    if (window.innerWidth > 768) {
       mediaScrollRatioD = 0.765;
-    } else if (window.innerHeight < 800 && window.innerHeight > 361) {
+    } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioD = 0.63;
-    } else if (window.innerHeight < 361) {
+    } else if (window.innerWidth < 361) {
       mediaScrollRatioD = 0.605;
+    }
+    if (window.innerWidth > 768) {
+      mediaScrollRatioE = 0.95;
+    } else if (window.innerWidth < 768 && window.innerWidth > 361) {
+      mediaScrollRatioE = 0.792;
+    } else if (window.innerWidth < 361) {
+      mediaScrollRatioE = 0.772;
     }
     switch (currentScene) {
       case 0:
@@ -551,8 +561,12 @@ const IndexPage = () => {
           mediaScrollRatioA &&
           mediaScrollRatioB &&
           mediaScrollRatioC &&
-          mediaScrollRatioD
+          mediaScrollRatioD &&
+          mediaScrollRatioE
         ) {
+          if (sceneInfo[0].objs.content.current) {
+            sceneInfo[0].objs.content.current.style.position = `static`;
+          }
           console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
@@ -581,6 +595,7 @@ const IndexPage = () => {
             objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `0`;
             objs.mainItemPreview.current.style.opacity = `0`;
           }
+          console.log(`이너`, window.innerHeight);
           if (scrollRatio > mediaScrollRatioA) {
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,0,0)`;
@@ -641,6 +656,23 @@ const IndexPage = () => {
             objs.mainItemCommitLogDescBox.current.style.opacity = `0`;
             setIsCommitLogAni(false);
           }
+          if (scrollRatio > mediaScrollRatioE) {
+            objs.mainItemProgressTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemProgressSubTitle.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemProgressDescBox.current.style.transform = `translate3d(0,0,0)`;
+            objs.mainItemProgressTitle.current.style.opacity = `1`;
+            objs.mainItemProgressSubTitle.current.style.opacity = `1`;
+            objs.mainItemProgressDescBox.current.style.opacity = `1`;
+            setIsProgressAni(true);
+          } else {
+            objs.mainItemProgressTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemProgressSubTitle.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemProgressDescBox.current.style.transform = `translate3d(0,25%,0)`;
+            objs.mainItemProgressTitle.current.style.opacity = `0`;
+            objs.mainItemProgressSubTitle.current.style.opacity = `0`;
+            objs.mainItemProgressDescBox.current.style.opacity = `0`;
+            setIsProgressAni(false);
+          }
         }
         break;
     }
@@ -672,16 +704,6 @@ const IndexPage = () => {
     playAnimation();
   }, []);
 
-  const aos = {
-    'data-aos': `fade-up`,
-    'data-aos-offset': `-25`,
-    'data-aos-delay': '0',
-    'data-aos-duration': `600`,
-    'data-aos-easing': 'ease',
-    // 'data-aos-mirror': 'true',
-    'data-aos-once': `false`,
-    'data-aos-anchor-placement': 'top-bottom',
-  };
   return (
     <div css={styles.flexRowCenter}>
       <section ref={introSection} css={styles.introSection}>
@@ -1056,7 +1078,7 @@ const IndexPage = () => {
                         onClick={previewClickHandler}
                       >
                         <span css={styles.previewProgressBarSpan}></span>
-                        <span>25%</span>
+                        <span>33%</span>
                         {clickLabel === `previewProgressBar` ? (
                           <div css={styles.previewProgressBarClick}>
                             <span>Todo List</span>를 만들고 진행률을 확인할 수
@@ -1337,7 +1359,7 @@ const IndexPage = () => {
               ref={mainItemCommitLogTitle}
               css={styles.mainItemCommitLogTitle}
             >
-              {`깃허브 저장소를\n연결하고 커밋과 이슈\n기록들을 한 눈에!`}
+              {`깃허브 저장소를\n연결하고 커밋과 이슈\n🔍기록들을 한 눈에!`}
             </h2>
             <div css={styles.mainItemCommitLogLayoutBox}>
               <div css={styles.mainItemCommitLogLayoutInnerBox}>
@@ -1410,24 +1432,59 @@ const IndexPage = () => {
           </div>
           <div css={styles.mainItemProgressBox}>
             <h2 ref={mainItemProgressTitle} css={styles.mainItemProgressTitle}>
-              {`진행상황`}
+              {`Todo 리스트 모아보기로\n현재 개발상황을 바로파악`}
+              <Image
+                src={check}
+                width={50}
+                height={50}
+                alt={`progress Image`}
+              />
             </h2>
-            <div css={styles.mainItemProgressLayoutBox}>
+            <div css={styles.mainItemProgressLayoutBox(isProgressAni)}>
               <div css={styles.mainItemProgressLayoutInnerBox}>
                 <h3
                   ref={mainItemProgressSubTitle}
                   css={styles.mainItemProgressSubTitle}
                 >
-                  커밋 or 이슈 로그
+                  진행상황
                 </h3>
                 <div
                   ref={mainItemProgressDescBox}
                   css={styles.mainItemProgressDescBox}
                 >
                   <h3>
-                    <span>중요한 내용을 </span>북마크에 저장
-                    <span>하고 편하게 꺼내볼 수 있어요</span>
+                    목표<span>를 설정하고 하나씩 이뤄나가면서 </span>
+                    성취감<span>을 맛보세요</span>
                   </h3>
+                </div>
+              </div>
+              <div css={styles.mainItemProgressA(isProgressAni)}>
+                <div>
+                  <div>
+                    <div css={styles.mainItemProgressAbarBox(isProgressAni)}>
+                      <span
+                        css={styles.mainItemProgressAbar(isProgressAni)}
+                      ></span>
+                      <span aria-label="33%">ㅤㅤㅤㅤ</span>
+                    </div>
+                    <div css={styles.mainItemProgressTabBox(isProgressAni)}>
+                      <div css={styles.mainItemProgressTab}>
+                        <h3>todo</h3>
+                        <div>게시판 만들기</div>
+                        <span>+ 새로 만들기</span>
+                      </div>
+                      <div css={styles.mainItemProgressTab}>
+                        <h3>preogress</h3>
+                        <div>회원가입 API 만들기</div>
+                        <span>+ 새로 만들기</span>
+                      </div>
+                      <div css={styles.mainItemProgressTab}>
+                        <h3>complete</h3>
+                        <div>프로젝트 세팅</div>
+                        <span>+ 새로 만들기</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

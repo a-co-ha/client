@@ -120,7 +120,7 @@ const chatOpacity = keyframes`
   }
 `;
 
-const bookmarkBlinkAni = keyframes`
+const bookmarkBlingAni = keyframes`
   to {
     left: 200%;
   }
@@ -190,7 +190,7 @@ const bookmarkContentAttrAni = keyframes`
   }
 `;
 
-const bookmarkSubmitBlinkAni = keyframes`
+const bookmarkSubmitBlingAni = keyframes`
 to {
   left: 200%;
 }
@@ -280,6 +280,99 @@ const commitLogIssueAniOut = keyframes`
   to {
     opacity: 1;
     transform: translate3d(0%,0,0) scale(1);
+  }
+`;
+
+// Progress Animation
+const toLittleGrayBackground = keyframes`
+  to {
+    background: rgba(0,0,0,0.1);
+  }
+`;
+
+const toGrayBackground = keyframes`
+  to {
+    background: rgba(0,0,0,0.2);
+  }
+`;
+
+const textColorToWhite = keyframes`
+  to {
+    color: white;
+    font-weight: 700;
+  }
+`;
+
+const progressTodoTranslateAani = keyframes`
+  to {
+    transform: translate3d(116.5%,0,0)
+  }
+`;
+
+const progressTodoTranslateBani = keyframes`
+  to {
+    transform: translate3d(233%,240%,0)
+  }
+`;
+
+const progressProgressTranslateAni = keyframes`
+  to {
+    transform: translate3d(116.5%,120%,0);
+  }
+`;
+
+const progressNewPostToTopAni = keyframes`
+  to {
+    transform: translate3d(0,-200%,0);
+  }
+`;
+
+const progressNewPostToTopLastAni = keyframes`
+  to {
+    transform: translate3d(0,-200%,0);
+  }
+`;
+
+const progressNewPostToBottomAni = keyframes`
+  to {
+    transform: translate3d(0,300%,0)
+  }
+`;
+const progressNewPostToBottomLastAni = keyframes`
+  to {
+    transform: translate3d(0,650%,0)
+  }
+`;
+
+const progressNewPostToBottomHalfAni = keyframes`
+  to {
+    transform: translate3d(0,0,0);
+  }
+`;
+
+const progressBar66 = keyframes`
+  to {
+    width: 66%;
+    background: #26b16e;
+  }
+`;
+
+const progressBar100 = keyframes`
+  to {
+    width: 100%;
+    background: #3a9ad2;
+  }
+`;
+
+const progressBar66Span = keyframes`
+  to {
+    content: '66%';
+  }
+`;
+
+const progressBar100Span = keyframes`
+  to {
+    content: '100%';
   }
 `;
 
@@ -670,6 +763,7 @@ const mainItemTitleStyle = css`
   font-weight: 900;
   text-align: start;
   white-space: pre-wrap;
+  word-break: keep-all;
   transition: 0.7s ease-out;
   @media screen and (max-width: 361px) {
     font-size: 2rem;
@@ -1419,7 +1513,7 @@ export const previewProgressBarSpan = css`
   position: relative;
   width: 7vh;
   height: 0.7vh;
-  border: 0.05vh solid rgb(255, 0, 0, 0.8);
+  border: 0.05vh solid rgb(0, 0, 0, 0.8);
   border-radius: 1vh;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   &::before {
@@ -1427,10 +1521,10 @@ export const previewProgressBarSpan = css`
     content: '';
     top: 0;
     left: 0;
-    width: 25%;
+    width: 33%;
     height: 100%;
     display: black;
-    background: red;
+    background: #f19c49;
     border-radius: 1vh;
   }
   @media screen and (min-width: 1280px) {
@@ -2235,7 +2329,7 @@ export const mainItemChatBookmarkA = (isAni: boolean) => css`
           z-index: 3;
           background: white;
           transform: rotate(45deg);
-          animation: ${isAni ? bookmarkBlinkAni : null} 2s 1s forwards;
+          animation: ${isAni ? bookmarkBlingAni : null} 2s 1s forwards;
         }
         &::after {
           position: absolute;
@@ -2247,7 +2341,7 @@ export const mainItemChatBookmarkA = (isAni: boolean) => css`
           z-index: 3;
           background: white;
           transform: rotate(45deg);
-          animation: ${isAni ? bookmarkBlinkAni : null} 2s 1s forwards;
+          animation: ${isAni ? bookmarkBlingAni : null} 2s 1s forwards;
         }
       }
       & > div:nth-of-type(2) {
@@ -2440,7 +2534,7 @@ export const mainItemChatBookmarkB = (isAni: boolean) => css`
           z-index: 3;
           background: white;
           transform: rotate(45deg);
-          animation: ${isAni ? bookmarkSubmitBlinkAni : null} 2s 4.8s forwards;
+          animation: ${isAni ? bookmarkSubmitBlingAni : null} 2s 4.8s forwards;
         }
         & > svg {
           width: 2vh;
@@ -2570,7 +2664,7 @@ export const mainItemCommitLogConnectInnerBox = (isAni: boolean) => css`
     z-index: 3;
     background: white;
     transform: rotate(45deg);
-    animation: ${isAni ? bookmarkBlinkAni : null} 0.5s 1s forwards;
+    animation: ${isAni ? bookmarkBlingAni : null} 0.5s 1s forwards;
   }
   &::after {
     position: absolute;
@@ -2582,7 +2676,7 @@ export const mainItemCommitLogConnectInnerBox = (isAni: boolean) => css`
     z-index: 3;
     background: white;
     transform: rotate(45deg);
-    animation: ${isAni ? bookmarkBlinkAni : null} 0.5s 1s forwards;
+    animation: ${isAni ? bookmarkBlingAni : null} 0.5s 1s forwards;
   }
 `;
 
@@ -2653,8 +2747,9 @@ export const mainItemProgressBox = css`
   );
 `;
 
-export const mainItemProgressLayoutBox = css`
+export const mainItemProgressLayoutBox = (isAni: boolean) => css`
   ${mainItemLayoutBox};
+  animation: ${isAni ? toLittleGrayBackground : null} 2s 1s forwards;
 `;
 
 export const mainItemProgressLayoutInnerBox = css`
@@ -2663,6 +2758,17 @@ export const mainItemProgressLayoutInnerBox = css`
 
 export const mainItemProgressTitle = css`
   ${mainItemTitleStyle};
+  & > img {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 361px) {
+    width: 85%;
+    font-size: 1.9rem;
+  }
 `;
 
 export const mainItemProgressSubTitle = css`
@@ -2686,6 +2792,143 @@ export const mainItemProgressDescBox = css`
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
+  }
+`;
+
+export const mainItemProgressA = (isAni: boolean) => css`
+  ${mainItemEditableStyle};
+
+  background: white;
+  transform: translate3d(0, 35%, 0);
+  box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.1),
+    2px 4px 8px -4px rgb(0 0 0 / 0.1);
+  animation: ${isAni ? toGrayBackground : null} 2s 1s forwards;
+
+  // animation: ${isAni ? mainItemChatBookmarkAaniIn : null} 1.5s 2.7s forwards,
+  // ${isAni ? mainItemChatBookmarkAaniOut : null} 1.5s 6.7s forwards;
+  & > div:nth-of-type(1) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    & > div {
+      background: white;
+    }
+  }
+  @media screen and (max-width: 361px) {
+    width: 100%;
+  }
+`;
+
+export const mainItemProgressAbarBox = (isAni: boolean) => css`
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0.1vh;
+  font-size: 0.9vh;
+  border-radius: 0.2rem;
+  & > span:nth-of-type(2) {
+    position: relative;
+    font-size: 0.8rem;
+    &::before {
+      position: absolute;
+      content: attr(aria-label);
+      top: 0;
+      left: 0;
+      animation: ${isAni ? progressBar66Span : null} 1.5s 1.5s forwards,
+        ${isAni ? progressBar100Span : null} 1.5s 6s forwards,
+        ${isAni ? textColorToWhite : null} 2s 1s forwards;
+    }
+  }
+`;
+
+export const mainItemProgressAbar = (isAni: boolean) => css`
+  ${previewProgressBarSpan};
+  margin-right: 0.3rem;
+  &::before {
+    animation: ${isAni ? progressBar66 : null} 1.5s 1.5s forwards,
+      ${isAni ? progressBar100 : null} 1.5s 6s forwards;
+  }
+`;
+
+export const mainItemProgressTabBox = (isAni: boolean) => css`
+  ${previewProgressTabBox};
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  transform: translate3d(0, -50%, 0);
+  & > div:nth-of-type(1) {
+    & > div {
+      z-index: 3;
+      background: white;
+      animation: ${isAni ? progressTodoTranslateAani : null} 2s 3.6s forwards,
+        ${isAni ? progressTodoTranslateBani : null} 2s 6s forwards;
+    }
+    & > span {
+      animation: ${isAni ? progressNewPostToTopAni : null} 1s 3.9s forwards;
+    }
+  }
+  & > div:nth-of-type(2) {
+    & > div {
+      background: white;
+      animation: ${isAni ? progressProgressTranslateAni : null} 2s 1s forwards;
+    }
+    & > span {
+      animation: ${isAni ? progressNewPostToTopAni : null} 1s 1.3s forwards,
+        ${isAni ? progressNewPostToBottomHalfAni : null} 1s 3.8s forwards,
+        ${isAni ? progressNewPostToTopLastAni : null} 1s 6.2s forwards;
+    }
+  }
+  & > div:nth-of-type(3) {
+    & > div {
+      background: white;
+    }
+    & > span {
+      animation: ${isAni ? progressNewPostToBottomAni : null} 1s 1.3s forwards,
+        ${isAni ? progressNewPostToBottomLastAni : null} 1.3s 6.4s forwards;
+    }
+  }
+`;
+
+export const mainItemProgressTab = css`
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  font-size: 0.9vh;
+  & > h3:nth-of-type(1) {
+    white-space: nowrap;
+  }
+  & > span:nth-of-type(1) {
+    font-size: 0.7vh;
+  }
+  & > div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.7vh;
+    color: rgba(0, 0, 0, 0.5);
+    border: 0.05vh solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.4vh;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
+  }
+  @media screen and (min-width: 1280px) {
+    & > h3:nth-of-type(1) {
+      font-size: 1.25rem;
+    }
+    & > div:nth-of-type(1) {
+      height: 25%;
+    }
+    & > span:nth-of-type(1) {
+      font-size: 0.7rem;
+    }
   }
 `;
 
@@ -2777,7 +3020,7 @@ export const bannerBtn = css`
     position: absolute;
     content: '';
     top: -50%;
-    left: -30%;
+    left: -40%;
     width: 2%;
     height: 200%;
     z-index: 3;
@@ -2788,7 +3031,7 @@ export const bannerBtn = css`
     position: absolute;
     content: '';
     top: -50%;
-    left: -20%;
+    left: -30%;
     width: 5%;
     height: 200%;
     z-index: 3;
@@ -2799,10 +3042,10 @@ export const bannerBtn = css`
     background: white;
     color: black;
     &::before {
-      animation: ${bookmarkBlinkAni} 1s forwards;
+      animation: ${bookmarkBlingAni} 1s forwards;
     }
     &::after {
-      animation: ${bookmarkBlinkAni} 1s forwards;
+      animation: ${bookmarkBlingAni} 1s forwards;
     }
   }
   @media screen and (min-width: 1280px) {
