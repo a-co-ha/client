@@ -20,89 +20,96 @@ export default function Page({ channelId, pageId, type }: pageProps) {
   const [parentPageId, setParentPageId] = useState('');
   //TODO: 템플릿안 페이지를 눌러도 pageId를 거쳐서감
   useEffect(() => {
-    setParentPageId(localStorage.getItem('parentPageId')!);
+    setParentPageId(localStorage.getItem('parentPageId') || '');
   }, [pageId]);
 
   resetServerContext();
-  if (parentPageId && type === 'progress-page') {
-    // TODO: 템플릿 안 페이지 일때는 template페이지에 parentType parenPageId를 전달하여 랜더링 시켜야함
 
-    return (
-      <>
-        <div css={styles.main}>
-          <Suspense fallback={<Loading position="fixed" />}>
-            <ProjectSideBar />
-            <div style={{ display: 'flex', padding: '1rem', width: '100%' }}>
-              <TemplatePage
-                channelId={channelId}
-                pageId={parentPageId!}
-                type={'template-progress'}
-              />
-              <EditablePage
-                channelId={channelId}
-                pageId={pageId as string}
-                type={type}
-              />
-            </div>
-          </Suspense>
-        </div>
-      </>
-    );
-  } else if (parentPageId && type === 'normal-page') {
-    return (
-      <>
-        <div css={styles.main}>
-          <Suspense fallback={<Loading position="fixed" />}>
-            <ProjectSideBar />
-            <div style={{ display: 'flex', padding: '1rem', width: '100%' }}>
-              <TemplateNormalPage
-                channelId={channelId}
-                pageId={parentPageId}
-                type={'template-normal'}
-              />
-              <EditablePage
-                channelId={channelId}
-                pageId={pageId as string}
-                type={type}
-              />
-            </div>
-          </Suspense>
-        </div>
-      </>
-    );
-  }
-  return (
-    <>
-      <div css={styles.main}>
-        <Suspense fallback={<Loading position="fixed" />}>
-          <ProjectSideBar />
+  let content = null;
 
-          {type === 'socket' ? (
-            <>
-              <ChatPage channelId={channelId} pageId={pageId} type={type} />
-              <div>
-                <UserList />
-                <ChatBookmark channelId={channelId} pageId={pageId} />
-              </div>
-            </>
-          ) : null}
-          {type === 'normal' ? (
+  switch (type) {
+    case 'progress-page':
+      if (parentPageId) {
+        content = (
+          <div style={{ display: 'flex', padding: '1rem', width: '100%' }}>
+            <TemplatePage
+              channelId={channelId}
+              pageId={parentPageId}
+              type={'template-progress'}
+            />
             <EditablePage
               channelId={channelId}
               pageId={pageId as string}
               type={type}
             />
-          ) : null}
-          {type === 'template-progress' ? (
-            <TemplatePage channelId={channelId} pageId={pageId} type={type} />
-          ) : null}
-          {type === 'template-normal' ? (
+          </div>
+        );
+      }
+      break;
+
+    case 'normal-page':
+      if (parentPageId) {
+        content = (
+          <div style={{ display: 'flex', padding: '1rem', width: '100%' }}>
             <TemplateNormalPage
               channelId={channelId}
-              pageId={pageId}
+              pageId={parentPageId}
+              type={'template-normal'}
+            />
+            <EditablePage
+              channelId={channelId}
+              pageId={pageId as string}
               type={type}
             />
-          ) : null}
+          </div>
+        );
+      }
+      break;
+
+    case 'socket':
+      content = (
+        <>
+          <ChatPage channelId={channelId} pageId={pageId} type={type} />
+          <div>
+            <UserList />
+            <ChatBookmark channelId={channelId} pageId={pageId} />
+          </div>
+        </>
+      );
+      break;
+
+    case 'normal':
+      content = (
+        <EditablePage
+          channelId={channelId}
+          pageId={pageId as string}
+          type={type}
+        />
+      );
+      break;
+
+    case 'template-progress':
+      content = (
+        <TemplatePage channelId={channelId} pageId={pageId} type={type} />
+      );
+      break;
+
+    case 'template-normal':
+      content = (
+        <TemplateNormalPage channelId={channelId} pageId={pageId} type={type} />
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  return (
+    <>
+      <div css={styles.main}>
+        <Suspense fallback={<Loading position="fixed" />}>
+          <ProjectSideBar />
+          {content}
           {/* <UserList /> */}
         </Suspense>
       </div>

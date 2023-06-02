@@ -16,7 +16,6 @@ export const TemplateNormalPage = ({
   pageId,
   type,
 }: TemplatePageProps) => {
-  console.log('🚀 ~ file: index.tsx:19 ~ type:', type);
   const { mutate: createPage } = useCreateTemplateInPage(
     channelId,
     pageId,
@@ -24,9 +23,7 @@ export const TemplateNormalPage = ({
   );
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
   const { mutate: upatePageList } = useUpadatePageList();
-
   const [pageArr, setPageArr] = useState(pageList);
-  console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
 
   useEffect(() => {
     localStorage.setItem('parentPageId', pageId);

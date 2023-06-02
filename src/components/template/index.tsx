@@ -16,7 +16,6 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { ProgressGauge } from './progressGauge';
-import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
 
@@ -25,14 +24,11 @@ export const TemplatePage = ({
   pageId,
   type,
 }: TemplatePageProps) => {
-  console.log("🚀 ~ file: index.tsx:28 ~ type:", type)
   const { mutate: createPage } = useCreateTemplateInPage(
     channelId,
     pageId,
     type
   );
-  console.log('🚀 ~ file: index.tsx:199 ~parentPageId pageId:', pageId);
-  //FIXME: pageId값이 처음에 있는데 2,3번쨰 없다가 다시 생김
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
   const groupPageList = progressStatusType.map((status) =>
     pageList?.filter((page: PageInPageList) => page.progressStatus === status)
@@ -40,15 +36,9 @@ export const TemplatePage = ({
   const [pageArr, setPageArr] = useState(groupPageList);
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
   const { mutate: upatePageList } = useUpadatePageList();
-  // const [parentPageId, setParentPageId] = useState('');
-  const { type: isRenderPage } = useGetUrlInfo();
-  // FIXME: true/false로 값 지정하기
-  // FIXME: 템플릿 안 페이지가 있는 상태에서 dnd 시 탬플릿 페이지 사라짐
 
   useEffect(() => {
-    if (isRenderPage == 'template-progress') {
-      localStorage.setItem('parentPageId', pageId);
-    }
+    localStorage.setItem('parentPageId', pageId);
   }, []);
   /**
    *
