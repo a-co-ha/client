@@ -16,6 +16,7 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { ProgressGauge } from './progressGauge';
+import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
 
@@ -37,16 +38,12 @@ export const TemplatePage = ({
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
   const { mutate: upatePageList } = useUpadatePageList();
 
+  // useRouter query type이 template으로 시작할떄만 값가져오기
+  useParentUrlInfo(channelId);
+
   useEffect(() => {
     localStorage.setItem('parentPageId', pageId);
   }, []);
-  /**
-   *
-   * TODO: 전역상태로 parentPageId 저장하면 안되는 이유
-   * 템플릿 안 페이지에서 새로고침 시 전역상태로 저장된 pageId가 현재페이지 id로 바뀜
-   * get하면 템플릿 페이지 뜨지않음
-   *
-   */
 
   useEffect(() => {
     upatePageList(PageIdList);

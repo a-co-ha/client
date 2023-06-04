@@ -75,6 +75,19 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     e.key === 'Delete' && deleteSelectBlock();
   };
 
+  const handleClose = () => {
+    // 부모페이지로 라우터이동 으로 해야함
+    // 컴포넌트 제거 - 가장 윗 요소 에서 true false 로 랜더링 제어 시 url이 남아있어서 같은 페이지 토글이 되지않음
+    const parentPageInfo = JSON.parse(
+      localStorage.getItem('parentPageInfo') || ''
+    );
+    const parentPageId = (localStorage.getItem('parentPageId') || '')
+    const [channelId, parentPageType, parentPageName] = parentPageInfo;
+    router.push(
+      `/project/${channelId}/${parentPageId}?name=${parentPageName}&type=${parentPageType}`
+    );
+  };
+
   return (
     <div
       style={{
@@ -89,6 +102,9 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
         {({ reset }) => (
           <ErrorBoundary fallback={Error} onReset={reset}>
             <div css={styles.contentBox} ref={page}>
+              {(type === 'progress-page' || type === 'progress-page') && (
+                <button onClick={handleClose}>닫기</button>
+              )}
               {isNewPage && <Notice status="SUCCESS" />}
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Label />

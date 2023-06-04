@@ -10,6 +10,7 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { PageInTemplate } from '../template/PageInTemplate';
+import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 
 export const TemplateNormalPage = ({
   channelId,
@@ -25,9 +26,7 @@ export const TemplateNormalPage = ({
   const { mutate: upatePageList } = useUpadatePageList();
   const [pageArr, setPageArr] = useState(pageList);
 
-  useEffect(() => {
-    localStorage.setItem('parentPageId', pageId);
-  }, []);
+  useParentUrlInfo(channelId);
 
   useDidMountEffect(() => {
     // 마운트 시 실행되지 않지만 마운트 후 상태값이 바뀌면서 리랜더링이 일어나 그떄부터 실행되어 첫 랜더링 때 실행되는것처럼 보임
