@@ -25,7 +25,8 @@ export interface UserInChannel {
   channel_id: string;
   id: number;
   name: string;
-  "user.user_id": number;
+  'user.img': string;
+  'user.user_id': number;
   userId: number;
   user_id: number;
 }

@@ -1,8 +1,13 @@
 import { useGetProgressPercentList } from '@/hooks/queries/main/useGetProgressPercentList';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
-import { PageNameLink } from '../project-sidebar/PageNameLink';
 import { ProgressGauge } from '../template/progressGauge';
 import * as styles from './styles';
+import Link from 'next/link';
+import { CreateProgressTemplate } from './CreateProgressTemplate';
+import { Icon } from '../project-sidebar/Icons';
+import { useRecoilValue } from 'recoil';
+import { pageNameShare } from '@/recoil/project/atom';
+import { useMemo } from 'react';
 
 export interface PageProgress {
   pageName: string;
@@ -15,22 +20,31 @@ export const Progress = () => {
   const { data: pagePercentList } = useGetProgressPercentList(channelId);
 
   return (
-    <div css={styles.commonBoxStyle}>
-      <h3 css={styles.commonTitleStyle}>진행현황</h3>
-      <main css={styles.content}>
-        {pagePercentList &&
-          pagePercentList.map((page: PageProgress) => (
-            <div key={page._id} css={styles.gaugeContainer}>
-              <PageNameLink
-                channelId={channelId}
-                pageId={page._id}
-                pageName={page.pageName}
-                type={'template-progress'}
-              />
-              <ProgressGauge pageId={page._id} />
-            </div>
-          ))}
-      </main>
+    <div css={styles.progressCommonBoxStyle}>
+      <h3 css={styles.commonTitleStyle}>
+        <Icon.Progress aria-hidden="true" />
+      </h3>
+      {pagePercentList &&
+        (pagePercentList.length > 0 ? (
+          <main css={styles.progressContent}>
+            {pagePercentList.slice(0, 4).map((page: PageProgress) => (
+              <div key={page._id} css={styles.gaugeContainer}>
+                <Link
+                  href={`/project/${channelId}/${page._id}?name=${page.pageName}&type=template-progress`}
+                >
+                  <div css={styles.progressTitleGuage}>
+                    <ProgressGauge pageId={page._id} />
+                    {page.pageName}
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </main>
+        ) : (
+          <main css={styles.createProgressContent}>
+            <CreateProgressTemplate />
+          </main>
+        ))}
     </div>
   );
 };

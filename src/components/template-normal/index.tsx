@@ -10,18 +10,26 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { PageInTemplate } from '../template/PageInTemplate';
+import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 
 export const TemplateNormalPage = ({
   channelId,
   pageId,
   type,
 }: TemplatePageProps) => {
-  const { mutate: createPage } = useCreateTemplateInPage();
+  const { mutate: createPage } = useCreateTemplateInPage(
+    channelId,
+    pageId,
+    type
+  );
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
   const { mutate: upatePageList } = useUpadatePageList();
-
   const [pageArr, setPageArr] = useState(pageList);
-  console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
+  useParentUrlInfo(channelId);
+
+  useEffect(() => {
+    localStorage.setItem('parentPageId', pageId);
+  }, []);
 
   useDidMountEffect(() => {
     // 마운트 시 실행되지 않지만 마운트 후 상태값이 바뀌면서 리랜더링이 일어나 그떄부터 실행되어 첫 랜더링 때 실행되는것처럼 보임
@@ -44,7 +52,7 @@ export const TemplateNormalPage = ({
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <main css={styles.progressContainer}>
+          <main css={styles.progressContainer} style={{ width: '40%' }}>
             <DragDropContext onDragEnd={onDragEndHandler}>
               <section css={styles.progressSection}>
                 <Droppable droppableId={pageId}>
@@ -68,7 +76,11 @@ export const TemplateNormalPage = ({
                     </div>
                   )}
                 </Droppable>
-                <button onClick={() => createPage(null)}>+ 새로 만들기</button>
+                <div className="hover:bg-gray-200 p-2 rounded-md">
+                  <button onClick={() => createPage(null)}>
+                    + 새로 만들기
+                  </button>
+                </div>
               </section>
             </DragDropContext>
           </main>

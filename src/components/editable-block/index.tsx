@@ -125,7 +125,11 @@ export const EditableBlock = (props: editableBlock) => {
       e.preventDefault();
 
       props.deleteBlock(props.id);
-      if (contentEditable.current && contentEditable.current.parentElement) {
+      if (
+        contentEditable.current &&
+        contentEditable.current.parentElement &&
+        props.position !== 0
+      ) {
         const prevBlock = contentEditable.current.parentElement
           .previousElementSibling.childNodes[1] as HTMLDivElement;
         focusContentEditableTextToEnd(prevBlock);
@@ -232,17 +236,15 @@ export const EditableBlock = (props: editableBlock) => {
                 <Image src={DragHandleIcon} alt="Icon" />
               </span>
               <div
+                className="list"
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
                 ref={contentEditable}
                 key={props.id}
-                css={styles.block(
-                  snapshot.isDragging,
-                  snapshot.dropAnimation,
-                  state.placeholder
-                )}
+                css={styles.block(snapshot.isDragging, state.placeholder)}
                 data-position={props.position}
+                data-id={props.id}
                 data-tag={state.tag}
                 onInput={handleChange}
                 onFocus={handleFocus}
@@ -250,6 +252,13 @@ export const EditableBlock = (props: editableBlock) => {
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
                 onClick={handleImageClick}
+                style={{
+                  backgroundColor: contentEditable?.current?.classList.contains(
+                    'selected'
+                  )
+                    ? '#ccd7f0'
+                    : '',
+                }}
               />
               <input
                 type="file"

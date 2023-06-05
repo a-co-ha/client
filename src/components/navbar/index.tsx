@@ -22,7 +22,7 @@ export const NavBar = () => {
           <div css={styles.navBar}>
             <ProjectMenu />
             <Title />
-            <Alert />
+            <Alert/>
             <LoginBtn />
           </div>
           {/* </Suspense> */}

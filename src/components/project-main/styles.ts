@@ -37,6 +37,18 @@ export const commonBoxStyle = css`
   margin: 0 auto;
 `;
 
+export const progressCommonBoxStyle = css`
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  max-width: 90%;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
+  height: fit-content;
+`;
+
 export const commonTitleStyle = css`
   text-align: left;
 `;
@@ -287,6 +299,29 @@ export const content = css`
   height: 150px;
   border: 1.5px solid gray;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const createProgressContent = css`
+  height: 150px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const progressContent = css`
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const progressTitleGuage = css`
+  display: flex;
 `;
 
 export const gaugeContainer = css`
@@ -579,5 +614,23 @@ export const confirmModalCancelBtn = css`
   background: rgba(0, 0, 0, 0.2);
   &:hover {
     background: rgba(0, 0, 0, 0.3);
+  }
+`;
+
+export const svgButtonStyles = css`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const svgIconStyles = css`
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
   }
 `;

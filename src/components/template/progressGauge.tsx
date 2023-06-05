@@ -1,17 +1,23 @@
 import { useGetProgressPercent } from '@/hooks/queries/template/useGetProgressPercent';
-import { dealt, progress, gaugeContainer } from './styles';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
+import { ProgressBar } from './ProgressBar';
+import { ProgressCircle } from './ProgressCircle';
+import { gaugeContainer } from './styles';
 
-export const ProgressGauge = ({ pageId = '' }) => {
-  const { data: progressPercent } = useGetProgressPercent(pageId);
+interface ProgressGaugeProps {
+  pageId: string;
+}
+export const ProgressGauge = ({ pageId }: ProgressGaugeProps) => {
+  const { type: inTemplate } = useGetUrlInfo();
+  const { data: progressPercent } = useGetProgressPercent(pageId, inTemplate);
 
-  return (
-    progressPercent && (
-      <div css={gaugeContainer}>
-        <div css={progress(progressPercent?.percentage)}>
-          <div css={dealt(progressPercent?.percentage)} />
-        </div>
-        <p>{progressPercent?.percentage}</p>
-      </div>
-    )
-  );
+  return progressPercent ? (
+    <div css={gaugeContainer}>
+      {inTemplate ? (
+        <ProgressBar progressPercent={progressPercent} />
+      ) : (
+        <ProgressCircle progressPercent={progressPercent} />
+      )}
+    </div>
+  ) : null;
 };

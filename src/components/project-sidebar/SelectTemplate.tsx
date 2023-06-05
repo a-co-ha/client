@@ -4,20 +4,19 @@ import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 import { usePostSocketPage } from '@/hooks/queries/socket/postPage';
 import { useCreateTemplate } from '@/hooks/queries/template/useCreateTemplate';
 import { SelectTemplateProps } from './type';
-import { IconOne, IconTwo, IconThree } from './Icons';
+import { Icon } from './Icons';
 
 export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
   const { mutate: postEditablePageMutate } = usePostEditablePage();
   const { mutate: createTemplateMutate } = useCreateTemplate();
   const { mutate: postSocketPageMutate } = usePostSocketPage();
-
   const templates =
     pageType === 'EditablePage'
       ? [
           {
             name: '기본',
             description: '기본 페이지 입니다.',
-            icon: IconOne,
+            icon: Icon.Docs,
             api() {
               postEditablePageMutate();
             },
@@ -26,7 +25,7 @@ export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
             name: '프로젝트',
             description:
               '팀을 위한 프로젝트 관리 템플릿입니다. 프로젝트별로 작업을 정리하고 팀 전반에 걸쳐 진행 상황을 트래킹하세요.',
-            icon: IconTwo,
+            icon: Icon.Progress,
             api() {
               createTemplateMutate('progress');
             },
@@ -34,7 +33,7 @@ export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
           {
             name: '문서',
             description: '한 곳에서 팀 문서를 정리하고 협업하세요.',
-            icon: IconThree,
+            icon: Icon.List,
             api() {
               createTemplateMutate('normal');
             },
@@ -44,7 +43,7 @@ export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
           {
             name: 'normal',
             description: '기본 채팅 페이지 입니다.',
-            icon: IconOne,
+            icon: Icon.Chat,
             api() {
               postSocketPageMutate();
             },
@@ -75,7 +74,7 @@ export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
                       close();
                     }}
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12 bg-[#9bbdba] rounded-lg">
                       <item.icon aria-hidden="true" />
                     </div>
                     <div className="ml-4">

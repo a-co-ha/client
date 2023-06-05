@@ -16,26 +16,37 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { ProgressGauge } from './progressGauge';
+import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
+const progressTitle = ['시작 전', '진행 중', '완료'];
+
+//FIXME: 옮기려는 라인에 박스가 없을 때 dnd동작 x => 박스 하나씩 생성후 display noen처리 해놓기?
 
 export const TemplatePage = ({
   channelId,
   pageId,
   type,
 }: TemplatePageProps) => {
-  const { mutate: createPage } = useCreateTemplateInPage();
+  const { mutate: createPage } = useCreateTemplateInPage(
+    channelId,
+    pageId,
+    type
+  );
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
-
   const groupPageList = progressStatusType.map((status) =>
     pageList?.filter((page: PageInPageList) => page.progressStatus === status)
   );
-
   const [pageArr, setPageArr] = useState(groupPageList);
-  console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
-
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
   const { mutate: upatePageList } = useUpadatePageList();
+
+  // useRouter query type이 template으로 시작할떄만 값가져오기
+  useParentUrlInfo(channelId);
+
+  useEffect(() => {
+    localStorage.setItem('parentPageId', pageId);
+  }, []);
 
   useEffect(() => {
     upatePageList(PageIdList);
@@ -126,7 +137,7 @@ export const TemplatePage = ({
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <div css={styles.mainContainer}>
+          <div css={styles.mainContainer} style={{ width: '40%' }}>
             <ProgressGauge pageId={pageId} />
             <main css={styles.progressContainer}>
               <DragDropContext onDragEnd={onDragEndHandler}>
@@ -135,7 +146,22 @@ export const TemplatePage = ({
                   pageArr.map((el: PageInPageList[], index) => {
                     return (
                       <section css={styles.progressSection} key={index}>
-                        <h3>{progressStatusType[index]}</h3>
+                        <span
+                          style={{
+                            backgroundColor:
+                              index === 0
+                                ? '#fcd99f'
+                                : index === 1
+                                ? '#daf7ea'
+                                : '#c8e5fa',
+                            borderRadius: '0.5rem',
+                            padding: '0.3rem',
+                            display: 'inline-block',
+                            marginBottom: '0.5rem',
+                          }}
+                        >
+                          {progressTitle[index]}
+                        </span>
                         <Droppable droppableId={`${index}`}>
                           {(provided) => (
                             <div
@@ -160,11 +186,15 @@ export const TemplatePage = ({
                             </div>
                           )}
                         </Droppable>
-                        <button
-                          onClick={() => createPage(progressStatusType[index])}
-                        >
-                          + 새로 만들기
-                        </button>
+                        <div className="hover:bg-gray-200 p-2 rounded-md">
+                          <button
+                            onClick={() =>
+                              createPage(progressStatusType[index])
+                            }
+                          >
+                            + 새로 만들기
+                          </button>
+                        </div>
                       </section>
                     );
                   })}
