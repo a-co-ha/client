@@ -24,7 +24,6 @@ import {
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { IconOne } from '../components/project-sidebar/Icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import chat from '@/images/landingPage/chat.svg';
 import Image from 'next/image';
