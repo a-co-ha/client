@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   chatBookmarkModalState,
@@ -42,12 +42,15 @@ export const ChatBookmarkModal = ({
 
   const [isCopied, setIsCopied] = useState(false);
 
+  const modalRef = useRef(null);
+
   useEffect(() => {
     setChatBookmarkEditContentShare({
       id: '',
       chatBookmarkTitle: chatBookmarkData.bookmarkName,
       chatBookmarkContent: chatBookmarkData.content,
     });
+    modalRef.current && (modalRef.current as HTMLDivElement).focus();
   }, [chatBookmarkData]);
 
   const onClickHandler = () => {
@@ -68,8 +71,14 @@ export const ChatBookmarkModal = ({
     setChatBookmarkModal(false);
   };
 
+  const onkeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === `Escape`) {
+      e.preventDefault();
+      setChatBookmarkModal(false);
+    }
+  };
   return (
-    <div>
+    <div ref={modalRef} onKeyDown={onkeyDownHandler} tabIndex={0}>
       <div
         onClick={onClickHandler}
         css={styles.chatBookmarkModalBackground(chatBookmarkModal)}

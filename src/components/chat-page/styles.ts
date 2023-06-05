@@ -78,7 +78,7 @@ export const messageAlign = (isDisplay: boolean) => css`
   margin-top: ${isDisplay ? `1.5rem` : `0`};
 `;
 
-export const messageContentBox = css`
+export const messageContentBox = (isMyMessage: boolean) => css`
   max-width: 815px;
   padding: 0.5rem;
   margin: 0.375rem 0 0 0.7rem;
@@ -86,7 +86,10 @@ export const messageContentBox = css`
   font-size: 0.75rem;
   font-weight: 500;
   text-align: start;
-  background: #ffd6dc;
+  background: ${isMyMessage
+    ? `
+#bddc95`
+    : `#ffd6dc`};
   border-radius: 0.75rem;
   border-top-left-radius: 0.2rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

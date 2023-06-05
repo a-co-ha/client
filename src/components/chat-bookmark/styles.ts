@@ -13,6 +13,7 @@ export const chatBookmarkBox = css`
 export const chatBookmarkCreateBtn = css`
   width: 100%;
   height: 2rem;
+  font-size: 0.9rem;
   &:hover {
     background: #eee;
   }

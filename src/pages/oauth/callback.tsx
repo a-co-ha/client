@@ -15,18 +15,20 @@ export default function Callback({
   refreshToken,
   sessionID,
   userId,
+  userName,
 }: {
   accessToken: string;
   refreshToken: string;
   sessionID: string;
   userId: number;
+  userName: string;
 }) {
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
   const setChannelName = useSetRecoilState(channelNameState);
   const router = useRouter();
   const { data: userData } = useGetUser();
-  setToken(accessToken, refreshToken, sessionID, userId);
+  setToken(accessToken, refreshToken, sessionID, userId, userName);
   api.defaults.headers.common['Authorization'] = `access ${accessToken}`;
   useEffect(() => {
     router.prefetch(`/project`);
@@ -57,8 +59,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const refreshToken = logindata?.refreshToken;
   const sessionID = logindata?.sessionID;
   const userId = logindata?.userId;
+  const userName = logindata?.name;
 
   return {
-    props: { accessToken, refreshToken, sessionID, userId },
+    props: { accessToken, refreshToken, sessionID, userId, userName },
   };
 };

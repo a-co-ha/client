@@ -56,16 +56,22 @@ export const ChatBookmark = ({
     setChatBookmarkModal(true);
     setChatBookmarkFormData({ id, bookmarkName, content });
   };
+
+  const onkeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === `Escape`) {
+      e.preventDefault();
+      setChatBookmarkModal(false);
+    }
+  };
   return (
     <div css={styles.chatBookmarkBox}>
-      <div>chatBookmark</div>
       <ChatBookmarkModal channelId={channelId} pageId={pageId} />
       <ChatBookmarkForm channelId={channelId} pageId={pageId} />
       <button
         css={styles.chatBookmarkCreateBtn}
         onClick={() => setChatBookmarkFormModal(true)}
       >
-        +
+        북마크 +
       </button>
       <div css={styles.chatBookmarkItemBox}>
         {chatBookmark.map((bookmark, i) => {

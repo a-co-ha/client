@@ -36,7 +36,7 @@ export const alertBox = css`
 
 export const loginBox = css`
   ${flexCenterNavBar};
-  min-width: 200px;
+  min-width: 100px;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
@@ -179,8 +179,9 @@ export const projectDeleteNameBtn = (
 
 export const loginLogo = css`
   display: inline-block;
-  width: 60px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 `;
 
 export const profileInnerBox = css`

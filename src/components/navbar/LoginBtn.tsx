@@ -3,26 +3,29 @@ import { Fragment, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import { loginState } from '@/recoil/user/atom';
+import { loginState, loginModalState } from '@/recoil/user/atom';
 import { Profile } from './Profile';
 import { getCookie } from 'cookies-next';
 import * as styles from './styles';
 import githubLogo from '@/images/githubLogo.png';
+import acohaGreen from '@/images/channelImg/6.png';
 
 export const LoginBtn = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
+  const [isLoginModalOpen, setIsLoginModalOpen] =
+    useRecoilState(loginModalState);
   console.log(`이즈로그드이이인`, isLoggedIn);
   useEffect(() => {
     const token = getCookie(`accessToken`);
     console.log(`로그인 버튼 토큰!@`, token);
     // token ? setIsLoggedIn(true) : setIsLoggedIn(false);
   }, []);
-  const [isOpen, setIsOpen] = useState(false);
+
   const closeModal = () => {
-    setIsOpen(false);
+    setIsLoginModalOpen(false);
   };
   const openModal = () => {
-    setIsOpen(true);
+    setIsLoginModalOpen(true);
   };
 
   return (
@@ -43,7 +46,7 @@ export const LoginBtn = () => {
             </div>
           </div>
 
-          <Transition appear show={isOpen} as={Fragment}>
+          <Transition appear show={isLoginModalOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeModal}>
               <Transition.Child
                 as={Fragment}
@@ -78,15 +81,14 @@ export const LoginBtn = () => {
                         아코하
                       </Dialog.Title>
                       <Image
-                        src={githubLogo}
+                        src={acohaGreen}
                         css={styles.loginLogo}
                         alt="loginLogo"
                       />
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Your payment has been successfully submitted. We’ve
-                          sent you an email with all of the details of your
-                          order.
+                          아코하는 깃허브 계정으로 간편 로그인을 지원해요
+                          <br></br> 바로 시작해 볼까요?
                         </p>
                       </div>
 

@@ -43,29 +43,36 @@ export const ChatBookmarkForm = ({
     control: methods.control,
   });
 
+  const titleInput = useRef(null);
+  const contentTextarea = useRef(null);
+
+  useEffect(() => {
+    titleInput.current && (titleInput.current as HTMLInputElement).focus();
+  }, [chatBookmarkFormModal]);
+
   const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
     console.log(`submitData`, chatBookmark);
-    // postBookmark.mutate(chatBookmark);
 
     setBookmark({
       bookmarkName: chatBookmark.chatBookmarkTitle,
       content: chatBookmark.chatBookmarkContent,
       roomId: pageId,
     });
-    // socket.emit(`SET_BOOKMARK`, {
-    //   bookmarkName: chatBookmark.chatBookmarkTitle,
-    //   content: chatBookmark.chatBookmarkContent,
-    //   roomId: pageId,
-    // });
     setChatBookmarkFormModal(false);
     methods.reset();
   };
 
-  // const onKeyDownTitleHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Enter') {
-  //     methods.setFocus(`chatBookmarkContent`);
-  //   }
-  // };
+  const onKeyDownTitleHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      contentTextarea.current &&
+        (contentTextarea.current as HTMLTextAreaElement).focus();
+    } else if (e.key === `Escape`) {
+      e.preventDefault();
+      setChatBookmarkFormModal(false);
+      methods.reset();
+    }
+  };
 
   const onKeyDownContentHandler = (
     e: React.KeyboardEvent<HTMLTextAreaElement>
@@ -98,17 +105,17 @@ export const ChatBookmarkForm = ({
                     !!titleError,
                     isBookmarkEditing
                   )}
+                  ref={titleInput}
                   type="text"
                   value={chatBookmarkTitle.value}
                   onChange={chatBookmarkTitle.onChange}
-                  // onKeyDown={onKeyDownTitleHandler}
+                  onKeyDown={onKeyDownTitleHandler}
                   maxLength={30}
                   spellCheck={false}
                   placeholder={`제목`}
-                  autoFocus
                 />
                 <textarea
-                  autoFocus
+                  ref={contentTextarea}
                   css={styles.chatBookmarkFormInput(isBookmarkEditing)}
                   value={chatBookmarkContent.value}
                   onChange={chatBookmarkContent.onChange}

@@ -1,13 +1,14 @@
 import { atom, atomFamily } from 'recoil';
 import { nanoId } from '@/utils/nanoId';
 import type { User } from '@/pages/api/user/type';
+import type { UserInChannel } from '@/components/editable-block/type';
 
 export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,
   default: {
     userId: 0,
-    github_id: '',
-    github_url: '',
+    githubID: '',
+    githubURL: '',
     img: '',
     name: '',
     channels: [
@@ -33,6 +34,11 @@ export const loginState = atom({
   default: false,
 });
 
+export const loginModalState = atom({
+  key: `loginModalState/${nanoId()}`,
+  default: false,
+});
+
 export const adminState = atomFamily({
   key: `adminState/${nanoId()}`,
   default: false,
@@ -52,7 +58,7 @@ export const inviteModalState = atom({
   default: false,
 });
 
-export const channelUserState = atom({
+export const channelUserState = atom<UserInChannel[]>({
   key: `channelUserState/${nanoId()}`,
   default: [],
 });

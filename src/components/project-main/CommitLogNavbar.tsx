@@ -31,9 +31,7 @@ export const CommitLogNavbar = () => {
         css={styles.commitLogNavBtn}
         onClick={onClickHandler}
         aria-selected="true"
-      >
-        커밋
-      </button>
+      ></button>
       <button
         css={styles.commitLogNavBtn}
         onClick={onClickHandler}

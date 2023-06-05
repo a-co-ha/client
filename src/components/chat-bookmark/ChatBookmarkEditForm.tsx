@@ -11,6 +11,7 @@ import {
   chatBookmarkFormDataState,
   isBookmarkEditingState,
   chatBookmarkEditContentShare,
+  chatBookmarkFormModalState,
 } from '@/recoil/socket/atom';
 import { usePatchBookmark } from '@/hooks/queries/socket/patchBookmark';
 
@@ -40,15 +41,10 @@ export const CahtBookmarkEditForm = ({
     },
     mode: 'onSubmit',
   });
-  const {
-    chatBookmarkTitle,
-    chatBookmarkContent,
-    titleError,
-    contentError,
-    isSubmitting,
-  } = useChatBookmarkForm({
-    control: methods.control,
-  });
+  const { chatBookmarkTitle, chatBookmarkContent, titleError, isSubmitting } =
+    useChatBookmarkForm({
+      control: methods.control,
+    });
 
   const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
     console.log(`submitData`, chatBookmark);
@@ -99,7 +95,6 @@ export const CahtBookmarkEditForm = ({
               onChange={chatBookmarkTitle.onChange}
               onKeyDown={onKeyDownTitleHandler}
               spellCheck={false}
-              autoFocus
               placeholder={`제목`}
             />
             <button

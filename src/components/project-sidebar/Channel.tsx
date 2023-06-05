@@ -19,8 +19,8 @@ export interface IpageListType {
   title: string;
 }
 export const pageListType: IpageListType[] = [
-  { type: 'EditablePage', title: '노션체널' },
-  { type: 'SocketPage', title: '체팅체널' },
+  { type: 'EditablePage', title: '일반' },
+  { type: 'SocketPage', title: '채팅' },
 ];
 
 /** 여기서 채널 간단목록 조회 api 쏨 */
