@@ -21,6 +21,8 @@ import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 const progressStatusType = ['todo', 'progress', 'complete'];
 const progressTitle = ['시작 전', '진행 중', '완료'];
 
+//FIXME: 옮기려는 라인에 박스가 없을 때 dnd동작 x => 박스 하나씩 생성후 display noen처리 해놓기?
+
 export const TemplatePage = ({
   channelId,
   pageId,
