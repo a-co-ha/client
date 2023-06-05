@@ -19,6 +19,7 @@ import { ProgressGauge } from './progressGauge';
 import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
+const progressTitle = ['시작 전', '진행 중', '완료'];
 
 export const TemplatePage = ({
   channelId,
@@ -143,7 +144,22 @@ export const TemplatePage = ({
                   pageArr.map((el: PageInPageList[], index) => {
                     return (
                       <section css={styles.progressSection} key={index}>
-                        <h3>{progressStatusType[index]}</h3>
+                        <span
+                          style={{
+                            backgroundColor:
+                              index === 0
+                                ? '#fcd99f'
+                                : index === 1
+                                ? '#daf7ea'
+                                : '#c8e5fa',
+                            borderRadius: '0.5rem',
+                            padding: '0.3rem',
+                            display: 'inline-block',
+                            marginBottom: '0.5rem',
+                          }}
+                        >
+                          {progressTitle[index]}
+                        </span>
                         <Droppable droppableId={`${index}`}>
                           {(provided) => (
                             <div
@@ -168,11 +184,15 @@ export const TemplatePage = ({
                             </div>
                           )}
                         </Droppable>
-                        <button
-                          onClick={() => createPage(progressStatusType[index])}
-                        >
-                          + 새로 만들기
-                        </button>
+                        <div className="hover:bg-gray-200 p-2 rounded-md">
+                          <button
+                            onClick={() =>
+                              createPage(progressStatusType[index])
+                            }
+                          >
+                            + 새로 만들기
+                          </button>
+                        </div>
                       </section>
                     );
                   })}

@@ -73,7 +73,11 @@ export const TemplateNormalPage = ({
                     </div>
                   )}
                 </Droppable>
-                <button onClick={() => createPage(null)}>+ 새로 만들기</button>
+                <div className="hover:bg-gray-200 p-2 rounded-md">
+                  <button onClick={() => createPage(null)}>
+                    + 새로 만들기
+                  </button>
+                </div>
               </section>
             </DragDropContext>
           </main>
