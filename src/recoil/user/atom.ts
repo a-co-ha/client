@@ -34,6 +34,11 @@ export const loginState = atom({
   default: false,
 });
 
+export const loginModalState = atom({
+  key: `loginModalState/${nanoId()}`,
+  default: false,
+});
+
 export const adminState = atomFamily({
   key: `adminState/${nanoId()}`,
   default: false,

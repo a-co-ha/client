@@ -376,6 +376,49 @@ const progressBar100Span = keyframes`
   }
 `;
 
+const mainItemProgressBani = keyframes`
+  to {
+    transform: translate3d(0,35%,0) scale(1) rotateX(0);
+  }
+`;
+
+const progressSvgScaleAni = keyframes`
+  to {
+    transform: translate3d(0,0,0) scale(0.5);
+  }
+`;
+
+const progressSvgTextScaleAni = keyframes`
+  to {
+    top: -120%;
+    left: 0%;
+  };
+`;
+
+const progressSvgOpacityAni = keyframes`
+  to {
+    opacity: 1;
+  }
+`;
+
+const progressSvgStroke25Ani = keyframes`
+  to {
+    stroke-dashoffset: 330;
+  }
+`;
+
+const progressSvgStroke33Ani = keyframes`
+  to {
+    stroke-dashoffset: 308;
+  }
+`;
+
+const progressSvgStroke66Ani = keyframes`
+  to {
+    stroke-dashoffset: 150;
+  }
+`;
+
 export const flexRowCenter = css`
   display: flex;
   flex-direction: column;
@@ -840,18 +883,21 @@ export const mainItemPreviewScrollBoxTitle = css`
   justify-content: center;
   width: 50%;
   padding: 0.4vh; 0;
-  color: #59a0cd;
-  font-size: 1.25rem;
   margin: 1vh auto 0;
+  color: #3292b8;
+  font-size: 1.25rem;
+  vertical-align: middle;
   background: rgba(0, 0, 0, 0.15);
   border-radius: 0.375rem;
   transition: 0.7s ease-out;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   &:hover {
-    color: #60c1ff;
+    transition: unset;
+    color: #2f89ff;
   }
   @media screen and (max-width: 361px) {
     font-size: 2vh;
+    line-height:2vh;
   }
 `;
 
@@ -1539,6 +1585,21 @@ export const previewProgressTabBox = css`
   justify-content: space-between;
   width: 100%;
   font-size: 0.9vh;
+  & > div:nth-of-type(1) {
+    & > h3 {
+      background: #d1b75d;
+    }
+  }
+  & > div:nth-of-type(2) {
+    & > h3 {
+      background: #a8d6c8;
+    }
+  }
+  & > div:nth-of-type(3) {
+    & > h3 {
+      background: #86bcde;
+    }
+  }
   @media screen and (min-width: 1280px) {
     padding: 4vh 2vh;
   }
@@ -1550,7 +1611,10 @@ export const previewProgressTab = css`
   width: 30%;
   font-size: 0.9vh;
   & > h3:nth-of-type(1) {
+    width: fit-content;
+    padding: 0.2rem;
     white-space: nowrap;
+    border-radius: 4px;
   }
   & > span:nth-of-type(1) {
     font-size: 0.7vh;
@@ -2608,6 +2672,7 @@ export const mainItemCommitLogDescBox = css`
   transition: 0.7s ease-out;
   & > h3 {
     width: 70%;
+    word-break: keep-all;
   }
   & > h3 > span {
     font-weight: 500;
@@ -2730,6 +2795,13 @@ export const mainItemCommitLogImageInnerBox = css`
   & > img {
     object-fit: contain;
   }
+  @media screen and (max-width: 361px) {
+    width: 41%;
+    transform: translate3d(71%, 0, 0);
+    & > img {
+      object-fit: fill;
+    }
+  }
 `;
 
 export const mainItemIsuueLogImageInnerBox = css`
@@ -2749,6 +2821,8 @@ export const mainItemProgressBox = css`
 
 export const mainItemProgressLayoutBox = (isAni: boolean) => css`
   ${mainItemLayoutBox};
+  perspective: 400px;
+  perspective-origin: center;
   animation: ${isAni ? toLittleGrayBackground : null} 2s 1s forwards;
 `;
 
@@ -2802,7 +2876,7 @@ export const mainItemProgressA = (isAni: boolean) => css`
   transform: translate3d(0, 35%, 0);
   box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.1),
     2px 4px 8px -4px rgb(0 0 0 / 0.1);
-  animation: ${isAni ? toGrayBackground : null} 2s 1s forwards;
+  animation: ${isAni ? toGrayBackground : null} 1.5s 1s forwards;
 
   // animation: ${isAni ? mainItemChatBookmarkAaniIn : null} 1.5s 2.7s forwards,
   // ${isAni ? mainItemChatBookmarkAaniOut : null} 1.5s 6.7s forwards;
@@ -2816,6 +2890,19 @@ export const mainItemProgressA = (isAni: boolean) => css`
       background: white;
     }
   }
+  &::before {
+    position: absolute;
+    content: '1주차 스프린트';
+    top: 3%;
+    left: 3%;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  @media screen and (min-width: 1280px) {
+    &::before {
+      font-size: 1.8rem;
+    }
+  }
   @media screen and (max-width: 361px) {
     width: 100%;
   }
@@ -2823,7 +2910,7 @@ export const mainItemProgressA = (isAni: boolean) => css`
 
 export const mainItemProgressAbarBox = (isAni: boolean) => css`
   position: absolute;
-  top: 0;
+  top: 3%;
   right: 0;
   display: flex;
   align-items: center;
@@ -2838,9 +2925,9 @@ export const mainItemProgressAbarBox = (isAni: boolean) => css`
       content: attr(aria-label);
       top: 0;
       left: 0;
-      animation: ${isAni ? progressBar66Span : null} 1.5s 1.5s forwards,
-        ${isAni ? progressBar100Span : null} 1.5s 6s forwards,
-        ${isAni ? textColorToWhite : null} 2s 1s forwards;
+      animation: ${isAni ? progressBar66Span : null} 1s 1s forwards,
+        ${isAni ? progressBar100Span : null} 1s 5.5s forwards,
+        ${isAni ? textColorToWhite : null} 1s 0.5s forwards;
     }
   }
 `;
@@ -2849,8 +2936,8 @@ export const mainItemProgressAbar = (isAni: boolean) => css`
   ${previewProgressBarSpan};
   margin-right: 0.3rem;
   &::before {
-    animation: ${isAni ? progressBar66 : null} 1.5s 1.5s forwards,
-      ${isAni ? progressBar100 : null} 1.5s 6s forwards;
+    animation: ${isAni ? progressBar66 : null} 1.5s 1s forwards,
+      ${isAni ? progressBar100 : null} 1.5s 5.5s forwards;
   }
 `;
 
@@ -2866,22 +2953,23 @@ export const mainItemProgressTabBox = (isAni: boolean) => css`
     & > div {
       z-index: 3;
       background: white;
-      animation: ${isAni ? progressTodoTranslateAani : null} 2s 3.6s forwards,
-        ${isAni ? progressTodoTranslateBani : null} 2s 6s forwards;
+      animation: ${isAni ? progressTodoTranslateAani : null} 1.5s 3.1s forwards,
+        ${isAni ? progressTodoTranslateBani : null} 1.5s 5.5s forwards;
     }
     & > span {
-      animation: ${isAni ? progressNewPostToTopAni : null} 1s 3.9s forwards;
+      animation: ${isAni ? progressNewPostToTopAni : null} 1s 3.4s forwards;
     }
   }
   & > div:nth-of-type(2) {
     & > div {
       background: white;
-      animation: ${isAni ? progressProgressTranslateAni : null} 2s 1s forwards;
+      animation: ${isAni ? progressProgressTranslateAni : null} 1.5s 0.5s
+        forwards;
     }
     & > span {
-      animation: ${isAni ? progressNewPostToTopAni : null} 1s 1.3s forwards,
-        ${isAni ? progressNewPostToBottomHalfAni : null} 1s 3.8s forwards,
-        ${isAni ? progressNewPostToTopLastAni : null} 1s 6.2s forwards;
+      animation: ${isAni ? progressNewPostToTopAni : null} 1s 0.8s forwards,
+        ${isAni ? progressNewPostToBottomHalfAni : null} 1s 3.3s forwards,
+        ${isAni ? progressNewPostToTopLastAni : null} 1s 5.7s forwards;
     }
   }
   & > div:nth-of-type(3) {
@@ -2889,8 +2977,8 @@ export const mainItemProgressTabBox = (isAni: boolean) => css`
       background: white;
     }
     & > span {
-      animation: ${isAni ? progressNewPostToBottomAni : null} 1s 1.3s forwards,
-        ${isAni ? progressNewPostToBottomLastAni : null} 1.3s 6.4s forwards;
+      animation: ${isAni ? progressNewPostToBottomAni : null} 1s 0.8s forwards,
+        ${isAni ? progressNewPostToBottomLastAni : null} 1.3s 5.9s forwards;
     }
   }
 `;
@@ -2901,7 +2989,11 @@ export const mainItemProgressTab = css`
   width: 30%;
   font-size: 0.9vh;
   & > h3:nth-of-type(1) {
+    width: fit-content;
+    padding: 0.2rem;
+    margin-bottom: 0.2rem;
     white-space: nowrap;
+    border-radius: 4px;
   }
   & > span:nth-of-type(1) {
     font-size: 0.7vh;
@@ -2921,7 +3013,7 @@ export const mainItemProgressTab = css`
   }
   @media screen and (min-width: 1280px) {
     & > h3:nth-of-type(1) {
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
     & > div:nth-of-type(1) {
       height: 25%;
@@ -2930,7 +3022,182 @@ export const mainItemProgressTab = css`
       font-size: 0.7rem;
     }
   }
+  @media screen and (max-width: 361px) {
+    & > div:nth-of-type(1) {
+      max-height: 27px;
+    }
+  }
 `;
+
+export const mainItemProgressB = (isAni: boolean) => css`
+  ${mainItemEditableStyle};
+  position: absolute;
+  background: white;
+  transform: translate3d(0, 100%, 0) scale(0.7) rotateX(-50deg);
+  box-shadow: 2px -3px 3px -3px rgb(0 0 0 / 0.1),
+    2px -2px 5px 1px rgb(0 0 0 / 0.1);
+  animation: ${isAni ? mainItemProgressBani : null} 1.5s 7s forwards;
+  & > div:nth-of-type(1) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      height: 40%;
+      & > svg {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 20px;
+        height: 20px;
+      }
+      & > div:nth-of-type(1),
+      div:nth-of-type(2),
+      div:nth-of-type(3),
+      div:nth-of-type(4) {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        top: 0%;
+        left: 0%;
+        transform: translate3d(50%, 50%, 0);
+        transition: 0.7s ease-out;
+        animation: ${isAni ? progressSvgScaleAni : null} 1.5s 8s forwards;
+        & > div:nth-of-type(1) {
+          position: absolute;
+          width: 150px;
+          height: 150px;
+          background: #3a9ad2;
+          border-radius: 50%;
+          transform: translate3d(-50%, -50%, 0);
+          &::before {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            content: '100%';
+            top: 50%;
+            left: 50%;
+            width: 88%;
+            height: 88%;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            transform: translate3d(-50%, -50%, 0);
+          }
+        }
+        & > div:nth-of-type(2) {
+          position: absolute;
+          top: -120%;
+          left: 0%;
+          width: 100%;
+          font-size: 1.5rem;
+          white-space: nowrap;
+          animation: ${isAni ? progressSvgTextScaleAni : null} 1.5s 8s forwards;
+        }
+      }
+      & > div:nth-of-type(2) {
+        opacity: 0;
+        transform: scale(0.5);
+        animation: ${isAni ? progressSvgOpacityAni : null} 1.5s 9s forwards;
+        & > div:nth-of-type(1) {
+          &::before {
+            content: '33%';
+          }
+          background: rgba(0, 0, 0, 0.15);
+          & > svg > circle {
+            stroke: #f19c49;
+            transition: 0.7s ease-out;
+            animation: ${isAni ? progressSvgStroke33Ani : null} 1.5s 9s forwards;
+          }
+        }
+      }
+      & > div:nth-of-type(3) {
+        opacity: 0;
+        transform: scale(0.5);
+        animation: ${isAni ? progressSvgOpacityAni : null} 1.5s 9s forwards;
+        & > div:nth-of-type(1) {
+          &::before {
+            content: '66%';
+          }
+          background: rgba(0, 0, 0, 0.15);
+          & > svg > circle {
+            stroke: #26b16e;
+            transition: 0.7s ease-out;
+            animation: ${isAni ? progressSvgStroke66Ani : null} 1.5s 9s forwards;
+          }
+        }
+      }
+      & > div:nth-of-type(4) {
+        opacity: 0;
+        transform: scale(0.5);
+        animation: ${isAni ? progressSvgOpacityAni : null} 1.5s 9s forwards;
+        & > div:nth-of-type(1) {
+          &::before {
+            content: '25%';
+          }
+          background: rgba(0, 0, 0, 0.15);
+          & > svg > circle {
+            stroke: #f19c49;
+            transition: 0.7s ease-out;
+            animation: ${isAni ? progressSvgStroke25Ani : null} 1.5s 9s forwards;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+  }
+  @media screen and (max-width: 361px) {
+    width: 100%;
+    & > div:nth-of-type(1),
+    div:nth-of-type(2),
+    div:nth-of-type(3),
+    div:nth-of-type(4) {
+      transform: scale(0.95);
+    }
+  }
+`;
+
+export const progressSvg = css`
+  width: 150px;
+  height: 150px;
+  transform: rotate(-90deg);
+  & > circle {
+    stroke: black;
+    stroke-width: 10px;
+    stroke-dashoffset: 440;
+    stroke-dasharray: 440;
+    fill: transparent;
+  }
+`;
+
+// const loadingCircleAni = keyframes`
+//   0% { stroke-dashoffset: 157; }
+// 	75% { stroke-dashoffset: -147; }
+// 	100% { stroke-dashoffset: -157; }
+// `;
+
+// export const loadingCircle = css`
+//   width: 54px;
+//   height: 54px;
+//   animation: ${loadingSpin} 3s infinite;
+//   & > circle {
+//     stroke: black;
+//     stroke-width: 4;
+//     stroke-dasharray: 157, 157;
+//     stroke-dashoffset: 0;
+//     fill: transparent;
+//     animation: ${loadingCircleAni} 1s infinite;
+//   }
+// `;
 
 export const bannerBox = css`
   ${mainItemPreviewBox};

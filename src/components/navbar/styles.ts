@@ -179,8 +179,9 @@ export const projectDeleteNameBtn = (
 
 export const loginLogo = css`
   display: inline-block;
-  width: 60px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 `;
 
 export const profileInnerBox = css`

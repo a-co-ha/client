@@ -10,6 +10,8 @@ import {
 } from 'react';
 import { divide, throttle } from 'lodash';
 import * as styles from '../styles/styles';
+import { useSetRecoilState } from 'recoil';
+import { loginModalState } from '@/recoil/user/atom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -99,6 +101,7 @@ const IndexPage = () => {
   const [isChatBookmarkAni, setIsChatBookmarkAni] = useState(false);
   const [isCommitLogAni, setIsCommitLogAni] = useState(false);
   const [isProgressAni, setIsProgressAni] = useState(false);
+  const setIsLoginModalOpen = useSetRecoilState(loginModalState);
   console.log(`위messageA`, messageA);
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -365,14 +368,14 @@ const IndexPage = () => {
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioA = 0.19;
     } else if (window.innerWidth < 361) {
-      mediaScrollRatioA = 0.19;
+      mediaScrollRatioA = 0.2;
     }
     if (window.innerWidth > 768) {
       mediaScrollRatioB = 0.43;
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioB = 0.345;
     } else if (window.innerWidth < 361) {
-      mediaScrollRatioB = 0.335;
+      mediaScrollRatioB = 0.37;
     }
     if (window.innerWidth > 768) {
       mediaScrollRatioC = 0.583;
@@ -386,14 +389,14 @@ const IndexPage = () => {
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioD = 0.63;
     } else if (window.innerWidth < 361) {
-      mediaScrollRatioD = 0.605;
+      mediaScrollRatioD = 0.652;
     }
     if (window.innerWidth > 768) {
       mediaScrollRatioE = 0.95;
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioE = 0.792;
     } else if (window.innerWidth < 361) {
-      mediaScrollRatioE = 0.772;
+      mediaScrollRatioE = 0.825;
     }
     switch (currentScene) {
       case 0:
@@ -1088,17 +1091,17 @@ const IndexPage = () => {
                       </div>
                       <div css={styles.previewProgressTabBox}>
                         <div css={styles.previewProgressTab}>
-                          <h3>todo</h3>
+                          <h3>시작 전</h3>
                           <div>게시판 만들기</div>
                           <span>+ 새로 만들기</span>
                         </div>
                         <div css={styles.previewProgressTab}>
-                          <h3>preogress</h3>
+                          <h3>진행 중</h3>
                           <div>회원가입 API 만들기</div>
                           <span>+ 새로 만들기</span>
                         </div>
                         <div css={styles.previewProgressTab}>
-                          <h3>complete</h3>
+                          <h3>완료</h3>
                           <div>프로젝트 세팅</div>
                           <span>+ 새로 만들기</span>
                         </div>
@@ -1469,20 +1472,55 @@ const IndexPage = () => {
                     </div>
                     <div css={styles.mainItemProgressTabBox(isProgressAni)}>
                       <div css={styles.mainItemProgressTab}>
-                        <h3>todo</h3>
+                        <h3>시작 전</h3>
                         <div>게시판 만들기</div>
                         <span>+ 새로 만들기</span>
                       </div>
                       <div css={styles.mainItemProgressTab}>
-                        <h3>preogress</h3>
+                        <h3>진행 중</h3>
                         <div>회원가입 API 만들기</div>
                         <span>+ 새로 만들기</span>
                       </div>
                       <div css={styles.mainItemProgressTab}>
-                        <h3>complete</h3>
+                        <h3>완료</h3>
                         <div>프로젝트 세팅</div>
                         <span>+ 새로 만들기</span>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div css={styles.mainItemProgressB(isProgressAni)}>
+                <div>
+                  <div>
+                    <CalendarIcon />
+                    <div>
+                      <div></div>
+                      <div>1주차 스프린트</div>
+                    </div>
+                    <div>
+                      <div>
+                        <svg css={styles.progressSvg} stroke-linecap="round">
+                          <circle cx="50%" cy="50%" r="70"></circle>
+                        </svg>
+                      </div>
+                      <div>2주차 스프린트</div>
+                    </div>
+                    <div>
+                      <div>
+                        <svg css={styles.progressSvg} stroke-linecap="round">
+                          <circle cx="50%" cy="50%" r="70"></circle>
+                        </svg>
+                      </div>
+                      <div>3주차 스프린트</div>
+                    </div>
+                    <div>
+                      <div>
+                        <svg css={styles.progressSvg} stroke-linecap="round">
+                          <circle cx="50%" cy="50%" r="70"></circle>
+                        </svg>
+                      </div>
+                      <div>4주차 스프린트</div>
                     </div>
                   </div>
                 </div>
@@ -1497,7 +1535,14 @@ const IndexPage = () => {
                   <div>
                     <div>새로운 프로젝트를 시작해 보세요!</div>{' '}
                   </div>
-                  <button css={styles.bannerBtn}>지금 시작하기</button>
+                  <button
+                    css={styles.bannerBtn}
+                    onClick={() => {
+                      setIsLoginModalOpen(true);
+                    }}
+                  >
+                    지금 시작하기
+                  </button>
                   <Image src={acohaAI} fill alt="acoha ai image" />
                 </div>
               </div>
