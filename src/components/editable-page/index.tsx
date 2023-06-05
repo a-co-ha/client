@@ -102,7 +102,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
         {({ reset }) => (
           <ErrorBoundary fallback={Error} onReset={reset}>
             <div css={styles.contentBox} ref={page}>
-              {(type === 'progress-page' || type === 'progress-page') && (
+              {(type === 'progress-page' || type === 'normal-page') && (
                 <button onClick={handleClose}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-6 h-6 opacity-50"
                   >
                     <path
                       strokeLinecap="round"

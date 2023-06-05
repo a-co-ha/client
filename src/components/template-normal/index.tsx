@@ -26,7 +26,7 @@ export const TemplateNormalPage = ({
   const { mutate: upatePageList } = useUpadatePageList();
   const [pageArr, setPageArr] = useState(pageList);
   useParentUrlInfo(channelId);
-  
+
   useEffect(() => {
     localStorage.setItem('parentPageId', pageId);
   }, []);
