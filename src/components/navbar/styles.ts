@@ -41,6 +41,7 @@ export const landingPageNavbarBox = (isScroll: boolean) => css`
   height: 50px;
   z-index: 3;
   font-weight: 600;
+  background: white;
   box-shadow: ${isScroll
     ? `0px 5px 5px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1)`

@@ -171,24 +171,24 @@ const IndexPage = () => {
     const scrollBox = mainItemPreviewScrollItemBox.current as HTMLDivElement;
     if (targetLabel === `ArrowLeft` && scrollBox) {
       scrollToCount--;
+      if (scrollToCount === -1) {
+        scrollToCount = 6;
+      }
       scrollBox.scrollTo({
         left: scrollBox.offsetWidth * scrollToCount,
         behavior: 'smooth',
       });
-      if (scrollToCount === 0) {
-        scrollToCount = 7;
-      }
       console.log(`left`, scrollBox.offsetWidth);
       console.log(`scCount`, scrollToCount);
     } else if (targetLabel === `ArrowRight` && scrollBox) {
       scrollToCount++;
+      if (scrollToCount === 7) {
+        scrollToCount = 0;
+      }
       scrollBox.scrollTo({
         left: scrollBox.offsetWidth * scrollToCount,
         behavior: 'smooth',
       });
-      if (scrollToCount === 7) {
-        scrollToCount = 1;
-      }
       console.log(`scCount`, scrollToCount);
     }
   };
