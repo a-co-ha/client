@@ -2286,16 +2286,11 @@ export const mainItemChatA = (isAni: boolean) => css`
       background: #ffd6dc;
     }
   }
-  @media screen and (min-width: 1280px) {
-    & > div:nth-of-type(1) {
-      padding
-    }
-  }
   @media screen and (max-width: 361px) {
     width: 100%;
-     & > div:nth-of-type(3) {
-        padding-top: 0;
-     }
+    & > div:nth-of-type(3) {
+      padding-top: 0;
+    }
   }
 `;
 
@@ -2307,6 +2302,9 @@ export const mainItemChatAInnerBox = css`
   }
   @media screen and (max-width: 450px) {
     padding-left: 3.5rem;
+  }
+  @media screen and (max-width: 361px) {
+    padding-left: 1rem;
   }
 `;
 
@@ -3091,7 +3089,7 @@ export const mainItemProgressTab = css`
   }
   @media screen and (max-width: 361px) {
     & > div:nth-of-type(1) {
-      max-height: 27px;
+      max-height: 23px;
     }
   }
 `;
@@ -3220,27 +3218,30 @@ export const mainItemProgressB = (isAni: boolean) => css`
     }
   }
 
-  @media screen and (min-width: 1280px) {
-  }
   @media screen and (max-width: 450px) {
     & > div:nth-of-type(1) {
       & > div {
+        width: 75%;
         & > div:nth-of-type(1),
         div:nth-of-type(2),
         div:nth-of-type(3),
         div:nth-of-type(4) {
-          width: 35%;
         }
       }
     }
   }
   @media screen and (max-width: 361px) {
     width: 100%;
-    & > div:nth-of-type(1),
-    div:nth-of-type(2),
-    div:nth-of-type(3),
-    div:nth-of-type(4) {
-      transform: scale(0.95);
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 90%;
+        div:nth-of-type(1) > div,
+        div:nth-of-type(2) > div,
+        div:nth-of-type(3) > div,
+        div:nth-of-type(4) > div {
+          transform: scale(0.7);
+        }
+      }
     }
   }
 `;
@@ -3392,6 +3393,8 @@ export const footer = css`
   height: 100px;
   background: white;
   user-select: none;
+  box-shadow: 2px -3px 3px -3px rgb(0 0 0 / 0.1),
+    2px -2px 5px 1px rgb(0 0 0 / 0.1);
   & > div {
     display: flex;
     flex-direction: column;

@@ -399,6 +399,7 @@ const IndexPage = () => {
     switch (currentScene) {
       case 0:
         if (
+          scrollToTopBtn.current &&
           objs.content.current &&
           objs.messageBox?.current &&
           objs.subMessage.current &&
@@ -419,6 +420,7 @@ const IndexPage = () => {
         ) {
           console.log(`scroll`, scrollRatio);
           if (scrollRatio <= 0.77) {
+            scrollToTopBtn.current.style.opacity = `0`;
             objs.messageBox.current.style.transform = `translate3d(${calcValues(
               values.messageBox_translateX_in,
               currentYOffset
