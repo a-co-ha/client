@@ -124,3 +124,30 @@ export const percentage = css`
   text-anchor: middle;
   animation: ${progressKeyframes};
 `;
+
+export const label = css`
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  height: 4rem;
+  margin-top: 0.5rem;
+  overflow: hidden scroll;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    background-color: #efefef;
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+`;
+
+export const labelName = css`
+  margin-bottom: 0.3rem;
+`;
