@@ -30,6 +30,7 @@ import previewPurple from '@/images/channelImg/7.png';
 import previewGithub from '@/images/githubLogo.png';
 import {
   ChevronDownIcon,
+  ChevronUpIcon,
   BellAlertIcon,
   DocumentIcon,
   ListBulletIcon,
@@ -45,6 +46,7 @@ import issueLog from '@/images/landingPage/issue.png';
 import check from '@/images/landingPage/check.png';
 
 const IndexPage = () => {
+  const scrollToTopBtn = useRef<HTMLDivElement>(null);
   //introSection
   const introSection = useRef<any>(null);
   const introSectionBox = useRef<HTMLDivElement>(null);
@@ -87,7 +89,7 @@ const IndexPage = () => {
   const mainItemProgressSubTitle = useRef<HTMLHeadingElement>(null);
   const mainItemProgressDescBox = useRef<HTMLDivElement>(null);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isViewScrollBtn, setIsViewScrollBtn] = useState(false);
   const [clickItem, setClickItem] = useState('');
   const [clickLabel, setClickLabel] = useState('');
   const [isEditableAni, setIsEditableAni] = useState(false);
@@ -191,6 +193,10 @@ const IndexPage = () => {
       });
       console.log(`scCount`, scrollToCount);
     }
+  };
+
+  const scrollToTopHandler = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const sceneInfo = [
@@ -537,6 +543,7 @@ const IndexPage = () => {
         break;
       case 1:
         if (
+          scrollToTopBtn.current &&
           objs.mainItemPreviewTitle?.current &&
           objs.mainItemPreview.current &&
           objs.mainItemPreviewScrollBoxTitle.current &&
@@ -589,6 +596,11 @@ const IndexPage = () => {
             objs.mainItemPreviewTitle.current.style.opacity = `0`;
             objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `0`;
             objs.mainItemPreview.current.style.opacity = `0`;
+          }
+          if (scrollRatio > 0.15 && window.innerWidth >= 756) {
+            scrollToTopBtn.current.style.opacity = `1`;
+          } else {
+            scrollToTopBtn.current.style.opacity = `0`;
           }
           console.log(`이너`, window.innerHeight);
           if (scrollRatio > mediaScrollRatioA) {
@@ -701,6 +713,14 @@ const IndexPage = () => {
 
   return (
     <div css={styles.flexRowCenter}>
+      <div
+        ref={scrollToTopBtn}
+        css={styles.scrollToTopBtn}
+        onClick={scrollToTopHandler}
+      >
+        <ChevronUpIcon />
+      </div>
+      <div></div>
       <section ref={introSection} css={styles.introSection}>
         <div ref={introSectionBox} css={styles.introSectionBox}>
           <div css={styles.mainTitleDesc}>
@@ -897,7 +917,6 @@ const IndexPage = () => {
                   </div>
                 </div>
               </div>
-              {/* <CommitLogNavbar /> */}
               <div ref={mainItemPreview} css={styles.mainItemPreview}>
                 <div css={styles.previewNav}>
                   <div

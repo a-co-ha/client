@@ -428,6 +428,28 @@ export const flexRowCenter = css`
   max-height: 10365px;
 `;
 
+export const scrollToTopBtn = css`
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 10px 15px 1px rgb(0 0 0 / 0.2),
+    2px 4px 6px 2px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  &:hover svg {
+    transition: 0.5s;
+    color: rgb(255, 155, 160);
+  }
+  & > svg {
+    transform: translate3d(0, -1px, 0);
+  }
+`;
+
 export const introSection = css`
   display: flex;
   justify-content: center;
@@ -3369,6 +3391,7 @@ export const footer = css`
   width: 100%;
   height: 100px;
   background: white;
+  user-select: none;
   & > div {
     display: flex;
     flex-direction: column;
