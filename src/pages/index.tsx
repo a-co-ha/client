@@ -1542,8 +1542,11 @@ const IndexPage = () => {
           </div>
         </div>
       </section>
-      <section>
-        <div></div>
+      <section css={styles.footer}>
+        <div>
+          <h3>ACOHA : 아 코딩하고싶다</h3>
+          <div>&copy; acoha team</div>
+        </div>
       </section>
     </div>
   );
