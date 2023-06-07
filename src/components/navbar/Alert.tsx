@@ -2,8 +2,9 @@ import { Fragment, useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import * as styles from './styles';
-import { SocketContext } from '../chat-page/SocketContextProvider';
+import { AlertValue, SocketContext } from '../chat-page/SocketContextProvider';
 import { Menu, Transition } from '@headlessui/react';
+import Link from 'next/link';
 
 /**
  * 알림은 toast를 통해 화면에 띄워진다
@@ -44,9 +45,11 @@ import { Menu, Transition } from '@headlessui/react';
 export const Alert = () => {
   const { socket, getAlert, alertSocket } = useContext(SocketContext);
   const [isAlert, setIsAlert] = useState<boolean | null>(null);
-  console.log('🚀 ~ file: Alert.tsx:39 ~ Alert ~ isAlert:', isAlert);
+  const [alertList, setAlertList] = useState<AlertValue[] | null>(null);
+  console.log('🚀 ~ file: Alert.tsx:48 ~ Alert ~ alertList:', alertList);
+
   useEffect(() => {
-    alertSocket(setIsAlert);
+    alertSocket(setIsAlert, setAlertList);
     getAlert(setIsAlert);
   }, [socket]);
 
@@ -77,19 +80,43 @@ export const Alert = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-30 overflow-hidden overflow-y-scroll">
                 <div className="px-1 py-1 ">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        className={`${
-                          active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        Edit
-                      </button>
-                    )}
-                  </Menu.Item>
+                  {alertList &&
+                    alertList.map((alert, index) => {
+                      return (
+                        <Menu.Item key={index}>
+                          {({ active }) => (
+                            <button
+                              className={`${
+                                active ? 'bg-[#e8e8e8]' : 'text-gray-900 '
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            >
+                              <Link
+                                href={`/project/${alert.channelId}/${alert.pageId}?name=${alert.pageName}&type=${alert.type}`}
+                                css={styles.alertMenuItem}
+                              >
+                                <span
+                                  style={{
+                                    backgroundColor: '#b3ccf5',
+                                    borderRadius: '0.3rem',
+                                    padding: '0.2rem',
+                                  }}
+                                >
+                                  @태그
+                                </span>
+                                {` ${alert.channelName}프로젝트의 ${
+                                  alert.subPageName
+                                    ? `${alert.subPageName} 페이지의`
+                                    : ''
+                                }
+          ${alert.pageName} 페이지`}
+                              </Link>
+                            </button>
+                          )}
+                        </Menu.Item>
+                      );
+                    })}
                 </div>
               </Menu.Items>
             </Transition>

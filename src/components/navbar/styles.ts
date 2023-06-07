@@ -198,3 +198,15 @@ export const profileImageBox = css`
   border-radius: 50%;
   overflow: hidden;
 `;
+
+export const alertMenuItem = css`
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover {
+    overflow: visible;
+    white-space: initial;
+    text-overflow: unset;
+  }
+`;
