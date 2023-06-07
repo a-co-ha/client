@@ -20,8 +20,8 @@ export const LoginModal = () => {
       ></div>
       <div css={styles.loginModalTransition(isLoginModalOpen)}>
         <div css={styles.loginModal}>
-          <h2>A ~ Co Ha!</h2>
-          <h3>아코하</h3>
+          <h3>A ~ Co Ha!</h3>
+          <h4>아코하</h4>
           <Image src={acohaGreen} css={styles.loginLogo} alt="loginLogo" />
           <p css={styles.loginModalDesc}>
             아코하는 깃허브 계정으로 간편 로그인을 지원해요

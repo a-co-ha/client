@@ -84,3 +84,8 @@ export const confirmModalState = atomFamily({
   key: `confirmModalState/${nanoId()}`,
   default: false,
 });
+
+export const LandingPageNavbarIsScroll = atom({
+  key: `LandingPageNavbarIsScroll/${nanoId()}`,
+  default: false,
+});

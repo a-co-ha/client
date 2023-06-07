@@ -319,10 +319,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:2.0.0"\
       ],\
       [\
-        "@types/aos",\
-        "npm:3.0.4"\
-      ],\
-      [\
         "@types/cookie",\
         "npm:0.4.1"\
       ],\
@@ -491,10 +487,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:3.1.3"\
       ],\
       [\
-        "aos",\
-        "npm:3.0.0-beta.6"\
-      ],\
-      [\
         "aproba",\
         "npm:2.0.0"\
       ],\
@@ -653,10 +645,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "chownr",\
         "npm:2.0.0"\
-      ],\
-      [\
-        "classlist-polyfill",\
-        "npm:1.2.0"\
       ],\
       [\
         "clean-stack",\
@@ -1583,16 +1571,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:4.17.21"\
       ],\
       [\
-        "lodash.debounce",\
-        "npm:4.0.8"\
-      ],\
-      [\
         "lodash.merge",\
         "npm:4.6.2"\
-      ],\
-      [\
-        "lodash.throttle",\
-        "npm:4.1.1"\
       ],\
       [\
         "log-symbols",\
@@ -2744,7 +2724,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@socket.io/component-emitter", "npm:4.0.0"],\
             ["@tanstack/react-query", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
             ["@tanstack/react-query-devtools", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
-            ["@types/aos", "npm:3.0.4"],\
             ["@types/lodash", "npm:4.14.194"],\
             ["@types/node", "npm:18.11.18"],\
             ["@types/prettier", "npm:2.7.2"],\
@@ -2753,7 +2732,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", "npm:18.0.10"],\
             ["@types/react-syntax-highlighter", "npm:15.5.6"],\
             ["@types/sharp", "npm:0.31.1"],\
-            ["aos", "npm:3.0.0-beta.6"],\
             ["autoprefixer", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:10.4.13"],\
             ["axios", "npm:1.3.2"],\
             ["cookies-next", "npm:2.1.1"],\
@@ -3719,15 +3697,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/aos", [\
-        ["npm:3.0.4", {\
-          "packageLocation": "./.yarn/cache/@types-aos-npm-3.0.4-fac8b2f462-55c54865df.zip/node_modules/@types/aos/",\
-          "packageDependencies": [\
-            ["@types/aos", "npm:3.0.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/cookie", [\
         ["npm:0.4.1", {\
           "packageLocation": "./.yarn/cache/@types-cookie-npm-0.4.1-274a704dc6-3275534ed6.zip/node_modules/@types/cookie/",\
@@ -4084,7 +4053,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@socket.io/component-emitter", "npm:4.0.0"],\
             ["@tanstack/react-query", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
             ["@tanstack/react-query-devtools", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.27.0"],\
-            ["@types/aos", "npm:3.0.4"],\
             ["@types/lodash", "npm:4.14.194"],\
             ["@types/node", "npm:18.11.18"],\
             ["@types/prettier", "npm:2.7.2"],\
@@ -4093,7 +4061,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", "npm:18.0.10"],\
             ["@types/react-syntax-highlighter", "npm:15.5.6"],\
             ["@types/sharp", "npm:0.31.1"],\
-            ["aos", "npm:3.0.0-beta.6"],\
             ["autoprefixer", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:10.4.13"],\
             ["axios", "npm:1.3.2"],\
             ["cookies-next", "npm:2.1.1"],\
@@ -4278,18 +4245,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["anymatch", "npm:3.1.3"],\
             ["normalize-path", "npm:3.0.0"],\
             ["picomatch", "npm:2.3.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["aos", [\
-        ["npm:3.0.0-beta.6", {\
-          "packageLocation": "./.yarn/cache/aos-npm-3.0.0-beta.6-236f89f979-7d271deed0.zip/node_modules/aos/",\
-          "packageDependencies": [\
-            ["aos", "npm:3.0.0-beta.6"],\
-            ["classlist-polyfill", "npm:1.2.0"],\
-            ["lodash.debounce", "npm:4.0.8"],\
-            ["lodash.throttle", "npm:4.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4787,15 +4742,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chownr-npm-2.0.0-638f1c9c61-c57cf9dd07.zip/node_modules/chownr/",\
           "packageDependencies": [\
             ["chownr", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["classlist-polyfill", [\
-        ["npm:1.2.0", {\
-          "packageLocation": "./.yarn/cache/classlist-polyfill-npm-1.2.0-e5d1976a47-43ff10af5e.zip/node_modules/classlist-polyfill/",\
-          "packageDependencies": [\
-            ["classlist-polyfill", "npm:1.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7581,29 +7527,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["lodash.debounce", [\
-        ["npm:4.0.8", {\
-          "packageLocation": "./.yarn/cache/lodash.debounce-npm-4.0.8-f1d6e09799-a3f527d22c.zip/node_modules/lodash.debounce/",\
-          "packageDependencies": [\
-            ["lodash.debounce", "npm:4.0.8"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["lodash.merge", [\
         ["npm:4.6.2", {\
           "packageLocation": "./.yarn/cache/lodash.merge-npm-4.6.2-77cb4416bf-ad580b4bdb.zip/node_modules/lodash.merge/",\
           "packageDependencies": [\
             ["lodash.merge", "npm:4.6.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["lodash.throttle", [\
-        ["npm:4.1.1", {\
-          "packageLocation": "./.yarn/cache/lodash.throttle-npm-4.1.1-856641af92-129c0a28ce.zip/node_modules/lodash.throttle/",\
-          "packageDependencies": [\
-            ["lodash.throttle", "npm:4.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\

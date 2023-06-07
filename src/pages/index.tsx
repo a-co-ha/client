@@ -12,8 +12,7 @@ import { divide, throttle } from 'lodash';
 import * as styles from '../styles/styles';
 import { useSetRecoilState } from 'recoil';
 import { loginModalState } from '@/recoil/user/atom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { LandingPageNavbarIsScroll } from '@/recoil/project/atom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faComments,
@@ -97,8 +96,9 @@ const IndexPage = () => {
   const [isCommitLogAni, setIsCommitLogAni] = useState(false);
   const [isProgressAni, setIsProgressAni] = useState(false);
   const setIsLoginModalOpen = useSetRecoilState(loginModalState);
+  const setIsScroll = useSetRecoilState(LandingPageNavbarIsScroll);
   console.log(`위messageA`, messageA);
-  let yOffset = 0; // window.pageYOffset 대신 쓸 변수
+  let yOffset = 0; // window.scrollY 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
   let enterNewScene = false; // 새로운 scene이 시작된 순간 true
@@ -108,15 +108,11 @@ const IndexPage = () => {
   let rafState;
   let scrollToCount = 1;
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   const throttledScroll = useMemo(
     () =>
       throttle(() => {
         if (!messageA.current) return;
-        yOffset = window.pageYOffset;
+        yOffset = window.scrollY;
         scrollLoop();
         // console.log(`scrollLoop`);
       }, 30),
@@ -305,7 +301,7 @@ const IndexPage = () => {
       }
     }
 
-    yOffset = window.pageYOffset;
+    yOffset = window.scrollY;
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
       totalScrollHeight += sceneInfo[i].scrollHeight;
@@ -353,6 +349,7 @@ const IndexPage = () => {
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
     const scrollRatio = currentYOffset / scrollHeight;
+    yOffset > 1 ? setIsScroll(true) : setIsScroll(false);
     let mediaScrollRatioA;
     let mediaScrollRatioB;
     let mediaScrollRatioC;
@@ -1495,7 +1492,7 @@ const IndexPage = () => {
                     </div>
                     <div>
                       <div>
-                        <svg css={styles.progressSvg} stroke-linecap="round">
+                        <svg css={styles.progressSvg} strokeLinecap="round">
                           <circle cx="50%" cy="50%" r="70"></circle>
                         </svg>
                       </div>
@@ -1503,7 +1500,7 @@ const IndexPage = () => {
                     </div>
                     <div>
                       <div>
-                        <svg css={styles.progressSvg} stroke-linecap="round">
+                        <svg css={styles.progressSvg} strokeLinecap="round">
                           <circle cx="50%" cy="50%" r="70"></circle>
                         </svg>
                       </div>
@@ -1511,7 +1508,7 @@ const IndexPage = () => {
                     </div>
                     <div>
                       <div>
-                        <svg css={styles.progressSvg} stroke-linecap="round">
+                        <svg css={styles.progressSvg} strokeLinecap="round">
                           <circle cx="50%" cy="50%" r="70"></circle>
                         </svg>
                       </div>

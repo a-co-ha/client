@@ -1,4 +1,24 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
+
+//LoginButton Animation
+const loginBtnAni = keyframes`
+  25% {
+    transform: rotate(45deg);
+  }
+  50% {
+    transform: rotate(-35deg);
+  }
+  75% {
+    transform: rotate(35deg);
+  }
+  90% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    color: black;
+  }
+`;
 
 const flexCenterNavBar = css`
   display: flex;
@@ -13,6 +33,43 @@ export const navBar = css`
   display: flex;
   width: 100%;
   z-index: 3;
+`;
+
+export const landingPageNavbarBox = (isScroll: boolean) => css`
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  z-index: 3;
+  font-weight: 600;
+  box-shadow: ${isScroll
+    ? `0px 5px 5px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1)`
+    : `unset`};
+  user-select: none;
+  transition: 0.5s;
+`;
+
+export const landingPageNavbarImageBox = css`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 1rem;
+`;
+
+export const landingPageNavbarImageAlign = css`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const landingPageNavbarImageDesc = css`
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.5);
+`;
+
+export const landingPageNavbarImage = css`
+  border-radius: 50%;
 `;
 
 export const profileBox = css`
@@ -174,7 +231,18 @@ export const projectDeleteNameBtn = (
 export const loginBox = css`
   ${flexCenterNavBar};
   min-width: 100px;
-  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  // box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+export const loginBtn = css`
+  padding: 1rem;
+  margin-left: auto;
+  font-size: 1.2rem;
+  letter-spacing: 0.05rem;
+  color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    animation: ${loginBtnAni} 0.5s forwards;
+  }
 `;
 
 export const loginModalBox = (isOpen: boolean) => css`
@@ -189,14 +257,6 @@ export const loginModalTransition = (isOpen: boolean) => css`
   ${projectInviteBoxTransition(isOpen)};
   width: 80%;
   max-width: 400px;
-  // position: fixed;
-  // width: ${isOpen ? `80%` : `0`};
-  // max-width: 400px;
-  // height: ${isOpen ? `auto` : `0`};
-  // background: white;
-  // border-radius: 8px;
-  // box-shadow: 2px 10px 5px -3px rgb(0 0 0 / 0.1),
-  //   2px 10px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const loginModal = css`
@@ -208,6 +268,9 @@ export const loginModal = css`
   border-radius: 8px;
   box-shadow: 2px 10px 5px -3px rgb(0 0 0 / 0.1),
     2px 10px 6px -4px rgb(0 0 0 / 0.1);
+  & > h3 {
+    font-size: 1.25rem;
+  }
 `;
 
 export const loginModalDesc = css`
