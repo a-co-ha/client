@@ -18,12 +18,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faComments,
   faPenToSquare,
-  faSquarePlus,
   faPaperPlane,
 } from '@fortawesome/free-regular-svg-icons';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import chat from '@/images/landingPage/chat.svg';
 import Image from 'next/image';
@@ -37,8 +35,6 @@ import {
   DocumentIcon,
   ListBulletIcon,
   CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
 } from '@heroicons/react/20/solid';
 import editableA from '@/images/landingPage/editableA.png';
 import editableB from '@/images/landingPage/editableB.png';

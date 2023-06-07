@@ -34,12 +34,6 @@ export const alertBox = css`
   align-items: center;
 `;
 
-export const loginBox = css`
-  ${flexCenterNavBar};
-  min-width: 100px;
-  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-`;
-
 export const projectNameBox = css`
   ${flexCenterNavBar}
   justify-content: flex-end;
@@ -56,7 +50,7 @@ export const modalBackground = (isOpen: boolean) => css`
   height: 100%;
 `;
 
-export const projectNambeBoxTransition = (isOpen: boolean) => css`
+export const projectNameBoxTransition = (isOpen: boolean) => css`
   transition: 0.1s ease-out;
   transform-origin: top;
   transform: scale(${isOpen ? `1` : `0.5`});
@@ -177,11 +171,66 @@ export const projectDeleteNameBtn = (
   }
 `;
 
+export const loginBox = css`
+  ${flexCenterNavBar};
+  min-width: 100px;
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+export const loginModalBox = (isOpen: boolean) => css`
+  ${projectInviteBox(isOpen)};
+`;
+
+export const loginModalBackground = (isOpen: boolean) => css`
+  ${inviteModalBackground(isOpen)};
+`;
+
+export const loginModalTransition = (isOpen: boolean) => css`
+  ${projectInviteBoxTransition(isOpen)};
+  width: 80%;
+  max-width: 400px;
+  // position: fixed;
+  // width: ${isOpen ? `80%` : `0`};
+  // max-width: 400px;
+  // height: ${isOpen ? `auto` : `0`};
+  // background: white;
+  // border-radius: 8px;
+  // box-shadow: 2px 10px 5px -3px rgb(0 0 0 / 0.1),
+  //   2px 10px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+export const loginModal = css`
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 2px 10px 5px -3px rgb(0 0 0 / 0.1),
+    2px 10px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+export const loginModalDesc = css`
+  padding-top: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  word-break: keep-all;
+  color: rgba(0, 0, 0, 0.5);
+  @media screen and (max-width: 361px) {
+    font-size: 0.8rem;
+  }
+`;
+
 export const loginLogo = css`
   display: inline-block;
   width: 40px;
   height: 40px;
   border-radius: 50%;
+`;
+
+export const loginModalBtnBox = css`
+  margin-top: 0.5rem;
+  text-align: center;
 `;
 
 export const profileInnerBox = css`

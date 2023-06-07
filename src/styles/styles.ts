@@ -3273,7 +3273,7 @@ export const bannerBtn = css`
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 3;
+  z-index: 2;
   padding: 1.5vh 3vh;
   background: black;
   color: white;

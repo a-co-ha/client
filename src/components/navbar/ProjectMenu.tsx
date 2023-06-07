@@ -48,7 +48,7 @@ export const ProjectMenu = () => {
         </div>
 
         <div
-          css={styles.projectNambeBoxTransition(isOpen)}
+          css={styles.projectNameBoxTransition(isOpen)}
           // className="absolute right-0 mt-3 w-48 origin-top divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <div className="px-1 py-1">
