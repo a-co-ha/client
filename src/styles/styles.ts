@@ -910,7 +910,13 @@ export const introChatImgReplyBox = css`
     margin: 0;
   }
   @media screen and (max-width: 520px) {
+    width: 65%;
     font-size: 0.85rem;
+    margin: 0;
+  }
+  @media screen and (max-width: 361px) {
+    width: 65%;
+    font-size: 0.75rem;
     margin: 0;
   }
 `;
@@ -2458,14 +2464,14 @@ export const mainItemChatMessageBox = css`
   @media screen and (max-width: 1280px) {
     margin-left: 3.5rem;
     & > span:nth-of-type(1) {
-      padding: 2vh;
-      font-size: 2vh;
+      padding: 1vh;
+      font-size: 1.5vh;
     }
     & > div > span:nth-of-type(1) {
       font-size: 1.75vh;
     }
     & > div > span:nth-of-type(2) {
-      font-size: 1.75vh;
+      font-size: 1.45vh;
       color: gray;
       margin-left: 0.5rem;
     }
