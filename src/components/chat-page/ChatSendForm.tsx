@@ -17,6 +17,12 @@ export const ChatSendForm = ({
   messagesEndRef: RefObject<HTMLDivElement>;
   setMessages: React.Dispatch<React.SetStateAction<SocketMessage[]>>;
 }) => {
+  const contentTextarea = useRef(null);
+  useEffect(() => {
+    contentTextarea.current &&
+      (contentTextarea.current as HTMLTextAreaElement).focus();
+  }, [pageId]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
@@ -95,7 +101,7 @@ export const ChatSendForm = ({
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div css={styles.chatFormInputBox}>
           <textarea
-            autoFocus
+            ref={contentTextarea}
             spellCheck={false}
             css={styles.chatFormInput}
             rows={1}
