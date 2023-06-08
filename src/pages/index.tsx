@@ -445,39 +445,71 @@ const IndexPage = () => {
     let mediaScrollRatioC;
     let mediaScrollRatioD;
     let mediaScrollRatioE;
-    if (window.innerWidth < 1920 && window.innerWidth > 1520) {
-      mediaScrollRatioA = 0.355;
+    // editable
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioA = 0.15;
     } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
-      mediaScrollRatioA = 0.22;
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioA = 0.15;
+      } else {
+        mediaScrollRatioA = 0.22;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioA = 0.19;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioA = 0.2;
     }
-
-    if (window.innerWidth > 768) {
-      mediaScrollRatioB = 0.43;
+    // chat
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioB = 0.29;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioB = 0.29;
+      } else {
+        mediaScrollRatioB = 0.43;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioB = 0.345;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioB = 0.37;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioC = 0.583;
+    // bookmark
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioC = 0.412;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioC = 0.412;
+      } else {
+        mediaScrollRatioC = 0.583;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioC = 0.485;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioC = 0.455;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioD = 0.765;
+    // commitLog
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioD = 0.531;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioD = 0.531;
+      } else {
+        mediaScrollRatioD = 0.765;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioD = 0.63;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioD = 0.652;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioE = 0.95;
+    // progress
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioE = 0.871;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioE = 0.871;
+      } else {
+        mediaScrollRatioE = 0.95;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioE = 0.792;
     } else if (window.innerWidth < 361) {
@@ -507,148 +539,132 @@ const IndexPage = () => {
           objs.introArrowDown.current
         ) {
           console.log(`scroll`, scrollRatio);
-          if (window.innerWidth < 1275) {
-            if (scrollRatio <= 0.77) {
-              scrollToTopBtn.current.style.opacity = `0`;
-              indexLinkBtn.current.style.opacity = `0`;
-              objs.messageBox.current.style.transform = `translate3d(${calcValues(
-                values.messageBox_translateX_in,
-                currentYOffset
-              )}%,${calcValues(
-                values.messageBox_translateY_in,
-                currentYOffset
-              )}%,0) scale(${calcValues(
-                values.messageBox_scale_in,
-                currentYOffset
-              )})`;
-              objs.messageBox.current.style.color = `rgba(${calcValues(
-                values.messageBox_colorR_in,
-                currentYOffset
-              )},${calcValues(
-                values.messageBox_colorG_in,
-                currentYOffset
-              )},${calcValues(values.messageBox_colorB_in, currentYOffset)},1)`;
-              objs.subMessage.current.style.opacity = `${calcValues(
-                values.subMessage_opacity_in,
-                currentYOffset
-              )}`;
-              objs.messageBackground.current.style.transform = `translate3d(0,${calcValues(
-                values.messageBackground_translateY_in,
-                currentYOffset
-              )}%, 0)`;
-              objs.messageBackground.current.style.opacity = `${calcValues(
-                values.messageBackground_opacity_in,
-                currentYOffset
-              )}`;
-              objs.messageA.current.style.transform = `translate3d(0, 0, 0)`;
-              objs.messageB.current.style.transform = `translate3d(${calcValues(
-                values.messageB_translateX_in,
-                currentYOffset
-              )}%,0, 0)`;
-              objs.messageB.current.style.opacity = `${calcValues(
-                values.messageB_opacity_in,
-                currentYOffset
-              )}`;
-              objs.messageC.current.style.transform = `translate3d(${calcValues(
-                values.messageC_translateX_in,
-                currentYOffset
-              )}%, 0, 0)`;
-              objs.messageD.current.style.transform = `translate3d(${calcValues(
-                values.messageD_translateX_in,
-                currentYOffset
-              )}%, 0, 0)`;
-              objs.messageD.current.style.opacity = `${calcValues(
-                values.messageD_opacity_in,
-                currentYOffset
-              )}`;
 
-              objs.introMonitorBox.current.style.opacity = `${calcValues(
-                values.introMonitorBox_opacity_out,
-                currentYOffset
-              )}`;
-              if (scrollRatio >= 0.22) {
-                objs.introChatImgBox.current.style.display = `flex`;
-                objs.introMonitorBox.current.style.cursor = `unset`;
-              } else {
-                objs.introMonitorBox.current.style.cursor = `pointer`;
-                objs.introChatImgBox.current.style.display = `none`;
-              }
-              objs.introChatImgBox.current.style.transform = `translate3d(0,${calcValues(
-                values.introChatImgBox_translateY_in,
-                currentYOffset
-              )}%,0)`;
-              objs.introChatImgBox.current.style.opacity = `${calcValues(
-                values.introChatImgBox_opacity_in,
-                currentYOffset
-              )}`;
-              objs.introChatImg.current.style.transform = `translate3d(${calcValues(
-                values.introChatImg_translateX_in,
-                currentYOffset
-              )}%,${calcValues(
-                values.introChatImg_translateY_in,
-                currentYOffset
-              )}%,0)`;
-              objs.introChatImg.current.style.width = `${calcValues(
-                values.introChatImg_width_in,
-                currentYOffset
-              )}%`;
-            }
-            if (scrollRatio <= 0.92) {
-              objs.introChatReplyBox.current.style.transform = `translate3d(0,${calcValues(
-                values.introChatReplyBox_translateY_in,
-                currentYOffset
-              )}%,0)`;
-              objs.introChatReplyBox.current.style.opacity = `${calcValues(
-                values.introChatReplyBox_opacity_in,
-                currentYOffset
-              )}`;
-              objs.introArrowDown.current.style.opacity = `${calcValues(
-                values.introArrowDown_opacity_in,
-                currentYOffset
-              )}`;
-            }
-            if (scrollRatio >= 0.95) {
-              objs.content.current.style.position = `static`;
-              objs.content.current.style.marginTop = `${
-                scrollHeight * 0.805
-              }px`;
-              if (window.innerWidth < 361) {
-                objs.content.current.style.transform = `translate3d(0,-50%,0)`;
-                objs.content.current.style.width = `${
-                  window.innerWidth * 0.7
-                }px`;
-              } else {
-                objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
-                objs.content.current.style.width = `${
-                  window.innerWidth * 0.55 - 7.5
-                }px`;
-              }
+          if (scrollRatio <= 0.77) {
+            scrollToTopBtn.current.style.opacity = `0`;
+            indexLinkBtn.current.style.opacity = `0`;
+            objs.messageBox.current.style.transform = `translate3d(${calcValues(
+              window.innerHeight > 1300 && window.innerWidth > 1520
+                ? [0, 80, { start: 0.05, end: 0.75 }]
+                : values.messageBox_translateX_in,
+              currentYOffset
+            )}%,${calcValues(
+              window.innerHeight > 1300
+                ? [-50, 200, { start: 0.4, end: 0.75 }]
+                : values.messageBox_translateY_in,
+              currentYOffset
+            )}%,0) scale(${calcValues(
+              values.messageBox_scale_in,
+              currentYOffset
+            )})`;
+            objs.messageBox.current.style.color = `rgba(${calcValues(
+              values.messageBox_colorR_in,
+              currentYOffset
+            )},${calcValues(
+              values.messageBox_colorG_in,
+              currentYOffset
+            )},${calcValues(values.messageBox_colorB_in, currentYOffset)},1)`;
+            objs.subMessage.current.style.opacity = `${calcValues(
+              values.subMessage_opacity_in,
+              currentYOffset
+            )}`;
+            objs.messageBackground.current.style.transform = `translate3d(0,${calcValues(
+              values.messageBackground_translateY_in,
+              currentYOffset
+            )}%, 0)`;
+            objs.messageBackground.current.style.opacity = `${calcValues(
+              values.messageBackground_opacity_in,
+              currentYOffset
+            )}`;
+            objs.messageA.current.style.transform = `translate3d(0, 0, 0)`;
+            objs.messageB.current.style.transform = `translate3d(${calcValues(
+              values.messageB_translateX_in,
+              currentYOffset
+            )}%,0, 0)`;
+            objs.messageB.current.style.opacity = `${calcValues(
+              values.messageB_opacity_in,
+              currentYOffset
+            )}`;
+            objs.messageC.current.style.transform = `translate3d(${calcValues(
+              values.messageC_translateX_in,
+              currentYOffset
+            )}%, 0, 0)`;
+            objs.messageD.current.style.transform = `translate3d(${calcValues(
+              values.messageD_translateX_in,
+              currentYOffset
+            )}%, 0, 0)`;
+            objs.messageD.current.style.opacity = `${calcValues(
+              values.messageD_opacity_in,
+              currentYOffset
+            )}`;
+
+            objs.introMonitorBox.current.style.opacity = `${calcValues(
+              values.introMonitorBox_opacity_out,
+              currentYOffset
+            )}`;
+            if (scrollRatio >= 0.22) {
+              objs.introChatImgBox.current.style.display = `flex`;
+              objs.introMonitorBox.current.style.cursor = `unset`;
             } else {
-              objs.content.current.style.position = `fixed`;
-              objs.content.current.style.marginTop = `0`;
-              objs.content.current.style.transform = `translate3d(-50%,-50%,0)`;
-              if (window.innerWidth < 361) {
-                objs.content.current.style.width = `${
-                  window.innerWidth * 0.7
-                }px`;
-              } else {
-                objs.content.current.style.width = `${
-                  window.innerWidth * 0.55 - 7.5
-                }px`;
-              }
+              objs.introMonitorBox.current.style.cursor = `pointer`;
+              objs.introChatImgBox.current.style.display = `none`;
+            }
+            objs.introChatImgBox.current.style.transform = `translate3d(0,${calcValues(
+              values.introChatImgBox_translateY_in,
+              currentYOffset
+            )}%,0)`;
+            objs.introChatImgBox.current.style.opacity = `${calcValues(
+              values.introChatImgBox_opacity_in,
+              currentYOffset
+            )}`;
+            objs.introChatImg.current.style.transform = `translate3d(${calcValues(
+              values.introChatImg_translateX_in,
+              currentYOffset
+            )}%,${calcValues(
+              values.introChatImg_translateY_in,
+              currentYOffset
+            )}%,0)`;
+            objs.introChatImg.current.style.width = `${calcValues(
+              values.introChatImg_width_in,
+              currentYOffset
+            )}%`;
+          }
+          if (scrollRatio <= 0.92) {
+            objs.introChatReplyBox.current.style.transform = `translate3d(0,${calcValues(
+              values.introChatReplyBox_translateY_in,
+              currentYOffset
+            )}%,0)`;
+            objs.introChatReplyBox.current.style.opacity = `${calcValues(
+              values.introChatReplyBox_opacity_in,
+              currentYOffset
+            )}`;
+            objs.introArrowDown.current.style.opacity = `${calcValues(
+              values.introArrowDown_opacity_in,
+              currentYOffset
+            )}`;
+          }
+          if (scrollRatio >= 0.95) {
+            objs.content.current.style.position = `static`;
+            objs.content.current.style.marginTop = `${scrollHeight * 0.805}px`;
+            if (window.innerWidth < 361) {
+              objs.content.current.style.transform = `translate3d(0,-50%,0)`;
+              objs.content.current.style.width = `${window.innerWidth * 0.7}px`;
+            } else {
+              objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
+              objs.content.current.style.width = `${
+                window.innerWidth * 0.55 - 7.5
+              }px`;
             }
           } else {
-            objs.introChatImgBox.current.style.display = `none`;
-            if (scrollRatio > 0.1) {
-              objs.container.current.style.opacity = `0`;
-              if (scrollRatio > 0.15) {
-              }
+            objs.content.current.style.position = `fixed`;
+            objs.content.current.style.marginTop = `0`;
+            objs.content.current.style.transform = `translate3d(-50%,-50%,0)`;
+            if (window.innerWidth < 361) {
+              objs.content.current.style.width = `${window.innerWidth * 0.7}px`;
             } else {
-              objs.container.current.style.opacity = `1`;
-              objs.messageD.current.style.opacity = `0`;
-              objs.messageA.current.style.color = `#ff96a6`;
-              objs.messageB.current.style.color = `#ff96a6`;
-              objs.messageC.current.style.color = `#ff96a6`;
+              objs.content.current.style.width = `${
+                window.innerWidth * 0.55 - 7.5
+              }px`;
             }
           }
         }
@@ -800,6 +816,21 @@ const IndexPage = () => {
             objs.mainItemProgressSubTitle.current.style.opacity = `0`;
             objs.mainItemProgressDescBox.current.style.opacity = `0`;
             setIsProgressAni(false);
+          }
+          if (window.innerHeight > 1300) {
+            if (window.innerWidth < 1520) {
+              if (scrollRatio > 0.95) {
+                indexLinkBtn.current.style.opacity = `0`;
+              }
+            } else {
+              if (scrollRatio > 0.92) {
+                indexLinkBtn.current.style.opacity = `0`;
+              }
+            }
+          } else {
+            if (scrollRatio > 0.9) {
+              indexLinkBtn.current.style.opacity = `0`;
+            }
           }
         }
         break;
