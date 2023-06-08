@@ -29,8 +29,10 @@ import previewGreen from '@/images/channelImg/6.png';
 import previewPurple from '@/images/channelImg/7.png';
 import previewGithub from '@/images/githubLogo.png';
 import {
-  ChevronDownIcon,
   ChevronUpIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   BellAlertIcon,
   DocumentIcon,
   ListBulletIcon,
@@ -47,6 +49,8 @@ import check from '@/images/landingPage/check.png';
 
 const IndexPage = () => {
   const scrollToTopBtn = useRef<HTMLDivElement>(null);
+  const indexLinkBtn = useRef<HTMLDivElement>(null);
+  const indexLinkTranslateBox = useRef<HTMLDivElement>(null);
   //introSection
   const introSection = useRef<any>(null);
   const introSectionBox = useRef<HTMLDivElement>(null);
@@ -89,7 +93,8 @@ const IndexPage = () => {
   const mainItemProgressSubTitle = useRef<HTMLHeadingElement>(null);
   const mainItemProgressDescBox = useRef<HTMLDivElement>(null);
 
-  const [isViewScrollBtn, setIsViewScrollBtn] = useState(false);
+  const [indexOrder, setIndexOrder] = useState('');
+  const [isIndexOpen, setIsIndexOpen] = useState(false);
   const [clickItem, setClickItem] = useState('');
   const [clickLabel, setClickLabel] = useState('');
   const [isEditableAni, setIsEditableAni] = useState(false);
@@ -146,6 +151,22 @@ const IndexPage = () => {
     });
   });
 
+  useEffect(() => {
+    if (!isIndexOpen && indexLinkTranslateBox.current) {
+      if (indexOrder === `index1`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
+      } else if (indexOrder === `index2`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-125px,0,0)`;
+      } else if (indexOrder === `index3`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-250px,0,0)`;
+      } else if (indexOrder === `index4`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-375px,0,0)`;
+      } else if (indexOrder === `index5`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-500px,0,0)`;
+      }
+    }
+  }, [isIndexOpen, indexOrder]);
+
   const introClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.currentTarget as HTMLDivElement;
     const targetValue = target.firstElementChild?.textContent;
@@ -197,6 +218,69 @@ const IndexPage = () => {
 
   const scrollToTopHandler = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const indexOpenHandler = () => {
+    isIndexOpen ? setIsIndexOpen(false) : setIsIndexOpen(true);
+    if (!isIndexOpen && indexLinkTranslateBox.current) {
+      console.log(`안쪽 isopen?`, isIndexOpen);
+      indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
+    } else if (isIndexOpen && indexLinkTranslateBox.current) {
+      if (indexOrder === `index1`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
+      } else if (indexOrder === `index2`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-125px,0,0)`;
+      } else if (indexOrder === `index3`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-250px,0,0)`;
+      } else if (indexOrder === `index4`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-375px,0,0)`;
+      } else if (indexOrder === `index5`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-500px,0,0)`;
+      }
+    }
+  };
+  console.log(`open?`, isIndexOpen);
+  const indexLinkHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const target = e.target as HTMLSpanElement;
+    const targetLabel = target.ariaLabel;
+    if (targetLabel === `index1` && mainItemSectionA.current?.offsetTop) {
+      window.scrollTo({
+        top: mainItemSectionA.current?.offsetTop - 40,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index2` &&
+      mainItemEditableTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemEditableTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index3` &&
+      mainItemChatTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemChatTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index4` &&
+      mainItemCommitLogTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemCommitLogTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index5` &&
+      mainItemProgressTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemProgressTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    }
   };
 
   const sceneInfo = [
@@ -361,13 +445,16 @@ const IndexPage = () => {
     let mediaScrollRatioC;
     let mediaScrollRatioD;
     let mediaScrollRatioE;
-    if (window.innerWidth > 768) {
+    if (window.innerWidth < 1920 && window.innerWidth > 1520) {
+      mediaScrollRatioA = 0.355;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
       mediaScrollRatioA = 0.22;
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioA = 0.19;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioA = 0.2;
     }
+
     if (window.innerWidth > 768) {
       mediaScrollRatioB = 0.43;
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
@@ -400,6 +487,7 @@ const IndexPage = () => {
       case 0:
         if (
           scrollToTopBtn.current &&
+          indexLinkBtn.current &&
           objs.content.current &&
           objs.messageBox?.current &&
           objs.subMessage.current &&
@@ -419,126 +507,148 @@ const IndexPage = () => {
           objs.introArrowDown.current
         ) {
           console.log(`scroll`, scrollRatio);
-          if (scrollRatio <= 0.77) {
-            scrollToTopBtn.current.style.opacity = `0`;
-            objs.messageBox.current.style.transform = `translate3d(${calcValues(
-              values.messageBox_translateX_in,
-              currentYOffset
-            )}%,${calcValues(
-              values.messageBox_translateY_in,
-              currentYOffset
-            )}%,0) scale(${calcValues(
-              values.messageBox_scale_in,
-              currentYOffset
-            )})`;
-            objs.messageBox.current.style.color = `rgba(${calcValues(
-              values.messageBox_colorR_in,
-              currentYOffset
-            )},${calcValues(
-              values.messageBox_colorG_in,
-              currentYOffset
-            )},${calcValues(values.messageBox_colorB_in, currentYOffset)},1)`;
-            objs.subMessage.current.style.opacity = `${calcValues(
-              values.subMessage_opacity_in,
-              currentYOffset
-            )}`;
-            objs.messageBackground.current.style.transform = `translate3d(0,${calcValues(
-              values.messageBackground_translateY_in,
-              currentYOffset
-            )}%, 0)`;
-            objs.messageBackground.current.style.opacity = `${calcValues(
-              values.messageBackground_opacity_in,
-              currentYOffset
-            )}`;
-            objs.messageA.current.style.transform = `translate3d(0, 0, 0)`;
-            objs.messageB.current.style.transform = `translate3d(${calcValues(
-              values.messageB_translateX_in,
-              currentYOffset
-            )}%,0, 0)`;
-            objs.messageB.current.style.opacity = `${calcValues(
-              values.messageB_opacity_in,
-              currentYOffset
-            )}`;
-            objs.messageC.current.style.transform = `translate3d(${calcValues(
-              values.messageC_translateX_in,
-              currentYOffset
-            )}%, 0, 0)`;
-            objs.messageD.current.style.transform = `translate3d(${calcValues(
-              values.messageD_translateX_in,
-              currentYOffset
-            )}%, 0, 0)`;
-            objs.messageD.current.style.opacity = `${calcValues(
-              values.messageD_opacity_in,
-              currentYOffset
-            )}`;
+          if (window.innerWidth < 1275) {
+            if (scrollRatio <= 0.77) {
+              scrollToTopBtn.current.style.opacity = `0`;
+              indexLinkBtn.current.style.opacity = `0`;
+              objs.messageBox.current.style.transform = `translate3d(${calcValues(
+                values.messageBox_translateX_in,
+                currentYOffset
+              )}%,${calcValues(
+                values.messageBox_translateY_in,
+                currentYOffset
+              )}%,0) scale(${calcValues(
+                values.messageBox_scale_in,
+                currentYOffset
+              )})`;
+              objs.messageBox.current.style.color = `rgba(${calcValues(
+                values.messageBox_colorR_in,
+                currentYOffset
+              )},${calcValues(
+                values.messageBox_colorG_in,
+                currentYOffset
+              )},${calcValues(values.messageBox_colorB_in, currentYOffset)},1)`;
+              objs.subMessage.current.style.opacity = `${calcValues(
+                values.subMessage_opacity_in,
+                currentYOffset
+              )}`;
+              objs.messageBackground.current.style.transform = `translate3d(0,${calcValues(
+                values.messageBackground_translateY_in,
+                currentYOffset
+              )}%, 0)`;
+              objs.messageBackground.current.style.opacity = `${calcValues(
+                values.messageBackground_opacity_in,
+                currentYOffset
+              )}`;
+              objs.messageA.current.style.transform = `translate3d(0, 0, 0)`;
+              objs.messageB.current.style.transform = `translate3d(${calcValues(
+                values.messageB_translateX_in,
+                currentYOffset
+              )}%,0, 0)`;
+              objs.messageB.current.style.opacity = `${calcValues(
+                values.messageB_opacity_in,
+                currentYOffset
+              )}`;
+              objs.messageC.current.style.transform = `translate3d(${calcValues(
+                values.messageC_translateX_in,
+                currentYOffset
+              )}%, 0, 0)`;
+              objs.messageD.current.style.transform = `translate3d(${calcValues(
+                values.messageD_translateX_in,
+                currentYOffset
+              )}%, 0, 0)`;
+              objs.messageD.current.style.opacity = `${calcValues(
+                values.messageD_opacity_in,
+                currentYOffset
+              )}`;
 
-            objs.introMonitorBox.current.style.opacity = `${calcValues(
-              values.introMonitorBox_opacity_out,
-              currentYOffset
-            )}`;
-            if (scrollRatio >= 0.22) {
-              objs.introChatImgBox.current.style.display = `flex`;
-              objs.introMonitorBox.current.style.cursor = `unset`;
-            } else {
-              objs.introMonitorBox.current.style.cursor = `pointer`;
-              objs.introChatImgBox.current.style.display = `none`;
+              objs.introMonitorBox.current.style.opacity = `${calcValues(
+                values.introMonitorBox_opacity_out,
+                currentYOffset
+              )}`;
+              if (scrollRatio >= 0.22) {
+                objs.introChatImgBox.current.style.display = `flex`;
+                objs.introMonitorBox.current.style.cursor = `unset`;
+              } else {
+                objs.introMonitorBox.current.style.cursor = `pointer`;
+                objs.introChatImgBox.current.style.display = `none`;
+              }
+              objs.introChatImgBox.current.style.transform = `translate3d(0,${calcValues(
+                values.introChatImgBox_translateY_in,
+                currentYOffset
+              )}%,0)`;
+              objs.introChatImgBox.current.style.opacity = `${calcValues(
+                values.introChatImgBox_opacity_in,
+                currentYOffset
+              )}`;
+              objs.introChatImg.current.style.transform = `translate3d(${calcValues(
+                values.introChatImg_translateX_in,
+                currentYOffset
+              )}%,${calcValues(
+                values.introChatImg_translateY_in,
+                currentYOffset
+              )}%,0)`;
+              objs.introChatImg.current.style.width = `${calcValues(
+                values.introChatImg_width_in,
+                currentYOffset
+              )}%`;
             }
-            objs.introChatImgBox.current.style.transform = `translate3d(0,${calcValues(
-              values.introChatImgBox_translateY_in,
-              currentYOffset
-            )}%,0)`;
-            objs.introChatImgBox.current.style.opacity = `${calcValues(
-              values.introChatImgBox_opacity_in,
-              currentYOffset
-            )}`;
-            objs.introChatImg.current.style.transform = `translate3d(${calcValues(
-              values.introChatImg_translateX_in,
-              currentYOffset
-            )}%,${calcValues(
-              values.introChatImg_translateY_in,
-              currentYOffset
-            )}%,0)`;
-            objs.introChatImg.current.style.width = `${calcValues(
-              values.introChatImg_width_in,
-              currentYOffset
-            )}%`;
-          }
-          if (scrollRatio <= 0.92) {
-            objs.introChatReplyBox.current.style.transform = `translate3d(0,${calcValues(
-              values.introChatReplyBox_translateY_in,
-              currentYOffset
-            )}%,0)`;
-            objs.introChatReplyBox.current.style.opacity = `${calcValues(
-              values.introChatReplyBox_opacity_in,
-              currentYOffset
-            )}`;
-            objs.introArrowDown.current.style.opacity = `${calcValues(
-              values.introArrowDown_opacity_in,
-              currentYOffset
-            )}`;
-          }
-          if (scrollRatio >= 0.95) {
-            objs.content.current.style.position = `static`;
-            objs.content.current.style.marginTop = `${scrollHeight * 0.805}px`;
-            if (window.innerWidth < 361) {
-              objs.content.current.style.transform = `translate3d(0,-50%,0)`;
-              objs.content.current.style.width = `${window.innerWidth * 0.7}px`;
-            } else {
-              objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
-              objs.content.current.style.width = `${
-                window.innerWidth * 0.55 - 7.5
+            if (scrollRatio <= 0.92) {
+              objs.introChatReplyBox.current.style.transform = `translate3d(0,${calcValues(
+                values.introChatReplyBox_translateY_in,
+                currentYOffset
+              )}%,0)`;
+              objs.introChatReplyBox.current.style.opacity = `${calcValues(
+                values.introChatReplyBox_opacity_in,
+                currentYOffset
+              )}`;
+              objs.introArrowDown.current.style.opacity = `${calcValues(
+                values.introArrowDown_opacity_in,
+                currentYOffset
+              )}`;
+            }
+            if (scrollRatio >= 0.95) {
+              objs.content.current.style.position = `static`;
+              objs.content.current.style.marginTop = `${
+                scrollHeight * 0.805
               }px`;
+              if (window.innerWidth < 361) {
+                objs.content.current.style.transform = `translate3d(0,-50%,0)`;
+                objs.content.current.style.width = `${
+                  window.innerWidth * 0.7
+                }px`;
+              } else {
+                objs.content.current.style.transform = `translate3d(-7.5px,-50%,0)`;
+                objs.content.current.style.width = `${
+                  window.innerWidth * 0.55 - 7.5
+                }px`;
+              }
+            } else {
+              objs.content.current.style.position = `fixed`;
+              objs.content.current.style.marginTop = `0`;
+              objs.content.current.style.transform = `translate3d(-50%,-50%,0)`;
+              if (window.innerWidth < 361) {
+                objs.content.current.style.width = `${
+                  window.innerWidth * 0.7
+                }px`;
+              } else {
+                objs.content.current.style.width = `${
+                  window.innerWidth * 0.55 - 7.5
+                }px`;
+              }
             }
           } else {
-            objs.content.current.style.position = `fixed`;
-            objs.content.current.style.marginTop = `0`;
-            objs.content.current.style.transform = `translate3d(-50%,-50%,0)`;
-            if (window.innerWidth < 361) {
-              objs.content.current.style.width = `${window.innerWidth * 0.7}px`;
+            objs.introChatImgBox.current.style.display = `none`;
+            if (scrollRatio > 0.1) {
+              objs.container.current.style.opacity = `0`;
+              if (scrollRatio > 0.15) {
+              }
             } else {
-              objs.content.current.style.width = `${
-                window.innerWidth * 0.55 - 7.5
-              }px`;
+              objs.container.current.style.opacity = `1`;
+              objs.messageD.current.style.opacity = `0`;
+              objs.messageA.current.style.color = `#ff96a6`;
+              objs.messageB.current.style.color = `#ff96a6`;
+              objs.messageC.current.style.color = `#ff96a6`;
             }
           }
         }
@@ -546,6 +656,8 @@ const IndexPage = () => {
       case 1:
         if (
           scrollToTopBtn.current &&
+          indexLinkBtn.current &&
+          indexLinkTranslateBox.current &&
           objs.mainItemPreviewTitle?.current &&
           objs.mainItemPreview.current &&
           objs.mainItemPreviewScrollBoxTitle.current &&
@@ -573,6 +685,8 @@ const IndexPage = () => {
           }
           console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
+            setIndexOrder(`index1`);
+            console.log(`실제`, isIndexOpen);
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemPreviewScrollBoxTitle.current.style.transform = `translate3d(0,0,0)`;
             if (window.innerWidth < 520) {
@@ -601,11 +715,13 @@ const IndexPage = () => {
           }
           if (scrollRatio > 0.15 && window.innerWidth >= 756) {
             scrollToTopBtn.current.style.opacity = `1`;
+            indexLinkBtn.current.style.opacity = `1`;
           } else {
             scrollToTopBtn.current.style.opacity = `0`;
+            indexLinkBtn.current.style.opacity = `0`;
           }
-          console.log(`이너`, window.innerHeight);
           if (scrollRatio > mediaScrollRatioA) {
+            setIndexOrder(`index2`);
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -623,6 +739,7 @@ const IndexPage = () => {
             setIsEditableAni(false);
           }
           if (scrollRatio > mediaScrollRatioB) {
+            setIndexOrder(`index3`);
             objs.mainItemChatTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -649,6 +766,7 @@ const IndexPage = () => {
             setIsChatBookmarkAni(false);
           }
           if (scrollRatio > mediaScrollRatioD) {
+            setIndexOrder(`index4`);
             objs.mainItemCommitLogTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemCommitLogSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemCommitLogDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -666,6 +784,7 @@ const IndexPage = () => {
             setIsCommitLogAni(false);
           }
           if (scrollRatio > mediaScrollRatioE) {
+            setIndexOrder(`index5`);
             objs.mainItemProgressTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemProgressSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemProgressDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -685,7 +804,7 @@ const IndexPage = () => {
         }
         break;
     }
-  }, [yOffset]);
+  }, [yOffset, isIndexOpen]);
 
   const scrollLoop = useCallback(() => {
     enterNewScene = false;
@@ -722,7 +841,74 @@ const IndexPage = () => {
       >
         <ChevronUpIcon />
       </div>
-      <div></div>
+      <div ref={indexLinkBtn} css={styles.indexLinkBtnBox(isIndexOpen)}>
+        <div css={styles.indexLinkBtnInnerBox(isIndexOpen)}>
+          <div
+            css={styles.indexLinkBtnLeftArrow(isIndexOpen)}
+            onClick={indexOpenHandler}
+          >
+            <ChevronLeftIcon />
+          </div>
+          <div
+            css={styles.indexLinkBtnRightArrow(isIndexOpen)}
+            onClick={indexOpenHandler}
+          >
+            <ChevronRightIcon />
+          </div>
+          <div
+            css={styles.indexLinkBtn(isIndexOpen)}
+            onClick={indexLinkHandler}
+          >
+            <div ref={indexLinkTranslateBox}>
+              <span
+                aria-label="index1"
+                css={{
+                  color:
+                    indexOrder === `index1` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                아코하 살펴보기
+              </span>
+              <span
+                aria-label="index2"
+                css={{
+                  color:
+                    indexOrder === `index2` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                희의록&middot;정보공유
+              </span>
+              <span
+                aria-label="index3"
+                css={{
+                  color:
+                    indexOrder === `index3` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                채팅&middot;북마크
+              </span>
+              <span
+                aria-label="index4"
+                css={{
+                  color:
+                    indexOrder === `index4` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                커밋&middot;이슈로그
+              </span>
+              <span
+                aria-label="index5"
+                css={{
+                  color:
+                    indexOrder === `index5` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                진행상황
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <section ref={introSection} css={styles.introSection}>
         <div ref={introSectionBox} css={styles.introSectionBox}>
           <div css={styles.mainTitleDesc}>

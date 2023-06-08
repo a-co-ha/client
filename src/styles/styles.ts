@@ -425,13 +425,12 @@ export const flexRowCenter = css`
   justify-content: center;
   align-items: center;
   height: 100%;
-  max-height: 10365px;
 `;
 
 export const scrollToTopBtn = css`
   position: fixed;
-  right: 5%;
-  bottom: 5%;
+  right: 2%;
+  bottom: 8%;
   width: 50px;
   height: 50px;
   color: white;
@@ -450,11 +449,102 @@ export const scrollToTopBtn = css`
   }
 `;
 
+export const indexLinkBtnBox = (isOpen: boolean) => css`
+  display: flex;
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  width: ${isOpen ? `650px` : `150px`};
+  height: 35px;
+  z-index: 9999;
+  color: white;
+  background: black;
+  border-radius: 8px;
+  box-shadow: 2px 10px 15px 1px rgb(0 0 0 / 0.2),
+    2px 4px 6px 2px rgb(0 0 0 / 0.1);
+  transition: 0.3s ease-out;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -30%;
+    left: -1.5%;
+    width: 103%;
+    height: 150%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: ${isOpen ? `blur(8px)` : `blur(0)`};
+  }
+`;
+
+export const indexLinkBtnInnerBox = (isOpen: boolean) => css`
+  position: absolute;
+  top: 0;
+  width: ${isOpen ? `650px` : `150px`};
+  height: 35px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  overflow: hidden;
+  transition: ${isOpen ? `0.5s` : `0.1s`};
+`;
+
+export const indexLinkBtnLeftArrow = (isOpen: boolean) => css`
+  display: ${isOpen ? `none` : `flex`};
+  position: absolute;
+  left: 0%;
+  width: 25px;
+  height: 35px;
+  color: white;
+  background: black;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  cursor: pointer;
+`;
+
+export const indexLinkBtnRightArrow = (isOpen: boolean) => css`
+  display: ${isOpen ? `flex` : `none`};
+  position: absolute;
+  right: 0;
+  width: 25px;
+  height: 35px;
+  color: white;
+  background: black;
+  border-top-right-radius: ${isOpen ? `0` : `6px`};
+  border-bottom-right-radius: ${isOpen ? `0` : `6px`};
+  cursor: pointer;
+`;
+
+export const indexLinkBtn = (isOpen: boolean) => css`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: ${!isOpen ? `0 0 0 25px` : `0 25px 0 0`};
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  & > div > span {
+    display: inline-block;
+    width: 125px;
+    padding: 0.5rem;
+    background: black;
+    cursor: pointer;
+  }
+  & > div > span:first-of-type {
+    border-top-left-radius: ${isOpen ? `6px` : `0`};
+    border-bottom-left-radius: ${isOpen ? `6px` : `0`};
+  }
+  & > div > span:last-of-type {
+    border-top-right-radius: ${isOpen ? `0` : `6px`};
+    border-bottom-right-radius: ${isOpen ? `0` : `6px`};
+  }
+`;
+
 export const introSection = css`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  transition: 0.25s ease-out;
 `;
 
 export const introSectionBox = css`
