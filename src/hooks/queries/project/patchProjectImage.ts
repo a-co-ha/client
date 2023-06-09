@@ -1,30 +1,29 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { postProject } from '@/pages/api/project/postProject';
+import { patchProjectImage } from '@/pages/api/project/patchProjectImage';
 import { useSetRecoilState } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
 import { patchProjectDefaultImage } from '@/pages/api/project/patchProjectDefaultImage';
 import { toast } from 'react-toastify';
 import { getCookie } from 'cookies-next';
 import type { AxiosError } from 'axios';
-import type { PostProject } from '@/pages/api/project/type';
+import type { PatchProjectImage } from '@/pages/api/project/type';
 import type { ProjectName } from '@/components/project-sidebar/type';
 
-export const usePostProject = () => {
+export const usePatchProjectImage = (
+  channelId: string | string[] | undefined
+) => {
   const setChannelName = useSetRecoilState(channelNameState);
+  const userId = getCookie(`myUserId`);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const userId = getCookie(`myUserId`);
-  return useMutation<PostProject, AxiosError, ProjectName>(
-    [`postProject`, userId],
-    (channelName) => postProject(channelName),
+  return useMutation<AxiosError, PatchProjectImage>(
+    [`patchProjectImage`, userId],
+    (channelImg) => patchProjectImage(channelId, channelImg),
     {
       onSuccess: async (data) => {
         if (data) {
-          await patchProjectDefaultImage(data.id);
           await queryClient.invalidateQueries([`user`, userId]);
-          setChannelName(data.channelName);
-          router.push(`/project/${data.id}`);
         }
       },
     }

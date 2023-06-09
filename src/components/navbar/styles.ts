@@ -232,7 +232,6 @@ export const projectDeleteNameBtn = (
 export const loginBox = css`
   ${flexCenterNavBar};
   min-width: 100px;
-  // box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
 export const loginBtn = css`
@@ -317,5 +316,99 @@ export const profileLogoutBtn = css`
   margin-left: 4px;
   &:hover {
     color: rgba(0, 0, 0, 0.4);
+  }
+`;
+
+export const projectChangeImgModalBox = (isOpen: boolean) => css`
+  ${projectInviteBox(isOpen)};
+`;
+
+export const projectChangeImgModalBackground = (isOpen: boolean) => css`
+  ${inviteModalBackground(isOpen)};
+`;
+
+export const projectChangeImgModalTransition = (isOpen: boolean) => css`
+  ${projectInviteBoxTransition(isOpen)};
+`;
+
+export const projectChangeImgModalFormBox = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  & > div:nth-of-type(1) {
+    display: flex;
+    justify-content: flex-end;
+  }
+`;
+
+export const projectChangeImgInputBox = css`
+  position: absolute;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  transform: translate3d(-50%, 0, 0);
+`;
+
+export const projectChangeImgLabel = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0;
+  cursor: pointer;
+  &::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    content: '+';
+    font-size: 2rem;
+    color: white;
+  }
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const projectChangeImgInput = css`
+  width: 0;
+`;
+
+export const projectChangeImgName = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  font-size: 1.5rem;
+  transform: translate3d(-50%, 0, 0);
+`;
+
+export const projectChangeImgSubmitBtnBox = css`
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translate3d(-50%, 0, 0);
+`;
+
+export const projectChangeImgSubmitBtn = css`
+  padding: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 2px 5px 5px -1px rgb(0 0 0 / 0.1),
+    2px 4px 6px -4px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 `;

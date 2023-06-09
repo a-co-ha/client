@@ -89,3 +89,8 @@ export const LandingPageNavbarIsScroll = atom({
   key: `LandingPageNavbarIsScroll/${nanoId()}`,
   default: false,
 });
+
+export const changeProjectImgModalState = atom({
+  key: `changeProjectImgModalState/${nanoId()}`,
+  default: false,
+});

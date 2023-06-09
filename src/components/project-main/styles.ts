@@ -559,6 +559,7 @@ export const errorMessage = css`
 export const helpModal = css`
   display: inline-block;
   position: relative;
+  z-index: 4;
   &:hover div {
     display: block;
   }

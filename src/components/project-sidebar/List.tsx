@@ -79,6 +79,7 @@ export const List = () => {
           css={styles.projectCreateThumbnail(
             String(channel.id) === channelId ? true : false
           )}
+          onClick={() => onClickHandler(channel)}
         >
           <HoverModal content={channel.channelName} />
           <svg
@@ -90,20 +91,20 @@ export const List = () => {
           >
             <defs>
               <path
-                id="shapeSquircle"
+                id="listSquircle"
                 d="M50 25C50 43.4095 43.4095 50 25 50C6.59051 50 0 43.4095 0 25C0 6.59051 6.59051 0 25 0C43.4095 0 50 6.59051 50 25Z"
               ></path>
-              <clipPath id="clipSquircle">
-                <use xlinkHref="#shapeSquircle" />
+              <clipPath id="listClipSquircle">
+                <use xlinkHref="#listSquircle" />
               </clipPath>
             </defs>
             <image
               width="100%"
               height="100%"
               preserveAspectRatio="xMidYMid slice"
-              clipPath="url(#clipSquircle)"
+              clipPath="url(#listClipSquircle)"
               xlinkHref={`${
-                channel.channelImg ? channel.channelImg : githubChannelImg
+                channel.channelImg ? channel.channelImg : githubChannelImg.src
               }`}
             />
           </svg>
