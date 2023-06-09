@@ -75,9 +75,9 @@ export const pageCreateBtnBox = css`
 
 export const pageCreateBtn = css`
   padding-inline: 12px;
-  color: purple;
+  color: rgb(30 27 75);
   &:hover {
-    background: gray;
+    background-color: rgb(209 213 219);
     height: 2rem;
   }
   border-radius: 8px;
@@ -85,13 +85,26 @@ export const pageCreateBtn = css`
 
 export const projectCreateThumbnail = (isSelected: boolean) => css`
   position: relative;
-  width: 40px;
-  height: 40px;
   margin-top: 5px;
   border-radius: 10px;
   transform: ${isSelected ? `scale(1.15)` : `scale(1)`};
   transition: 0.3s;
-  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  & > svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  & > div:nth-of-type(2) {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    z-index: -1;
+    width: 95%;
+    height: 95%;
+    border-radius: 50%;
+    box-shadow: 3px 3px 5px 1px rgb(0 0 0 / 0.2),
+      3px 2px 8px 1px rgb(0 0 0 / 0.2);
+  }
   &:hover {
     transform: ${isSelected ? `scale(1.15)` : `scale(1.08)`};
   }
@@ -151,6 +164,9 @@ export const projectCreatePlusBtn = css`
   border-radius: 10px;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   border: 1px solid black;
+  &:hover {
+    color: rgba(0, 0, 0, 0.4);
+  }
   &:hover > div {
     display: block;
   }

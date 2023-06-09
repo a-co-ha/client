@@ -10,6 +10,7 @@ import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import { XCircleIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 
 export const Profile = () => {
@@ -44,11 +45,8 @@ export const Profile = () => {
           <button css={{ fontSize: '12px', marginRight: `auto` }}>
             {user.name}
           </button>
-          <button
-            css={{ marginLeft: '4px', width: '20px' }}
-            onClick={onClickHandler}
-          >
-            <FontAwesomeIcon icon={faDoorOpen} />
+          <button css={styles.profileLogoutBtn} onClick={onClickHandler}>
+            <XCircleIcon />
           </button>
         </div>
       )}

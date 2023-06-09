@@ -9,7 +9,7 @@ import {
 import { useDeleteProject } from '@/hooks/queries/project/deleteProject';
 import { useExitProject } from '@/hooks/queries/project/exitProject';
 import { useEffect, useState, useLayoutEffect } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { ArrowDownCircleIcon } from '@heroicons/react/20/solid';
 import { InviteModal } from './inviteModal';
 import { ProjectDeleteForm } from './ProjectDeleteForm';
 import { inviteModalState } from '@/recoil/user/atom';
@@ -41,23 +41,17 @@ export const ProjectMenu = () => {
         <div css={styles.modalBackground(isOpen)}></div>
         <div className="group inline-flex w-full justify-center cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           <p>{channelName}</p>
-          <ChevronDownIcon
-            className="ml-auto -mr-1 h-5 w-5 text-black-200 group-hover:text-violet-100 text-right"
+          <ArrowDownCircleIcon
+            className="ml-auto -mr-1 h-5 w-5 text-gray-400 group-hover:text-violet-100 text-right"
             aria-hidden="true"
           />
         </div>
 
-        <div
-          css={styles.projectNameBoxTransition(isOpen)}
-          // className="absolute right-0 mt-3 w-48 origin-top divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-        >
+        <div css={styles.projectNameBoxTransition(isOpen)}>
           <div className="px-1 py-1">
             <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-400">
               <button>프로젝트 정보 (예정)</button>
             </div>
-            {/* <div className="group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-violet-500 hover:text-white text-gray-900">
-              <button>button 2</button>
-            </div> */}
             {channelList.length !== 0 ? (
               <div
                 onClick={() => setIsInviteModal(true)}

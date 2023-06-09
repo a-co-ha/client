@@ -311,3 +311,11 @@ export const profileImageBox = css`
   border-radius: 50%;
   overflow: hidden;
 `;
+
+export const profileLogoutBtn = css`
+  width: 20px;
+  margin-left: 4px;
+  &:hover {
+    color: rgba(0, 0, 0, 0.4);
+  }
+`;
