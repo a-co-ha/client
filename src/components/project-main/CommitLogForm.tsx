@@ -44,7 +44,7 @@ export const CommitLogForm = ({
     commitLogModalFormState
   );
   const [isModalOpen, setIsModalOpen] = useRecoilState(
-    confirmModalState(MODAL_KEY.confirm)
+    confirmModalState(MODAL_KEY.commitLog)
   );
   const methods = useForm<CommitLogFormType>({
     defaultValues: {
@@ -132,6 +132,7 @@ export const CommitLogForm = ({
         css={styles.commitLogModalBackground(isCommitLogFormModal)}
       />
       <ConfirmModal
+        modalKey={MODAL_KEY.commitLog}
         title={`다음 저장소로 연결할까요?`}
         content={isFocusContent}
         confirmFunc={onConfirmHandler}

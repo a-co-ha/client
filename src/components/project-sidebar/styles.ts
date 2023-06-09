@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 
 const flexColumnCenter = css`
   display: flex;
@@ -204,7 +204,8 @@ export const pageNameInput = css`
 
 export const pageNameLinkBox = (
   propsPageId: string,
-  pageId: string | string[] | undefined
+  pageId: string | string[] | undefined,
+  isClicked: boolean
 ) => css`
   color: ${pageId !== undefined && propsPageId === pageId ? `black` : `gray`};
   background: ${pageId !== undefined && propsPageId === pageId
@@ -217,18 +218,75 @@ export const pageNameLinkBox = (
       display: block;
     }
   }
+  & > div > button {
+    display: ${isClicked ? `block` : `none`};
+  }
 `;
 
 export const pageNameLink = css`
+  position: relative;
   display: flex;
   align-items: center;
   font-size: 0.875rem;
   border-radius: 0.375rem;
   padding: 0.3rem;
+  & > button > svg {
+    color: gray;
+  }
+  & > button:nth-of-type(1) {
+    &:hover svg {
+      color: #efb925;
+    }
+  }
+  & > button:nth-of-type(2) {
+    &:hover svg {
+      color: black;
+    }
+  }
+`;
+
+export const pageNameLinkTag = css`
+  width: 70%;
+  z-index: 2;
+`;
+
+export const pageNameBtnStyle = css`
+  display: none;
+  padding-inline: 0.2rem;
+  margin-left: auto;
 `;
 
 export const pageNameEditBtn = css`
-  display: none;
-  padding: 0;
-  margin-left: auto;
+  ${pageNameBtnStyle};
+  z-index: 3;
+`;
+
+export const pageNameDeleteBtn = (isClicked: boolean) => css`
+  ${pageNameBtnStyle};
+  position: relative;
+  z-index: 3;
+  transform: translate3d(${isClicked ? `120%,0,0` : `0,0,0`});
+  transition: 0.3s ease-out;
+`;
+
+export const pageNameDeleteConfirmBtn = (isClicked: boolean) => css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 10%;
+  right: ${isClicked ? `5%` : `0%`};
+  width: ${isClicked ? `50px` : `0px`};
+  height: 80%;
+  font-size: 0.8rem;
+  color: white;
+  z-index: 3;
+  background: #ee1f3e;
+  border-radius: 4px;
+  opacity: ${isClicked ? `1` : `0`};
+  transition: 0.3s ease-out;
+  &:hover {
+    background-color: red;
+  }
 `;

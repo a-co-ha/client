@@ -41,6 +41,7 @@ export interface CommitRegisterResponse {
 }
 
 export interface ConfirmModalType {
+  modalKey: string;
   title: string;
   content: string;
   confirmFunc: () => void;

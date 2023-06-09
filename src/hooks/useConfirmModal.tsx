@@ -5,13 +5,14 @@ import * as styles from '@/components/project-main/styles';
 import type { ConfirmModalType } from '@/pages/api/github/type';
 
 export const ConfirmModal = ({
+  modalKey,
   title,
   content,
   confirmFunc,
   cancelFunc,
 }: ConfirmModalType) => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
-    confirmModalState(MODAL_KEY.confirm)
+    confirmModalState(modalKey)
   );
 
   const onClickHandler = () => {

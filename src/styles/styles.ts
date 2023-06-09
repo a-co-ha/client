@@ -498,6 +498,10 @@ export const indexLinkBtnLeftArrow = (isOpen: boolean) => css`
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   cursor: pointer;
+  &:hover svg {
+    transition: 0.5s;
+    color: rgb(255, 155, 160);
+  }
 `;
 
 export const indexLinkBtnRightArrow = (isOpen: boolean) => css`
@@ -511,6 +515,10 @@ export const indexLinkBtnRightArrow = (isOpen: boolean) => css`
   border-top-right-radius: ${isOpen ? `0` : `6px`};
   border-bottom-right-radius: ${isOpen ? `0` : `6px`};
   cursor: pointer;
+  &:hover svg {
+    transition: 0.5s;
+    color: rgb(255, 155, 160);
+  }
 `;
 
 export const indexLinkBtn = (isOpen: boolean) => css`
@@ -2425,7 +2433,7 @@ export const mainItemChatImageBoxA = css`
 export const mainItemChatMessageBox = css`
   display: flex;
   flex-direction: column;
-  margin-left: 2.7rem;
+  margin-left: 3.7rem;
   line-height: 2vh;
   & > div > span:nth-of-type(1) {
     font-size: 1.5vh;
@@ -2437,7 +2445,7 @@ export const mainItemChatMessageBox = css`
   }
   & > span:nth-of-type(1) {
     width: fit-content;
-    padding: 0.2rem;
+    padding: 0.5rem;
     font-size: 1.7vh;
     font-weight: 500;
     background: #bddc95;
@@ -2651,7 +2659,7 @@ export const mainItemChatBookmarkA = (isAni: boolean) => css`
     & > div:nth-of-type(1) {
       & > div:nth-of-type(1) {
         & > div:nth-of-type(1) {
-          font-size: 2rem;
+          font-size: 1.5rem;
         }
         & > div:nth-of-type(2) {
           & > div:nth-of-type(1),
@@ -3190,7 +3198,7 @@ export const mainItemProgressTab = css`
     display: flex;
     align-items: center;
     width: 100%;
-    height: 30%;
+    height: 25%;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 0.7vh;

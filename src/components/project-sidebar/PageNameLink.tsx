@@ -10,6 +10,7 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';
 import { useDeletePageInTemplate } from '@/hooks/queries/template/useDeletePageInTemplate';
+import { useState } from 'react';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
   const router = useRouter();
@@ -17,6 +18,7 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   const [isEditing, setIsEditing] = useRecoilState(
     pageNameEditToggle(props.pageId)
   );
+  const [isClicked, setIsClicked] = useState(false);
   const { mutate: deletePageInTemplate } = useDeletePageInTemplate(
     props.channelId,
     props.pageId,
@@ -41,12 +43,22 @@ export const PageNameLink = (props: PageNameLinkProps) => {
     }
   };
 
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    isClicked ? setIsClicked(false) : setIsClicked(true);
+  };
+
+  const onDeleteHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onDelete();
+  };
+
   return (
     <div>
       {!isEditing ? (
-        <div css={styles.pageNameLinkBox(props.pageId, pageId)}>
+        <div css={styles.pageNameLinkBox(props.pageId, pageId, isClicked)}>
           <div css={styles.pageNameLink}>
             <Link
+              css={styles.pageNameLinkTag}
               href={`/project/${props.channelId}/${props.pageId}?name=${props.pageName}&type=${props.type}`}
             >
               {pageName}
@@ -55,15 +67,17 @@ export const PageNameLink = (props: PageNameLinkProps) => {
               css={styles.pageNameEditBtn}
               onClick={() => setIsEditing(true)}
             >
-              <FontAwesomeIcon
-                icon={faPencil}
-                size="sm"
-                style={{ color: '#efb925' }}
-              />
+              <FontAwesomeIcon icon={faPencil} size="sm" />
             </button>
-            <button css={styles.pageNameEditBtn} onClick={onDelete}>
+            <button
+              css={styles.pageNameDeleteBtn(isClicked)}
+              onClick={onClickHandler}
+            >
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
+            <div css={styles.pageNameDeleteConfirmBtn(isClicked)}>
+              <button onClick={onDeleteHandler}>삭제</button>
+            </div>
           </div>
         </div>
       ) : null}

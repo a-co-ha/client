@@ -137,19 +137,18 @@ const IndexPage = () => {
 
   useLayoutEffect(() => {
     window.addEventListener(`scroll`, throttledScroll);
-    // console.log(`scroll`);
     return () => {
       window.addEventListener(`scroll`, throttledScroll);
     };
   }, [throttledScroll]);
 
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) {
-        window.location.reload();
-      }
-    });
-  });
+  // useEffect(() => {
+  //   window.addEventListener('resize', () => {
+  //     if (window.innerWidth > 900) {
+  //       window.location.reload();
+  //     }
+  //   });
+  // });
 
   useEffect(() => {
     if (!isIndexOpen && indexLinkTranslateBox.current) {
