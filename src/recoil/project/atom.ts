@@ -94,3 +94,8 @@ export const changeProjectImgModalState = atom({
   key: `changeProjectImgModalState/${nanoId()}`,
   default: false,
 });
+
+export const changeProjectNameEditToggle = atomFamily({
+  key: `changeProjectNameEditToggle/${nanoId()}`,
+  default: false,
+});

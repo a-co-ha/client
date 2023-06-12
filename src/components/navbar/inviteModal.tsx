@@ -16,7 +16,6 @@ export interface OgData {
 
 export const InviteModal = () => {
   const { userId, channelName, channelId } = useRecoilValue(inviteChannelState);
-  const channelImg = useRecoilValue(channelImageState);
   const [isInviteModal, setIsInviteModal] = useRecoilState(inviteModalState);
   let [isCopied, setIsCopied] = useState(false);
   console.log(`인코딩 되기전`, userId, channelName);

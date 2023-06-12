@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { patchProjectImage } from '@/pages/api/project/patchProjectImage';
+import { patchProjectName } from '@/pages/api/project/patchProjectName';
 import { useSetRecoilState } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
 import { patchProjectDefaultImage } from '@/pages/api/project/patchProjectDefaultImage';
@@ -12,16 +12,15 @@ import type {
   ProjectChangeInfoResponse,
 } from '@/components/navbar/type';
 
-export const usePatchProjectImage = (
+export const usePatchProjectName = (
   channelId: string | string[] | undefined
 ) => {
   const userId = getCookie(`myUserId`);
   const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation<ProjectChangeInfoResponse, AxiosError, ProjectChangeInfo>(
-    [`patchProjectImage`, userId],
-    (projectInfo) =>
-      patchProjectImage(channelId, projectInfo.projectChangeImage),
+    [`patchProjectName`, userId],
+    (projectInfo) => patchProjectName(channelId, projectInfo.projectChangeName),
     {
       onSuccess: async (data) => {
         if (data) {

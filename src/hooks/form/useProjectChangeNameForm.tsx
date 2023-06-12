@@ -1,19 +1,11 @@
 import { Control, useController } from 'react-hook-form';
 import type { ProjectChangeInfo } from '@/components/navbar/type';
 
-export const useProjectChangeImageForm = ({
+export const useProjectChangeNameForm = ({
   control,
 }: {
   control: Control<ProjectChangeInfo>;
 }) => {
-  const {
-    field: projectChangeImage,
-    fieldState: { error: imageError },
-    formState: { isSubmitting: imageIsSubmitting },
-  } = useController({
-    name: 'projectChangeImage',
-    control,
-  });
   const {
     field: projectChangeName,
     fieldState: { error: nameError },
@@ -27,11 +19,8 @@ export const useProjectChangeImageForm = ({
     },
   });
   return {
-    projectChangeImage,
     projectChangeName,
-    imageError,
     nameError,
-    imageIsSubmitting,
     nameIsSubmitting,
   };
 };

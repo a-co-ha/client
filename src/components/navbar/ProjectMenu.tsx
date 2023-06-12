@@ -35,7 +35,7 @@ export const ProjectMenu = () => {
 
   return (
     <div css={styles.projectNameBox}>
-      <ProjectImageModal channelId={channelId} />
+      <ProjectImageModal channelId={channelId} channelNameValue={channelName} />
       <InviteModal />
       <ProjectDeleteForm channelId={channelId} />
       <div

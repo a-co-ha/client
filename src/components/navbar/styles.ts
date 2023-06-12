@@ -340,18 +340,23 @@ export const projectChangeImgModalFormBox = css`
   padding: 1.5rem;
   & > div:nth-of-type(1) {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 `;
 
+export const projectChangeImgForm = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
 export const projectChangeImgInputBox = css`
-  position: absolute;
-  left: 50%;
+  position: relative;
   width: 100px;
   height: 100px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
-  transform: translate3d(-50%, 0, 0);
 `;
 
 export const projectChangeImgLabel = css`
@@ -384,22 +389,44 @@ export const projectChangeImgInput = css`
   width: 0;
 `;
 
-export const projectChangeImgName = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 45%;
-  left: 50%;
+export const projectChangeNameForm = css`
+  ${projectChangeImgForm};
+`;
+
+export const projectChangeNameBox = css`
+  padding: 1rem;
   font-size: 1.5rem;
-  transform: translate3d(-50%, 0, 0);
+`;
+
+export const projectChangeNameInput = css`
+  text-align: center;
+  border-bottom: 0.1px solid black;
+`;
+
+export const projectChangeNameDiv = css`
+  position: relative;
+  padding-top: 0.25rem;
+  &:hover {
+    & > div {
+      opacity: 1;
+    }
+  }
+`;
+export const projectChangeNameDivIcon = css`
+  display: inline-block;
+  position: absolute;
+  padding-left: 0.5rem;
+  opacity: 0;
+  color: black;
+  cursor: pointer;
+  &:hover svg {
+    color: #efb925;
+  }
 `;
 
 export const projectChangeImgSubmitBtnBox = css`
-  position: absolute;
-  left: 50%;
-  bottom: 5%;
-  transform: translate3d(-50%, 0, 0);
+  margin-top: 1rem;
+  margin-bottom: auto;
 `;
 
 export const projectChangeImgSubmitBtn = css`

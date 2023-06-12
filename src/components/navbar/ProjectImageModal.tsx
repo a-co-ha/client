@@ -1,50 +1,80 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   changeProjectImgModalState,
   channelImageState,
   channelNameState,
+  changeProjectNameEditToggle,
 } from '@/recoil/project/atom';
-import { usePorjectChangeImgForm } from '@/hooks/form/useProjectChangeImgForm';
+import { useProjectChangeImageForm } from '@/hooks/form/useProjectChangeImgForm';
+import { useProjectChangeNameForm } from '@/hooks/form/useProjectChangeNameForm';
 import * as styles from './styles';
-import type { ProjectChangeImage } from './type';
+import type { ProjectChangeInfo } from './type';
 import { HelpModal } from '@/hooks/useHelpModal';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { usePatchProjectImage } from '@/hooks/queries/project/patchProjectImage';
+import { usePatchProjectName } from '@/hooks/queries/project/patchProjectName';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 export const ProjectImageModal = ({
   channelId,
+  channelNameValue,
 }: {
   channelId: string | string[] | undefined;
+  channelNameValue: string;
 }) => {
   const [isChangeImgModal, setIsChangeImgModal] = useRecoilState(
     changeProjectImgModalState
   );
-  const channelName = useRecoilValue(channelNameState);
+  const [isEditing, setIsEditing] = useRecoilState(
+    changeProjectNameEditToggle(channelId)
+  );
   const channelImageValue = useRecoilValue(channelImageState);
   const [channelImage, setChannelImage] = useState('');
+  const [channelName, setChannelName] = useState('');
   const patchProjectImage = usePatchProjectImage(channelId);
+  const patchProjectName = usePatchProjectName(channelId);
+  const channelNameRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setChannelImage(channelImageValue);
-    console.log(channelImage);
-  }, [channelImageValue]);
+    setChannelName(channelNameValue);
+    console.log(`나옴`, channelNameValue);
+  }, [channelImageValue, channelNameValue]);
 
-  const methods = useForm<ProjectChangeImage>({
+  const imageMethods = useForm<ProjectChangeInfo>({
     defaultValues: {
       projectChangeImage: '',
     },
     mode: 'onChange',
   });
 
-  const { projectChangeImage, isSubmitting } = usePorjectChangeImgForm({
-    control: methods.control,
+  const nameMethods = useForm<ProjectChangeInfo>({
+    defaultValues: {
+      projectChangeName: channelName,
+    },
+    mode: 'onChange',
   });
 
+  const { projectChangeImage, imageError, imageIsSubmitting } =
+    useProjectChangeImageForm({
+      control: imageMethods.control,
+    });
+
+  const { projectChangeName, nameError, nameIsSubmitting } =
+    useProjectChangeNameForm({
+      control: nameMethods.control,
+    });
+
   const onClickHandler = () => {
+    setIsEditing(false);
     setIsChangeImgModal(false);
     setChannelImage(channelImageValue);
+    console.log(`이게뭔가`, channelNameValue);
+    setChannelName(channelNameValue);
   };
 
   const onChangeHandler = ({
@@ -63,12 +93,40 @@ export const ProjectImageModal = ({
     }
   };
 
-  const onSubmit = async (channelImg: any) => {
-    console.log(`imageChange`, channelImg);
+  const onkeydownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === `Enter`) {
+      e.preventDefault();
+      if (projectChangeName.value === '') {
+        toast.error(`너무 짧아요 (최소 1자)`);
+        return;
+      }
+      setChannelName(projectChangeName.value);
+      setIsEditing(false);
+    }
+  };
+
+  const projectChangeNameHandler = () => {
+    setIsEditing(true);
+  };
+
+  const imageFormOnSubmit = async (projectInfo: ProjectChangeInfo) => {
+    console.log(`imageChange`, projectInfo);
     try {
-      patchProjectImage.mutate(channelImg.projectChangeImage);
+      patchProjectImage.mutate(projectInfo);
       setChannelImage(channelImage);
-      methods.reset();
+      // methods.reset();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const nameFormOnSubmit = async (projectInfo: ProjectChangeInfo) => {
+    console.log(`imageChange`, projectInfo);
+    try {
+      patchProjectName.mutate(projectInfo);
+      toast.success('페이지 이름을 바꿨어요');
+      setChannelName(projectChangeName.value);
+      setIsEditing(false);
     } catch (err) {
       console.error(err);
     }
@@ -80,14 +138,19 @@ export const ProjectImageModal = ({
         css={styles.projectChangeImgModalBackground(isChangeImgModal)}
       ></div>
       <div css={styles.projectChangeImgModalTransition(isChangeImgModal)}>
-        <div className="w-[70vw] max-w-[400px] h-[50vw] max-h-[400px] overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
+        <div className="w-[70vw] max-w-[400px] h-[60vw] max-h-[400px] overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
           <div css={styles.projectChangeImgModalFormBox}>
             <div>
+              <h3>프로젝트 정보 변경</h3>
               <HelpModal
                 content={`프로젝트 이미지를 바꿔보세요!\n이미지를 업로드하면 미리보기가 가능해요`}
+                direction={`left`}
               />
             </div>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <form
+              css={styles.projectChangeImgForm}
+              onSubmit={imageMethods.handleSubmit(imageFormOnSubmit)}
+            >
               <div css={styles.projectChangeImgInputBox}>
                 <svg
                   width="100"
@@ -146,12 +209,39 @@ export const ProjectImageModal = ({
                 />
               </div>
               <div css={styles.projectChangeImgSubmitBtnBox}>
-                <button css={styles.projectChangeImgSubmitBtn}>
+                <button type={`submit`} css={styles.projectChangeImgSubmitBtn}>
                   이미지 변경하기
                 </button>
               </div>
             </form>
-            <div css={styles.projectChangeImgName}>{channelName}</div>
+            <form
+              css={styles.projectChangeNameForm}
+              onSubmit={nameMethods.handleSubmit(nameFormOnSubmit)}
+            >
+              <div css={styles.projectChangeNameBox}>
+                {isEditing ? (
+                  <input
+                    ref={channelNameRef}
+                    css={styles.projectChangeNameInput}
+                    value={projectChangeName.value}
+                    onChange={projectChangeName.onChange}
+                    name={projectChangeName.name}
+                    // onKeyDown={onkeydownHandler}
+                    autoFocus
+                  />
+                ) : (
+                  <div css={styles.projectChangeNameDiv}>
+                    {channelName}
+                    <div
+                      css={styles.projectChangeNameDivIcon}
+                      onClick={projectChangeNameHandler}
+                    >
+                      <FontAwesomeIcon icon={faPencil} size="xs" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </form>
           </div>
         </div>
       </div>
