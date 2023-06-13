@@ -2,15 +2,18 @@ import * as styles from './styles';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { useResetRecoilState } from 'recoil';
+import { useResetRecoilState, useRecoilState } from 'recoil';
 import { loginState } from '@/recoil/user/atom';
-import { channelNameState } from '@/recoil/project/atom';
+import {
+  channelNameState,
+  channelMobileRightSidebarOpenState,
+} from '@/recoil/project/atom';
 import { api } from '@/pages/api/config/api-config';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
-import { XCircleIcon } from '@heroicons/react/20/solid';
+import { XCircleIcon, Bars3Icon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 
 export const Profile = () => {
@@ -19,6 +22,15 @@ export const Profile = () => {
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
   const resetChannelName = useResetRecoilState(channelNameState);
+  const [isChannelRightSidebarOpen, setIsChannelRightSidebarOpen] =
+    useRecoilState(channelMobileRightSidebarOpenState);
+
+  const rightSidebarClickHandler = () => {
+    isChannelRightSidebarOpen
+      ? setIsChannelRightSidebarOpen(false)
+      : setIsChannelRightSidebarOpen(true);
+  };
+
   const onClickHandler = async () => {
     const sessionID = getCookie(`sessionId`);
     console.log(`session`, sessionID);
@@ -39,6 +51,12 @@ export const Profile = () => {
     <div css={styles.profileBox}>
       {user && (
         <div css={styles.profileInnerBox}>
+          <div
+            css={styles.navBarRightSidebarIconBox(isChannelRightSidebarOpen)}
+            onClick={rightSidebarClickHandler}
+          >
+            <Bars3Icon />
+          </div>
           <div css={styles.profileImageBox}>
             <Image src={user.img} alt="" width={100} height={100} />{' '}
           </div>

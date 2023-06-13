@@ -13,6 +13,10 @@ export interface ProjectChangeImage {
   projectChangeImage: string;
 }
 
+export interface ProjectChangeName {
+  projectChangeName: string;
+}
+
 export interface ProjectChangeInfoResponse {
   id: number;
   userId: number;

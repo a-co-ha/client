@@ -9,6 +9,7 @@ export interface GetEditablePage {
 export interface GetChannelPages {
   _id: string;
   channelId: number;
+  channelName: string;
   EditablePage: EditablePage[];
   SocketPage: EditablePage[];
 }

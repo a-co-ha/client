@@ -8,6 +8,7 @@ export const pageListState = atom<GetChannelPages>({
   default: {
     _id: '',
     channelId: 0,
+    channelName: '',
     EditablePage: [
       {
         page: {
@@ -63,6 +64,11 @@ export const channelImageState = atom({
 export const channelSidebarOpenState = atom({
   key: `channelSidebarOpenState/${nanoId()}`,
   default: true,
+});
+
+export const channelMobileRightSidebarOpenState = atom({
+  key: `channelMobileRightSidebarOpenState/${nanoId()}`,
+  default: false,
 });
 
 export const deleteModalState = atom({

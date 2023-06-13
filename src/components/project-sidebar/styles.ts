@@ -14,8 +14,15 @@ export const projectSideBarBox = (isOpen: boolean) => css`
   ${flexRowCenter}
   width: ${isOpen ? `260px` : `85px`};
   height: calc(100vh - 50px);
+  z-index: 1;
   transition: 0.5s;
   transition-delay: ${isOpen ? `0s` : `0.5s`};
+  @media screen and (max-width: 450px) {
+    position: absolute;
+    z-index: 1;
+    transform: translate3d(${isOpen ? `0, 0, 0` : `-110%,0,0`});
+    background: white;
+  }
 `;
 
 export const list = css`
@@ -297,12 +304,15 @@ export const pageNameDeleteConfirmBtn = (isClicked: boolean) => css`
   height: 80%;
   font-size: 0.8rem;
   color: white;
-  z-index: 3;
+  z-index: ${isClicked ? `3` : `1`};
   background: #ee1f3e;
   border-radius: 4px;
   opacity: ${isClicked ? `1` : `0`};
   transition: 0.3s ease-out;
   &:hover {
     background-color: red;
+  }
+  & > button {
+    width: 100%;
   }
 `;

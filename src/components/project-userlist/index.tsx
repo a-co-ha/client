@@ -1,8 +1,9 @@
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { onUserState } from '@/recoil/socket/atom';
 import { channelUserState, channelUserModalState } from '@/recoil/user/atom';
+import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { UserModal } from './UserModal';
 import Image from 'next/image';
@@ -18,6 +19,9 @@ export const UserList = () => {
   const [channelUsers, setChannelUsers] = useRecoilState(channelUserState);
   const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
     channelUserModalState(1)
+  );
+  const isChannelRightSidebarOpen = useRecoilValue(
+    channelMobileRightSidebarOpenState
   );
   const { newMember, disconnectMember } = useContext(SocketContext);
 
@@ -59,7 +63,7 @@ export const UserList = () => {
   };
   console.log(`온유저`, onUser);
   return (
-    <div css={styles.userListBox}>
+    <div css={styles.userListBox(isChannelRightSidebarOpen)}>
       <div css={styles.userListInnerBox}>
         {channelUsers &&
           channelUsers.map((member: ChannelUser, i: number) => {

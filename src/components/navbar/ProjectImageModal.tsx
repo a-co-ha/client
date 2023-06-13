@@ -10,7 +10,7 @@ import {
 import { useProjectChangeImageForm } from '@/hooks/form/useProjectChangeImgForm';
 import { useProjectChangeNameForm } from '@/hooks/form/useProjectChangeNameForm';
 import * as styles from './styles';
-import type { ProjectChangeInfo } from './type';
+import type { ProjectChangeInfo, ProjectChangeName } from './type';
 import { HelpModal } from '@/hooks/useHelpModal';
 import { useEffect, useLayoutEffect } from 'react';
 import { usePatchProjectImage } from '@/hooks/queries/project/patchProjectImage';
@@ -26,6 +26,7 @@ export const ProjectImageModal = ({
   channelId: string | string[] | undefined;
   channelNameValue: string;
 }) => {
+  console.log(`네임빌로`, channelNameValue);
   const [isChangeImgModal, setIsChangeImgModal] = useRecoilState(
     changeProjectImgModalState
   );
@@ -34,7 +35,7 @@ export const ProjectImageModal = ({
   );
   const channelImageValue = useRecoilValue(channelImageState);
   const [channelImage, setChannelImage] = useState('');
-  const [channelName, setChannelName] = useState('');
+  const [channelName, setChannelName] = useRecoilState(channelNameState);
   const patchProjectImage = usePatchProjectImage(channelId);
   const patchProjectName = usePatchProjectName(channelId);
   const channelNameRef = useRef<HTMLInputElement>(null);
@@ -52,7 +53,7 @@ export const ProjectImageModal = ({
     mode: 'onChange',
   });
 
-  const nameMethods = useForm<ProjectChangeInfo>({
+  const nameMethods = useForm<ProjectChangeName>({
     defaultValues: {
       projectChangeName: channelName,
     },
@@ -74,7 +75,7 @@ export const ProjectImageModal = ({
     setIsChangeImgModal(false);
     setChannelImage(channelImageValue);
     console.log(`이게뭔가`, channelNameValue);
-    setChannelName(channelNameValue);
+    nameMethods.reset();
   };
 
   const onChangeHandler = ({
@@ -114,13 +115,12 @@ export const ProjectImageModal = ({
     try {
       patchProjectImage.mutate(projectInfo);
       setChannelImage(channelImage);
-      // methods.reset();
     } catch (err) {
       console.error(err);
     }
   };
 
-  const nameFormOnSubmit = async (projectInfo: ProjectChangeInfo) => {
+  const nameFormOnSubmit = async (projectInfo: ProjectChangeName) => {
     console.log(`imageChange`, projectInfo);
     try {
       patchProjectName.mutate(projectInfo);

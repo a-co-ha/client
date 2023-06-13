@@ -9,6 +9,7 @@ import { getCookie } from 'cookies-next';
 import type { AxiosError } from 'axios';
 import type {
   ProjectChangeInfo,
+  ProjectChangeName,
   ProjectChangeInfoResponse,
 } from '@/components/navbar/type';
 
@@ -18,13 +19,14 @@ export const usePatchProjectName = (
   const userId = getCookie(`myUserId`);
   const queryClient = useQueryClient();
   const router = useRouter();
-  return useMutation<ProjectChangeInfoResponse, AxiosError, ProjectChangeInfo>(
+  return useMutation<ProjectChangeInfoResponse, AxiosError, ProjectChangeName>(
     [`patchProjectName`, userId],
     (projectInfo) => patchProjectName(channelId, projectInfo.projectChangeName),
     {
       onSuccess: async (data) => {
         if (data) {
           await queryClient.invalidateQueries([`user`, userId]);
+          await queryClient.invalidateQueries([`channelPages`, channelId]);
         }
       },
     }

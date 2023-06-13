@@ -37,6 +37,12 @@ export const Channel = () => {
     pages && setPageList(pages);
   }, [pages]);
 
+  useEffect(() => {
+    if (window !== undefined) {
+      window.innerWidth <= 450 ? setIsChannelSidebarOpen(false) : null;
+    }
+  }, []);
+
   const onClickHandler = () => {
     isChannelSidebarOpen
       ? setIsChannelSidebarOpen(false)

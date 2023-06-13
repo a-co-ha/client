@@ -1,10 +1,11 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import {
   chatBookmarkFormModalState,
   chatBookmarkFormDataState,
   chatBookmarkModalState,
   chatBookmarkState,
 } from '@/recoil/socket/atom';
+import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
 import { ChatBookmarkModal } from './ChatBookmarkModal';
 import { ChatBookmarkForm } from './ChatBookmarkForm';
 import { useEffect, useCallback, useContext, useLayoutEffect } from 'react';
@@ -26,6 +27,10 @@ export const ChatBookmark = ({
   const setChatBookmarkFormModal = useSetRecoilState(
     chatBookmarkFormModalState
   );
+  const isChannelRightSidebarOpen = useRecoilValue(
+    channelMobileRightSidebarOpenState
+  );
+
   const { newBookmark } = useContext(SocketContext);
 
   const addBookmark = useCallback((bookmark: any) => {
@@ -64,7 +69,7 @@ export const ChatBookmark = ({
     }
   };
   return (
-    <div css={styles.chatBookmarkBox}>
+    <div css={styles.chatBookmarkBox(isChannelRightSidebarOpen)}>
       <ChatBookmarkModal channelId={channelId} pageId={pageId} />
       <ChatBookmarkForm channelId={channelId} pageId={pageId} />
       <button

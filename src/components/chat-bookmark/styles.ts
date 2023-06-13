@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const chatBookmarkBox = css`
+export const chatBookmarkBox = (isOpen: boolean) => css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,6 +8,13 @@ export const chatBookmarkBox = css`
   height: calc(70vh - 66px);
   margin-top: 1rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  @media screen and (max-width: 450px) {
+    position: fixed;
+    right: ${!isOpen ? `-100%` : `0`};
+    bottom: 0;
+    z-index: 3;
+    background: white;
+  }
 `;
 
 export const chatBookmarkCreateBtn = css`
@@ -150,6 +157,9 @@ export const chatBookmarkModalContent = css`
   }
   overflow: auto;
   white-space: pre-wrap;
+  @media screen and (max-width: 450px) {
+    max-height: 25vh;
+  }
 `;
 
 export const chatBookmarkBtnBox = css`

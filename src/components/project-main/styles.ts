@@ -390,6 +390,11 @@ export const commitLogModalFormBox = css`
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  @media screen and (max-width: 450px) {
+    width: 330px;
+    height: 45vh;
+  }
 `;
 
 export const commitLogHelpModalAlign = css`
@@ -451,6 +456,10 @@ export const commitLogModalBtn = css`
     border: 4px solid white;
     background-color: rgba(255, 0, 0, 0.4);
   }
+  @media screen and (max-width: 450px) {
+    gap: 5px;
+    padding: 7px 12px;
+  }
 `;
 
 export const commitLogRepoLabel = css`
@@ -488,6 +497,11 @@ export const commitLogFormBtn = css`
   &:hover {
     background: #eee;
   }
+  @media screen and (max-width: 450px) {
+    padding: 7px 12px;
+    min-width: 40px;
+    height: 30px;
+  }
 `;
 
 export const ItemBox = css`
@@ -498,6 +512,9 @@ export const ItemBox = css`
   height: 44.5vh;
   overflow-y: auto;
   overflow-x: hidden;
+  @media screen and (max-width: 450px) {
+    max-height: 25vh;
+  }
 `;
 
 export const ItemBoxPadding = css`
