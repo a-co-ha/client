@@ -167,6 +167,9 @@ export const chatBookmarkModalContent = css`
   @media screen and (max-width: 450px) {
     height: 30vh;
   }
+  @media screen and (max-width: 361px) {
+    height: 28vh;
+  }
 `;
 
 export const chatBookmarkBtnBox = css`
@@ -264,6 +267,9 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
   cursor: auto;
   @media screen and (max-width: 450px) {
     height: 26vh;
+  }
+  @media screen and (max-width: 361px) {
+    height: 24vh;
   }
 `;
 

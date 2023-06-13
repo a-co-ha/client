@@ -387,10 +387,8 @@ export const profileImageBox = css`
     margin: 0 20px 0 auto;
   }
   @media screen and (max-width: 361px) {
-    & > img {
-      width: 25px;
-      height: 25px;
-    }
+    width: 30px;
+    height: 30px;
   }
 `;
 

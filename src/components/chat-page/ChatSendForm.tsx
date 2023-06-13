@@ -96,7 +96,7 @@ export const ChatSendForm = ({
   };
 
   return (
-    <div css={styles.chatFormBox}>
+    <div css={styles.chatFormBox} onClick={textAreaClickHandler}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div css={styles.chatFormInputBox}>
           <textarea
@@ -112,7 +112,6 @@ export const ChatSendForm = ({
                 chatMessage: e.target,
               })
             }
-            onClick={textAreaClickHandler}
             onKeyDown={onKeyDownHandler}
             name={chatMessage.name}
             placeholder={`메세지를 입력해주세요`}
