@@ -57,6 +57,9 @@ export const commitLogBox = css`
   ${commonBoxStyle};
   width: 300px;
   margin-bottom: 1rem;
+  @media screen and (max-width: 450px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 export const commitLogTitleBox = css`

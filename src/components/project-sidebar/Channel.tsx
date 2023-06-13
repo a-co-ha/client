@@ -1,5 +1,9 @@
-import { useRecoilState } from 'recoil';
-import { pageListState, channelSidebarOpenState } from '@/recoil/project/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  pageListState,
+  channelSidebarOpenState,
+  channelMobileRightSidebarOpenState,
+} from '@/recoil/project/atom';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { SelectTemplate } from './SelectTemplate';
@@ -29,6 +33,9 @@ export const Channel = () => {
   const [isChannelSidebarOpen, setIsChannelSidebarOpen] = useRecoilState(
     channelSidebarOpenState
   );
+  const setIsChannelRightSidebarOpen = useSetRecoilState(
+    channelMobileRightSidebarOpenState
+  );
   const router = useRouter();
   const channelId = router.query.id;
   const { data: pages } = useGetChannelPages(channelId);
@@ -44,9 +51,12 @@ export const Channel = () => {
   }, []);
 
   const onClickHandler = () => {
-    isChannelSidebarOpen
-      ? setIsChannelSidebarOpen(false)
-      : setIsChannelSidebarOpen(true);
+    if (isChannelSidebarOpen) {
+      setIsChannelSidebarOpen(false);
+    } else {
+      setIsChannelRightSidebarOpen(false);
+      setIsChannelSidebarOpen(true);
+    }
   };
 
   return (

@@ -5,6 +5,7 @@ import {
   channelListState,
   channelNameState,
   channelImageState,
+  channelMobileRightSidebarOpenState,
 } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
 import { ProjectCreateForm } from './CreateForm';
@@ -26,7 +27,9 @@ export const List = () => {
   const setChannelName = useSetRecoilState(channelNameState);
   const setChannelImage = useSetRecoilState(channelImageState);
   const setIsInitialUser = useSetRecoilState(initialUserState);
-
+  const setIsChannelRightSidebarOpen = useSetRecoilState(
+    channelMobileRightSidebarOpenState
+  );
   const [isOpen, setIsOpen] = useState(false);
   const { data: userData } = useGetUser();
   const closeModal = () => {
@@ -69,6 +72,9 @@ export const List = () => {
     setChannelImage(channelData.channelImg);
     console.log(channelData.channelName);
     router.push(`/project/${channelData.id}`);
+    if (window) {
+      window.innerWidth <= 450 ? setIsChannelRightSidebarOpen(false) : null;
+    }
   };
 
   return (

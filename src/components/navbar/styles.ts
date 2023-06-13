@@ -386,6 +386,12 @@ export const profileImageBox = css`
   @media screen and (max-width: 450px) {
     margin: 0 20px 0 auto;
   }
+  @media screen and (max-width: 361px) {
+    & > img {
+      width: 25px;
+      height: 25px;
+    }
+  }
 `;
 
 export const profileLogoutBtn = css`
@@ -423,6 +429,7 @@ export const projectChangeImgModalFormBox = css`
   & > div:nth-of-type(1) {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
   }
 `;
 

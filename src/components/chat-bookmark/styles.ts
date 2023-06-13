@@ -84,6 +84,9 @@ export const chatBookmarkModalTransition = (isOpen: boolean) => css`
   transform-duration: ${isOpen ? `0.1s` : `0.25s`};
   opacity: ${isOpen ? `1` : `0.5`};
   transition: 0.1s ease-out;
+  @media screen and (max-width: 450px) {
+    position: fixed;
+  }
 `;
 
 export const chatBookmarkModalBox = css`
@@ -97,6 +100,10 @@ export const chatBookmarkModalBox = css`
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 450px) {
+    width: 330px;
+    height: 45vh;
+  }
 `;
 
 export const chatBookmarkModalTitleBox = css`
@@ -158,7 +165,7 @@ export const chatBookmarkModalContent = css`
   overflow: auto;
   white-space: pre-wrap;
   @media screen and (max-width: 450px) {
-    max-height: 25vh;
+    height: 30vh;
   }
 `;
 
@@ -192,6 +199,10 @@ export const chatBookmarkFormModalBox = css`
   overflow: hidden;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 450px) {
+    width: 330px;
+    height: 45vh;
+  }
 `;
 
 export const chatBookmarkFormEditBox = css`
@@ -217,6 +228,9 @@ export const chatBookmarkFormTitleInput = (
     outline: none;
   }
   border-bottom: ${titleError ? `1px solid red` : `1px solid gray`};
+  @media screen and (max-width: 450px) {
+    max-width: ${isEditing ? `35%` : `unset`};
+  }
 `;
 
 export const chatBookmarkFormInput = (isEditing: boolean) => css`
@@ -248,6 +262,9 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
   }
   white-space: pre-wrap;
   cursor: auto;
+  @media screen and (max-width: 450px) {
+    height: 26vh;
+  }
 `;
 
 export const chatBookmarkFormBtn = css`

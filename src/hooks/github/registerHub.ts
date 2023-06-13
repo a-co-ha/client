@@ -30,7 +30,11 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
     {
       onSuccess: (data) => {
         console.log('register', data);
-        setGithubConnectData({ repoName: data.name, repoType: data.type });
+        setGithubConnectData({
+          repoName: data.name,
+          repoType: data.type,
+          owner: '',
+        });
         queryClient.invalidateQueries([`user`, userId]);
       },
     }

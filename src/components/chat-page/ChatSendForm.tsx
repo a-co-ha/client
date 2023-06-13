@@ -68,11 +68,6 @@ export const ChatSendForm = ({
 
   const onSubmit = (chat: ChatMessage) => {
     sendMessage(chat.chatMessage, pageId);
-    // socket.emit(`SEND_MESSAGE`, {
-    //   content: chat.chatMessage,
-    //   roomId: pageId,
-    //   myMessage,
-    // });
     console.log(`보냅니다`);
     methods.reset();
   };
@@ -96,6 +91,10 @@ export const ChatSendForm = ({
     }
   };
 
+  const textAreaClickHandler = () => {
+    scrollToBottom();
+  };
+
   return (
     <div css={styles.chatFormBox}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -113,6 +112,7 @@ export const ChatSendForm = ({
                 chatMessage: e.target,
               })
             }
+            onClick={textAreaClickHandler}
             onKeyDown={onKeyDownHandler}
             name={chatMessage.name}
             placeholder={`메세지를 입력해주세요`}

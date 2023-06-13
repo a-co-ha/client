@@ -3,7 +3,7 @@ import { Profile } from './Profile';
 import { Title } from './Title';
 import { ProjectMenu } from './ProjectMenu';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   channelSidebarOpenState,
   channelMobileRightSidebarOpenState,
@@ -22,11 +22,17 @@ export const NavBar = () => {
   const [isChannelSidebarOpen, setIsChannelSidebarOpen] = useRecoilState(
     channelSidebarOpenState
   );
+  const setIsChannelRightSidebarOpen = useSetRecoilState(
+    channelMobileRightSidebarOpenState
+  );
 
   const onClickHandler = () => {
-    isChannelSidebarOpen
-      ? setIsChannelSidebarOpen(false)
-      : setIsChannelSidebarOpen(true);
+    if (isChannelSidebarOpen) {
+      setIsChannelSidebarOpen(false);
+    } else {
+      setIsChannelRightSidebarOpen(false);
+      setIsChannelSidebarOpen(true);
+    }
   };
 
   return (
