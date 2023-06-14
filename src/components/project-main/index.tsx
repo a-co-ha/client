@@ -1,5 +1,4 @@
 import { MainCalendar } from './Calendar';
-import { TroubleShooting } from './TroubleShooting';
 import { Progress } from './Progress';
 import { CommitLog } from './CommitLog';
 import { useSetRecoilState } from 'recoil';
@@ -20,7 +19,6 @@ export const MainContent = () => {
     <div css={styles.flexColumnCenter}>
       <div css={styles.mainContentBox} onClick={onClickHandler}>
         <MainCalendar />
-        <TroubleShooting />
         <Progress />
         <CommitLog />
       </div>

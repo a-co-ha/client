@@ -188,6 +188,9 @@ export const commitLogPlusBtnBox = css`
   & svg {
     width: 30px;
   }
+  @media screen and (min-width: 1080px) {
+    height: 300px;
+  }
 `;
 
 export const commitLogPlusAndErrorMessage = css`
