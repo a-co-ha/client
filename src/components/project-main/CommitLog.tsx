@@ -93,9 +93,8 @@ export const CommitLog = () => {
         setClickRepoName(githubOrgData.repos[0].name);
       }
     } else if (githubConnectData.repoType === 'repo') {
-      if (githubConnectData.repoName !== '' && githubConnectData.owner !== '') {
+      if (githubConnectData.repoName !== '') {
         getRepoCommitList.mutate({
-          owner: githubConnectData.owner,
           repo: githubConnectData.repoName,
         });
         setIsIssueOpen(false);
@@ -112,7 +111,6 @@ export const CommitLog = () => {
       });
     } else if (githubConnectData.repoType === 'repo') {
       getRepoIssueList.mutate({
-        org: githubConnectData.owner,
         repo: githubConnectData.repoName,
       });
     }
@@ -199,7 +197,6 @@ export const CommitLog = () => {
                   onClick={() => {
                     setIsIssueOpen(false);
                     getRepoCommitList.mutate({
-                      owner: githubConnectData.owner,
                       repo: githubConnectData.repoName,
                     });
                   }}

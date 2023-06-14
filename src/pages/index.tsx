@@ -1551,7 +1551,7 @@ const IndexPage = () => {
                     </div>
                   </div>
                   <div>
-                    <h3>welcome!</h3>
+                    <h3>welcome acoha!</h3>
                     <span>
                       <span css={styles.mainItemChatMessageCode}>
                         <i>1</i>

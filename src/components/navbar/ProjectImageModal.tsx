@@ -138,7 +138,7 @@ export const ProjectImageModal = ({
         css={styles.projectChangeImgModalBackground(isChangeImgModal)}
       ></div>
       <div css={styles.projectChangeImgModalTransition(isChangeImgModal)}>
-        <div className="w-[70vw] max-w-[400px] h-[70vw] max-h-[400px] overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
+        <div className="w-[70vw] max-w-[400px] h-[75vw] max-h-[400px] overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
           <div css={styles.projectChangeImgModalFormBox}>
             <div>
               <h3>프로젝트 정보 변경</h3>

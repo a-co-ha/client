@@ -71,7 +71,6 @@ export const githubConnectState = atomFamily<
   default: {
     repoName: '',
     repoType: '',
-    owner: '',
   },
 });
 

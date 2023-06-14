@@ -47,7 +47,6 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
         setChannelGithubData({
           repoName: channelGithubData.repoName,
           repoType: channelGithubData.repoType,
-          owner: userData.githubID,
         });
       console.log(`채널 깃허브`, channelGithubData);
       setChannelName(myUserData.channelName);

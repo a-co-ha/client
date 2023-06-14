@@ -33,7 +33,6 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
         setGithubConnectData({
           repoName: data.name,
           repoType: data.type,
-          owner: 'tangjinlog',
         });
         queryClient.invalidateQueries([`user`, userId]);
       },

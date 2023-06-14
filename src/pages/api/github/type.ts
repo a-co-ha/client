@@ -50,7 +50,6 @@ export interface ConfirmModalType {
 }
 
 export interface CommitLogGithubRegister {
-  owner?: string;
   repoName: string;
   repoType: string;
 }
@@ -112,6 +111,5 @@ export interface OrgIssueTransferedData {
 
 export interface OrgRepoName {
   org?: string;
-  owner?: string;
   repo: string;
 }
