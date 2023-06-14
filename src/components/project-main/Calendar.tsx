@@ -10,6 +10,7 @@ export const MainCalendar = () => {
     <div css={styles.mainCalendar}>
       <h3 css={styles.commonTitleStyle}>캘린더</h3>
       <Calendar
+        locale="ko"
         onChange={() => onChange}
         value={value}
         formatDay={(locale, date) => dayjs(date).format('DD')}
