@@ -53,10 +53,29 @@ export const commonTitleStyle = css`
   text-align: left;
 `;
 
+export const mainCalendar = css`
+  ${commonBoxStyle};
+  width: 300px;
+  height: 300px;
+  min-height: unset;
+  padding-inline: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.37rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 450px) {
+  }
+`;
+
 export const commitLogBox = css`
   ${commonBoxStyle};
   width: 300px;
   margin-bottom: 1rem;
+  @media screen and (min-width: 1080px) {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+  }
   @media screen and (max-width: 450px) {
     margin-bottom: 3rem;
   }
@@ -153,6 +172,9 @@ export const commitLogInnerBox = (
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0.375rem;
     cursor: ${!isConnected ? 'pointer' : `auto`};
+  }
+  @media screen and (min-width: 1080px) {
+    min-height: 300px;
   }
 `;
 

@@ -1,4 +1,4 @@
-import { Chart } from './Chart';
+import { MainCalendar } from './Calendar';
 import { TroubleShooting } from './TroubleShooting';
 import { Progress } from './Progress';
 import { CommitLog } from './CommitLog';
@@ -19,7 +19,7 @@ export const MainContent = () => {
   return (
     <div css={styles.flexColumnCenter}>
       <div css={styles.mainContentBox} onClick={onClickHandler}>
-        <Chart />
+        <MainCalendar />
         <TroubleShooting />
         <Progress />
         <CommitLog />
