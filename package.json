@@ -2,15 +2,18 @@
   "name": "acoha",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": false,
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze-bundle": "ANALYZE=true yarn build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@headlessui/react": "^1.7.7",
+    "@next/bundle-analyzer": "^13.4.5",
     "@next/font": "13.1.2",
     "@socket.io/component-emitter": "^4.0.0",
     "@tanstack/react-query": "^4.27.0",
@@ -25,6 +28,7 @@
     "eslint-config-next": "13.1.2",
     "nanoid": "^4.0.1",
     "next": "13.1.2",
+    "next-compose-plugins": "^2.2.1",
     "prettier": "^2.8.2",
     "react": "18.2.0",
     "react-beautiful-dnd": "^13.1.1",
@@ -72,4 +76,5 @@
   "msw": {
     "workerDirectory": "public"
   }
+  
 }

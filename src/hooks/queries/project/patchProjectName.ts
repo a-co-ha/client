@@ -1,17 +1,12 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
-import { patchProjectName } from '@/pages/api/project/patchProjectName';
-import { useSetRecoilState } from 'recoil';
-import { channelNameState } from '@/recoil/project/atom';
-import { patchProjectDefaultImage } from '@/pages/api/project/patchProjectDefaultImage';
-import { toast } from 'react-toastify';
-import { getCookie } from 'cookies-next';
-import type { AxiosError } from 'axios';
 import type {
-  ProjectChangeInfo,
-  ProjectChangeName,
   ProjectChangeInfoResponse,
+  ProjectChangeName,
 } from '@/components/navbar/type';
+import { patchProjectName } from '@/pages/api/project/patchProjectName';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 export const usePatchProjectName = (
   channelId: string | string[] | undefined

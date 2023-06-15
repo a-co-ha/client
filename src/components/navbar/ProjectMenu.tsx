@@ -1,25 +1,21 @@
-import * as styles from './styles';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  channelNameState,
-  channelListState,
-  deleteModalState,
-} from '@/recoil/project/atom';
+import { useGetChannelPages } from '@/hooks/queries/editable/getPages';
+import { useExitProject } from '@/hooks/queries/project/exitProject';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import {
   changeProjectImgModalState,
+  channelListState,
+  channelNameState,
   channelSidebarOpenState,
+  deleteModalState,
 } from '@/recoil/project/atom';
-import { useDeleteProject } from '@/hooks/queries/project/deleteProject';
-import { useExitProject } from '@/hooks/queries/project/exitProject';
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { adminState, inviteModalState } from '@/recoil/user/atom';
 import { ArrowDownCircleIcon } from '@heroicons/react/20/solid';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { InviteModal } from './inviteModal';
 import { ProjectDeleteForm } from './ProjectDeleteForm';
-import { inviteModalState } from '@/recoil/user/atom';
-import { adminState } from '@/recoil/user/atom';
 import { ProjectImageModal } from './ProjectImageModal';
-import { useGetChannelPages } from '@/hooks/queries/editable/getPages';
-import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
+import * as styles from './styles';
 
 export const ProjectMenu = () => {
   const { channelId } = useGetUrlInfo();
@@ -29,7 +25,7 @@ export const ProjectMenu = () => {
   const setIsInviteModal = useSetRecoilState(inviteModalState);
   const setIsDeleteModal = useSetRecoilState(deleteModalState);
   const setIsChangeImgModal = useSetRecoilState(changeProjectImgModalState);
-  // const { data: channelPages } = useGetChannelPages(channelId);
+  const { data: channelPages } = useGetChannelPages(channelId);
   const exitProject = useExitProject(channelId);
   let [isOpen, setIsOpen] = useState(false);
   const [channelName, setChannelName] = useRecoilState(channelNameState);
@@ -38,12 +34,12 @@ export const ProjectMenu = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };
 
-  // useEffect(() => {
-  //   if (channelPages !== undefined) {
-  //     setChannelName(channelPages.channelName);
-  //     console.log(`뉴`, channelPages);
-  //   }
-  // }, [channelPages]);
+  useEffect(() => {
+    if (channelPages !== undefined) {
+      setChannelName(channelPages.channelName);
+      console.log(`뉴`, channelPages);
+    }
+  }, [channelPages]);
 
   return (
     <div css={styles.projectNameBox(isChannelSidebarOpen)}>

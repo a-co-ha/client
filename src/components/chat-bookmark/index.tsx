@@ -1,16 +1,16 @@
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useGetBookmarks } from '@/hooks/queries/socket/getBookmarks';
+import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
 import {
-  chatBookmarkFormModalState,
   chatBookmarkFormDataState,
+  chatBookmarkFormModalState,
   chatBookmarkModalState,
   chatBookmarkState,
 } from '@/recoil/socket/atom';
-import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
-import { ChatBookmarkModal } from './ChatBookmarkModal';
-import { ChatBookmarkForm } from './ChatBookmarkForm';
-import { useEffect, useCallback, useContext, useLayoutEffect } from 'react';
-import { useGetBookmarks } from '@/hooks/queries/socket/getBookmarks';
+import { useCallback, useContext, useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { SocketContext } from '../chat-page/SocketContextProvider';
+import { ChatBookmarkForm } from './ChatBookmarkForm';
+import { ChatBookmarkModal } from './ChatBookmarkModal';
 import * as styles from './styles';
 
 export const ChatBookmark = ({

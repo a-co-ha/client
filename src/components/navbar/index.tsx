@@ -1,22 +1,17 @@
-import { LoginBtn } from './LoginBtn';
-import { Profile } from './Profile';
-import { Title } from './Title';
-import { ProjectMenu } from './ProjectMenu';
-import { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
-  channelSidebarOpenState,
   channelMobileRightSidebarOpenState,
+  channelSidebarOpenState,
 } from '@/recoil/project/atom';
-import { initialUserState } from '@/recoil/user/atom';
-import { Loading } from '../loading/Loading';
-import { Suspense } from 'react';
+import { ArrowSmallLeftIcon } from '@heroicons/react/20/solid';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ErrorBoundary } from '../error-boundary';
 import { Error } from '../error-boundary/Error';
-import * as styles from './styles';
 import { Alert } from './Alert';
-import { ArrowSmallLeftIcon } from '@heroicons/react/20/solid';
+import { LoginBtn } from './LoginBtn';
+import { ProjectMenu } from './ProjectMenu';
+import * as styles from './styles';
+import { Title } from './Title';
 
 export const NavBar = () => {
   const [isChannelSidebarOpen, setIsChannelSidebarOpen] = useRecoilState(

@@ -1,23 +1,22 @@
-import { useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  changeProjectImgModalState,
-  channelImageState,
-  channelNameState,
-  changeProjectNameEditToggle,
-} from '@/recoil/project/atom';
 import { useProjectChangeImageForm } from '@/hooks/form/useProjectChangeImgForm';
 import { useProjectChangeNameForm } from '@/hooks/form/useProjectChangeNameForm';
-import * as styles from './styles';
-import type { ProjectChangeInfo, ProjectChangeName } from './type';
-import { HelpModal } from '@/hooks/useHelpModal';
-import { useEffect, useLayoutEffect } from 'react';
 import { usePatchProjectImage } from '@/hooks/queries/project/patchProjectImage';
 import { usePatchProjectName } from '@/hooks/queries/project/patchProjectName';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { HelpModal } from '@/hooks/useHelpModal';
+import {
+  changeProjectImgModalState,
+  changeProjectNameEditToggle,
+  channelImageState,
+  channelNameState,
+} from '@/recoil/project/atom';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import * as styles from './styles';
+import type { ProjectChangeInfo, ProjectChangeName } from './type';
 
 export const ProjectImageModal = ({
   channelId,

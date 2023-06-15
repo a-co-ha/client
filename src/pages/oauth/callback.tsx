@@ -1,14 +1,14 @@
+import { Loading } from '@/components/loading/Loading';
+import { useGetUser } from '@/hooks/queries/user/getUser';
+import { oauthLogin } from '@/pages/api/user/oauthLogin';
+import { channelImageState, channelNameState } from '@/recoil/project/atom';
+import { initialUserState, loginState } from '@/recoil/user/atom';
+import type { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { initialUserState, loginState } from '@/recoil/user/atom';
-import { channelImageState, channelNameState } from '@/recoil/project/atom';
-import { useGetUser } from '@/hooks/queries/user/getUser';
-import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
-import { oauthLogin } from '@/pages/api/user/oauthLogin';
-import { Loading } from '@/components/loading/Loading';
-import type { GetServerSideProps } from 'next';
+import { setToken } from '../api/user/setToken';
 
 export default function Callback({
   accessToken,

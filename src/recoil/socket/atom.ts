@@ -1,8 +1,7 @@
-import { atom, atomFamily } from 'recoil';
-import { nanoId } from '@/utils/nanoId';
-import type { ChatBookmark, SocketMessage } from '@/pages/api/socket/type';
-import type { ChatBookmarkList } from '@/pages/api/socket/type';
 import type { ChatBookmarkFormType } from '@/components/chat-bookmark/type';
+import type { ChatBookmark, SocketMessage } from '@/pages/api/socket/type';
+import { nanoId } from '@/utils/nanoId';
+import { atom, atomFamily } from 'recoil';
 
 export const onUserState = atom({
   key: `onUserState/${nanoId()}`,

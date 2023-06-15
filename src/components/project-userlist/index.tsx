@@ -1,17 +1,15 @@
-import { SocketContext } from '../chat-page/SocketContextProvider';
-import { useContext, useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { onUserState } from '@/recoil/socket/atom';
-import { channelUserState, channelUserModalState } from '@/recoil/user/atom';
-import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
 import { useGetUsers } from '@/hooks/queries/user/getUsers';
-import { UserModal } from './UserModal';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCrown } from '@fortawesome/free-solid-svg-icons';
-import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
-import * as styles from './styles';
 import type { ChannelUser } from '@/pages/api/user/type';
+import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
+import { onUserState } from '@/recoil/socket/atom';
+import { channelUserModalState, channelUserState } from '@/recoil/user/atom';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext, useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { SocketContext } from '../chat-page/SocketContextProvider';
+import * as styles from './styles';
+import { UserModal } from './UserModal';
 
 export const UserList = () => {
   const { data: channelUsersData } = useGetUsers();

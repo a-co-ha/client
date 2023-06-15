@@ -1,20 +1,18 @@
+import { ChatBookmark } from '@/components/chat-bookmark';
+import { ChatPage } from '@/components/chat-page';
+import { EditablePage } from '@/components/editable-page';
+import { Loading } from '@/components/loading/Loading';
 import * as styles from '@/components/project-main/styles';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
-import { ChatBookmark } from '@/components/chat-bookmark';
-import { EditablePage } from '@/components/editable-page';
-import { ChatPage } from '@/components/chat-page';
-import { GetServerSideProps } from 'next';
-import { resetServerContext } from 'react-beautiful-dnd';
-import { Suspense, useEffect, useState } from 'react';
-import { Loading } from '@/components/loading/Loading';
-import { QueryClient, dehydrate, hydrate } from '@tanstack/react-query';
-import { getEditablePage } from '@/pages/api/editable/getPage';
-import { getSocketPage } from '@/pages/api/socket/getPage';
-import type { pageProps } from '@/pages/api/editable/type';
 import { TemplatePage } from '@/components/template';
 import { TemplateNormalPage } from '@/components/template-normal';
-import { channel } from '../../../components/project-sidebar/styles';
+import { getEditablePage } from '@/pages/api/editable/getPage';
+import type { pageProps } from '@/pages/api/editable/type';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { GetServerSideProps } from 'next';
+import { Suspense, useEffect, useState } from 'react';
+import { resetServerContext } from 'react-beautiful-dnd';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   const [parentPageId, setParentPageId] = useState('');

@@ -1,5 +1,3 @@
-import type { Blob } from 'buffer';
-
 export interface ProjectDeleteName {
   ProjectDeleteName: string;
 }

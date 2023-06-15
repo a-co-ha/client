@@ -1,15 +1,13 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { usePutEditablePage } from '@/hooks/queries/editable/putPage';
+import { usePutSocketPage } from '@/hooks/queries/socket/putPage';
+import { useUpadatePageName } from '@/hooks/queries/template/useUpdatePageName';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { usePageNameForm } from '../../hooks/usePageNameForm';
-import { useMutation } from '@tanstack/react-query';
-import { usePutEditablePage } from '@/hooks/queries/editable/putPage';
-import { usePutSocketPage } from '@/hooks/queries/socket/putPage';
-import { api } from '@/pages/api/config/api-config';
 import { toast } from 'react-toastify';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { usePageNameForm } from '../../hooks/usePageNameForm';
 import * as styles from './styles';
-import { useUpadatePageName } from '@/hooks/queries/template/useUpdatePageName';
 import type { PageName } from './type';
 
 export const PageNameForm = ({

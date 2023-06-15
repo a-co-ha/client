@@ -1,6 +1,42 @@
-import { Loading } from '@/components/loading/Loading';
-import React from 'react';
+import previewRed from '@/images/channelImg/1.png';
+import chatYellow from '@/images/channelImg/5.png';
+import previewGreen from '@/images/channelImg/6.png';
+import previewPurple from '@/images/channelImg/7.png';
+import chatPink from '@/images/channelImg/9.png';
+import previewGithub from '@/images/githubLogo.png';
+import acohaAI from '@/images/landingPage/ai.png';
+import chat from '@/images/landingPage/chat.svg';
+import check from '@/images/landingPage/check.png';
+import commitLog from '@/images/landingPage/commit.png';
+import editableA from '@/images/landingPage/editableA.png';
+import editableB from '@/images/landingPage/editableB.png';
+import issueLog from '@/images/landingPage/issue.png';
+import { LandingPageNavbarIsScroll } from '@/recoil/project/atom';
+import { loginModalState } from '@/recoil/user/atom';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
+  faComments,
+  faPaperPlane,
+  faPenToSquare,
+} from '@fortawesome/free-regular-svg-icons';
+import {
+  faListCheck,
+  faMagnifyingGlass,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  BellAlertIcon,
+  CalendarIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  DocumentIcon,
+  ListBulletIcon,
+} from '@heroicons/react/20/solid';
+import { throttle } from 'lodash';
+import Image from 'next/image';
+import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -8,44 +44,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import { divide, throttle } from 'lodash';
-import * as styles from '../styles/styles';
 import { useSetRecoilState } from 'recoil';
-import { loginModalState } from '@/recoil/user/atom';
-import { LandingPageNavbarIsScroll } from '@/recoil/project/atom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faComments,
-  faPenToSquare,
-  faPaperPlane,
-} from '@fortawesome/free-regular-svg-icons';
-import { faListCheck } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import chat from '@/images/landingPage/chat.svg';
-import Image from 'next/image';
-import previewRed from '@/images/channelImg/1.png';
-import previewGreen from '@/images/channelImg/6.png';
-import previewPurple from '@/images/channelImg/7.png';
-import previewGithub from '@/images/githubLogo.png';
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  BellAlertIcon,
-  DocumentIcon,
-  ListBulletIcon,
-  CalendarIcon,
-} from '@heroicons/react/20/solid';
-import editableA from '@/images/landingPage/editableA.png';
-import editableB from '@/images/landingPage/editableB.png';
-import acohaAI from '@/images/landingPage/ai.png';
-import chatPink from '@/images/channelImg/9.png';
-import chatYellow from '@/images/channelImg/5.png';
-import commitLog from '@/images/landingPage/commit.png';
-import issueLog from '@/images/landingPage/issue.png';
-import check from '@/images/landingPage/check.png';
+import * as styles from '../styles/styles';
 
 const IndexPage = () => {
   const scrollToTopBtn = useRef<HTMLDivElement>(null);
@@ -1455,13 +1455,23 @@ const IndexPage = () => {
                 ref={mainItemEditableA}
                 css={styles.mainItemEditableA(isEditableAni)}
               >
-                <Image src={editableA} fill alt={`editable image A`} />
+                <Image
+                  src={editableA}
+                  fill
+                  sizes={`100%`}
+                  alt={`editable image A`}
+                />
               </div>
               <div
                 ref={mainItemEditableB}
                 css={styles.mainItemEditableB(isEditableAni)}
               >
-                <Image src={editableB} fill alt={`editable image B`} />
+                <Image
+                  src={editableB}
+                  fill
+                  sizes={`100%`}
+                  alt={`editable image B`}
+                />
               </div>
             </div>
           </div>
@@ -1487,7 +1497,12 @@ const IndexPage = () => {
               <div css={styles.mainItemChatA(isChatAni)}>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
-                    <Image src={chatPink} fill alt="chatPink image" />
+                    <Image
+                      src={chatPink}
+                      fill
+                      sizes={`100%`}
+                      alt="chatPink image"
+                    />
                   </div>
                   <div css={styles.mainItemChatMessageBox}>
                     <div>
@@ -1499,7 +1514,12 @@ const IndexPage = () => {
                 </div>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
-                    <Image src={chatPink} fill alt="chatPink image" />
+                    <Image
+                      src={chatPink}
+                      fill
+                      sizes={`100%`}
+                      alt="chatPink image"
+                    />
                   </div>
                   <div css={styles.mainItemChatMessageBox}>
                     <div>
@@ -1517,7 +1537,12 @@ const IndexPage = () => {
                 </div>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
-                    <Image src={chatYellow} fill alt="chatPink image" />
+                    <Image
+                      src={chatYellow}
+                      fill
+                      sizes={`100%`}
+                      alt="chatPink image"
+                    />
                   </div>
                   <div css={styles.mainItemChatMessageBox}>
                     <div>
@@ -1642,6 +1667,7 @@ const IndexPage = () => {
                         <Image
                           src={commitLog}
                           fill
+                          sizes={`100%`}
                           alt={`mainItem commitLogImg`}
                           quality={100}
                         />
@@ -1652,6 +1678,7 @@ const IndexPage = () => {
                         <Image
                           src={issueLog}
                           fill
+                          sizes={`100%`}
                           alt={`mainItem issueLog Image`}
                           quality={100}
                         />
@@ -1772,7 +1799,7 @@ const IndexPage = () => {
                   >
                     지금 시작하기
                   </button>
-                  <Image src={acohaAI} fill alt="acoha ai image" />
+                  <Image src={acohaAI} sizes={`100%`} alt="acoha ai image" />
                 </div>
               </div>
             </div>

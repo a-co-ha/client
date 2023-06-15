@@ -1,8 +1,6 @@
-import { useRouter } from 'next/router';
 import { useInviteUser } from '@/hooks/queries/user/inviteUser';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { deleteCookie, getCookie } from 'cookies-next';
-import { api } from '../api/config/api-config';
 
 export default function InviteUser() {
   const router = useRouter();

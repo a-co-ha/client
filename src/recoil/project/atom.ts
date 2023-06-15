@@ -1,7 +1,7 @@
-import { atom, atomFamily } from 'recoil';
-import { nanoId } from '@/utils/nanoId';
-import type { ChannelList } from '@/pages/api/user/type';
 import type { GetChannelPages } from '@/pages/api/editable/type';
+import type { ChannelList } from '@/pages/api/user/type';
+import { nanoId } from '@/utils/nanoId';
+import { atom, atomFamily } from 'recoil';
 
 export const pageListState = atom<GetChannelPages>({
   key: `pageList/${nanoId()}`,

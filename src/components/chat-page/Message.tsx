@@ -1,16 +1,16 @@
-import Image from 'next/image';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useEffect, useRef, useLayoutEffect } from 'react';
 import {
-  messageModalState,
   messageModalImgState,
+  messageModalState,
   messageMoreState,
 } from '@/recoil/socket/atom';
 import { getCookie } from 'cookies-next';
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import remarkGfm from 'remark-gfm';
 import * as styles from './styles';
 import type { MessageType } from './type';
 

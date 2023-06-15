@@ -1,22 +1,21 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
-import {
-  channelListState,
-  channelNameState,
-  channelImageState,
-  channelMobileRightSidebarOpenState,
-} from '@/recoil/project/atom';
-import { initialUserState } from '@/recoil/user/atom';
-import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { HoverModal } from '@/hooks/useHoverModal';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
 import githubChannelImg from '@/images/github_channel.png';
-import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
+import {
+  channelImageState,
+  channelListState,
+  channelMobileRightSidebarOpenState,
+  channelNameState,
+} from '@/recoil/project/atom';
+import { initialUserState } from '@/recoil/user/atom';
+import { Dialog, Transition } from '@headlessui/react';
+import { useRouter } from 'next/router';
+import { Fragment, useLayoutEffect, useState } from 'react';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { ProjectCreateForm } from './CreateForm';
+import * as styles from './styles';
 
 export const List = () => {
   const router = useRouter();

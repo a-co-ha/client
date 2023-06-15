@@ -6,7 +6,6 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import Label from '../editable-block/Label';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
 import { EditableBlock } from '@/components/editable-block';
-import { Notice } from '../notice/index';
 import { currentBlockIdState } from '@/recoil/editable-block/atom';
 import * as styles from './styles';
 import type { AddBlock, EditablePages, Block } from './type';
@@ -60,7 +59,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     const updatedBlocks = handlers.onDragEnd(blocks, result);
     updatedBlocks && setBlocks(updatedBlocks);
   };
-  const isNewPage = router.query.initial === 'true';
 
   function deleteSelectBlock() {
     if (confirm('선택된 블럭을 삭제하시겠습니까?')) {
@@ -120,7 +118,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                   </svg>
                 </button>
               )}
-              {isNewPage && <Notice status="SUCCESS" />}
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Label />
                 {selectedBlocks.length > 0 && (

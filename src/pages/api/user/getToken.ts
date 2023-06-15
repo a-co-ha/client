@@ -1,5 +1,5 @@
+import { CookieValueTypes } from 'cookies-next';
 import { api } from '../config/api-config';
-import { getCookie, CookieValueTypes } from 'cookies-next';
 
 export const getToken = async (refreshToken: CookieValueTypes) => {
   console.log('리프레쉬', refreshToken);

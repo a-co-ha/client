@@ -1,9 +1,8 @@
-import { List } from './List';
-import { Channel } from './Channel';
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { initialUserState } from '@/recoil/user/atom';
 import { channelSidebarOpenState } from '@/recoil/project/atom';
+import { initialUserState } from '@/recoil/user/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { Channel } from './Channel';
+import { List } from './List';
 import * as styles from './styles';
 
 export const ProjectSideBar = () => {

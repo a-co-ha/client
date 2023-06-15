@@ -1,18 +1,17 @@
+import type { SocketMessage } from '@/pages/api/socket/type';
+import { onUserState } from '@/recoil/socket/atom';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { getCookie } from 'cookies-next';
+import Link from 'next/link';
 import {
   createContext,
   Dispatch,
   SetStateAction,
-  useEffect,
   useLayoutEffect,
 } from 'react';
-import io, { Socket } from 'socket.io-client';
-import { DefaultEventsMap } from '@socket.io/component-emitter';
-import { getCookie } from 'cookies-next';
-import { useSetRecoilState } from 'recoil';
-import { onUserState } from '@/recoil/socket/atom';
-import type { SocketMessage } from '@/pages/api/socket/type';
 import { toast } from 'react-toastify';
-import Link from 'next/link';
+import { useSetRecoilState } from 'recoil';
+import io, { Socket } from 'socket.io-client';
 
 interface Context {
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;

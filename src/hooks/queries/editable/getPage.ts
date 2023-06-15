@@ -1,6 +1,5 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getEditablePage } from '@/pages/api/editable';
-import type { AxiosError } from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 export const useGetEditablePage = (
   channelId: string,

@@ -1,22 +1,14 @@
-import {
-  useEffect,
-  useState,
-  useContext,
-  useRef,
-  useLayoutEffect,
-  useCallback,
-} from 'react';
-import { SocketContext } from './SocketContextProvider';
-import { useGetSocketPage } from '@/hooks/queries/socket/getPage';
+import type { pageProps } from '@/pages/api/editable/type';
+import type { SocketMessage } from '@/pages/api/socket/type';
+import { socketMessageState } from '@/recoil/socket/atom';
+import { getTimeValue } from '@/utils/getTimeValue';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useLayoutEffect, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 import { ChatSendForm } from './ChatSendForm';
 import { Message } from './Message';
 import { MessageModal } from './MessageModal';
-import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { socketMessageState } from '@/recoil/socket/atom';
-import { getTimeValue } from '@/utils/getTimeValue';
-import type { pageProps } from '@/pages/api/editable/type';
-import type { SocketMessage } from '@/pages/api/socket/type';
+import { SocketContext } from './SocketContextProvider';
 import * as styles from './styles';
 
 export const ChatPage = ({ pageId }: pageProps) => {

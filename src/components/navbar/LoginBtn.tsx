@@ -1,9 +1,9 @@
+import { LoginModal } from '@/components/navbar/LoginModal';
+import { loginModalState, loginState } from '@/recoil/user/atom';
+import { getCookie } from 'cookies-next';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { loginState, loginModalState } from '@/recoil/user/atom';
 import { Profile } from './Profile';
-import { getCookie } from 'cookies-next';
-import { LoginModal } from '@/components/navbar/LoginModal';
 import * as styles from './styles';
 
 export const LoginBtn = () => {

@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 
 const flexColumnCenter = css`
   display: flex;
@@ -56,7 +56,7 @@ export const channel = (isOpen: boolean) => css`
 export const channelSidbarMoreBtn = (isOpen: boolean) => css`
   display: ${isOpen ? `none` : `block`};
   position: ${isOpen ? `absolute` : `fixed`};
-  top: 50%;
+  top: 45%;
   left: ${isOpen ? `calc(100% - 10px)` : `100%`};
   width: ${isOpen ? `20px` : `40px`};
   height: ${isOpen ? `60px` : `40px`};

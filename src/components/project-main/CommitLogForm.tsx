@@ -1,25 +1,24 @@
-import { useForm } from 'react-hook-form';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { SocketContext } from '../chat-page/SocketContextProvider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { commitLogModalFormState } from '@/recoil/github/atom';
-import {
-  commitLogModalOrgsSearchState,
-  commitLogModalReposSearchState,
-} from '@/recoil/github/atom';
-import { confirmModalState } from '@/recoil/project/atom';
 import { useGithubRepoForm } from '@/hooks/form/useGithubRepoForm';
 import { useGetOrgs } from '@/hooks/github/getHubOrgs';
 import { useGetRepos } from '@/hooks/github/getHubRepos';
 import { useRegisterHub } from '@/hooks/github/registerHub';
-import { HelpModal } from '@/hooks/useHelpModal';
 import { ConfirmModal } from '@/hooks/useConfirmModal';
-import { MODAL_KEY } from '@/utils/const';
-import Image from 'next/image';
-import * as styles from './styles';
+import { HelpModal } from '@/hooks/useHelpModal';
 import type { CommitLogFormType } from '@/pages/api/github/type';
+import {
+  commitLogModalFormState,
+  commitLogModalOrgsSearchState,
+  commitLogModalReposSearchState,
+} from '@/recoil/github/atom';
+import { confirmModalState } from '@/recoil/project/atom';
+import { MODAL_KEY } from '@/utils/const';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from 'next/image';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import * as styles from './styles';
 
 export const CommitLogForm = ({
   channelId,

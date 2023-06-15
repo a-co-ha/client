@@ -1,20 +1,20 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  chatBookmarkModalState,
-  chatBookmarkFormDataState,
-  isBookmarkEditingState,
-  chatBookmarkEditContentShare,
-} from '@/recoil/socket/atom';
-import { HelpModal } from '@/hooks/useHelpModal';
 import { useDeleteBookmark } from '@/hooks/queries/socket/deleteBookmark';
-import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
+import { HelpModal } from '@/hooks/useHelpModal';
+import bookmark from '@/images/helpImg/bookmark.png';
+import {
+  chatBookmarkEditContentShare,
+  chatBookmarkFormDataState,
+  chatBookmarkModalState,
+  isBookmarkEditingState,
+} from '@/recoil/socket/atom';
+import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import remarkGfm from 'remark-gfm';
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import remarkGfm from 'remark-gfm';
+import { CahtBookmarkEditForm } from './ChatBookmarkEditForm';
 import * as styles from './styles';
-import bookmark from '@/images/helpImg/bookmark.png';
 
 export const ChatBookmarkModal = ({
   channelId,

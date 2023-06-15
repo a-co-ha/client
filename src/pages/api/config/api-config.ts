@@ -1,10 +1,7 @@
 import axios from 'axios';
-import { deleteCookie, getCookie } from 'cookies-next';
-import { getToken } from '../user/getToken';
-import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
 import { toast } from 'react-toastify';
 
-// const router = useRouter();
 export const api = axios.create({
   withCredentials: true,
   baseURL: `${
@@ -16,15 +13,11 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-//Authorization: `access ${accessToken}`
 console.log('여기', process.env.NEXT_PUBLIC_DEV_SERVER_URL);
 
 api.interceptors.request.use(
   (config) => {
     const accessToken = getCookie('accessToken');
-    // if (!accessToken) {
-    //   if (window) window.location.href = `/error`;
-    // }
     if (config.headers && accessToken)
       config.headers.Authorization = `access ${accessToken}`;
     return config;

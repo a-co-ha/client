@@ -1,8 +1,7 @@
-import { useRecoilState } from 'recoil';
-import { confirmModalState } from '@/recoil/project/atom';
-import { MODAL_KEY } from '@/utils/const';
 import * as styles from '@/components/project-main/styles';
 import type { ConfirmModalType } from '@/pages/api/github/type';
+import { confirmModalState } from '@/recoil/project/atom';
+import { useRecoilState } from 'recoil';
 
 export const ConfirmModal = ({
   modalKey,
@@ -19,14 +18,6 @@ export const ConfirmModal = ({
     isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
     cancelFunc();
   };
-  // const onKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   (e.target as HTMLDivElement).focus();
-  //   e.preventDefault();
-  //   if (e.key === `Escape`) {
-  //     setIsModalOpen(false);
-  //     console.log('esc');
-  //   }
-  // };
   console.log(`focusContent`, content);
   return (
     <div tabIndex={0}>

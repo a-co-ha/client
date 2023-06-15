@@ -1,8 +1,5 @@
+import type { ProjectChangeName } from '@/components/navbar/type';
 import { Control, useController } from 'react-hook-form';
-import type {
-  ProjectChangeInfo,
-  ProjectChangeName,
-} from '@/components/navbar/type';
 
 export const useProjectChangeNameForm = ({
   control,

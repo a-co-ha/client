@@ -1,20 +1,18 @@
-import * as styles from './styles';
 import { useGetUser } from '@/hooks/queries/user/getUser';
-import { deleteCookie, getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
-import { useResetRecoilState, useRecoilState } from 'recoil';
-import { loginState } from '@/recoil/user/atom';
-import {
-  channelNameState,
-  channelMobileRightSidebarOpenState,
-} from '@/recoil/project/atom';
 import { api } from '@/pages/api/config/api-config';
-import { SocketContext } from '../chat-page/SocketContextProvider';
-import { useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
-import { XCircleIcon, Bars3Icon } from '@heroicons/react/20/solid';
+import {
+  channelMobileRightSidebarOpenState,
+  channelNameState,
+} from '@/recoil/project/atom';
+import { loginState } from '@/recoil/user/atom';
+import { Bars3Icon, XCircleIcon } from '@heroicons/react/20/solid';
+import { deleteCookie, getCookie } from 'cookies-next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { SocketContext } from '../chat-page/SocketContextProvider';
+import * as styles from './styles';
 
 export const Profile = () => {
   const { socketDisconnect } = useContext(SocketContext);
