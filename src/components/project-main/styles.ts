@@ -315,7 +315,6 @@ export const content = css`
   align-items: center;
   flex-direction: column;
 `;
-
 export const createProgressContent = css`
   height: 150px;
   border-radius: 4px;
@@ -329,15 +328,19 @@ export const progressContent = css`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  padding-bottom: 0.5rem;
 `;
 
 export const progressTitleGuage = css`
   display: flex;
+  padding: 0.5rem;
 `;
 
 export const gaugeContainer = css`
-&:hover {
-  background: rgb(241 245 249);
+  &:hover {
+    background: rgb(241 245 249);
+    border-radius: 1rem;
+  }
 `;
 
 export const main = css`

@@ -49,7 +49,6 @@ export const progressInPage = css`
   min-height: 5rem;
 `;
 
-
 export const gaugeContainer = css`
   align-self: flex-end;
   display: flex;
