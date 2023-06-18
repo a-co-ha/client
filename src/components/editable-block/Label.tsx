@@ -70,7 +70,7 @@ export default function Label() {
   };
 
   return (
-    <div className="w-1/3">
+    <div className="w-1/3 mb-5 ml-5 mt-5">
       <Combobox
         value={selected}
         onChange={(name) => setSelected(name)}
