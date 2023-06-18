@@ -104,6 +104,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
+      return;
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (e.nativeEvent.isComposing) {
