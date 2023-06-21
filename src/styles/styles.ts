@@ -3462,6 +3462,7 @@ export const bannerImageBox = css`
   height: 100%;
   & > img {
     object-fit: cover;
+    height: 100%;
   }
   & > div:nth-of-type(1) {
     position: absolute;

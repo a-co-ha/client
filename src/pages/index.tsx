@@ -142,14 +142,6 @@ const IndexPage = () => {
     };
   }, [throttledScroll]);
 
-  // useEffect(() => {
-  //   window.addEventListener('resize', () => {
-  //     if (window.innerWidth > 900) {
-  //       window.location.reload();
-  //     }
-  //   });
-  // });
-
   useEffect(() => {
     if (!isIndexOpen && indexLinkTranslateBox.current) {
       if (indexOrder === `index1`) {
