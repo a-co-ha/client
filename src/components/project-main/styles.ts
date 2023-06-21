@@ -85,6 +85,7 @@ export const mainCalendarBox = css`
   min-width: 300px;
   max-width: 350px;
   height: 370px;
+  z-index: 0;
   margin-bottom: 1rem;
   border-radius: 0.37rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
@@ -118,7 +119,7 @@ export const mainCalendarSchedule = (isOpen: boolean) => css`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  // z-index: 1;
   backdrop-filter: blur(4px);
   background: ${isOpen ? `rgba(0,0,0,0.3)` : `none`};
   transform: translate3d(${isOpen ? `0,0,0` : `0,115%,0`});
@@ -203,11 +204,18 @@ export const commitLogBox = css`
   }
 `;
 
-export const calendarScheduleDeleteConfirmBtn = (isClicked: boolean) => css`
+export const calendarScheduleDeleteConfirmBtn = (
+  isClicked: boolean,
+  index: number,
+  i: number
+) => css`
   ${pageNameDeleteConfirmBtn(isClicked)};
   top: 0;
-  right: ${isClicked ? `10%` : `0%`};
+  right: ${isClicked && index === i ? `10%` : `0%`};
+  width: ${isClicked ? `50px` : `0px`};
   height: 100%;
+  z-index: ${isClicked && index === i ? `3` : `1`};
+  opacity: ${isClicked && index === i ? `1` : `0`};
 `;
 
 export const commitLogTitleBox = css`

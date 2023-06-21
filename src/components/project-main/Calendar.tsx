@@ -12,6 +12,7 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 export const MainCalendar = () => {
   const [value, onChange] = useState<Value>(new Date());
   const [isClicked, setIsClicked] = useState(false);
+  const [index, setIndex] = useState(0);
   const [isDeleteBtnClicked, setIsDeleteBtnClicked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [mark, setMark] = useState(['2023-06-18']);
@@ -26,7 +27,8 @@ export const MainCalendar = () => {
     setIsClicked(true);
   };
 
-  const onDeleteHandler = () => {
+  const onDeleteHandler = (index: number) => {
+    setIndex(index);
     isDeleteBtnClicked
       ? setIsDeleteBtnClicked(false)
       : setIsDeleteBtnClicked(true);
@@ -82,16 +84,18 @@ export const MainCalendar = () => {
                         css={styles.calendarScheduleDeleteBtn(
                           isDeleteBtnClicked
                         )}
-                        onClick={onDeleteHandler}
+                        onClick={() => onDeleteHandler(i)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} />
                       </button>
                       <div
                         css={styles.calendarScheduleDeleteConfirmBtn(
-                          isDeleteBtnClicked
+                          isDeleteBtnClicked,
+                          index,
+                          i
                         )}
                       >
-                        <button onClick={onDeleteHandler}>삭제</button>
+                        <button>삭제</button>
                       </div>
                     </li>
                   </ul>
