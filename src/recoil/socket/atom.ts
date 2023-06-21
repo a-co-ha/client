@@ -1,5 +1,9 @@
 import type { ChatBookmarkFormType } from '@/components/chat-bookmark/type';
-import type { ChatBookmark, SocketMessage } from '@/pages/api/socket/type';
+import type {
+  ChatBookmark,
+  SocketMessage,
+  SocketMessageStatus,
+} from '@/pages/api/socket/type';
 import { nanoId } from '@/utils/nanoId';
 import { atom, atomFamily } from 'recoil';
 
@@ -22,6 +26,16 @@ export const messageModalState = atom({
 export const messageModalImgState = atom({
   key: `messageModalImgState/${nanoId()}`,
   default: '',
+});
+
+export const messageStatusState = atom<SocketMessageStatus[]>({
+  key: `messageStatusState/${nanoId()}`,
+  default: [],
+});
+
+export const messageReadState = atomFamily({
+  key: `messageReadState/${nanoId()}`,
+  default: false,
 });
 
 export const socketMessageState = atomFamily<SocketMessage[], string>({

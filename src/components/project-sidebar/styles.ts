@@ -90,7 +90,10 @@ export const pageCreateBtn = css`
   border-radius: 8px;
 `;
 
-export const projectCreateThumbnail = (isSelected: boolean) => css`
+export const projectCreateThumbnail = (
+  isSelected: boolean,
+  isRead: boolean
+) => css`
   position: relative;
   margin-top: 5px;
   border-radius: 10px;
@@ -132,6 +135,18 @@ export const projectCreateThumbnail = (isSelected: boolean) => css`
     transition: 0.3s;
     transform: scale(${isSelected ? `1` : `0`});
     transform-origin: center;
+  }
+  &::after {
+    display: ${!isRead ? `none` : `block`};
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 50%;
+    transform: translate3d(-200%, -50%, 0);
   }
 `;
 
@@ -228,8 +243,10 @@ export const pageNameInput = css`
 export const pageNameLinkBox = (
   propsPageId: string,
   pageId: string | string[] | undefined,
-  isClicked: boolean
+  isClicked: boolean,
+  isRead: boolean
 ) => css`
+  position: relative;
   color: ${pageId !== undefined && propsPageId === pageId ? `black` : `gray`};
   background: ${pageId !== undefined && propsPageId === pageId
     ? `rgb(226 232 240)`
@@ -243,6 +260,18 @@ export const pageNameLinkBox = (
   }
   & > div > button {
     display: ${isClicked ? `block` : `none`};
+  }
+  &::after {
+    display: ${isRead ? `none` : `block`};
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 50%;
+    transform: translate3d(-150%, -50%, 0);
   }
 `;
 

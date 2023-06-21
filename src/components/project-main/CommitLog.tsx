@@ -149,7 +149,7 @@ export const CommitLog = () => {
                     ? githubOrgData.name
                     : githubRepoData.name}
                 </p>
-                <FontAwesomeIcon icon={faTentArrowLeftRight} color={`white`} />
+                <FontAwesomeIcon icon={faTentArrowLeftRight} color={`black`} />
               </div>
               <HelpModal
                 content={`프로젝트와 연결된 저장소의\n커밋기록과 이슈를 볼 수 있어요`}

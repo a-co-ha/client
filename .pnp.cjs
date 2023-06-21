@@ -2196,7 +2196,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "react-calendar",\
-        "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.3.0"\
+        "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A."\
       ],\
       [\
         "react-contenteditable",\
@@ -2815,7 +2815,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.2"],\
             ["react", "npm:18.2.0"],\
             ["react-beautiful-dnd", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.1"],\
-            ["react-calendar", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.3.0"],\
+            ["react-calendar", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A."],\
             ["react-contenteditable", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:3.3.6"],\
             ["react-dom", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:18.2.0"],\
             ["react-hook-form", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.43.2"],\
@@ -4192,7 +4192,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.2"],\
             ["react", "npm:18.2.0"],\
             ["react-beautiful-dnd", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.1"],\
-            ["react-calendar", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.3.0"],\
+            ["react-calendar", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A."],\
             ["react-contenteditable", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:3.3.6"],\
             ["react-dom", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:18.2.0"],\
             ["react-hook-form", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.43.2"],\
@@ -9617,17 +9617,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["react-calendar", [\
-        ["npm:4.3.0", {\
-          "packageLocation": "./.yarn/cache/react-calendar-npm-4.3.0-89c6303b2d-0abfb0e6c6.zip/node_modules/react-calendar/",\
+        ["patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A.", {\
+          "packageLocation": "./.yarn/cache/react-calendar-patch-d906441efc-b3a0f20791.zip/node_modules/react-calendar/",\
           "packageDependencies": [\
-            ["react-calendar", "npm:4.3.0"]\
+            ["react-calendar", "patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A."]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.3.0", {\
-          "packageLocation": "./.yarn/__virtual__/react-calendar-virtual-9bfa2010c7/0/cache/react-calendar-npm-4.3.0-89c6303b2d-0abfb0e6c6.zip/node_modules/react-calendar/",\
+        ["virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A.", {\
+          "packageLocation": "./.yarn/__virtual__/react-calendar-virtual-81c4397ebe/0/cache/react-calendar-patch-d906441efc-b3a0f20791.zip/node_modules/react-calendar/",\
           "packageDependencies": [\
-            ["react-calendar", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:4.3.0"],\
+            ["react-calendar", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A."],\
             ["@types/react", "npm:18.0.26"],\
             ["@types/react-dom", "npm:18.0.10"],\
             ["@wojtekmaj/date-utils", "npm:1.4.1"],\

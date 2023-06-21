@@ -21,6 +21,18 @@ export interface SocketMessage {
   createdAt: string;
 }
 
+export interface SocketMessageStatus {
+  channelId: {
+    channelId: number;
+    _id: string;
+  };
+  status: {
+    isRead: boolean;
+    roomId: string;
+    userId: number;
+  };
+}
+
 export interface ChatBookmarkList {
   _id: string;
   bookmarkList: ChatBookmark[];

@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { pageNameEditToggle, pageNameShare } from '@/recoil/project/atom';
+import { messageStatusState, messageReadState } from '@/recoil/socket/atom';
 import { useRouter } from 'next/router';
 import { useDeleteEditablePage } from '@/hooks/queries/editable/deletePage';
 import { useDeleteSocketPage } from '@/hooks/queries/socket/deletePage';
@@ -10,15 +11,33 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import * as styles from './styles';
 import type { PageNameLinkProps } from './type';
 import { useDeletePageInTemplate } from '@/hooks/queries/template/useDeletePageInTemplate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const PageNameLink = (props: PageNameLinkProps) => {
   const router = useRouter();
   const pageName = useRecoilValue(pageNameShare(props.pageId));
+  const messageStatus = useRecoilValue(messageStatusState);
+  const [isRead, setIsRead] = useRecoilState(messageReadState(props.pageId));
   const [isEditing, setIsEditing] = useRecoilState(
     pageNameEditToggle(props.pageId)
   );
   const [isClicked, setIsClicked] = useState(false);
+  useEffect(() => {
+    const unReadRoomArray = messageStatus.filter((room) => {
+      const unReadRoom = room.status.isRead === false;
+      console.log(`이건 룸`, unReadRoom);
+      return unReadRoom;
+    });
+    unReadRoomArray.some((room) => {
+      if (room.status.roomId.indexOf(props.pageId) === -1) {
+        setIsRead(true);
+      } else {
+        setIsRead(false);
+      }
+    });
+    console.log(unReadRoomArray);
+  }, [messageStatus]);
+
   const { mutate: deletePageInTemplate } = useDeletePageInTemplate(
     props.channelId,
     props.pageId,
@@ -55,7 +74,9 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   return (
     <div>
       {!isEditing ? (
-        <div css={styles.pageNameLinkBox(props.pageId, pageId, isClicked)}>
+        <div
+          css={styles.pageNameLinkBox(props.pageId, pageId, isClicked, isRead)}
+        >
           <div css={styles.pageNameLink}>
             <Link
               css={styles.pageNameLinkTag}

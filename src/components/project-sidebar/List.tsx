@@ -10,10 +10,16 @@ import {
   channelNameState,
 } from '@/recoil/project/atom';
 import { initialUserState } from '@/recoil/user/atom';
+import { messageStatusState } from '@/recoil/socket/atom';
 import { Dialog, Transition } from '@headlessui/react';
 import { useRouter } from 'next/router';
 import { Fragment, useLayoutEffect, useState } from 'react';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 import { ProjectCreateForm } from './CreateForm';
 import * as styles from './styles';
 
@@ -26,6 +32,8 @@ export const List = () => {
   const setChannelName = useSetRecoilState(channelNameState);
   const setChannelImage = useSetRecoilState(channelImageState);
   const setIsInitialUser = useSetRecoilState(initialUserState);
+  const messageStatus = useRecoilValue(messageStatusState);
+  const [readChannel, setReadChannel] = useState(['']);
   const setIsChannelRightSidebarOpen = useSetRecoilState(
     channelMobileRightSidebarOpenState
   );
@@ -63,6 +71,19 @@ export const List = () => {
       console.error(err);
     }
   }, [userData]);
+  useLayoutEffect(() => {
+    const newArr: string[] = [];
+    const unReadRoomArray = messageStatus.filter((room) => {
+      const unReadRoom = room.status.isRead === false;
+      return unReadRoom;
+    });
+    unReadRoomArray.map((room) => {
+      newArr.push(String(room.channelId.channelId));
+    });
+
+    const set = [...new Set(newArr)];
+    setReadChannel(set);
+  }, [messageStatus]);
 
   console.log('채널리스트 ', channelList);
 
@@ -82,7 +103,8 @@ export const List = () => {
         <div
           key={channel.id}
           css={styles.projectCreateThumbnail(
-            String(channel.id) === channelId ? true : false
+            String(channel.id) === channelId ? true : false,
+            readChannel.indexOf(String(channel.id)) !== -1
           )}
           onClick={() => onClickHandler(channel)}
         >

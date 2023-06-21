@@ -5682,7 +5682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-calendar@npm:^4.3.0":
+"react-calendar@npm:4.3.0":
   version: 4.3.0
   resolution: "react-calendar@npm:4.3.0"
   dependencies:
@@ -5695,6 +5695,22 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 0abfb0e6c6c8ea6d5d10a9073db1861b9d6c746905573a1ba576d77e260c4cf4d90cc45a7eccb3166e8ccdad71df787cd629ae2d0b2839409db7e25c76f8cd32
+  languageName: node
+  linkType: hard
+
+"react-calendar@patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::locator=acoha%40workspace%3A.":
+  version: 4.3.0
+  resolution: "react-calendar@patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch::version=4.3.0&hash=5f94a7&locator=acoha%40workspace%3A."
+  dependencies:
+    "@types/react": "*"
+    "@wojtekmaj/date-utils": ^1.1.3
+    clsx: ^1.2.1
+    get-user-locale: ^2.2.1
+    prop-types: ^15.6.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: b3a0f207915b735e067fd9a206dbe1f12308cd65bcbabfb372fb23322adea06eafdaafc9834d137f931008b73e6f8d95f691c267e85fd73f498d4be3c47ec314
   languageName: node
   linkType: hard
 

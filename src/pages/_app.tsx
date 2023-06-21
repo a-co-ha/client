@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { getToken } from './api/user/getToken';
+
 interface MyAppProps extends AppProps {
   authState: {
     isLoggedIn: boolean;

@@ -71,10 +71,10 @@
   },
   "resolutions": {
     "@headlessui/react@^1.7.7": "patch:@headlessui/react@npm%3A1.7.7#./.yarn/patches/@headlessui-react-npm-1.7.7-23b64271f9.patch",
-    "@emotion/react@^11.10.5": "patch:@emotion/react@npm%3A11.10.5#./.yarn/patches/@emotion-react-npm-11.10.5-98e2cdb553.patch"
+    "@emotion/react@^11.10.5": "patch:@emotion/react@npm%3A11.10.5#./.yarn/patches/@emotion-react-npm-11.10.5-98e2cdb553.patch",
+    "react-calendar@^4.3.0": "patch:react-calendar@npm%3A4.3.0#./.yarn/patches/react-calendar-npm-4.3.0-89c6303b2d.patch"
   },
   "msw": {
     "workerDirectory": "public"
   }
-  
 }

@@ -19,27 +19,27 @@ import * as styles from './styles';
 
 export const ProjectMenu = () => {
   const { channelId } = useGetUrlInfo();
-  // const channelName = useRecoilValue(channelNameState);
+  const channelName = useRecoilValue(channelNameState);
   const channelList = useRecoilValue(channelListState);
   const isAdmin = useRecoilValue(adminState(channelId));
   const setIsInviteModal = useSetRecoilState(inviteModalState);
   const setIsDeleteModal = useSetRecoilState(deleteModalState);
   const setIsChangeImgModal = useSetRecoilState(changeProjectImgModalState);
-  const { data: channelPages } = useGetChannelPages(channelId);
+  // const { data: channelPages } = useGetChannelPages(channelId);
   const exitProject = useExitProject(channelId);
   let [isOpen, setIsOpen] = useState(false);
-  const [channelName, setChannelName] = useRecoilState(channelNameState);
+  // const [channelName, setChannelName] = useRecoilState(channelNameState);
   const isChannelSidebarOpen = useRecoilValue(channelSidebarOpenState);
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };
 
-  useEffect(() => {
-    if (channelPages !== undefined) {
-      setChannelName(channelPages.channelName);
-      console.log(`뉴`, channelPages);
-    }
-  }, [channelPages]);
+  // useEffect(() => {
+  //   if (channelPages !== undefined) {
+  //     setChannelName(channelPages.channelName);
+  //     console.log(`뉴`, channelPages);
+  //   }
+  // }, [channelPages]);
 
   return (
     <div css={styles.projectNameBox(isChannelSidebarOpen)}>

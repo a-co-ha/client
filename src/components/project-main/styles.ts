@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { chatBookmarkModalContent } from '../chat-bookmark/styles';
 import { inviteModalShareBtn } from '../navbar/styles';
+import { pageNameDeleteBtn } from '../project-sidebar/styles';
+import { pageNameDeleteConfirmBtn } from '../project-sidebar/styles';
 
 const scrollBarStyle = css`
   &::-webkit-scrollbar {
@@ -53,18 +55,138 @@ export const commonTitleStyle = css`
   text-align: left;
 `;
 
-export const mainCalendar = css`
+export const mainCalendarTitleBox = css`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  background: #ffe3e7;
+  border-top-left-radius: 0.37rem;
+  border-top-right-radius: 0.37rem;
+  transition: 0.5s;
+  &:hover {
+    background: #ffd6dc;
+  }
+  & > div:nth-of-type(1) {
+    margin-left: auto;
+  }
+`;
+
+export const mainCalendarTitle = css`
+  text-align: start;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+  user-select: none;
+`;
+
+export const mainCalendarBox = css`
   ${commonBoxStyle};
-  width: 300px;
-  height: 300px;
-  min-height: unset;
-  padding-inline: 0.5rem;
+  flex-grow: 1;
+  min-width: 300px;
+  max-width: 350px;
+  height: 370px;
   margin-bottom: 1rem;
   border-radius: 0.37rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+  overflow: hidden;
   @media screen and (max-width: 450px) {
   }
+`;
+
+export const mainCalendar = css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+export const calendarScheduleDot = css`
+  width: 6.5px;
+  height: 6.5px;
+  margin-bottom: 8px;
+  background: red;
+  border-radius: 50%;
+`;
+
+export const calendarScheduleBtnBox = css`
+  display: flex;
+`;
+
+export const mainCalendarSchedule = (isOpen: boolean) => css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  backdrop-filter: blur(4px);
+  background: ${isOpen ? `rgba(0,0,0,0.3)` : `none`};
+  transform: translate3d(${isOpen ? `0,0,0` : `0,115%,0`});
+  transition: 0.25s;
+`;
+
+export const mainCalendarScheduleTitle = css`
+  padding: 1rem;
+  color: white;
+`;
+
+export const mainCalendarScheduleContentBox = css`
+  // border: 1px solid red;
+`;
+
+export const mainCalendarScheduleContent = css`
+  padding: 0.3rem;
+  margin: 0.25rem;
+  color: black;
+  background: white;
+  border-radius: 4px;
+  & > ul li {
+    position: relative;
+    padding-inline: 1rem;
+    list-style: inside;
+    text-align: start;
+    &:hover > button {
+      display: inline-block;
+      position: absolute;
+      right: 10%;
+      &:hover > svg {
+        color: black;
+      }
+    }
+    & > button > svg {
+      color: gray;
+    }
+  }
+`;
+
+export const calendarScheduleAddBtn = css`
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  z-index: 2;
+  background: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const calendarScheduleViewBtn = (isClicked: boolean) => css`
+  width: 50%;
+  height: 100%;
+  padding: 0.5rem;
+  z-index: 2;
+  font-size: 0.9rem;
+  color: ${isClicked ? `black` : `gray`};
+  background: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const calendarScheduleDeleteBtn = (isClicked: boolean) => css`
+  ${pageNameDeleteBtn(isClicked)};
 `;
 
 export const commitLogBox = css`
@@ -72,13 +194,20 @@ export const commitLogBox = css`
   width: 300px;
   margin-bottom: 1rem;
   @media screen and (min-width: 1080px) {
-    position: fixed;
-    right: 0;
-    bottom: 0;
+    // position: fixed;
+    // right: 0;
+    // bottom: 0;
   }
   @media screen and (max-width: 450px) {
     margin-bottom: 3rem;
   }
+`;
+
+export const calendarScheduleDeleteConfirmBtn = (isClicked: boolean) => css`
+  ${pageNameDeleteConfirmBtn(isClicked)};
+  top: 0;
+  right: ${isClicked ? `10%` : `0%`};
+  height: 100%;
 `;
 
 export const commitLogTitleBox = css`
@@ -86,7 +215,7 @@ export const commitLogTitleBox = css`
   gap: 1rem;
   padding: 0.5rem;
   align-items: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: #ffe3e7;
   border-top-left-radius: 0.37rem;
   border-top-right-radius: 0.37rem;
   & div:last-child {
