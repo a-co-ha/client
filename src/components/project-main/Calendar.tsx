@@ -62,7 +62,9 @@ export const MainCalendar = () => {
           tileContent={({ date, view }) => {
             let html = [];
             if (mark.find((x) => x === dayjs(date).format(`YYYY-MM-DD`))) {
-              html.push(<div css={styles.calendarScheduleDot}></div>);
+              html.push(
+                <div key={view} css={styles.calendarScheduleDot}></div>
+              );
             }
             return <>{html}</>;
           }}

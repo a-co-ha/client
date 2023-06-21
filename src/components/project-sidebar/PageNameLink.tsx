@@ -25,7 +25,6 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   useEffect(() => {
     const unReadRoomArray = messageStatus.filter((room) => {
       const unReadRoom = room.status.isRead === false;
-      console.log(`이건 룸`, unReadRoom);
       return unReadRoom;
     });
     unReadRoomArray.some((room) => {
