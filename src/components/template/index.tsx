@@ -4,12 +4,7 @@ import { Error } from './Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useCreateTemplateInPage } from '@/hooks/queries/template/useCreateTemplateInPage';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
-import {
-  DragDropContext,
-  DraggableLocation,
-  Droppable,
-  DropResult,
-} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PageInTemplate } from './PageInTemplate';
 import { useEffect, useState } from 'react';
 import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
@@ -17,11 +12,10 @@ import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { ProgressGauge } from './progressGauge';
 import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
+import { move, reorder } from './templateDragaAndDrop';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
 const progressTitle = ['시작 전', '진행 중', '완료'];
-
-//FIXME: 옮기려는 라인에 박스가 없을 때 dnd동작 x => 박스 하나씩 생성후 display noen처리 해놓기?
 
 export const TemplatePage = ({
   channelId,
@@ -39,7 +33,7 @@ export const TemplatePage = ({
   );
   const [pageArr, setPageArr] = useState(groupPageList);
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
-  const { mutate: upatePageList } = useUpadatePageList();
+  const { mutate: upatePageList } = useUpadatePageList(channelId, pageId, type);
 
   // useRouter query type이 template으로 시작할떄만 값가져오기
   useParentUrlInfo(channelId);
@@ -55,37 +49,6 @@ export const TemplatePage = ({
   useDidMountEffect(() => {
     setPageArr(groupPageList);
   }, [pageList]);
-
-  const reorder = (
-    list: PageInPageList[],
-    startIndex: number,
-    endIndex: number
-  ) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-  };
-
-  const move = (
-    source: PageInPageList[],
-    destination: PageInPageList[],
-    droppableSource: DraggableLocation,
-    droppableDestination: DraggableLocation
-  ) => {
-    const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-    destClone.splice(droppableDestination.index, 0, removed);
-
-    const result: Record<string, unknown> = {};
-    result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
-
-    return result;
-  };
 
   function onDragEndHandler(result: DropResult) {
     const { source, destination } = result;
@@ -145,29 +108,17 @@ export const TemplatePage = ({
                   pageArr.length === 3 &&
                   pageArr.map((el: PageInPageList[], index) => {
                     return (
-                      <section css={styles.progressSection} key={index}>
-                        <span
-                          style={{
-                            backgroundColor:
-                              index === 0
-                                ? '#fcd99f'
-                                : index === 1
-                                ? '#daf7ea'
-                                : '#c8e5fa',
-                            borderRadius: '0.5rem',
-                            padding: '0.3rem',
-                            display: 'inline-block',
-                            marginBottom: '0.5rem',
-                          }}
-                        >
-                          {progressTitle[index]}
-                        </span>
-                        <Droppable droppableId={`${index}`}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.droppableProps}
-                            >
+                      <Droppable droppableId={`${index}`}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                          >
+                            <section css={styles.progressSection} key={index}>
+                              <span css={styles.progressStatus(index)}>
+                                {progressTitle[index]}
+                              </span>
+
                               {el &&
                                 el.map((page: PageInPageList, i) => {
                                   return (
@@ -183,19 +134,20 @@ export const TemplatePage = ({
                                   );
                                 })}
                               {provided.placeholder}
-                            </div>
-                          )}
-                        </Droppable>
-                        <div className="hover:bg-gray-200 p-2 rounded-md">
-                          <button
-                            onClick={() =>
-                              createPage(progressStatusType[index])
-                            }
-                          >
-                            + 새로 만들기
-                          </button>
-                        </div>
-                      </section>
+
+                              <div className="hover:bg-gray-200 p-2 rounded-md">
+                                <button
+                                  onClick={() =>
+                                    createPage(progressStatusType[index])
+                                  }
+                                >
+                                  + 새로 만들기
+                                </button>
+                              </div>
+                            </section>
+                          </div>
+                        )}
+                      </Droppable>
                     );
                   })}
               </DragDropContext>
