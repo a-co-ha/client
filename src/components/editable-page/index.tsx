@@ -62,14 +62,14 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   };
   const isNewPage = router.query.initial === 'true';
 
-  function deleteSelectBlock() {
+  const deleteSelectBlock = () => {
     if (confirm('선택된 블럭을 삭제하시겠습니까?')) {
       const curBlocks = blocks.filter(
         (block) => !selectedBlocks.includes(block.blockId)
       );
       setBlocks(curBlocks);
     }
-  }
+  };
 
   const handleDeleteBlocks = (e: React.KeyboardEvent) => {
     e.key === 'Delete' && deleteSelectBlock();
@@ -159,7 +159,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                             setSelectedBlocks([]);
                           });
                         }}
-                      ></Selecto>
+                      />
                       {blocks &&
                         blocks.map((block) => {
                           const position = blocks

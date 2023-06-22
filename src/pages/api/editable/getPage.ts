@@ -5,7 +5,6 @@ export const getEditablePage = async (
   type: string | string[] | undefined
 ) => {
   try {
-    console.log(`여기 api`, channelId, pageId, type);
     const res = await api.get(
       `/api/page/${pageId}?type=${type}&channel=${channelId}`
     );

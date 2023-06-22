@@ -49,6 +49,18 @@ export const progressInPage = css`
   min-height: 5rem;
 `;
 
+export const progressStatus = (index: number) => css`
+  background-color: ${index === 0
+    ? '#fcd99f'
+    : index === 1
+    ? '#daf7ea'
+    : '#c8e5fa'};
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+`;
+
 export const gaugeContainer = css`
   align-self: flex-end;
   display: flex;
