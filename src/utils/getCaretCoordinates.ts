@@ -1,4 +1,4 @@
-const getCaretCoordinates = (fromStart = true) => {
+const getCaretCoordinates = () => {
   let x = 0,
     y = 0;
   const isSupported = typeof window.getSelection !== 'undefined';

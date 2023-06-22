@@ -143,7 +143,7 @@ export const EditableBlock = (props: editableBlock) => {
   const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Shift') state.previousKey = null;
     else if (e.key === CMD_KEY) {
-      const { x, y } = getCaretCoordinates(true);
+      const { x, y } = getCaretCoordinates();
 
       setState({
         ...state,
@@ -182,10 +182,10 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current.firstElementChild?.tagName === 'IMG'
     ) {
       const imgNode = contentEditable.current.firstElementChild;
-      if (imgNode.getAttribute('style') === 'width: 100%') {
+      if (imgNode.getAttribute('style') === 'width: 80%') {
         imgNode.removeAttribute('style');
       } else {
-        imgNode.setAttribute('style', 'width: 100%');
+        imgNode.setAttribute('style', 'width: 80%');
       }
     }
   };
