@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { channelSidebarOpenState } from '@/recoil/project/atom';
 import { handlers } from './handlers';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import Label from '../editable-block/Label';
@@ -18,6 +19,13 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
+  const setIsChannelSidebarOpen = useSetRecoilState(channelSidebarOpenState);
+  const onClickHandler = () => {
+    if (window !== undefined) {
+      window.innerWidth <= 450 ? setIsChannelSidebarOpen(false) : null;
+    }
+  };
+
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -95,6 +103,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
             }
           : { width: '100%' }),
       }}
+      onClick={onClickHandler}
     >
       <QueryErrorResetBoundary>
         {({ reset }) => (
