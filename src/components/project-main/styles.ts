@@ -81,7 +81,6 @@ export const mainCalendarTitle = css`
 
 export const mainCalendarBox = css`
   ${commonBoxStyle};
-  flex-grow: 1;
   min-width: 300px;
   max-width: 350px;
   height: 370px;
@@ -91,7 +90,11 @@ export const mainCalendarBox = css`
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
   overflow: hidden;
+  @media screen and (min-width: 768px) {
+    width: 350px;
+  }
   @media screen and (max-width: 450px) {
+    width: 300px;
   }
 `;
 
@@ -119,20 +122,16 @@ export const mainCalendarSchedule = (isOpen: boolean) => css`
   left: 0;
   width: 100%;
   height: 100%;
-  // z-index: 1;
   backdrop-filter: blur(4px);
   background: ${isOpen ? `rgba(0,0,0,0.3)` : `none`};
   transform: translate3d(${isOpen ? `0,0,0` : `0,115%,0`});
   transition: 0.25s;
+  overflow: hidden auto;
 `;
 
 export const mainCalendarScheduleTitle = css`
   padding: 1rem;
   color: white;
-`;
-
-export const mainCalendarScheduleContentBox = css`
-  // border: 1px solid red;
 `;
 
 export const mainCalendarScheduleContent = css`
@@ -160,11 +159,12 @@ export const mainCalendarScheduleContent = css`
   }
 `;
 
-export const calendarScheduleAddBtn = css`
+export const calendarScheduleAddBtn = (isClicked: boolean) => css`
   width: 50%;
   padding: 0.5rem;
   font-size: 0.9rem;
   z-index: 2;
+  color: ${isClicked ? `black` : `gray`};
   background: white;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   &:hover {
@@ -186,22 +186,13 @@ export const calendarScheduleViewBtn = (isClicked: boolean) => css`
   }
 `;
 
-export const calendarScheduleDeleteBtn = (isClicked: boolean) => css`
+export const calendarScheduleDeleteBtn = (
+  isClicked: boolean,
+  index: number,
+  i: number
+) => css`
   ${pageNameDeleteBtn(isClicked)};
-`;
-
-export const commitLogBox = css`
-  ${commonBoxStyle};
-  width: 300px;
-  margin-bottom: 1rem;
-  @media screen and (min-width: 1080px) {
-    // position: fixed;
-    // right: 0;
-    // bottom: 0;
-  }
-  @media screen and (max-width: 450px) {
-    margin-bottom: 3rem;
-  }
+  transform: translate3d(${isClicked && index === i ? `120%,0,0` : `0,0,0`});
 `;
 
 export const calendarScheduleDeleteConfirmBtn = (
@@ -216,6 +207,62 @@ export const calendarScheduleDeleteConfirmBtn = (
   height: 100%;
   z-index: ${isClicked && index === i ? `3` : `1`};
   opacity: ${isClicked && index === i ? `1` : `0`};
+`;
+
+export const mainCalendarAddSchedule = (isOpen: boolean) => css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  transform: translate3d(${isOpen ? `0,0,0` : `0,115%,0`});
+  transition: 0.25s;
+`;
+
+export const mainCalendarAddScheduleTitle = css`
+  padding: 1rem;
+  color: black;
+`;
+
+export const mainCalendarAddScheduleContentBox = css`
+  & > form {
+    display: flex;
+  }
+  & > form > button > svg {
+    position: absolute;
+    right: 0;
+    bottom: 5%;
+    &:hover {
+      color: #ff8da8;
+    }
+  }
+`;
+
+export const mainCalendarAddScheduleTextarea = (isError: boolean) => css`
+  flex-grow: 1;
+  min-height: 220px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  resize: none;
+  outline: none;
+  &::placeholder {
+    color: ${isError ? `red` : `gray`};
+  }
+`;
+
+export const commitLogBox = css`
+  ${commonBoxStyle};
+  width: 300px;
+  margin-bottom: 1rem;
+  @media screen and (min-width: 1080px) {
+    // position: fixed;
+    // right: 0;
+    // bottom: 0;
+  }
+  @media screen and (max-width: 450px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 export const commitLogTitleBox = css`

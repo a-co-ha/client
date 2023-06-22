@@ -2,9 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useCreateProjectForm } from '@/hooks/useCreateProjectForm';
 import { initialUserState } from '@/recoil/user/atom';
 import { useSetRecoilState } from 'recoil';
-import { useRouter } from 'next/router';
 import { usePostProject } from '@/hooks/queries/project/postProject';
-import { usePostEditablePage } from '@/hooks/queries/editable/postPage';
 import * as styles from './styles';
 import type { ProjectName } from './type';
 

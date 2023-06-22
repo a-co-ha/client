@@ -1,46 +1,72 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import dayjs from 'dayjs';
 import * as styles from './styles';
-import type { Value, Range } from 'react-calendar/dist/cjs/shared/types';
+import type { Value } from 'react-calendar/dist/cjs/shared/types';
 import { HelpModal } from '@/hooks/useHelpModal';
 import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
+import { useGetCalendarSchedule } from '@/hooks/queries/main/getCalendarSchedule';
+import { useDeleteCalendarSchedule } from '@/hooks/queries/main/deleteCalendarSchedule';
+import {
+  calendarScheduleState,
+  calendarAddScheduleState,
+} from '@/recoil/project/atom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { CalendarForm } from './CalendarForm';
 
 export const MainCalendar = () => {
+  const { channelId } = useGetUrlInfo();
+  const { data: scheduleDate } = useGetCalendarSchedule(channelId);
+  const deleteSchedule = useDeleteCalendarSchedule(channelId);
+  const scheduleValue = useRecoilValue(calendarScheduleState);
   const [value, onChange] = useState<Value>(new Date());
   const [isClicked, setIsClicked] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [isDeleteBtnClicked, setIsDeleteBtnClicked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [mark, setMark] = useState(['2023-06-18']);
+  const [isCalendarFormOpen, setIsCalendarFormOpen] = useRecoilState(
+    calendarAddScheduleState
+  );
+  const [isDeleteBtnClicked, setIsDeleteBtnClicked] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [clickDate, setClickDate] = useState('');
 
-  const onChangeHandler = (
-    value: Value,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const onChangeHandler = (value: Value) => {
     onChange(value);
   };
-  const onClickHandler = () => {
+  const onClickHandler = (value: Date) => {
     setIsClicked(true);
+    setClickDate(dayjs(value).format(`YYYY-MM-DD`));
   };
 
-  const onDeleteHandler = (index: number) => {
+  const addScheduleHandler = () => {
+    isCalendarFormOpen
+      ? setIsCalendarFormOpen(false)
+      : setIsCalendarFormOpen(true);
+    setIsOpen(false);
+  };
+
+  const onDeleteHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    const label = target.getAttribute(`aria-label`);
+    deleteSchedule.mutate(Number(label));
+  };
+
+  const trashCanHandler = (index: number) => {
     setIndex(index);
     isDeleteBtnClicked
       ? setIsDeleteBtnClicked(false)
       : setIsDeleteBtnClicked(true);
   };
-
+  console.log([scheduleValue.filter((e) => e.date == clickDate)], clickDate);
   const isOpenHandler = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
     setIsDeleteBtnClicked(false);
+    setIsCalendarFormOpen(false);
   };
-  console.log(`벨류`, value);
-  // const date = dayjs(value[0]).get('date');
-  // console.log(`변환`, date);
+  console.log(`스케쥴 벨류 낫어`, scheduleValue);
   return (
     <div css={styles.mainCalendarBox}>
       <div css={styles.mainCalendarTitleBox}>
@@ -56,14 +82,16 @@ export const MainCalendar = () => {
           locale="ko"
           onChange={onChangeHandler}
           value={value}
-          // selectRange
-          // allowPartialRange
           showNeighboringMonth={false}
           formatDay={(locale, date) => dayjs(date).format('DD')}
           onClickDay={onClickHandler}
           tileContent={({ date, view }) => {
             let html = [];
-            if (mark.find((x) => x === dayjs(date).format(`YYYY-MM-DD`))) {
+            if (
+              scheduleValue.find(
+                (x) => x.date === dayjs(date).format(`YYYY-MM-DD`)
+              )
+            ) {
               html.push(
                 <div key={view} css={styles.calendarScheduleDot}></div>
               );
@@ -71,43 +99,59 @@ export const MainCalendar = () => {
             return <>{html}</>;
           }}
         />
+        <CalendarForm channelId={channelId} clickDate={clickDate} />
         <div css={styles.mainCalendarSchedule(isOpen)}>
-          <h2 css={styles.mainCalendarScheduleTitle}>2023.06.20</h2>
-          <div css={styles.mainCalendarScheduleContentBox}>
-            {['1221하기', '4344343434'].map((e, i) => {
-              return (
-                <div key={i} css={styles.mainCalendarScheduleContent}>
-                  <ul>
-                    <li>
-                      {e}
-                      <button
-                        css={styles.calendarScheduleDeleteBtn(
-                          isDeleteBtnClicked
-                        )}
-                        onClick={() => onDeleteHandler(i)}
-                      >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                      </button>
-                      <div
-                        css={styles.calendarScheduleDeleteConfirmBtn(
-                          isDeleteBtnClicked,
-                          index,
-                          i
-                        )}
-                      >
-                        <button>삭제</button>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              );
-            })}
+          <h2 css={styles.mainCalendarScheduleTitle}>{clickDate}</h2>
+          <div>
+            {scheduleValue &&
+              [scheduleValue.filter((e) => e.date == clickDate)][0].map(
+                (e, i) => {
+                  return (
+                    <div key={i} css={styles.mainCalendarScheduleContent}>
+                      <ul>
+                        <li>
+                          {e.content}
+                          <button
+                            css={styles.calendarScheduleDeleteBtn(
+                              isDeleteBtnClicked,
+                              index,
+                              i
+                            )}
+                            onClick={() => trashCanHandler(i)}
+                          >
+                            <FontAwesomeIcon icon={faTrashCan} />
+                          </button>
+                          <div
+                            css={styles.calendarScheduleDeleteConfirmBtn(
+                              isDeleteBtnClicked,
+                              index,
+                              i
+                            )}
+                          >
+                            <button
+                              aria-label={String(e.id)}
+                              onClick={onDeleteHandler}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  );
+                }
+              )}
           </div>
         </div>
       </div>
-      {/* <div css={styles.content}>내용</div> */}
       <div css={styles.calendarScheduleBtnBox}>
-        <button css={styles.calendarScheduleAddBtn}>일정 추가</button>
+        <button
+          css={styles.calendarScheduleAddBtn(isClicked)}
+          onClick={addScheduleHandler}
+          disabled={!isClicked}
+        >
+          {isCalendarFormOpen ? `닫기` : `일정 추가`}
+        </button>
         <button
           css={styles.calendarScheduleViewBtn(isClicked)}
           onClick={isOpenHandler}
@@ -119,13 +163,3 @@ export const MainCalendar = () => {
     </div>
   );
 };
-
-// [
-//   {
-//     작성자:
-//     내용:
-//     날짜:
-//     channelId:
-//   }
-// ]
-// 2032-05-21
