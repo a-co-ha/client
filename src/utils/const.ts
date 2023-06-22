@@ -3,3 +3,14 @@ export const DOMAIN = `https://acoha.site`;
 export const MODAL_KEY = {
   confirm: 'CONFIRM_MODAL',
 };
+
+export const TAG_MENU_ITEM = [
+  { tag: 'h1', label: 'h1' },
+  { tag: 'h2', label: 'h2' },
+  { tag: 'h3', label: 'h3' },
+  { tag: 'b', label: 'bold' },
+  { tag: 'p', label: 'p' },
+  { tag: 'i', label: 'i' },
+  { tag: 'code', label: 'code' },
+  { tag: 'img', label: 'image' },
+];
