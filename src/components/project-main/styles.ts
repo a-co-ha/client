@@ -132,6 +132,15 @@ export const mainCalendarSchedule = (isOpen: boolean) => css`
 export const mainCalendarScheduleTitle = css`
   padding: 1rem;
   color: white;
+  & > svg {
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+    &: hover {
+      color: black;
+    }
+    color: gray;
+  }
 `;
 
 export const mainCalendarScheduleContent = css`
@@ -186,27 +195,19 @@ export const calendarScheduleViewBtn = (isClicked: boolean) => css`
   }
 `;
 
-export const calendarScheduleDeleteBtn = (
-  isClicked: boolean,
-  index: number,
-  i: number
-) => css`
+export const calendarScheduleDeleteBtn = (isClicked: boolean) => css`
   ${pageNameDeleteBtn(isClicked)};
-  transform: translate3d(${isClicked && index === i ? `120%,0,0` : `0,0,0`});
+  transform: translate3d(${isClicked ? `120%,0,0` : `0,0,0`});
 `;
 
-export const calendarScheduleDeleteConfirmBtn = (
-  isClicked: boolean,
-  index: number,
-  i: number
-) => css`
+export const calendarScheduleDeleteConfirmBtn = (isClicked: boolean) => css`
   ${pageNameDeleteConfirmBtn(isClicked)};
   top: 0;
-  right: ${isClicked && index === i ? `10%` : `0%`};
+  right: 0;
   width: ${isClicked ? `50px` : `0px`};
   height: 100%;
-  z-index: ${isClicked && index === i ? `3` : `1`};
-  opacity: ${isClicked && index === i ? `1` : `0`};
+  z-index: ${isClicked ? `3` : `1`};
+  opacity: ${isClicked ? `1` : `0`};
 `;
 
 export const mainCalendarAddSchedule = (isOpen: boolean) => css`

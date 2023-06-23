@@ -6,6 +6,7 @@ export const userListBox = (isOpen: boolean) => css`
   align-items: center;
   width: 200px;
   height: 30vh;
+  padding-inline: 1rem;
   box-shadow: 0 5px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
   @media screen and (max-width: 450px) {
     position: fixed;
@@ -19,7 +20,7 @@ export const userListInnerBox = css`
   position: relative;
   width: 100%;
   margin-top: 1rem;
-  text-align: center;
+  text-align: start;
 `;
 
 export const user = css`

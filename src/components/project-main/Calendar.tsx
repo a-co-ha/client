@@ -15,7 +15,7 @@ import {
   calendarScheduleState,
   calendarAddScheduleState,
 } from '@/recoil/project/atom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CalendarForm } from './CalendarForm';
 
 export const MainCalendar = () => {
@@ -54,19 +54,17 @@ export const MainCalendar = () => {
     deleteSchedule.mutate(Number(label));
   };
 
-  const trashCanHandler = (index: number) => {
-    setIndex(index);
+  const trashCanHandler = () => {
+    // setIndex(index);
     isDeleteBtnClicked
       ? setIsDeleteBtnClicked(false)
       : setIsDeleteBtnClicked(true);
   };
-  console.log([scheduleValue.filter((e) => e.date == clickDate)], clickDate);
   const isOpenHandler = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
     setIsDeleteBtnClicked(false);
     setIsCalendarFormOpen(false);
   };
-  console.log(`스케쥴 벨류 낫어`, scheduleValue);
   return (
     <div css={styles.mainCalendarBox}>
       <div css={styles.mainCalendarTitleBox}>
@@ -101,7 +99,10 @@ export const MainCalendar = () => {
         />
         <CalendarForm channelId={channelId} clickDate={clickDate} />
         <div css={styles.mainCalendarSchedule(isOpen)}>
-          <h2 css={styles.mainCalendarScheduleTitle}>{clickDate}</h2>
+          <h2 css={styles.mainCalendarScheduleTitle}>
+            {clickDate}
+            <FontAwesomeIcon icon={faTrashCan} onClick={trashCanHandler} />
+          </h2>
           <div>
             {scheduleValue &&
               [scheduleValue.filter((e) => e.date == clickDate)][0].map(
@@ -113,19 +114,12 @@ export const MainCalendar = () => {
                           {e.content}
                           <button
                             css={styles.calendarScheduleDeleteBtn(
-                              isDeleteBtnClicked,
-                              index,
-                              i
+                              isDeleteBtnClicked
                             )}
-                            onClick={() => trashCanHandler(i)}
-                          >
-                            <FontAwesomeIcon icon={faTrashCan} />
-                          </button>
+                          ></button>
                           <div
                             css={styles.calendarScheduleDeleteConfirmBtn(
-                              isDeleteBtnClicked,
-                              index,
-                              i
+                              isDeleteBtnClicked
                             )}
                           >
                             <button
