@@ -244,7 +244,8 @@ export const pageNameLinkBox = (
   propsPageId: string,
   pageId: string | string[] | undefined,
   isClicked: boolean,
-  isRead: boolean
+  isRead: boolean,
+  type: string
 ) => css`
   position: relative;
   color: ${pageId !== undefined && propsPageId === pageId ? `black` : `gray`};
@@ -262,7 +263,11 @@ export const pageNameLinkBox = (
     display: ${isClicked ? `block` : `none`};
   }
   &::after {
-    display: ${isRead ? `none` : `block`};
+    display: ${type !== `socket`
+      ? `none`
+      : type === `socket` && isRead
+      ? `none`
+      : `block`};
     content: '';
     position: absolute;
     top: 50%;

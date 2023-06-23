@@ -66,12 +66,18 @@ export const PageNameLink = (props: PageNameLinkProps) => {
     e.stopPropagation();
     onDelete();
   };
-
+  console.log(`tpye`, props.type);
   return (
     <div>
       {!isEditing ? (
         <div
-          css={styles.pageNameLinkBox(props.pageId, pageId, isClicked, isRead)}
+          css={styles.pageNameLinkBox(
+            props.pageId,
+            pageId,
+            isClicked,
+            isRead,
+            props.type
+          )}
         >
           <div css={styles.pageNameLink}>
             <Link
