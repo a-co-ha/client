@@ -8,14 +8,9 @@ export const mainContainer = css`
 `;
 
 export const progressContainer = css`
-  flex-basis: 0;
-  flex-grow: 1;
   padding: 1rem;
   display: flex;
-  justify-content: space-evenly;
   height: calc(100vh - 50px);
-  padding-right: 44px;
-  padding-bottom: 2rem;
   overflow: hidden scroll;
   &::-webkit-scrollbar {
     width: 15px;
@@ -34,8 +29,14 @@ export const progressContainer = css`
   }
 `;
 
+export const progressSectionContainer = css`
+  flex-basis: 0;
+  flex-grow: 1;
+  padding: 1rem;
+`;
+
 export const progressSection = css`
-  flex-basis: 30%;
+  flex-grow: 1;
 `;
 
 export const progressInPage = css`

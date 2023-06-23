@@ -96,14 +96,18 @@ export const TemplatePage = ({
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          <div css={styles.mainContainer} style={{ width: '40%' }}>
+          <div css={styles.mainContainer}>
             <ProgressGauge pageId={pageId} />
             <main css={styles.progressContainer}>
               <DragDropContext onDragEnd={onDragEndHandler}>
                 {Array.from({ length: 3 }, (_, index) => (
                   <Droppable droppableId={`${index}`} key={index}>
                     {(provided) => (
-                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        css={styles.progressSectionContainer}
+                      >
                         <section css={styles.progressSection} key={index}>
                           <span css={styles.progressStatus(index)}>
                             {progressTitle[index]}
