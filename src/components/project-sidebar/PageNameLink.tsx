@@ -27,10 +27,16 @@ export const PageNameLink = (props: PageNameLinkProps) => {
       console.log(`unReadRoom`, room.status.isRead === `false`);
       return room.status.isRead === `false`;
     });
-    const isReadRoom = unReadRoomArray.some((room) => {
+    console.log(`이거`, unReadRoomArray);
+    let isReadRoom = unReadRoomArray.some((room) => {
       return room.status.roomId.indexOf(props.pageId) === -1;
     });
-    isReadRoom ? setIsRead(false) : setIsRead(true);
+    if (unReadRoomArray.length === 0) {
+      setIsRead(true);
+    } else {
+      isReadRoom ? setIsRead(true) : setIsRead(false);
+    }
+
     console.log(`isReadRoom`, isReadRoom);
   }, [messageStatus]);
 
@@ -66,7 +72,6 @@ export const PageNameLink = (props: PageNameLinkProps) => {
     e.stopPropagation();
     onDelete();
   };
-  console.log(`tpye`, props.type);
   return (
     <div>
       {!isEditing ? (
