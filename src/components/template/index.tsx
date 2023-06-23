@@ -11,7 +11,6 @@ import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import type { PageInPageList, TemplatePageProps } from './type';
 import { ProgressGauge } from './progressGauge';
-import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
 import { move, reorder } from './templateDragaAndDrop';
 
 const progressStatusType = ['todo', 'progress', 'complete'];
@@ -37,7 +36,7 @@ export const TemplatePage = ({
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
   const { mutate: upatePageList } = useUpadatePageList(channelId, pageId, type);
   // useRouter query type이 template으로 시작할떄만 값가져오기
-  useParentUrlInfo(channelId);
+  // useSetParentUrlInfo(channelId);
 
   useEffect(() => {
     localStorage.setItem('parentPageId', pageId);

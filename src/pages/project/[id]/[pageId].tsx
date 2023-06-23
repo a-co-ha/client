@@ -15,10 +15,12 @@ import type { pageProps } from '@/pages/api/editable/type';
 import { TemplatePage } from '@/components/template';
 import { TemplateNormalPage } from '@/components/template-normal';
 import { channel } from '../../../components/project-sidebar/styles';
+import { useSetParentUrlInfo } from '@/hooks/useSetParentUrlInfo';
 
 export default function Page({ channelId, pageId, type }: pageProps) {
   const [parentPageId, setParentPageId] = useState('');
-  //TODO: 템플릿안 페이지를 눌러도 pageId를 거쳐서감
+
+  useSetParentUrlInfo(channelId);
   useEffect(() => {
     setParentPageId(localStorage.getItem('parentPageId') || '');
   }, [pageId]);

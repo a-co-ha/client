@@ -8,9 +8,8 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import { useUpadatePageList } from '@/hooks/queries/template/useUpdatePageList';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
-import type { PageInPageList, TemplatePageProps } from './type';
 import { PageInTemplate } from '../template/PageInTemplate';
-import { useParentUrlInfo } from '@/hooks/useParentUrlInfo';
+import type { PageInPageList, TemplatePageProps } from './type';
 
 export const TemplateNormalPage = ({
   channelId,
@@ -23,9 +22,8 @@ export const TemplateNormalPage = ({
     type
   );
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
-  const { mutate: upatePageList } = useUpadatePageList();
+  const { mutate: upatePageList } = useUpadatePageList(channelId, pageId, type);
   const [pageArr, setPageArr] = useState(pageList);
-  useParentUrlInfo(channelId);
 
   useEffect(() => {
     localStorage.setItem('parentPageId', pageId);
