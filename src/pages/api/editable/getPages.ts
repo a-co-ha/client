@@ -5,6 +5,7 @@ export const getChannelPages = async (
 ) => {
   try {
     const res = await api.get(`/api/list?channel=${channelId}`);
+    console.log(`리스트`, res.data);
     return res.data;
   } catch (err) {
     console.error(err);

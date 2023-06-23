@@ -60,7 +60,12 @@ export const Channel = () => {
   };
 
   return (
-    <div css={styles.channel(isChannelSidebarOpen)}>
+    <div
+      css={styles.channel(
+        isChannelSidebarOpen,
+        window && window.innerWidth <= 450
+      )}
+    >
       <button
         css={styles.channelSidbarMoreBtn(isChannelSidebarOpen)}
         onClick={onClickHandler}

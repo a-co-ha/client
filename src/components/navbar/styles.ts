@@ -493,17 +493,12 @@ export const projectChangeNameInput = css`
 export const projectChangeNameDiv = css`
   position: relative;
   padding-top: 0.25rem;
-  &:hover {
-    & > div {
-      opacity: 1;
-    }
-  }
 `;
 export const projectChangeNameDivIcon = css`
   display: inline-block;
   position: absolute;
   padding-left: 0.5rem;
-  opacity: 0;
+  opacity: 1;
   color: black;
   cursor: pointer;
   &:hover svg {

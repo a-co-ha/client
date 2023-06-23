@@ -33,7 +33,7 @@ export const list = css`
   z-index: 2;
 `;
 
-export const channel = (isOpen: boolean) => css`
+export const channel = (isOpen: boolean, isMobile: boolean) => css`
   ${flexColumnCenter}
   position: relative;
   width: 260px;
@@ -46,6 +46,9 @@ export const channel = (isOpen: boolean) => css`
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   &:hover > button {
     display: block;
+  }
+  & > button {
+    display: ${isMobile ? `block` : !isMobile && isOpen ? `none` : null};
   }
   & > *:not(button:nth-of-type(1)) {
     opacity: ${isOpen ? `1` : `0`};

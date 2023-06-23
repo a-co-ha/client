@@ -286,14 +286,14 @@ export const commitLogTitleBox = css`
   }
 `;
 
-export const commitLogConnectChangeBox = css`
+export const commitLogConnectChangeBox = (isMobile: boolean) => css`
   display: flex;
   gap: 0.5rem;
+  & svg {
+    display: ${isMobile ? `block` : `none`};
+  }
   &:hover svg {
     display: block;
-  }
-  & svg {
-    display: none;
   }
   cursor: pointer;
 `;

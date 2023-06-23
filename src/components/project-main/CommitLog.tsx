@@ -141,7 +141,9 @@ export const CommitLog = () => {
                   />
                 )}
               <div
-                css={styles.commitLogConnectChangeBox}
+                css={styles.commitLogConnectChangeBox(
+                  window && window.innerWidth <= 450
+                )}
                 onClick={() => setIsCommitLogFormModal(true)}
               >
                 <p css={styles.commitLogTitle}>
