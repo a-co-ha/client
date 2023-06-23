@@ -70,9 +70,9 @@ export const SocketContextProvider = ({
       console.log(`status`, data);
       setMessageStatus(data);
     });
-    socket.on(`UPDATE_STATUS`, (data) => {
-      console.log(`update status`, data);
-    });
+    // socket.on(`UPDATE_STATUS`, (data) => {
+    //   console.log(`update status`, data);
+    // });
 
     return () => {
       console.log(`disconnect`);

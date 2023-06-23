@@ -35,7 +35,7 @@ export const messageStatusState = atom<SocketMessageStatus[]>({
 
 export const messageReadState = atomFamily({
   key: `messageReadState/${nanoId()}`,
-  default: false,
+  default: true,
 });
 
 export const socketMessageState = atomFamily<SocketMessage[], string>({

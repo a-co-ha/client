@@ -74,8 +74,7 @@ export const List = () => {
   useLayoutEffect(() => {
     const newArr: string[] = [];
     const unReadRoomArray = messageStatus.filter((room) => {
-      const unReadRoom = room.status.isRead === false;
-      return unReadRoom;
+      return room.status.isRead === `false`;
     });
     unReadRoomArray.map((room) => {
       newArr.push(String(room.channelId.channelId));

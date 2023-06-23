@@ -27,7 +27,7 @@ export interface SocketMessageStatus {
     _id: string;
   };
   status: {
-    isRead: boolean;
+    isRead: string;
     roomId: string;
     userId: number;
   };

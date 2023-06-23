@@ -24,17 +24,14 @@ export const PageNameLink = (props: PageNameLinkProps) => {
   const [isClicked, setIsClicked] = useState(false);
   useEffect(() => {
     const unReadRoomArray = messageStatus.filter((room) => {
-      const unReadRoom = room.status.isRead === false;
-      return unReadRoom;
+      console.log(`unReadRoom`, room.status.isRead === `false`);
+      return room.status.isRead === `false`;
     });
-    unReadRoomArray.some((room) => {
-      if (room.status.roomId.indexOf(props.pageId) === -1) {
-        setIsRead(true);
-      } else {
-        setIsRead(false);
-      }
+    const isReadRoom = unReadRoomArray.some((room) => {
+      return room.status.roomId.indexOf(props.pageId) === -1;
     });
-    console.log(unReadRoomArray);
+    isReadRoom ? setIsRead(false) : setIsRead(true);
+    console.log(`isReadRoom`, isReadRoom);
   }, [messageStatus]);
 
   const { mutate: deletePageInTemplate } = useDeletePageInTemplate(

@@ -231,7 +231,7 @@ export const mainCalendarAddScheduleContentBox = css`
   }
   & > form > button > svg {
     position: absolute;
-    right: 0;
+    right: 5%;
     bottom: 5%;
     &:hover {
       color: #ff8da8;
@@ -788,7 +788,7 @@ export const errorMessage = css`
 export const helpModal = css`
   display: inline-block;
   position: relative;
-  z-index: 4;
+  z-index: 2;
   &:hover div {
     display: block;
   }

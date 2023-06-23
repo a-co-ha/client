@@ -11,7 +11,7 @@ import {
 } from '@/recoil/project/atom';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -41,9 +41,8 @@ export const ProjectImageModal = ({
 
   useLayoutEffect(() => {
     setChannelImage(channelImageValue);
-    setChannelName(channelNameValue);
     console.log(`나옴`, channelNameValue);
-  }, [channelImageValue, channelNameValue]);
+  }, [channelImageValue]);
 
   const imageMethods = useForm<ProjectChangeInfo>({
     defaultValues: {
@@ -100,7 +99,7 @@ export const ProjectImageModal = ({
         toast.error(`너무 짧아요 (최소 1자)`);
         return;
       }
-      setChannelName(projectChangeName.value);
+      // setChannelName(projectChangeName.value);
       setIsEditing(false);
     }
   };
@@ -124,7 +123,7 @@ export const ProjectImageModal = ({
     try {
       patchProjectName.mutate(projectInfo);
       toast.success('페이지 이름을 바꿨어요');
-      setChannelName(projectChangeName.value);
+      // setChannelName(projectChangeName.value);
       setIsEditing(false);
     } catch (err) {
       console.error(err);
@@ -231,6 +230,7 @@ export const ProjectImageModal = ({
                 ) : (
                   <div css={styles.projectChangeNameDiv}>
                     {channelName}
+                    {/* {channelNameValue} */}
                     <div
                       css={styles.projectChangeNameDivIcon}
                       onClick={projectChangeNameHandler}

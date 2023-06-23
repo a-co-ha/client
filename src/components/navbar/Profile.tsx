@@ -19,7 +19,6 @@ export const Profile = () => {
   const router = useRouter();
   const { data: user } = useGetUser();
   const resetProfile = useResetRecoilState(loginState);
-  const resetChannelName = useResetRecoilState(channelNameState);
   const [isChannelRightSidebarOpen, setIsChannelRightSidebarOpen] =
     useRecoilState(channelMobileRightSidebarOpenState);
 
@@ -42,7 +41,6 @@ export const Profile = () => {
     deleteCookie(`myUserId`);
     deleteCookie(`myUserName`);
     resetProfile();
-    resetChannelName();
     router.replace(`/`);
   };
   return (

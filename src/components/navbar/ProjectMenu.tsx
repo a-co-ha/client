@@ -25,7 +25,7 @@ export const ProjectMenu = () => {
   const setIsInviteModal = useSetRecoilState(inviteModalState);
   const setIsDeleteModal = useSetRecoilState(deleteModalState);
   const setIsChangeImgModal = useSetRecoilState(changeProjectImgModalState);
-  // const { data: channelPages } = useGetChannelPages(channelId);
+  const { data: channelPages } = useGetChannelPages(channelId);
   const exitProject = useExitProject(channelId);
   let [isOpen, setIsOpen] = useState(false);
   // const [channelName, setChannelName] = useRecoilState(channelNameState);
@@ -34,12 +34,13 @@ export const ProjectMenu = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };
 
+  useEffect(() => {}, [channelName]);
   // useEffect(() => {
   //   if (channelPages !== undefined) {
-  //     setChannelName(channelPages.channelName);
+  //     // setChannelName(channelPages.channelName);
   //     console.log(`뉴`, channelPages);
   //   }
-  // }, [channelPages]);
+  // }, [channelPages, channelName]);
 
   return (
     <div css={styles.projectNameBox(isChannelSidebarOpen)}>

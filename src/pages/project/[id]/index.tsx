@@ -11,7 +11,6 @@ import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
 import { adminState, inviteChannelState } from '@/recoil/user/atom';
 import { githubConnectState } from '@/recoil/github/atom';
-import { channelNameState } from '@/recoil/project/atom';
 import * as styles from '@/components/project-main/styles';
 import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
@@ -27,7 +26,6 @@ export default function ProjectMain({
   const setChannelGithubData = useSetRecoilState(
     githubConnectState(channelIdProps)
   );
-  const setChannelName = useSetRecoilState(channelNameState);
   const { data: userData } = useGetUser();
   const { data: channelUsers } = useGetUsers();
 
@@ -55,7 +53,6 @@ export default function ProjectMain({
           repoType: channelGithubData.repoType,
         });
       console.log(`채널 깃허브`, channelGithubData);
-      setChannelName(myUserData.channelName);
     }
   }, [userData, channelUsers]);
 
