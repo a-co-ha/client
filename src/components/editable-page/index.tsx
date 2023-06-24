@@ -2,7 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { handlers } from './handlers';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Droppable,
+  DropResult,
+  resetServerContext,
+} from 'react-beautiful-dnd';
 import Label from '../editable-block/Label';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
 import { EditableBlock } from '@/components/editable-block';
@@ -19,6 +24,7 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
+  resetServerContext();
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -36,8 +42,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     if (fetchedBlocks !== blocks) {
       handlers.updatePageOnserver(blocks, pageId, channelId);
     }
-    const contentElement = page.current;
-    if (contentElement) contentElement.scrollTop = contentElement.scrollHeight;
   }, [blocks]);
 
   const addBlockHandler = (currentBlock: AddBlock) => {
@@ -76,8 +80,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   };
 
   const handleClose = () => {
-    // 부모페이지로 라우터이동 으로 해야함
-    // 컴포넌트 제거 - 가장 윗 요소 에서 true false 로 랜더링 제어 시 url이 남아있어서 같은 페이지 토글이 되지않음
     const parentPageInfo = JSON.parse(
       localStorage.getItem('parentPageInfo') || ''
     );
