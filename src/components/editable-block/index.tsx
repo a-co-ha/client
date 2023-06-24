@@ -227,13 +227,7 @@ export const EditableBlock = (props: editableBlock) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <span
-                css={styles.dragHandle}
-                role="button"
-                tabIndex={0}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
+              <span css={styles.dragHandle}>
                 <Image src={DragHandleIcon} alt="Icon" />
               </span>
               <div
