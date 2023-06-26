@@ -1,18 +1,18 @@
-const getCaretCoordinates = (fromStart = true) => {
+const getCaretCoordinates = () => {
   let x = 0,
     y = 0;
   const isSupported = typeof window.getSelection !== 'undefined';
+
   if (isSupported) {
     const selection = window.getSelection();
 
-    if (selection && selection.rangeCount !== 0) {
+    if (selection) {
       const range = selection.getRangeAt(0).cloneRange();
-      range.collapse(fromStart ? true : false);
-      const rect = range.getClientRects()[0];
-
+      const rect = range.getBoundingClientRect();
+      range.deleteContents();
       if (rect) {
-        x = rect.left;
-        y = rect.top;
+        x = rect.x;
+        y = rect.y;
       }
     }
   }

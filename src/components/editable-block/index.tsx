@@ -104,6 +104,7 @@ export const EditableBlock = (props: editableBlock) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && state.previousKey === 'Shift') {
+      return;
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (e.nativeEvent.isComposing) {
@@ -142,7 +143,7 @@ export const EditableBlock = (props: editableBlock) => {
   const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Shift') state.previousKey = null;
     else if (e.key === CMD_KEY) {
-      const { x, y } = getCaretCoordinates(true);
+      const { x, y } = getCaretCoordinates();
 
       setState({
         ...state,
@@ -181,10 +182,10 @@ export const EditableBlock = (props: editableBlock) => {
       contentEditable.current.firstElementChild?.tagName === 'IMG'
     ) {
       const imgNode = contentEditable.current.firstElementChild;
-      if (imgNode.getAttribute('style') === 'width: 100%') {
+      if (imgNode.getAttribute('style') === 'width: 80%') {
         imgNode.removeAttribute('style');
       } else {
-        imgNode.setAttribute('style', 'width: 100%');
+        imgNode.setAttribute('style', 'width: 80%');
       }
     }
   };
@@ -226,13 +227,7 @@ export const EditableBlock = (props: editableBlock) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <span
-                css={styles.dragHandle}
-                role="button"
-                tabIndex={0}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
+              <span css={styles.dragHandle}>
                 <Image src={DragHandleIcon} alt="Icon" />
               </span>
               <div

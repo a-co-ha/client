@@ -27,4 +27,11 @@ export const block = (isDragging: boolean, hasPlaceholder: boolean) => css`
   -webkit-user-select: text;
   user-select: text;
   opacity: ${hasPlaceholder ? '0.5' : ''};
+  &:focus {
+    outline: none;
+    background: #f6f6f6;
+  }
+  &:hover {
+    background: #f6f6f6;
+  }
 `;

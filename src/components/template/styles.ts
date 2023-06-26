@@ -8,14 +8,9 @@ export const mainContainer = css`
 `;
 
 export const progressContainer = css`
-  flex-basis: 0;
-  flex-grow: 1;
   padding: 1rem;
   display: flex;
-  justify-content: space-evenly;
   height: calc(100vh - 50px);
-  padding-right: 44px;
-  padding-bottom: 2rem;
   overflow: hidden scroll;
   &::-webkit-scrollbar {
     width: 15px;
@@ -34,8 +29,14 @@ export const progressContainer = css`
   }
 `;
 
+export const progressSectionContainer = css`
+  flex-basis: 0;
+  flex-grow: 1;
+  padding: 1rem;
+`;
+
 export const progressSection = css`
-  flex-basis: 30%;
+  flex-grow: 1;
 `;
 
 export const progressInPage = css`
@@ -49,9 +50,16 @@ export const progressInPage = css`
   min-height: 5rem;
 `;
 
-export const d = css`
-  padding: 0 0.3rem;
-  font-size: 0.8rem;
+export const progressStatus = (index: number) => css`
+  background-color: ${index === 0
+    ? '#fcd99f'
+    : index === 1
+    ? '#daf7ea'
+    : '#c8e5fa'};
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
 `;
 
 export const gaugeContainer = css`
@@ -123,4 +131,31 @@ export const percentage = css`
   font-size: 0.5em;
   text-anchor: middle;
   animation: ${progressKeyframes};
+`;
+
+export const label = css`
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  height: 4rem;
+  margin-top: 0.5rem;
+  overflow: hidden scroll;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    background-color: #efefef;
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+`;
+
+export const labelName = css`
+  margin-bottom: 0.3rem;
 `;

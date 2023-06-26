@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export const useParentUrlInfo = (channelId: string) => {
+export const useSetParentUrlInfo = (channelId: string) => {
   const router = useRouter();
 
   useEffect(() => {

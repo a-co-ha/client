@@ -1,17 +1,7 @@
+import { TAG_MENU_ITEM } from '@/utils/const';
 import { Menu } from '@headlessui/react';
 import { useEffect } from 'react';
 import type { TagSelectorMenuProps } from '../editable-block/type';
-
-const menuItemTag = [
-  { tag: 'h1', label: 'h1' },
-  { tag: 'h2', label: 'h2' },
-  { tag: 'h3', label: 'h3' },
-  { tag: 'b', label: 'bold' },
-  { tag: 'p', label: 'p' },
-  { tag: 'i', label: 'i' },
-  { tag: 'code', label: 'code' },
-  { tag: 'img', label: 'image' },
-];
 
 export default function TagSelectorMenu({
   position,
@@ -35,7 +25,7 @@ export default function TagSelectorMenu({
         top: position.y,
         left: position.x,
       }}
-      onBlur={() => closeMenu}
+      onBlur={closeMenu}
       onKeyUp={handleKeyUp}
     >
       <Menu as="div" className="relative inline-block text-left">
@@ -48,13 +38,13 @@ export default function TagSelectorMenu({
           }
         >
           <div className="px-1  py-1">
-            {menuItemTag.map((item) => {
+            {TAG_MENU_ITEM.map((item) => {
               return (
                 <Menu.Item key={item.label}>
                   {({ active }) => (
                     <button
                       className={`${
-                        active ? 'bg-violet-500 text-white ' : 'text-gray-900 '
+                        active ? 'bg-indigo-300 text-white ' : 'text-gray-900 '
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                       onClick={() => handleTagSelection(item.tag)}
                     >

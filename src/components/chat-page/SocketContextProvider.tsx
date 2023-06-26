@@ -14,6 +14,21 @@ import type { SocketMessage } from '@/pages/api/socket/type';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 
+export interface AlertValue {
+  channelId: string;
+  channelName: string;
+  pageId: string;
+  pageName: string;
+  subPageName?: string;
+  targetUserName: string;
+  type: string;
+}
+
+interface Alert {
+  alerts: AlertValue[];
+  isRead: string;
+}
+
 interface Context {
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   socketDisconnect: () => void;
@@ -31,7 +46,7 @@ interface Context {
   disconnectMember: (func: (user: any) => void) => void;
   joinChannel: (channelId: string) => void;
   getAlert: (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => void;
-  alertSocket: (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => void;
+  alertSocket: (setIsAlert: Dispatch<SetStateAction<boolean | null>>,setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>) => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -173,11 +188,13 @@ export const SocketContextProvider = ({
   };
 
   const alertSocket = (
-    setIsAlert: Dispatch<SetStateAction<boolean | null>>
+    setIsAlert: Dispatch<SetStateAction<boolean | null>>,
+    setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>
   ) => {
-    socket.on('ALERT', (data: string) => {
+    socket.on('ALERT', (data: Alert) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);
-      if (data === 'true') setIsAlert(true);
+      setAlertList(data.alerts);
+      if (data.isRead === 'true') setIsAlert(true);
       else setIsAlert(false);
     });
   };
