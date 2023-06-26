@@ -30,7 +30,6 @@ export const MainCalendar = () => {
     calendarAddScheduleState
   );
   const [isDeleteBtnClicked, setIsDeleteBtnClicked] = useState(false);
-  const [index, setIndex] = useState(0);
   const [clickDate, setClickDate] = useState('');
 
   const onChangeHandler = (value: Value) => {
