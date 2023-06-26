@@ -9,15 +9,14 @@ export const useGetChannelPages = (
   channelId: string | string[] | undefined
 ) => {
   const setChannelName = useSetRecoilState(channelNameState);
-  // const setChannelImage = useSetRecoilState(channelImageState);
 
   return useQuery<pages, AxiosError>(
     [`channelPages`, channelId],
     () => getChannelPages(channelId),
     {
-      onSuccess: (data) => {
-        setChannelName(data.channelName);
-        // setChannelImage(data.)
+      enabled: !!channelId,
+      onSuccess: async (data) => {
+        setChannelName(data?.channelName);
       },
     }
   );

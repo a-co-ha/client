@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { lazy, Suspense, useState } from 'react';
-import { Header } from './Header';
+import { Header } from '../notice/Header';
 const NoticeList = lazy(() => import('./NoticeList'));
 const NoticeForm = lazy(() => import('./NoticeForm'));
 const NoticeDetail = lazy(() => import('./NoticeDetail'));
