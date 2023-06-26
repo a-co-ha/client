@@ -1,13 +1,13 @@
 import { registerHub } from '@/pages/api/github/registerHub';
+import type {
+  CommitLogGithubRegister,
+  CommitRegisterResponse,
+} from '@/pages/api/github/type';
+import { githubConnectState } from '@/recoil/github/atom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
-import { useSetRecoilState, useResetRecoilState } from 'recoil';
-import { githubConnectState } from '@/recoil/github/atom';
-import type { CommitLogOrgResponse } from '@/pages/api/github/type';
-import type { CommitLogRepoResponse } from '@/pages/api/github/type';
-import type { CommitRegisterResponse } from '@/pages/api/github/type';
-import type { CommitLogGithubRegister } from '@/pages/api/github/type';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 export const useRegisterHub = (channelId: string | string[] | undefined) => {
   const queryClient = useQueryClient();
@@ -30,7 +30,10 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
     {
       onSuccess: (data) => {
         console.log('register', data);
-        setGithubConnectData({ repoName: data.name, repoType: data.type });
+        setGithubConnectData({
+          repoName: data.name,
+          repoType: data.type,
+        });
         queryClient.invalidateQueries([`user`, userId]);
       },
     }

@@ -1,7 +1,7 @@
-import { atom, atomFamily } from 'recoil';
-import { nanoId } from '@/utils/nanoId';
-import type { User } from '@/pages/api/user/type';
 import type { UserInChannel } from '@/components/editable-block/type';
+import type { User } from '@/pages/api/user/type';
+import { nanoId } from '@/utils/nanoId';
+import { atom, atomFamily } from 'recoil';
 
 export const userDataState = atom<User>({
   key: `userData/${nanoId()}`,

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { channelSidebarOpenState } from '@/recoil/project/atom';
 import { handlers } from './handlers';
 import {
   DragDropContext,
@@ -11,7 +12,6 @@ import {
 import Label from '../editable-block/Label';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
 import { EditableBlock } from '@/components/editable-block';
-import { Notice } from '../notice/index';
 import { currentBlockIdState } from '@/recoil/editable-block/atom';
 import * as styles from './styles';
 import type { AddBlock, EditablePages, Block } from './type';
@@ -25,6 +25,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   resetServerContext();
+  const setIsChannelSidebarOpen = useSetRecoilState(channelSidebarOpenState);
+  const onClickHandler = () => {
+    if (window !== undefined) {
+      window.innerWidth <= 450 ? setIsChannelSidebarOpen(false) : null;
+    }
+  };
+
   const { data: fetchedBlocks } = useGetEditablePage(channelId, pageId, type);
   // return <Notice status="ERROR" />;
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -64,7 +71,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
     const updatedBlocks = handlers.onDragEnd(blocks, result);
     updatedBlocks && setBlocks(updatedBlocks);
   };
-  const isNewPage = router.query.initial === 'true';
 
   const deleteSelectBlock = () => {
     if (confirm('선택된 블럭을 삭제하시겠습니까?')) {
@@ -99,6 +105,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
             }
           : { width: '100%' }),
       }}
+      onClick={onClickHandler}
     >
       <QueryErrorResetBoundary>
         {({ reset }) => (
@@ -122,7 +129,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                   </svg>
                 </button>
               )}
-              {isNewPage && <Notice status="SUCCESS" />}
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Label />
                 {selectedBlocks.length > 0 && (

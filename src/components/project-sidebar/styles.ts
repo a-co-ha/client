@@ -14,8 +14,15 @@ export const projectSideBarBox = (isOpen: boolean) => css`
   ${flexRowCenter}
   width: ${isOpen ? `260px` : `85px`};
   height: calc(100vh - 50px);
+  z-index: 1;
   transition: 0.5s;
   transition-delay: ${isOpen ? `0s` : `0.5s`};
+  @media screen and (max-width: 450px) {
+    position: absolute;
+    z-index: 1;
+    transform: translate3d(${isOpen ? `0, 0, 0` : `-110%,0,0`});
+    background: white;
+  }
 `;
 
 export const list = css`
@@ -26,7 +33,7 @@ export const list = css`
   z-index: 2;
 `;
 
-export const channel = (isOpen: boolean) => css`
+export const channel = (isOpen: boolean, isMobile: boolean) => css`
   ${flexColumnCenter}
   position: relative;
   width: 260px;
@@ -40,6 +47,9 @@ export const channel = (isOpen: boolean) => css`
   &:hover > button {
     display: block;
   }
+  & > button {
+    display: ${isMobile ? `block` : !isMobile && isOpen ? `none` : null};
+  }
   & > *:not(button:nth-of-type(1)) {
     opacity: ${isOpen ? `1` : `0`};
     transition: 0.5s;
@@ -49,7 +59,7 @@ export const channel = (isOpen: boolean) => css`
 export const channelSidbarMoreBtn = (isOpen: boolean) => css`
   display: ${isOpen ? `none` : `block`};
   position: ${isOpen ? `absolute` : `fixed`};
-  top: 50%;
+  top: 45%;
   left: ${isOpen ? `calc(100% - 10px)` : `100%`};
   width: ${isOpen ? `20px` : `40px`};
   height: ${isOpen ? `60px` : `40px`};
@@ -75,23 +85,39 @@ export const pageCreateBtnBox = css`
 
 export const pageCreateBtn = css`
   padding-inline: 12px;
-  color: purple;
+  color: rgb(30 27 75);
   &:hover {
-    background: gray;
+    background-color: rgb(209 213 219);
     height: 2rem;
   }
   border-radius: 8px;
 `;
 
-export const projectCreateThumbnail = (isSelected: boolean) => css`
+export const projectCreateThumbnail = (
+  isSelected: boolean,
+  isRead: boolean
+) => css`
   position: relative;
-  width: 40px;
-  height: 40px;
   margin-top: 5px;
   border-radius: 10px;
   transform: ${isSelected ? `scale(1.15)` : `scale(1)`};
   transition: 0.3s;
-  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
+  & > svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  & > div:nth-of-type(2) {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    z-index: -1;
+    width: 95%;
+    height: 95%;
+    border-radius: 50%;
+    box-shadow: 3px 3px 5px 1px rgb(0 0 0 / 0.2),
+      3px 2px 8px 1px rgb(0 0 0 / 0.2);
+  }
   &:hover {
     transform: ${isSelected ? `scale(1.15)` : `scale(1.08)`};
   }
@@ -112,6 +138,18 @@ export const projectCreateThumbnail = (isSelected: boolean) => css`
     transition: 0.3s;
     transform: scale(${isSelected ? `1` : `0`});
     transform-origin: center;
+  }
+  &::after {
+    display: ${!isRead ? `none` : `block`};
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 50%;
+    transform: translate3d(-200%, -50%, 0);
   }
 `;
 
@@ -151,6 +189,9 @@ export const projectCreatePlusBtn = css`
   border-radius: 10px;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 8px -4px rgb(0 0 0 / 0.2);
   border: 1px solid black;
+  &:hover {
+    color: rgba(0, 0, 0, 0.4);
+  }
   &:hover > div {
     display: block;
   }
@@ -204,8 +245,12 @@ export const pageNameInput = css`
 
 export const pageNameLinkBox = (
   propsPageId: string,
-  pageId: string | string[] | undefined
+  pageId: string | string[] | undefined,
+  isClicked: boolean,
+  isRead: boolean,
+  type: string
 ) => css`
+  position: relative;
   color: ${pageId !== undefined && propsPageId === pageId ? `black` : `gray`};
   background: ${pageId !== undefined && propsPageId === pageId
     ? `rgb(226 232 240)`
@@ -217,18 +262,94 @@ export const pageNameLinkBox = (
       display: block;
     }
   }
+  & > div > button {
+    display: ${isClicked ? `block` : `none`};
+  }
+  &::after {
+    display: ${type !== `socket`
+      ? `none`
+      : type === `socket` && isRead
+      ? `none`
+      : `block`};
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 50%;
+    transform: translate3d(-150%, -50%, 0);
+  }
 `;
 
 export const pageNameLink = css`
+  position: relative;
   display: flex;
   align-items: center;
   font-size: 0.875rem;
   border-radius: 0.375rem;
   padding: 0.3rem;
+  & > button > svg {
+    color: gray;
+  }
+  & > button:nth-of-type(1) {
+    &:hover svg {
+      color: #efb925;
+    }
+  }
+  & > button:nth-of-type(2) {
+    &:hover svg {
+      color: black;
+    }
+  }
+`;
+
+export const pageNameLinkTag = css`
+  width: 70%;
+  z-index: 2;
+`;
+
+export const pageNameBtnStyle = css`
+  display: none;
+  padding-inline: 0.2rem;
+  margin-left: auto;
 `;
 
 export const pageNameEditBtn = css`
-  display: none;
-  padding: 0;
-  margin-left: auto;
+  ${pageNameBtnStyle};
+  z-index: 3;
+`;
+
+export const pageNameDeleteBtn = (isClicked: boolean) => css`
+  ${pageNameBtnStyle};
+  position: relative;
+  z-index: 3;
+  transform: translate3d(${isClicked ? `120%,0,0` : `0,0,0`});
+  transition: 0.3s ease-out;
+`;
+
+export const pageNameDeleteConfirmBtn = (isClicked: boolean) => css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 10%;
+  right: ${isClicked ? `5%` : `0%`};
+  width: ${isClicked ? `50px` : `0px`};
+  height: 80%;
+  font-size: 0.8rem;
+  color: white;
+  z-index: ${isClicked ? `3` : `1`};
+  background: #ee1f3e;
+  border-radius: 4px;
+  opacity: ${isClicked ? `1` : `0`};
+  transition: 0.3s ease-out;
+  &:hover {
+    background-color: red;
+  }
+  & > button {
+    width: 100%;
+  }
 `;

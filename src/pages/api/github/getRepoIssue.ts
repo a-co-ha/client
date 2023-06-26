@@ -1,7 +1,7 @@
 import { api } from '../config/api-config';
-export const getRepoIssue = async (owner: string | undefined, repo: string) => {
+export const getRepoIssue = async (repo: string) => {
   try {
-    const res = await api.post(`/api/github/issue`, { owner, repo });
+    const res = await api.post(`/api/github/issue`, { repo });
     console.log(`github 이슈`, res.data);
     return res.data;
   } catch (err) {

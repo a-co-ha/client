@@ -1,14 +1,14 @@
-import { atom, atomFamily } from 'recoil';
-import { nanoId } from '@/utils/nanoId';
 import type {
-  CommitLogOrgsResponse,
+  CommitLogGithubRegister,
   CommitLogOrgResponse,
+  CommitLogOrgsResponse,
+  CommitLogRepoResponse,
   CommitLogReposResponse,
   OrgCommitTransferedData,
   OrgIssueTransferedData,
-  CommitLogRepoResponse,
-  CommitLogGithubRegister,
 } from '@/pages/api/github/type';
+import { nanoId } from '@/utils/nanoId';
+import { atom, atomFamily } from 'recoil';
 
 export const commitLogModalFormState = atom({
   key: `commitLogModalFormState/${nanoId()}`,
@@ -71,7 +71,6 @@ export const githubConnectState = atomFamily<
   default: {
     repoName: '',
     repoType: '',
-    owner: '',
   },
 });
 

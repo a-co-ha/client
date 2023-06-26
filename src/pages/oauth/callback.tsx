@@ -1,14 +1,14 @@
+import { Loading } from '@/components/loading/Loading';
+import { useGetUser } from '@/hooks/queries/user/getUser';
+import { oauthLogin } from '@/pages/api/user/oauthLogin';
+import { channelImageState, channelNameState } from '@/recoil/project/atom';
+import { initialUserState, loginState } from '@/recoil/user/atom';
+import type { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { initialUserState, loginState } from '@/recoil/user/atom';
-import { channelNameState } from '@/recoil/project/atom';
-import { useGetUser } from '@/hooks/queries/user/getUser';
-import { setToken } from '../api/user/setToken';
 import { api } from '../api/config/api-config';
-import { oauthLogin } from '@/pages/api/user/oauthLogin';
-import { Loading } from '@/components/loading/Loading';
-import type { GetServerSideProps } from 'next';
+import { setToken } from '../api/user/setToken';
 
 export default function Callback({
   accessToken,
@@ -26,6 +26,7 @@ export default function Callback({
   const setIsInitialUser = useSetRecoilState(initialUserState);
   const setIsLoggedIn = useSetRecoilState(loginState);
   const setChannelName = useSetRecoilState(channelNameState);
+  const setChannelImg = useSetRecoilState(channelImageState);
   const router = useRouter();
   const { data: userData } = useGetUser();
   setToken(accessToken, refreshToken, sessionID, userId, userName);
@@ -41,7 +42,8 @@ export default function Callback({
       initialUser
         ? router.push(`/main`)
         : (router.push(`/project/${userData.channels[0].id}`),
-          setChannelName(userData.channels[0].channelName));
+          setChannelName(userData.channels[0].channelName)),
+        setChannelImg(userData.channels[0].channelImg);
     }
   }, [userData]);
 

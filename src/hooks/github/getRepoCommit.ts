@@ -18,8 +18,7 @@ export const useGetRepoCommit = (channelId: string | string[] | undefined) => {
   });
   return useMutation<CommitList[], AxiosError, OrgRepoName>(
     [`getRepoCommit`, channelId],
-    (orgRepoName: OrgRepoName) =>
-      getRepoCommit(orgRepoName.owner, orgRepoName.repo),
+    (orgRepoName: OrgRepoName) => getRepoCommit(orgRepoName.repo),
     {
       onSuccess: async (data) => {
         if (data == null) {

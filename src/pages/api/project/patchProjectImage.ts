@@ -1,20 +1,16 @@
 import { api } from '../config/api-config';
 
-export const patchProjectImage = async (channelId: number) => {
+export const patchProjectImage = async (
+  channelId: string | string[] | undefined,
+  channelImg: any
+) => {
+  console.log(`여기서보자`, channelImg);
   try {
-    const randomCount = Math.floor(Math.random() * 10 + 1);
     const formData = new FormData();
-    await fetch(`/images/channelImg/${randomCount}.png`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        console.log(`blob`, blob);
-        const file = new File([blob], 'image', { type: 'image/png' });
-        formData.append(`image`, file, 'channelImg.png');
-      });
-
+    formData.append(`channelImg`, channelImg);
     const res = await api.patch(
       `/api/channel/imageUpdate?channel=${channelId}`,
-      { channelImg: formData.get('image') },
+      { channelImg: formData.get(`channelImg`) },
       {
         headers: {
           'Content-Type': 'multipart/form-data',

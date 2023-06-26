@@ -18,8 +18,7 @@ export const useGetRepoIssue = (channelId: string | string[] | undefined) => {
   });
   return useMutation<IssueList[], AxiosError, OrgRepoName>(
     [`getRepoIssue`, channelId],
-    (orgRepoName: OrgRepoName) =>
-      getRepoIssue(orgRepoName.org, orgRepoName.repo),
+    (orgRepoName: OrgRepoName) => getRepoIssue(orgRepoName.repo),
     {
       onSuccess: async (data) => {
         console.log('repoIssues', data);

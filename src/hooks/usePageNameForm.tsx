@@ -15,7 +15,7 @@ export const usePageNameForm = ({
     rules: {
       required: '꼭 필요해요',
       minLength: { value: 2, message: '너무짧아요' },
-      maxLength: { value: 10, message: '너무길어요' },
+      maxLength: { value: 15, message: '너무길어요 (최대 15자)' },
     },
   });
   return { pageNameField, errors };

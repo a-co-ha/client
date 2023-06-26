@@ -1,21 +1,27 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState, useLayoutEffect, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
-import {
-  channelListState,
-  channelNameState,
-  channelImageState,
-} from '@/recoil/project/atom';
-import { initialUserState } from '@/recoil/user/atom';
-import { ProjectCreateForm } from './CreateForm';
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { HoverModal } from '@/hooks/useHoverModal';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
 import githubChannelImg from '@/images/github_channel.png';
-import * as styles from './styles';
 import type { ChannelList } from '@/pages/api/user/type';
+import {
+  channelImageState,
+  channelListState,
+  channelMobileRightSidebarOpenState,
+  channelNameState,
+} from '@/recoil/project/atom';
+import { initialUserState } from '@/recoil/user/atom';
+import { messageStatusState } from '@/recoil/socket/atom';
+import { Dialog, Transition } from '@headlessui/react';
+import { useRouter } from 'next/router';
+import { Fragment, useLayoutEffect, useState } from 'react';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
+import { ProjectCreateForm } from './CreateForm';
+import * as styles from './styles';
 
 export const List = () => {
   const router = useRouter();
@@ -26,7 +32,11 @@ export const List = () => {
   const setChannelName = useSetRecoilState(channelNameState);
   const setChannelImage = useSetRecoilState(channelImageState);
   const setIsInitialUser = useSetRecoilState(initialUserState);
-
+  const messageStatus = useRecoilValue(messageStatusState);
+  const [readChannel, setReadChannel] = useState(['']);
+  const setIsChannelRightSidebarOpen = useSetRecoilState(
+    channelMobileRightSidebarOpenState
+  );
   const [isOpen, setIsOpen] = useState(false);
   const { data: userData } = useGetUser();
   const closeModal = () => {
@@ -61,6 +71,18 @@ export const List = () => {
       console.error(err);
     }
   }, [userData]);
+  useLayoutEffect(() => {
+    const newArr: string[] = [];
+    const unReadRoomArray = messageStatus.filter((room) => {
+      return room.status.isRead === `false`;
+    });
+    unReadRoomArray.map((room) => {
+      newArr.push(String(room.channelId.channelId));
+    });
+
+    const set = [...new Set(newArr)];
+    setReadChannel(set);
+  }, [messageStatus]);
 
   console.log('채널리스트 ', channelList);
 
@@ -69,6 +91,9 @@ export const List = () => {
     setChannelImage(channelData.channelImg);
     console.log(channelData.channelName);
     router.push(`/project/${channelData.id}`);
+    if (window) {
+      window.innerWidth <= 450 ? setIsChannelRightSidebarOpen(false) : null;
+    }
   };
 
   return (
@@ -77,24 +102,39 @@ export const List = () => {
         <div
           key={channel.id}
           css={styles.projectCreateThumbnail(
-            String(channel.id) === channelId ? true : false
+            String(channel.id) === channelId ? true : false,
+            readChannel.indexOf(String(channel.id)) !== -1
           )}
+          onClick={() => onClickHandler(channel)}
         >
           <HoverModal content={channel.channelName} />
-          <button
-            css={{ position: `relative`, width: `100%`, height: `100%` }}
-            onClick={() => onClickHandler(channel)}
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 50 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <Image
-              src={channel.channelImg ? channel.channelImg : githubChannelImg}
-              fill
-              sizes="40px"
-              alt={`channelImg`}
-              placeholder="blur"
-              blurDataURL={`...Loading`}
-              style={{ borderRadius: `10px` }}
+            <defs>
+              <path
+                id="listSquircle"
+                d="M50 25C50 43.4095 43.4095 50 25 50C6.59051 50 0 43.4095 0 25C0 6.59051 6.59051 0 25 0C43.4095 0 50 6.59051 50 25Z"
+              ></path>
+              <clipPath id="listClipSquircle">
+                <use xlinkHref="#listSquircle" />
+              </clipPath>
+            </defs>
+            <image
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMid slice"
+              clipPath="url(#listClipSquircle)"
+              xlinkHref={`${
+                channel.channelImg ? channel.channelImg : githubChannelImg.src
+              }`}
             />
-          </button>
+          </svg>
+          <div></div>
         </div>
       ))}
       <button

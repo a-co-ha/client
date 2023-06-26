@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { ProjectSideBar } from '@/components/project-sidebar';
 import { UserList } from '@/components/project-userlist';
 import { MainContent } from '@/components/project-main';
@@ -11,21 +11,25 @@ import { useGetUsers } from '@/hooks/queries/user/getUsers';
 import { useSetRecoilState } from 'recoil';
 import { adminState, inviteChannelState } from '@/recoil/user/atom';
 import { githubConnectState } from '@/recoil/github/atom';
-import { channelNameState } from '@/recoil/project/atom';
 import * as styles from '@/components/project-main/styles';
 import type { GetServerSideProps } from 'next';
 import type { ChannelUser } from '@/pages/api/user/type';
 
-export default function ProjectMain({ channelId }: { channelId: string }) {
-  console.log(`채널@@@`, channelId);
-  const setIsAdmin = useSetRecoilState(adminState(channelId));
+export default function ProjectMain({
+  channelIdProps,
+}: {
+  channelIdProps: string;
+}) {
+  console.log(`채널@@@`, channelIdProps);
+  const setIsAdmin = useSetRecoilState(adminState(channelIdProps));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
-  const setChannelGithubData = useSetRecoilState(githubConnectState(channelId));
-  const setChannelName = useSetRecoilState(channelNameState);
+  const setChannelGithubData = useSetRecoilState(
+    githubConnectState(channelIdProps)
+  );
   const { data: userData } = useGetUser();
   const { data: channelUsers } = useGetUsers();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (userData !== undefined && channelUsers !== undefined) {
       console.log(`채널 유저스`, channelUsers);
       const myUserData = channelUsers.filter(
@@ -41,16 +45,14 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
       setInviteChannelData({ userId, channelName, channelId });
       console.log(`인바이트 인포`, userId, channelName);
       const channelGithubData = userData.channels.filter(
-        (channel) => channelId === String(channel.id)
+        (channel) => channelIdProps === String(channel.id)
       )[0];
       channelGithubData &&
         setChannelGithubData({
           repoName: channelGithubData.repoName,
           repoType: channelGithubData.repoType,
-          owner: userData.githubID,
         });
       console.log(`채널 깃허브`, channelGithubData);
-      setChannelName(myUserData.channelName);
     }
   }, [userData, channelUsers]);
 
@@ -68,23 +70,23 @@ export default function ProjectMain({ channelId }: { channelId: string }) {
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  const channelId = context.query.id as string;
+  const channelIdProps = context.query.id as string;
   try {
-    if (channelId) {
+    if (channelIdProps) {
       await Promise.all([
         queryClient.prefetchQuery([`user`], getUser),
-        queryClient.prefetchQuery([`channelPages`, channelId], () =>
-          getChannelPages(channelId)
+        queryClient.prefetchQuery([`channelPages`, channelIdProps], () =>
+          getChannelPages(channelIdProps)
         ),
-        queryClient.prefetchQuery([`users`, channelId], () =>
-          getUsers(channelId)
+        queryClient.prefetchQuery([`users`, channelIdProps], () =>
+          getUsers(channelIdProps)
         ),
       ]);
     }
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
-        channelId,
+        channelIdProps,
       },
     };
   } catch (err) {

@@ -1,38 +1,38 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { Tab } from '@headlessui/react';
-import * as styles from './styles';
 import { useGetOrg } from '@/hooks/github/getHubOrg';
 import { useGetRepo } from '@/hooks/github/getHubRepo';
 import { useGetOrgCommit } from '@/hooks/github/getOrgCommit';
-import { useGetRepoCommit } from '@/hooks/github/getRepoCommit';
 import { useGetOrgIssue } from '@/hooks/github/getOrgIssue';
+import { useGetRepoCommit } from '@/hooks/github/getRepoCommit';
 import { useGetRepoIssue } from '@/hooks/github/getRepoIssue';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
-import { CommitLogForm } from './CommitLogForm';
+import { HelpModal } from '@/hooks/useHelpModal';
 import {
   commitLogModalFormState,
   commitLogModalOrgSearchState,
   commitLogModalRepoSearchState,
+  githubCommitErrorState,
   githubConnectState,
   githubOrgCommitState,
-  githubRepoCommitState,
-  githubCommitErrorState,
   githubOrgIssueState,
+  githubRepoCommitState,
   githubRepoIssueState,
 } from '@/recoil/github/atom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import {
   faScrewdriverWrench,
   faTentArrowLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tab } from '@headlessui/react';
+import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HelpModal } from '@/hooks/useHelpModal';
+import { useLayoutEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Loading } from '../loading/Loading';
-import { getCookie } from 'cookies-next';
+import { CommitLogForm } from './CommitLogForm';
+import * as styles from './styles';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -93,9 +93,8 @@ export const CommitLog = () => {
         setClickRepoName(githubOrgData.repos[0].name);
       }
     } else if (githubConnectData.repoType === 'repo') {
-      if (githubConnectData.repoName !== '' && githubConnectData.owner !== '') {
+      if (githubConnectData.repoName !== '') {
         getRepoCommitList.mutate({
-          owner: githubConnectData.owner,
           repo: githubConnectData.repoName,
         });
         setIsIssueOpen(false);
@@ -112,7 +111,6 @@ export const CommitLog = () => {
       });
     } else if (githubConnectData.repoType === 'repo') {
       getRepoIssueList.mutate({
-        org: githubConnectData.owner,
         repo: githubConnectData.repoName,
       });
     }
@@ -143,7 +141,9 @@ export const CommitLog = () => {
                   />
                 )}
               <div
-                css={styles.commitLogConnectChangeBox}
+                css={styles.commitLogConnectChangeBox(
+                  window && window.innerWidth <= 450
+                )}
                 onClick={() => setIsCommitLogFormModal(true)}
               >
                 <p css={styles.commitLogTitle}>
@@ -151,7 +151,7 @@ export const CommitLog = () => {
                     ? githubOrgData.name
                     : githubRepoData.name}
                 </p>
-                <FontAwesomeIcon icon={faTentArrowLeftRight} color={`white`} />
+                <FontAwesomeIcon icon={faTentArrowLeftRight} color={`black`} />
               </div>
               <HelpModal
                 content={`프로젝트와 연결된 저장소의\n커밋기록과 이슈를 볼 수 있어요`}
@@ -199,7 +199,6 @@ export const CommitLog = () => {
                   onClick={() => {
                     setIsIssueOpen(false);
                     getRepoCommitList.mutate({
-                      owner: githubConnectData.owner,
                       repo: githubConnectData.repoName,
                     });
                   }}

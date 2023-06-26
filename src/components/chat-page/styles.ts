@@ -7,6 +7,13 @@ export const chatPage = css`
   flex-basis: 0;
   flex-grow: 1;
   height: calc(100vh - 50px);
+  z-index: 0;
+  background: transparent;
+  @media screen and (max-width: 450px) {
+    min-width: 100vw;
+    // z-index: 3;
+    background: white;
+  }
 `;
 
 export const chatPageInnerBox = css`

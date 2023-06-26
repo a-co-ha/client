@@ -1,11 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { getRepo } from '../../pages/api/github/getHubRepo';
-import { useSetRecoilState } from 'recoil';
 import {
   commitLogModalRepoSearchState,
   githubCommitErrorState,
 } from '@/recoil/github/atom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
+import { getRepo } from '../../pages/api/github/getHubRepo';
 
 export const useGetRepo = (channelId: string | string[] | undefined) => {
   const queryClient = useQueryClient();

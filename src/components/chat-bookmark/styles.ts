@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const chatBookmarkBox = css`
+export const chatBookmarkBox = (isOpen: boolean) => css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,6 +8,13 @@ export const chatBookmarkBox = css`
   height: calc(70vh - 66px);
   margin-top: 1rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  @media screen and (max-width: 450px) {
+    position: fixed;
+    right: ${!isOpen ? `-100%` : `0`};
+    bottom: 0;
+    z-index: 3;
+    background: white;
+  }
 `;
 
 export const chatBookmarkCreateBtn = css`
@@ -77,6 +84,9 @@ export const chatBookmarkModalTransition = (isOpen: boolean) => css`
   transform-duration: ${isOpen ? `0.1s` : `0.25s`};
   opacity: ${isOpen ? `1` : `0.5`};
   transition: 0.1s ease-out;
+  @media screen and (max-width: 450px) {
+    position: fixed;
+  }
 `;
 
 export const chatBookmarkModalBox = css`
@@ -90,6 +100,10 @@ export const chatBookmarkModalBox = css`
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 450px) {
+    width: 330px;
+    height: 45vh;
+  }
 `;
 
 export const chatBookmarkModalTitleBox = css`
@@ -150,6 +164,12 @@ export const chatBookmarkModalContent = css`
   }
   overflow: auto;
   white-space: pre-wrap;
+  @media screen and (max-width: 450px) {
+    height: 30vh;
+  }
+  @media screen and (max-width: 361px) {
+    height: 28vh;
+  }
 `;
 
 export const chatBookmarkBtnBox = css`
@@ -182,6 +202,10 @@ export const chatBookmarkFormModalBox = css`
   overflow: hidden;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+  @media screen and (max-width: 450px) {
+    width: 330px;
+    height: 45vh;
+  }
 `;
 
 export const chatBookmarkFormEditBox = css`
@@ -207,6 +231,9 @@ export const chatBookmarkFormTitleInput = (
     outline: none;
   }
   border-bottom: ${titleError ? `1px solid red` : `1px solid gray`};
+  @media screen and (max-width: 450px) {
+    max-width: ${isEditing ? `35%` : `unset`};
+  }
 `;
 
 export const chatBookmarkFormInput = (isEditing: boolean) => css`
@@ -238,6 +265,12 @@ export const chatBookmarkFormInput = (isEditing: boolean) => css`
   }
   white-space: pre-wrap;
   cursor: auto;
+  @media screen and (max-width: 450px) {
+    height: 26vh;
+  }
+  @media screen and (max-width: 361px) {
+    height: 24vh;
+  }
 `;
 
 export const chatBookmarkFormBtn = css`

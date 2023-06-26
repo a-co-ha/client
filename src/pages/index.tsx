@@ -1,6 +1,42 @@
-import { Loading } from '@/components/loading/Loading';
-import React from 'react';
+import previewRed from '@/images/channelImg/1.png';
+import chatYellow from '@/images/channelImg/5.png';
+import previewGreen from '@/images/channelImg/6.png';
+import previewPurple from '@/images/channelImg/7.png';
+import chatPink from '@/images/channelImg/9.png';
+import previewGithub from '@/images/githubLogo.png';
+import acohaAI from '@/images/landingPage/ai.png';
+import chat from '@/images/landingPage/chat.svg';
+import check from '@/images/landingPage/check.png';
+import commitLog from '@/images/landingPage/commit.png';
+import editableA from '@/images/landingPage/editableA.png';
+import editableB from '@/images/landingPage/editableB.png';
+import issueLog from '@/images/landingPage/issue.png';
+import { LandingPageNavbarIsScroll } from '@/recoil/project/atom';
+import { loginModalState } from '@/recoil/user/atom';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
+  faComments,
+  faPaperPlane,
+  faPenToSquare,
+} from '@fortawesome/free-regular-svg-icons';
+import {
+  faListCheck,
+  faMagnifyingGlass,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  BellAlertIcon,
+  CalendarIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  DocumentIcon,
+  ListBulletIcon,
+} from '@heroicons/react/20/solid';
+import { throttle } from 'lodash';
+import Image from 'next/image';
+import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -8,48 +44,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import { divide, throttle } from 'lodash';
-import * as styles from '../styles/styles';
 import { useSetRecoilState } from 'recoil';
-import { loginModalState } from '@/recoil/user/atom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faComments,
-  faPenToSquare,
-  faSquarePlus,
-  faPaperPlane,
-} from '@fortawesome/free-regular-svg-icons';
-import { faListCheck } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import chat from '@/images/landingPage/chat.svg';
-import Image from 'next/image';
-import previewRed from '@/images/channelImg/1.png';
-import previewGreen from '@/images/channelImg/6.png';
-import previewPurple from '@/images/channelImg/7.png';
-import previewGithub from '@/images/githubLogo.png';
-import {
-  ChevronDownIcon,
-  BellAlertIcon,
-  DocumentIcon,
-  ListBulletIcon,
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/20/solid';
-import editableA from '@/images/landingPage/editableA.png';
-import editableB from '@/images/landingPage/editableB.png';
-import acohaAI from '@/images/landingPage/ai.png';
-import chatPink from '@/images/channelImg/9.png';
-import chatYellow from '@/images/channelImg/5.png';
-import commitLog from '@/images/landingPage/commit.png';
-import issueLog from '@/images/landingPage/issue.png';
-import check from '@/images/landingPage/check.png';
+import * as styles from '../styles/styles';
 
 const IndexPage = () => {
+  const scrollToTopBtn = useRef<HTMLDivElement>(null);
+  const indexLinkBtn = useRef<HTMLDivElement>(null);
+  const indexLinkTranslateBox = useRef<HTMLDivElement>(null);
   //introSection
   const introSection = useRef<any>(null);
   const introSectionBox = useRef<HTMLDivElement>(null);
@@ -92,7 +93,8 @@ const IndexPage = () => {
   const mainItemProgressSubTitle = useRef<HTMLHeadingElement>(null);
   const mainItemProgressDescBox = useRef<HTMLDivElement>(null);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [indexOrder, setIndexOrder] = useState('');
+  const [isIndexOpen, setIsIndexOpen] = useState(false);
   const [clickItem, setClickItem] = useState('');
   const [clickLabel, setClickLabel] = useState('');
   const [isEditableAni, setIsEditableAni] = useState(false);
@@ -101,8 +103,9 @@ const IndexPage = () => {
   const [isCommitLogAni, setIsCommitLogAni] = useState(false);
   const [isProgressAni, setIsProgressAni] = useState(false);
   const setIsLoginModalOpen = useSetRecoilState(loginModalState);
+  const setIsScroll = useSetRecoilState(LandingPageNavbarIsScroll);
   console.log(`위messageA`, messageA);
-  let yOffset = 0; // window.pageYOffset 대신 쓸 변수
+  let yOffset = 0; // window.scrollY 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
   let enterNewScene = false; // 새로운 scene이 시작된 순간 true
@@ -112,15 +115,11 @@ const IndexPage = () => {
   let rafState;
   let scrollToCount = 1;
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   const throttledScroll = useMemo(
     () =>
       throttle(() => {
         if (!messageA.current) return;
-        yOffset = window.pageYOffset;
+        yOffset = window.scrollY;
         scrollLoop();
         // console.log(`scrollLoop`);
       }, 30),
@@ -138,19 +137,26 @@ const IndexPage = () => {
 
   useLayoutEffect(() => {
     window.addEventListener(`scroll`, throttledScroll);
-    // console.log(`scroll`);
     return () => {
       window.addEventListener(`scroll`, throttledScroll);
     };
   }, [throttledScroll]);
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) {
-        window.location.reload();
+    if (!isIndexOpen && indexLinkTranslateBox.current) {
+      if (indexOrder === `index1`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
+      } else if (indexOrder === `index2`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-125px,0,0)`;
+      } else if (indexOrder === `index3`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-250px,0,0)`;
+      } else if (indexOrder === `index4`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-375px,0,0)`;
+      } else if (indexOrder === `index5`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-500px,0,0)`;
       }
-    });
-  });
+    }
+  }, [isIndexOpen, indexOrder]);
 
   const introClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.currentTarget as HTMLDivElement;
@@ -179,25 +185,92 @@ const IndexPage = () => {
     const scrollBox = mainItemPreviewScrollItemBox.current as HTMLDivElement;
     if (targetLabel === `ArrowLeft` && scrollBox) {
       scrollToCount--;
+      if (scrollToCount === -1) {
+        scrollToCount = 6;
+      }
       scrollBox.scrollTo({
         left: scrollBox.offsetWidth * scrollToCount,
         behavior: 'smooth',
       });
-      if (scrollToCount === 0) {
-        scrollToCount = 7;
-      }
       console.log(`left`, scrollBox.offsetWidth);
       console.log(`scCount`, scrollToCount);
     } else if (targetLabel === `ArrowRight` && scrollBox) {
       scrollToCount++;
+      if (scrollToCount === 7) {
+        scrollToCount = 0;
+      }
       scrollBox.scrollTo({
         left: scrollBox.offsetWidth * scrollToCount,
         behavior: 'smooth',
       });
-      if (scrollToCount === 7) {
-        scrollToCount = 1;
-      }
       console.log(`scCount`, scrollToCount);
+    }
+  };
+
+  const scrollToTopHandler = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const indexOpenHandler = () => {
+    isIndexOpen ? setIsIndexOpen(false) : setIsIndexOpen(true);
+    if (!isIndexOpen && indexLinkTranslateBox.current) {
+      console.log(`안쪽 isopen?`, isIndexOpen);
+      indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
+    } else if (isIndexOpen && indexLinkTranslateBox.current) {
+      if (indexOrder === `index1`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
+      } else if (indexOrder === `index2`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-125px,0,0)`;
+      } else if (indexOrder === `index3`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-250px,0,0)`;
+      } else if (indexOrder === `index4`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-375px,0,0)`;
+      } else if (indexOrder === `index5`) {
+        indexLinkTranslateBox.current.style.transform = `translate3d(-500px,0,0)`;
+      }
+    }
+  };
+  console.log(`open?`, isIndexOpen);
+  const indexLinkHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const target = e.target as HTMLSpanElement;
+    const targetLabel = target.ariaLabel;
+    if (targetLabel === `index1` && mainItemSectionA.current?.offsetTop) {
+      window.scrollTo({
+        top: mainItemSectionA.current?.offsetTop - 40,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index2` &&
+      mainItemEditableTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemEditableTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index3` &&
+      mainItemChatTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemChatTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index4` &&
+      mainItemCommitLogTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemCommitLogTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
+    } else if (
+      targetLabel === `index5` &&
+      mainItemProgressTitle.current?.offsetTop
+    ) {
+      window.scrollTo({
+        top: mainItemProgressTitle.current?.offsetTop - 80,
+        behavior: `smooth`,
+      });
     }
   };
 
@@ -309,7 +382,7 @@ const IndexPage = () => {
       }
     }
 
-    yOffset = window.pageYOffset;
+    yOffset = window.scrollY;
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
       totalScrollHeight += sceneInfo[i].scrollHeight;
@@ -357,41 +430,77 @@ const IndexPage = () => {
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
     const scrollRatio = currentYOffset / scrollHeight;
+    yOffset > 1 ? setIsScroll(true) : setIsScroll(false);
     let mediaScrollRatioA;
     let mediaScrollRatioB;
     let mediaScrollRatioC;
     let mediaScrollRatioD;
     let mediaScrollRatioE;
-    if (window.innerWidth > 768) {
-      mediaScrollRatioA = 0.22;
+    // editable
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioA = 0.15;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioA = 0.15;
+      } else {
+        mediaScrollRatioA = 0.22;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioA = 0.19;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioA = 0.2;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioB = 0.43;
+    // chat
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioB = 0.29;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioB = 0.29;
+      } else {
+        mediaScrollRatioB = 0.43;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioB = 0.345;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioB = 0.37;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioC = 0.583;
+    // bookmark
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioC = 0.412;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioC = 0.412;
+      } else {
+        mediaScrollRatioC = 0.583;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioC = 0.485;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioC = 0.455;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioD = 0.765;
+    // commitLog
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioD = 0.531;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioD = 0.531;
+      } else {
+        mediaScrollRatioD = 0.765;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioD = 0.63;
     } else if (window.innerWidth < 361) {
       mediaScrollRatioD = 0.652;
     }
-    if (window.innerWidth > 768) {
-      mediaScrollRatioE = 0.95;
+    // progress
+    if (window.innerWidth > 1520) {
+      mediaScrollRatioE = 0.871;
+    } else if (window.innerWidth < 1520 && window.innerWidth > 768) {
+      if (window.innerHeight > 1300) {
+        mediaScrollRatioE = 0.871;
+      } else {
+        mediaScrollRatioE = 0.95;
+      }
     } else if (window.innerWidth < 768 && window.innerWidth > 361) {
       mediaScrollRatioE = 0.792;
     } else if (window.innerWidth < 361) {
@@ -400,6 +509,8 @@ const IndexPage = () => {
     switch (currentScene) {
       case 0:
         if (
+          scrollToTopBtn.current &&
+          indexLinkBtn.current &&
           objs.content.current &&
           objs.messageBox?.current &&
           objs.subMessage.current &&
@@ -419,12 +530,19 @@ const IndexPage = () => {
           objs.introArrowDown.current
         ) {
           console.log(`scroll`, scrollRatio);
+
           if (scrollRatio <= 0.77) {
+            scrollToTopBtn.current.style.opacity = `0`;
+            indexLinkBtn.current.style.opacity = `0`;
             objs.messageBox.current.style.transform = `translate3d(${calcValues(
-              values.messageBox_translateX_in,
+              window.innerHeight > 1300 && window.innerWidth > 1520
+                ? [0, 80, { start: 0.05, end: 0.75 }]
+                : values.messageBox_translateX_in,
               currentYOffset
             )}%,${calcValues(
-              values.messageBox_translateY_in,
+              window.innerHeight > 1300
+                ? [-50, 200, { start: 0.4, end: 0.75 }]
+                : values.messageBox_translateY_in,
               currentYOffset
             )}%,0) scale(${calcValues(
               values.messageBox_scale_in,
@@ -544,6 +662,9 @@ const IndexPage = () => {
         break;
       case 1:
         if (
+          scrollToTopBtn.current &&
+          indexLinkBtn.current &&
+          indexLinkTranslateBox.current &&
           objs.mainItemPreviewTitle?.current &&
           objs.mainItemPreview.current &&
           objs.mainItemPreviewScrollBoxTitle.current &&
@@ -571,6 +692,8 @@ const IndexPage = () => {
           }
           console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
+            setIndexOrder(`index1`);
+            console.log(`실제`, isIndexOpen);
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemPreviewScrollBoxTitle.current.style.transform = `translate3d(0,0,0)`;
             if (window.innerWidth < 520) {
@@ -597,8 +720,15 @@ const IndexPage = () => {
             objs.mainItemPreviewScrollBoxTitle.current.style.opacity = `0`;
             objs.mainItemPreview.current.style.opacity = `0`;
           }
-          console.log(`이너`, window.innerHeight);
+          if (scrollRatio > 0.15 && window.innerWidth >= 756) {
+            scrollToTopBtn.current.style.opacity = `1`;
+            indexLinkBtn.current.style.opacity = `1`;
+          } else {
+            scrollToTopBtn.current.style.opacity = `0`;
+            indexLinkBtn.current.style.opacity = `0`;
+          }
           if (scrollRatio > mediaScrollRatioA) {
+            setIndexOrder(`index2`);
             objs.mainItemEditableTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemEditableDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -616,6 +746,7 @@ const IndexPage = () => {
             setIsEditableAni(false);
           }
           if (scrollRatio > mediaScrollRatioB) {
+            setIndexOrder(`index3`);
             objs.mainItemChatTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemChatDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -642,6 +773,7 @@ const IndexPage = () => {
             setIsChatBookmarkAni(false);
           }
           if (scrollRatio > mediaScrollRatioD) {
+            setIndexOrder(`index4`);
             objs.mainItemCommitLogTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemCommitLogSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemCommitLogDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -659,6 +791,7 @@ const IndexPage = () => {
             setIsCommitLogAni(false);
           }
           if (scrollRatio > mediaScrollRatioE) {
+            setIndexOrder(`index5`);
             objs.mainItemProgressTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemProgressSubTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemProgressDescBox.current.style.transform = `translate3d(0,0,0)`;
@@ -675,10 +808,25 @@ const IndexPage = () => {
             objs.mainItemProgressDescBox.current.style.opacity = `0`;
             setIsProgressAni(false);
           }
+          if (window.innerHeight > 1300) {
+            if (window.innerWidth < 1520) {
+              if (scrollRatio > 0.95) {
+                indexLinkBtn.current.style.opacity = `0`;
+              }
+            } else {
+              if (scrollRatio > 0.92) {
+                indexLinkBtn.current.style.opacity = `0`;
+              }
+            }
+          } else {
+            if (scrollRatio > 0.9) {
+              indexLinkBtn.current.style.opacity = `0`;
+            }
+          }
         }
         break;
     }
-  }, [yOffset]);
+  }, [yOffset, isIndexOpen]);
 
   const scrollLoop = useCallback(() => {
     enterNewScene = false;
@@ -708,6 +856,81 @@ const IndexPage = () => {
 
   return (
     <div css={styles.flexRowCenter}>
+      <div
+        ref={scrollToTopBtn}
+        css={styles.scrollToTopBtn}
+        onClick={scrollToTopHandler}
+      >
+        <ChevronUpIcon />
+      </div>
+      <div ref={indexLinkBtn} css={styles.indexLinkBtnBox(isIndexOpen)}>
+        <div css={styles.indexLinkBtnInnerBox(isIndexOpen)}>
+          <div
+            css={styles.indexLinkBtnLeftArrow(isIndexOpen)}
+            onClick={indexOpenHandler}
+          >
+            <ChevronLeftIcon />
+          </div>
+          <div
+            css={styles.indexLinkBtnRightArrow(isIndexOpen)}
+            onClick={indexOpenHandler}
+          >
+            <ChevronRightIcon />
+          </div>
+          <div
+            css={styles.indexLinkBtn(isIndexOpen)}
+            onClick={indexLinkHandler}
+          >
+            <div ref={indexLinkTranslateBox}>
+              <span
+                aria-label="index1"
+                css={{
+                  color:
+                    indexOrder === `index1` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                아코하 살펴보기
+              </span>
+              <span
+                aria-label="index2"
+                css={{
+                  color:
+                    indexOrder === `index2` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                희의록&middot;정보공유
+              </span>
+              <span
+                aria-label="index3"
+                css={{
+                  color:
+                    indexOrder === `index3` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                채팅&middot;북마크
+              </span>
+              <span
+                aria-label="index4"
+                css={{
+                  color:
+                    indexOrder === `index4` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                커밋&middot;이슈로그
+              </span>
+              <span
+                aria-label="index5"
+                css={{
+                  color:
+                    indexOrder === `index5` ? `white` : `rgba(255,255,255,0.6)`,
+                }}
+              >
+                진행상황
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <section ref={introSection} css={styles.introSection}>
         <div ref={introSectionBox} css={styles.introSectionBox}>
           <div css={styles.mainTitleDesc}>
@@ -904,7 +1127,6 @@ const IndexPage = () => {
                   </div>
                 </div>
               </div>
-              {/* <CommitLogNavbar /> */}
               <div ref={mainItemPreview} css={styles.mainItemPreview}>
                 <div css={styles.previewNav}>
                   <div
@@ -1225,13 +1447,23 @@ const IndexPage = () => {
                 ref={mainItemEditableA}
                 css={styles.mainItemEditableA(isEditableAni)}
               >
-                <Image src={editableA} fill alt={`editable image A`} />
+                <Image
+                  src={editableA}
+                  fill
+                  sizes={`100%`}
+                  alt={`editable image A`}
+                />
               </div>
               <div
                 ref={mainItemEditableB}
                 css={styles.mainItemEditableB(isEditableAni)}
               >
-                <Image src={editableB} fill alt={`editable image B`} />
+                <Image
+                  src={editableB}
+                  fill
+                  sizes={`100%`}
+                  alt={`editable image B`}
+                />
               </div>
             </div>
           </div>
@@ -1257,7 +1489,12 @@ const IndexPage = () => {
               <div css={styles.mainItemChatA(isChatAni)}>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
-                    <Image src={chatPink} fill alt="chatPink image" />
+                    <Image
+                      src={chatPink}
+                      fill
+                      sizes={`100%`}
+                      alt="chatPink image"
+                    />
                   </div>
                   <div css={styles.mainItemChatMessageBox}>
                     <div>
@@ -1269,7 +1506,12 @@ const IndexPage = () => {
                 </div>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
-                    <Image src={chatPink} fill alt="chatPink image" />
+                    <Image
+                      src={chatPink}
+                      fill
+                      sizes={`100%`}
+                      alt="chatPink image"
+                    />
                   </div>
                   <div css={styles.mainItemChatMessageBox}>
                     <div>
@@ -1287,7 +1529,12 @@ const IndexPage = () => {
                 </div>
                 <div css={styles.mainItemChatAInnerBox}>
                   <div css={styles.mainItemChatImageBoxA}>
-                    <Image src={chatYellow} fill alt="chatPink image" />
+                    <Image
+                      src={chatYellow}
+                      fill
+                      sizes={`100%`}
+                      alt="chatPink image"
+                    />
                   </div>
                   <div css={styles.mainItemChatMessageBox}>
                     <div>
@@ -1321,7 +1568,7 @@ const IndexPage = () => {
                     </div>
                   </div>
                   <div>
-                    <h3>welcome!</h3>
+                    <h3>welcome acoha!</h3>
                     <span>
                       <span css={styles.mainItemChatMessageCode}>
                         <i>1</i>
@@ -1412,6 +1659,7 @@ const IndexPage = () => {
                         <Image
                           src={commitLog}
                           fill
+                          sizes={`100%`}
                           alt={`mainItem commitLogImg`}
                           quality={100}
                         />
@@ -1422,6 +1670,7 @@ const IndexPage = () => {
                         <Image
                           src={issueLog}
                           fill
+                          sizes={`100%`}
                           alt={`mainItem issueLog Image`}
                           quality={100}
                         />
@@ -1499,7 +1748,7 @@ const IndexPage = () => {
                     </div>
                     <div>
                       <div>
-                        <svg css={styles.progressSvg} stroke-linecap="round">
+                        <svg css={styles.progressSvg} strokeLinecap="round">
                           <circle cx="50%" cy="50%" r="70"></circle>
                         </svg>
                       </div>
@@ -1507,7 +1756,7 @@ const IndexPage = () => {
                     </div>
                     <div>
                       <div>
-                        <svg css={styles.progressSvg} stroke-linecap="round">
+                        <svg css={styles.progressSvg} strokeLinecap="round">
                           <circle cx="50%" cy="50%" r="70"></circle>
                         </svg>
                       </div>
@@ -1515,7 +1764,7 @@ const IndexPage = () => {
                     </div>
                     <div>
                       <div>
-                        <svg css={styles.progressSvg} stroke-linecap="round">
+                        <svg css={styles.progressSvg} strokeLinecap="round">
                           <circle cx="50%" cy="50%" r="70"></circle>
                         </svg>
                       </div>
@@ -1542,15 +1791,18 @@ const IndexPage = () => {
                   >
                     지금 시작하기
                   </button>
-                  <Image src={acohaAI} fill alt="acoha ai image" />
+                  <Image src={acohaAI} sizes={`100%`} alt="acoha ai image" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section>
-        <div></div>
+      <section css={styles.footer}>
+        <div>
+          <h3>ACOHA : 아 코딩하고싶다</h3>
+          <div>&copy; acoha team</div>
+        </div>
       </section>
     </div>
   );

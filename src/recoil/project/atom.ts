@@ -1,13 +1,15 @@
-import { atom, atomFamily } from 'recoil';
-import { nanoId } from '@/utils/nanoId';
-import type { ChannelList } from '@/pages/api/user/type';
 import type { GetChannelPages } from '@/pages/api/editable/type';
+import type { ChannelList } from '@/pages/api/user/type';
+import type { CalendarScheduleResponse } from '@/pages/api/main/type';
+import { nanoId } from '@/utils/nanoId';
+import { atom, atomFamily } from 'recoil';
 
 export const pageListState = atom<GetChannelPages>({
   key: `pageList/${nanoId()}`,
   default: {
     _id: '',
     channelId: 0,
+    channelName: '',
     EditablePage: [
       {
         page: {
@@ -65,6 +67,11 @@ export const channelSidebarOpenState = atom({
   default: true,
 });
 
+export const channelMobileRightSidebarOpenState = atom({
+  key: `channelMobileRightSidebarOpenState/${nanoId()}`,
+  default: false,
+});
+
 export const deleteModalState = atom({
   key: `deleteModalState/${nanoId()}`,
   default: false,
@@ -82,5 +89,39 @@ export const pageNameShare = atomFamily({
 
 export const confirmModalState = atomFamily({
   key: `confirmModalState/${nanoId()}`,
+  default: false,
+});
+
+export const LandingPageNavbarIsScroll = atom({
+  key: `LandingPageNavbarIsScroll/${nanoId()}`,
+  default: false,
+});
+
+export const changeProjectImgModalState = atom({
+  key: `changeProjectImgModalState/${nanoId()}`,
+  default: false,
+});
+
+export const changeProjectNameEditToggle = atomFamily({
+  key: `changeProjectNameEditToggle/${nanoId()}`,
+  default: false,
+});
+
+export const calendarScheduleState = atom<CalendarScheduleResponse[]>({
+  key: `calendarScheduleState/${nanoId()}`,
+  default: [
+    {
+      id: 0,
+      channelId: 0,
+      date: '',
+      content: '',
+      userId: 0,
+      userName: '',
+    },
+  ],
+});
+
+export const calendarAddScheduleState = atom({
+  key: `calendarAddScheduleState/${nanoId()}`,
   default: false,
 });

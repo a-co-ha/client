@@ -41,6 +41,7 @@ export interface CommitRegisterResponse {
 }
 
 export interface ConfirmModalType {
+  modalKey: string;
   title: string;
   content: string;
   confirmFunc: () => void;
@@ -49,7 +50,6 @@ export interface ConfirmModalType {
 }
 
 export interface CommitLogGithubRegister {
-  owner?: string;
   repoName: string;
   repoType: string;
 }
@@ -111,6 +111,5 @@ export interface OrgIssueTransferedData {
 
 export interface OrgRepoName {
   org?: string;
-  owner?: string;
   repo: string;
 }

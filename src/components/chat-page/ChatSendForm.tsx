@@ -17,6 +17,12 @@ export const ChatSendForm = ({
   messagesEndRef: RefObject<HTMLDivElement>;
   setMessages: React.Dispatch<React.SetStateAction<SocketMessage[]>>;
 }) => {
+  const contentTextarea = useRef(null);
+  useEffect(() => {
+    contentTextarea.current &&
+      (contentTextarea.current as HTMLTextAreaElement).focus();
+  }, [pageId]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ block: 'center' });
   };
@@ -62,11 +68,6 @@ export const ChatSendForm = ({
 
   const onSubmit = (chat: ChatMessage) => {
     sendMessage(chat.chatMessage, pageId);
-    // socket.emit(`SEND_MESSAGE`, {
-    //   content: chat.chatMessage,
-    //   roomId: pageId,
-    //   myMessage,
-    // });
     console.log(`보냅니다`);
     methods.reset();
   };
@@ -90,12 +91,16 @@ export const ChatSendForm = ({
     }
   };
 
+  const textAreaClickHandler = () => {
+    scrollToBottom();
+  };
+
   return (
-    <div css={styles.chatFormBox}>
+    <div css={styles.chatFormBox} onClick={textAreaClickHandler}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div css={styles.chatFormInputBox}>
           <textarea
-            autoFocus
+            ref={contentTextarea}
             spellCheck={false}
             css={styles.chatFormInput}
             rows={1}

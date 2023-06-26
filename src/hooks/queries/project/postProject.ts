@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { postProject } from '@/pages/api/project/postProject';
 import { useSetRecoilState } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
-import { patchProjectImage } from '@/pages/api/project/patchProjectImage';
+import { patchProjectDefaultImage } from '@/pages/api/project/patchProjectDefaultImage';
 import { toast } from 'react-toastify';
 import { getCookie } from 'cookies-next';
 import type { AxiosError } from 'axios';
@@ -21,7 +21,7 @@ export const usePostProject = () => {
     {
       onSuccess: async (data) => {
         if (data) {
-          await patchProjectImage(data.id);
+          await patchProjectDefaultImage(data.id);
           await queryClient.invalidateQueries([`user`, userId]);
           setChannelName(data.channelName);
           router.push(`/project/${data.id}`);

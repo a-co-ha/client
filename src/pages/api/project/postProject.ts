@@ -1,8 +1,6 @@
-import { api } from '../config/api-config';
-import { nanoId } from '@/utils/nanoId';
 import type { ProjectName } from '@/components/project-sidebar/type';
-import axios, { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
+import { nanoId } from '@/utils/nanoId';
+import { api } from '../config/api-config';
 
 export const postProject = async (inputData: ProjectName) => {
   try {
@@ -15,12 +13,3 @@ export const postProject = async (inputData: ProjectName) => {
     console.error(`33333`, err);
   }
 };
-/**
- * catch (err: unknown | AxiosError) {
-    if (axios.isAxiosError(err)) {
-      // toast.error(err.response?.data.message);
-      alert(err);
-    } else {
-      console.error(err);
-    }
- */

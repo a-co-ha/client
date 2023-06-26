@@ -1,27 +1,18 @@
 /** @type {import('next').NextConfig} */
+const withPlugins = require('next-compose-plugins');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: false,
   swcMinify: true,
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: `/api/:path*`,
-  //       destination:
-  //         'http://ec2-3-36-123-5.ap-northeast-2.compute.amazonaws.com/api/:path*',
-  //     },
-  //   ];
-  // },
   images: {
     domains: [
       `avatars.githubusercontent.com`,
       `a-coha.s3.ap-northeast-2.amazonaws.com`,
     ],
+    formats: [`image/webp`],
   },
 };
-module.exports = nextConfig;
-
-/**
- * source: `/api/:path*`,
-  destination: `http://ec2-3-36-123-5.ap-northeast-2.compute.amazonaws.com/api/:path*`,
- */
+module.exports = withPlugins([[withBundleAnalyzer], nextConfig]);

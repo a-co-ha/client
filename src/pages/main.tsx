@@ -1,6 +1,4 @@
-import { ProjectSideBar } from '@/components/project-sidebar';
 import { Guide } from '@/components/guide';
-import { UserList } from '@/components/project-userlist';
 import { List } from '@/components/project-sidebar/List';
 import { css } from '@emotion/react';
 

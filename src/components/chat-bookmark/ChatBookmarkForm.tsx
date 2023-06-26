@@ -1,16 +1,16 @@
-import { useForm } from 'react-hook-form';
 import { useChatBookmarkForm } from '@/hooks/form/useChatBookmarkForm';
-import { RefObject, useContext, useEffect, useRef } from 'react';
-import { SocketContext } from '../chat-page/SocketContextProvider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
-import * as styles from './styles';
-import type { ChatBookmarkFormType } from './type';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   chatBookmarkFormModalState,
   isBookmarkEditingState,
 } from '@/recoil/socket/atom';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { SocketContext } from '../chat-page/SocketContextProvider';
+import * as styles from './styles';
+import type { ChatBookmarkFormType } from './type';
 
 export const ChatBookmarkForm = ({
   channelId,

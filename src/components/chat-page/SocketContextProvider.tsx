@@ -1,18 +1,17 @@
+import type { SocketMessage } from '@/pages/api/socket/type';
+import { onUserState, messageStatusState } from '@/recoil/socket/atom';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { getCookie } from 'cookies-next';
+import Link from 'next/link';
 import {
   createContext,
   Dispatch,
   SetStateAction,
-  useEffect,
   useLayoutEffect,
 } from 'react';
-import io, { Socket } from 'socket.io-client';
-import { DefaultEventsMap } from '@socket.io/component-emitter';
-import { getCookie } from 'cookies-next';
-import { useSetRecoilState } from 'recoil';
-import { onUserState } from '@/recoil/socket/atom';
-import type { SocketMessage } from '@/pages/api/socket/type';
 import { toast } from 'react-toastify';
-import Link from 'next/link';
+import { useSetRecoilState } from 'recoil';
+import io, { Socket } from 'socket.io-client';
 
 export interface AlertValue {
   channelId: string;
@@ -57,6 +56,7 @@ export const SocketContextProvider = ({
   children: React.ReactNode;
 }) => {
   const setOnUser = useSetRecoilState(onUserState);
+  const setMessageStatus = useSetRecoilState(messageStatusState);
   const sessionId = getCookie(`sessionId`);
 
   let socket = io(`${process.env.NEXT_PUBLIC_DEV_SERVER_URL}`, {
@@ -81,6 +81,13 @@ export const SocketContextProvider = ({
       console.log(`session USER_INFO`, data);
     });
     socket.on(`NEW_MEMBER`, (data) => console.log(`유저 접속`, data));
+    socket.on(`MESSAGE_STATUS`, (data) => {
+      console.log(`status`, data);
+      setMessageStatus(data);
+    });
+    // socket.on(`UPDATE_STATUS`, (data) => {
+    //   console.log(`update status`, data);
+    // });
 
     return () => {
       console.log(`disconnect`);
@@ -91,6 +98,8 @@ export const SocketContextProvider = ({
   const socketDisconnect = () => {
     socket.disconnect();
   };
+
+  const getMessageStatus = () => {};
 
   const readMessage = (pageId: string) => {
     console.log(`소케엣`, socket);

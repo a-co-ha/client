@@ -4,3 +4,7 @@ export interface PostProject {
   channelName: string;
   channelImg: null;
 }
+
+export interface PatchProjectImage {
+  channelImg: any;
+}

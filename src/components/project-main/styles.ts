@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { chatBookmarkModalContent } from '../chat-bookmark/styles';
 import { inviteModalShareBtn } from '../navbar/styles';
+import { pageNameDeleteBtn } from '../project-sidebar/styles';
+import { pageNameDeleteConfirmBtn } from '../project-sidebar/styles';
 
 const scrollBarStyle = css`
   &::-webkit-scrollbar {
@@ -53,10 +55,215 @@ export const commonTitleStyle = css`
   text-align: left;
 `;
 
+export const mainCalendarTitleBox = css`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  background: #ffe3e7;
+  border-top-left-radius: 0.37rem;
+  border-top-right-radius: 0.37rem;
+  transition: 0.5s;
+  &:hover {
+    background: #ffd6dc;
+  }
+  & > div:nth-of-type(1) {
+    margin-left: auto;
+  }
+`;
+
+export const mainCalendarTitle = css`
+  text-align: start;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+  user-select: none;
+`;
+
+export const mainCalendarBox = css`
+  ${commonBoxStyle};
+  min-width: 300px;
+  max-width: 350px;
+  height: 370px;
+  z-index: 0;
+  margin-bottom: 1rem;
+  border-radius: 0.37rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  overflow: hidden;
+  @media screen and (min-width: 768px) {
+    width: 350px;
+  }
+  @media screen and (max-width: 450px) {
+    width: 300px;
+  }
+`;
+
+export const mainCalendar = css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+export const calendarScheduleDot = css`
+  width: 6.5px;
+  height: 6.5px;
+  margin-bottom: 8px;
+  background: red;
+  border-radius: 50%;
+`;
+
+export const calendarScheduleBtnBox = css`
+  display: flex;
+`;
+
+export const mainCalendarSchedule = (isOpen: boolean) => css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: ${isOpen ? `rgba(0,0,0,0.3)` : `none`};
+  transform: translate3d(${isOpen ? `0,0,0` : `0,115%,0`});
+  transition: 0.25s;
+  overflow: hidden auto;
+`;
+
+export const mainCalendarScheduleTitle = css`
+  padding: 1rem;
+  color: white;
+  & > svg {
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+    &: hover {
+      color: black;
+    }
+    color: gray;
+  }
+`;
+
+export const mainCalendarScheduleContent = css`
+  padding: 0.3rem;
+  margin: 0.25rem;
+  color: black;
+  background: white;
+  border-radius: 4px;
+  & > ul li {
+    position: relative;
+    padding-inline: 1rem;
+    list-style: inside;
+    text-align: start;
+    &:hover > button {
+      display: inline-block;
+      position: absolute;
+      right: 10%;
+      &:hover > svg {
+        color: black;
+      }
+    }
+    & > button > svg {
+      color: gray;
+    }
+  }
+`;
+
+export const calendarScheduleAddBtn = (isClicked: boolean) => css`
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  z-index: 2;
+  color: ${isClicked ? `black` : `gray`};
+  background: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const calendarScheduleViewBtn = (isClicked: boolean) => css`
+  width: 50%;
+  height: 100%;
+  padding: 0.5rem;
+  z-index: 2;
+  font-size: 0.9rem;
+  color: ${isClicked ? `black` : `gray`};
+  background: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const calendarScheduleDeleteBtn = (isClicked: boolean) => css`
+  ${pageNameDeleteBtn(isClicked)};
+  transform: translate3d(${isClicked ? `120%,0,0` : `0,0,0`});
+`;
+
+export const calendarScheduleDeleteConfirmBtn = (isClicked: boolean) => css`
+  ${pageNameDeleteConfirmBtn(isClicked)};
+  top: 0;
+  right: 0;
+  width: ${isClicked ? `50px` : `0px`};
+  height: 100%;
+  z-index: ${isClicked ? `3` : `1`};
+  opacity: ${isClicked ? `1` : `0`};
+`;
+
+export const mainCalendarAddSchedule = (isOpen: boolean) => css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  transform: translate3d(${isOpen ? `0,0,0` : `0,115%,0`});
+  transition: 0.25s;
+`;
+
+export const mainCalendarAddScheduleTitle = css`
+  padding: 1rem;
+  color: black;
+`;
+
+export const mainCalendarAddScheduleContentBox = css`
+  & > form {
+    display: flex;
+  }
+  & > form > button > svg {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    &:hover {
+      color: #ff8da8;
+    }
+  }
+`;
+
+export const mainCalendarAddScheduleTextarea = (isError: boolean) => css`
+  flex-grow: 1;
+  min-height: 220px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  resize: none;
+  outline: none;
+  &::placeholder {
+    color: ${isError ? `red` : `gray`};
+  }
+`;
+
 export const commitLogBox = css`
   ${commonBoxStyle};
   width: 300px;
   margin-bottom: 1rem;
+  @media screen and (min-width: 1080px) {
+    // position: fixed;
+    // right: 0;
+    // bottom: 0;
+  }
+  @media screen and (max-width: 450px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 export const commitLogTitleBox = css`
@@ -64,7 +271,7 @@ export const commitLogTitleBox = css`
   gap: 1rem;
   padding: 0.5rem;
   align-items: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: #ffe3e7;
   border-top-left-radius: 0.37rem;
   border-top-right-radius: 0.37rem;
   & div:last-child {
@@ -79,14 +286,14 @@ export const commitLogTitleBox = css`
   }
 `;
 
-export const commitLogConnectChangeBox = css`
+export const commitLogConnectChangeBox = (isMobile: boolean) => css`
   display: flex;
   gap: 0.5rem;
+  & svg {
+    display: ${isMobile ? `block` : `none`};
+  }
   &:hover svg {
     display: block;
-  }
-  & svg {
-    display: none;
   }
   cursor: pointer;
 `;
@@ -151,6 +358,9 @@ export const commitLogInnerBox = (
     border-radius: 0.375rem;
     cursor: ${!isConnected ? 'pointer' : `auto`};
   }
+  @media screen and (min-width: 1080px) {
+    min-height: 300px;
+  }
 `;
 
 export const commitLogPlusBtnBox = css`
@@ -162,6 +372,9 @@ export const commitLogPlusBtnBox = css`
   align-items: center;
   & svg {
     width: 30px;
+  }
+  @media screen and (min-width: 1080px) {
+    height: 300px;
   }
 `;
 
@@ -393,6 +606,11 @@ export const commitLogModalFormBox = css`
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  @media screen and (max-width: 450px) {
+    width: 330px;
+    height: 45vh;
+  }
 `;
 
 export const commitLogHelpModalAlign = css`
@@ -454,6 +672,10 @@ export const commitLogModalBtn = css`
     border: 4px solid white;
     background-color: rgba(255, 0, 0, 0.4);
   }
+  @media screen and (max-width: 450px) {
+    gap: 5px;
+    padding: 7px 12px;
+  }
 `;
 
 export const commitLogRepoLabel = css`
@@ -491,6 +713,11 @@ export const commitLogFormBtn = css`
   &:hover {
     background: #eee;
   }
+  @media screen and (max-width: 450px) {
+    padding: 7px 12px;
+    min-width: 40px;
+    height: 30px;
+  }
 `;
 
 export const ItemBox = css`
@@ -501,6 +728,9 @@ export const ItemBox = css`
   height: 44.5vh;
   overflow-y: auto;
   overflow-x: hidden;
+  @media screen and (max-width: 450px) {
+    max-height: 25vh;
+  }
 `;
 
 export const ItemBoxPadding = css`
@@ -562,6 +792,7 @@ export const errorMessage = css`
 export const helpModal = css`
   display: inline-block;
   position: relative;
+  z-index: 2;
   &:hover div {
     display: block;
   }

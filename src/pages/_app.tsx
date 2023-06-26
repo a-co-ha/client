@@ -1,29 +1,29 @@
-import '@/styles/globals.css';
-import { ThemeProvider } from '@emotion/react';
-import theme from '@/styles/theme';
-import { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { MutableSnapshot, RecoilRoot, useSetRecoilState } from 'recoil';
-import { loginState } from '@/recoil/user/atom';
+import { SocketContextProvider } from '@/components/chat-page/SocketContextProvider';
 import { Layout } from '@/components/layout';
+import { CustomHead } from '@/components/layout/CustomHead';
+import { loginState } from '@/recoil/user/atom';
+import '@/styles/globals.css';
+import theme from '@/styles/theme';
+import { ThemeProvider } from '@emotion/react';
 import {
+  Hydrate,
   QueryClient,
   QueryClientProvider,
-  Hydrate,
 } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { getCookie, setCookie } from 'cookies-next';
+import type { AppContext, AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getCookie, setCookie } from 'cookies-next';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { getToken } from './api/user/getToken';
-import { SocketContextProvider } from '@/components/chat-page/SocketContextProvider';
-import type { AppContext, AppProps } from 'next/app';
+
 interface MyAppProps extends AppProps {
   authState: {
     isLoggedIn: boolean;
   };
 }
-import { CustomHead } from '@/components/layout/CustomHead';
 
 export default function App({ Component, pageProps, authState }: MyAppProps) {
   const router = useRouter();

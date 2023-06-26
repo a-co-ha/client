@@ -425,7 +425,126 @@ export const flexRowCenter = css`
   justify-content: center;
   align-items: center;
   height: 100%;
-  max-height: 10365px;
+`;
+
+export const scrollToTopBtn = css`
+  position: fixed;
+  right: 2%;
+  bottom: 8%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 10px 15px 1px rgb(0 0 0 / 0.2),
+    2px 4px 6px 2px rgb(0 0 0 / 0.1);
+  transition: 0.5s;
+  &:hover svg {
+    transition: 0.5s;
+    color: rgb(255, 155, 160);
+  }
+  & > svg {
+    transform: translate3d(0, -1px, 0);
+  }
+`;
+
+export const indexLinkBtnBox = (isOpen: boolean) => css`
+  display: flex;
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  width: ${isOpen ? `650px` : `150px`};
+  height: 35px;
+  z-index: 9999;
+  color: white;
+  background: black;
+  border-radius: 8px;
+  box-shadow: 2px 10px 15px 1px rgb(0 0 0 / 0.2),
+    2px 4px 6px 2px rgb(0 0 0 / 0.1);
+  transition: 0.3s ease-out;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -30%;
+    left: -1.5%;
+    width: 103%;
+    height: 150%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: ${isOpen ? `blur(8px)` : `blur(0)`};
+  }
+`;
+
+export const indexLinkBtnInnerBox = (isOpen: boolean) => css`
+  position: absolute;
+  top: 0;
+  width: ${isOpen ? `650px` : `150px`};
+  height: 35px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  overflow: hidden;
+  transition: ${isOpen ? `0.5s` : `0.1s`};
+`;
+
+export const indexLinkBtnLeftArrow = (isOpen: boolean) => css`
+  display: ${isOpen ? `none` : `flex`};
+  position: absolute;
+  left: 0%;
+  width: 25px;
+  height: 35px;
+  color: white;
+  background: black;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  cursor: pointer;
+  &:hover svg {
+    transition: 0.5s;
+    color: rgb(255, 155, 160);
+  }
+`;
+
+export const indexLinkBtnRightArrow = (isOpen: boolean) => css`
+  display: ${isOpen ? `flex` : `none`};
+  position: absolute;
+  right: 0;
+  width: 25px;
+  height: 35px;
+  color: white;
+  background: black;
+  border-top-right-radius: ${isOpen ? `0` : `6px`};
+  border-bottom-right-radius: ${isOpen ? `0` : `6px`};
+  cursor: pointer;
+  &:hover svg {
+    transition: 0.5s;
+    color: rgb(255, 155, 160);
+  }
+`;
+
+export const indexLinkBtn = (isOpen: boolean) => css`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: ${!isOpen ? `0 0 0 25px` : `0 25px 0 0`};
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  & > div > span {
+    display: inline-block;
+    width: 125px;
+    padding: 0.5rem;
+    background: black;
+    cursor: pointer;
+  }
+  & > div > span:first-of-type {
+    border-top-left-radius: ${isOpen ? `6px` : `0`};
+    border-bottom-left-radius: ${isOpen ? `6px` : `0`};
+  }
+  & > div > span:last-of-type {
+    border-top-right-radius: ${isOpen ? `0` : `6px`};
+    border-bottom-right-radius: ${isOpen ? `0` : `6px`};
+  }
 `;
 
 export const introSection = css`
@@ -433,6 +552,7 @@ export const introSection = css`
   justify-content: center;
   align-items: center;
   width: 100%;
+  transition: 0.25s ease-out;
 `;
 
 export const introSectionBox = css`
@@ -457,8 +577,12 @@ export const mainTitleDesc = css`
   left: 0;
   width: 100%;
   opacity: 0;
+  white-space: nowrap;
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
+  }
+  @media screen and (max-width: 450px) {
+    width: 100%;
   }
   user-select: none;
   animation: ${subTitleAni} 0.7s 1.8s forwards;
@@ -758,7 +882,7 @@ export const introChatImgReplyBox = css`
   position: absolute;
   bottom: 35%;
   right: 7%;
-  width: 65%;
+  width: fit-content;
   padding: 0.2rem 0 0.2rem 0.5rem;
   font-size: 2.2rem;
   font-weight: 600;
@@ -794,7 +918,13 @@ export const introChatImgReplyBox = css`
     margin: 0;
   }
   @media screen and (max-width: 520px) {
+    width: 65%;
     font-size: 0.85rem;
+    margin: 0;
+  }
+  @media screen and (max-width: 361px) {
+    width: 65%;
+    font-size: 0.75rem;
     margin: 0;
   }
 `;
@@ -808,6 +938,12 @@ const mainItemTitleStyle = css`
   white-space: pre-wrap;
   word-break: keep-all;
   transition: 0.7s ease-out;
+  @media screen and (min-width: 1280px) {
+    font-size: 3rem;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 2rem;
+  }
   @media screen and (max-width: 361px) {
     font-size: 2rem;
   }
@@ -894,6 +1030,12 @@ export const mainItemPreviewScrollBoxTitle = css`
   &:hover {
     transition: unset;
     color: #2f89ff;
+  }
+  @media screen and (min-width: 1280px) {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 2vh;
   }
   @media screen and (max-width: 361px) {
     font-size: 2vh;
@@ -2112,7 +2254,7 @@ export const mainItemEditableDescBox = css`
     font-weight: 500;
   }
   @media screen and (min-width: 1280px) {
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
@@ -2213,7 +2355,7 @@ export const mainItemChatDescBox = css`
     font-weight: 500;
   }
   @media screen and (min-width: 1280px) {
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
@@ -2254,16 +2396,11 @@ export const mainItemChatA = (isAni: boolean) => css`
       background: #ffd6dc;
     }
   }
-  @media screen and (min-width: 1280px) {
-    & > div:nth-of-type(1) {
-      padding
-    }
-  }
   @media screen and (max-width: 361px) {
     width: 100%;
-     & > div:nth-of-type(3) {
-        padding-top: 0;
-     }
+    & > div:nth-of-type(3) {
+      padding-top: 0;
+    }
   }
 `;
 
@@ -2272,6 +2409,12 @@ export const mainItemChatAInnerBox = css`
   padding: 1rem;
   @media screen and (min-width: 1280px) {
     padding-top: 2rem;
+  }
+  @media screen and (max-width: 450px) {
+    padding-left: 3.5rem;
+  }
+  @media screen and (max-width: 361px) {
+    padding-left: 1rem;
   }
 `;
 
@@ -2290,7 +2433,7 @@ export const mainItemChatImageBoxA = css`
 export const mainItemChatMessageBox = css`
   display: flex;
   flex-direction: column;
-  margin-left: 2.7rem;
+  margin-left: 3.7rem;
   line-height: 2vh;
   & > div > span:nth-of-type(1) {
     font-size: 1.5vh;
@@ -2302,7 +2445,7 @@ export const mainItemChatMessageBox = css`
   }
   & > span:nth-of-type(1) {
     width: fit-content;
-    padding: 1vh;
+    padding: 0.5rem;
     font-size: 1.7vh;
     font-weight: 500;
     background: #bddc95;
@@ -2311,11 +2454,11 @@ export const mainItemChatMessageBox = css`
     box-shadow: 2px 5px 5px -3px rgb(0 0 0 / 0.2),
       2px 4px 8px -4px rgb(0 0 0 / 0.2);
   }
-  @media screen and (min-width: 1280px) {
-    margin-left: 3.5rem;
+  @media screen and (min-width: 1520px) {
+    margin-left: 5rem;
     & > span:nth-of-type(1) {
       padding: 2vh;
-      font-size: 2.5vh;
+      font-size: 2vh;
     }
     & > div > span:nth-of-type(1) {
       font-size: 1.75vh;
@@ -2326,10 +2469,25 @@ export const mainItemChatMessageBox = css`
       margin-left: 0.5rem;
     }
   }
+  @media screen and (max-width: 1280px) {
+    margin-left: 3.5rem;
+    & > span:nth-of-type(1) {
+      padding: 1vh;
+      font-size: 1.5vh;
+    }
+    & > div > span:nth-of-type(1) {
+      font-size: 1.75vh;
+    }
+    & > div > span:nth-of-type(2) {
+      font-size: 1.45vh;
+      color: gray;
+      margin-left: 0.5rem;
+    }
+  }
 `;
 
 export const mainItemChatMessageCode = css`
-  padding: 1vh;
+  padding: 0.2rem;
   color: #3c89da;
   background: #f3f3f3;
   border-radius: 0.5vh;
@@ -2345,6 +2503,9 @@ export const mainItemChatMessageCode = css`
   }
   & > span:nth-of-type(3) {
     color: #7fb37e;
+  }
+  @media screen and (min-width: 1520px) {
+    font-size: 2rem;
   }
   @media screen and (max-width: 361px) {
     font-size: 0.7rem;
@@ -2497,6 +2658,9 @@ export const mainItemChatBookmarkA = (isAni: boolean) => css`
   @media screen and (min-width: 1280px) {
     & > div:nth-of-type(1) {
       & > div:nth-of-type(1) {
+        & > div:nth-of-type(1) {
+          font-size: 1.5rem;
+        }
         & > div:nth-of-type(2) {
           & > div:nth-of-type(1),
           div:nth-of-type(2),
@@ -2511,6 +2675,16 @@ export const mainItemChatBookmarkA = (isAni: boolean) => css`
         }
         & > div > div:nth-of-type(1) {
           font-size: 2vh;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 450px) {
+    & > div:nth-of-type(1) {
+      & > div:nth-of-type(2) {
+        width: 70%;
+        & > div > div:nth-of-type(1) {
+          font-size: 0.9rem;
         }
       }
     }
@@ -2624,6 +2798,14 @@ export const mainItemChatBookmarkB = (isAni: boolean) => css`
       }
     }
   }
+  @media screen and (max-width: 450px) {
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 60%;
+        transform: translate3d(-8%, 0, 0);
+      }
+    }
+  }
   @media screen and (max-width: 361px) {
     & > div:nth-of-type(1) {
       & > div {
@@ -2654,6 +2836,9 @@ export const mainItemCommitLogTitle = css`
   @media screen and (max-width: 768px) {
     width: 50%;
   }
+  @media screen and (max-width: 450px) {
+    width: 75%;
+  }
   @media screen and (max-width: 361px) {
     width: 85%;
     font-size: 1.9rem;
@@ -2678,7 +2863,7 @@ export const mainItemCommitLogDescBox = css`
     font-weight: 500;
   }
   @media screen and (min-width: 1280px) {
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
@@ -2795,6 +2980,13 @@ export const mainItemCommitLogImageInnerBox = css`
   & > img {
     object-fit: contain;
   }
+  @media screen and (max-width: 450px) {
+    width: 50%;
+    transform: translate3d(50%, 0, 0);
+    & > img {
+      object-fit: fill;
+    }
+  }
   @media screen and (max-width: 361px) {
     width: 41%;
     transform: translate3d(71%, 0, 0);
@@ -2839,6 +3031,9 @@ export const mainItemProgressTitle = css`
   @media screen and (max-width: 768px) {
     width: 50%;
   }
+  @media screen and (max-width: 450px) {
+    width: 70%;
+  }
   @media screen and (max-width: 361px) {
     width: 85%;
     font-size: 1.9rem;
@@ -2862,7 +3057,7 @@ export const mainItemProgressDescBox = css`
     font-weight: 500;
   }
   @media screen and (min-width: 1280px) {
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   @media screen and (max-width: 361px) {
     font-size: 1.8vh;
@@ -2878,8 +3073,6 @@ export const mainItemProgressA = (isAni: boolean) => css`
     2px 4px 8px -4px rgb(0 0 0 / 0.1);
   animation: ${isAni ? toGrayBackground : null} 1.5s 1s forwards;
 
-  // animation: ${isAni ? mainItemChatBookmarkAaniIn : null} 1.5s 2.7s forwards,
-  // ${isAni ? mainItemChatBookmarkAaniOut : null} 1.5s 6.7s forwards;
   & > div:nth-of-type(1) {
     position: relative;
     display: flex;
@@ -2902,6 +3095,9 @@ export const mainItemProgressA = (isAni: boolean) => css`
     &::before {
       font-size: 1.8rem;
     }
+  }
+  @media screen and (max-width: 450px) {
+    transform: translate3d(0, 35%, 0) scale(0.8);
   }
   @media screen and (max-width: 361px) {
     width: 100%;
@@ -3002,7 +3198,7 @@ export const mainItemProgressTab = css`
     display: flex;
     align-items: center;
     width: 100%;
-    height: 30%;
+    height: 25%;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 0.7vh;
@@ -3011,12 +3207,26 @@ export const mainItemProgressTab = css`
     border-radius: 0.4vh;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.1);
   }
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1520px) {
     & > h3:nth-of-type(1) {
       font-size: 1rem;
     }
     & > div:nth-of-type(1) {
       height: 25%;
+      max-height: 60px;
+      font-size: 1.5rem;
+    }
+    & > span:nth-of-type(1) {
+      font-size: 1rem;
+    }
+  }
+  @media screen and (max-width: 1280px) {
+    & > h3:nth-of-type(1) {
+      font-size: 1rem;
+    }
+    & > div:nth-of-type(1) {
+      height: 25%;
+      max-height: 35px;
     }
     & > span:nth-of-type(1) {
       font-size: 0.7rem;
@@ -3024,7 +3234,7 @@ export const mainItemProgressTab = css`
   }
   @media screen and (max-width: 361px) {
     & > div:nth-of-type(1) {
-      max-height: 27px;
+      max-height: 21px;
     }
   }
 `;
@@ -3152,16 +3362,62 @@ export const mainItemProgressB = (isAni: boolean) => css`
       }
     }
   }
-
   @media screen and (min-width: 1280px) {
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 100%;
+        div:nth-of-type(1) > div:nth-of-type(1),
+        div:nth-of-type(2) > div:nth-of-type(1),
+        div:nth-of-type(3) > div:nth-of-type(1),
+        div:nth-of-type(4) > div:nth-of-type(1) {
+          transform: translate3d(-50%, -50%, 0) scale(2);
+        }
+        div:nth-of-type(1) > div:nth-of-type(2),
+        div:nth-of-type(2) > div:nth-of-type(2),
+        div:nth-of-type(3) > div:nth-of-type(2),
+        div:nth-of-type(4) > div:nth-of-type(2) {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1280px) {
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 100%;
+        div:nth-of-type(1) > div:nth-of-type(1),
+        div:nth-of-type(2) > div:nth-of-type(1),
+        div:nth-of-type(3) > div:nth-of-type(1),
+        div:nth-of-type(4) > div:nth-of-type(1) {
+          transform: translate3d(-50%, -50%, 0) scale(1.2);
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 450px) {
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 75%;
+        & > div:nth-of-type(1),
+        div:nth-of-type(2),
+        div:nth-of-type(3),
+        div:nth-of-type(4) {
+        }
+      }
+    }
   }
   @media screen and (max-width: 361px) {
     width: 100%;
-    & > div:nth-of-type(1),
-    div:nth-of-type(2),
-    div:nth-of-type(3),
-    div:nth-of-type(4) {
-      transform: scale(0.95);
+    & > div:nth-of-type(1) {
+      & > div {
+        width: 90%;
+        div:nth-of-type(1) > div,
+        div:nth-of-type(2) > div,
+        div:nth-of-type(3) > div,
+        div:nth-of-type(4) > div {
+          transform: scale(0.7);
+        }
+      }
     }
   }
 `;
@@ -3178,26 +3434,6 @@ export const progressSvg = css`
     fill: transparent;
   }
 `;
-
-// const loadingCircleAni = keyframes`
-//   0% { stroke-dashoffset: 157; }
-// 	75% { stroke-dashoffset: -147; }
-// 	100% { stroke-dashoffset: -157; }
-// `;
-
-// export const loadingCircle = css`
-//   width: 54px;
-//   height: 54px;
-//   animation: ${loadingSpin} 3s infinite;
-//   & > circle {
-//     stroke: black;
-//     stroke-width: 4;
-//     stroke-dasharray: 157, 157;
-//     stroke-dashoffset: 0;
-//     fill: transparent;
-//     animation: ${loadingCircleAni} 1s infinite;
-//   }
-// `;
 
 export const bannerBox = css`
   ${mainItemPreviewBox};
@@ -3226,6 +3462,7 @@ export const bannerImageBox = css`
   height: 100%;
   & > img {
     object-fit: cover;
+    height: 100%;
   }
   & > div:nth-of-type(1) {
     position: absolute;
@@ -3260,6 +3497,11 @@ export const bannerImageBox = css`
       font-size: 3rem;
     }
   }
+  @media screen and (max-width: 450px) {
+    & > div:nth-of-type(2) {
+      font-size: 1.5rem;
+    }
+  }
   @media screen and (max-width: 361px) {
     & > div:nth-of-type(2) {
       & > div {
@@ -3273,7 +3515,7 @@ export const bannerBtn = css`
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 3;
+  z-index: 2;
   padding: 1.5vh 3vh;
   background: black;
   color: white;
@@ -3318,5 +3560,28 @@ export const bannerBtn = css`
   @media screen and (min-width: 1280px) {
     padding: 2.5vh 4vh;
     font-size: 2.5vh;
+  }
+`;
+
+export const footer = css`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  background: white;
+  user-select: none;
+  box-shadow: 2px -3px 3px -3px rgb(0 0 0 / 0.1),
+    2px -2px 5px 1px rgb(0 0 0 / 0.1);
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 55%;
+    padding: 1rem 0;
+  }
+  @media screen and (max-width: 361px) {
+    & > div {
+      width: 80%;
+    }
   }
 `;
