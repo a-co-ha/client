@@ -2,7 +2,7 @@ import { Progress } from './Progress';
 import { CommitLog } from './CommitLog';
 
 import * as styles from './styles';
-import { Notice } from './Notice';
+import { Notice } from './Notice/Notice';
 import { Suspense } from 'react';
 import { RecentPosts } from './RecentPosts';
 
