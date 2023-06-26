@@ -7,7 +7,7 @@ export interface PostType {
   content: string;
 }
 
-export const usePostNotice = (channelId: string) => {
+export const usePostNotice = (channelId: string | string[] | undefined) => {
   const queryClient = useQueryClient();
   return useMutation((post: PostType) => postNotice(post), {
     onSuccess: () => {
