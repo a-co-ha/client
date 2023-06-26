@@ -16,11 +16,11 @@ export default function NoticeDetail({
 
   return (
     <div css={Content}>
-      <h4>{data?.title}</h4>
-      <p>{data?.content}</p>
       <button css={ToListButton} onClick={() => setActiveComponent('list')}>
         {`< 목록으로`}
       </button>
+      <h4>{data?.title}</h4>
+      <p>{data?.content}</p>
     </div>
   );
 }

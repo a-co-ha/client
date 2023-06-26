@@ -22,7 +22,7 @@ export const Progress = () => {
     <div css={Container}>
       <span css={Title}>
         <Icon.Progress aria-hidden="true" />
-        <b>프로젝트 진행률</b>
+        <b>진행률</b>
       </span>
       {pagePercentList.length > 0 ? (
         <main css={styles.progressContent}>
