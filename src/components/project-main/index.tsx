@@ -5,9 +5,9 @@ import { useSetRecoilState } from 'recoil';
 import { channelSidebarOpenState } from '@/recoil/project/atom';
 
 import * as styles from './styles';
-import { Notice } from './notice/Notice';
 import { Suspense } from 'react';
 import { RecentPosts } from './RecentPosts';
+import { Notice } from './notice/Notice';
 
 export const MainContent = () => {
   const setIsChannelSidebarOpen = useSetRecoilState(channelSidebarOpenState);
