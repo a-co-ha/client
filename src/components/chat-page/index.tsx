@@ -21,7 +21,6 @@ export const ChatPage = ({ pageId }: pageProps) => {
   };
 
   const { readMessage, receiveMessage, getMessage } = useContext(SocketContext);
-  // const { data: socketMessage } = useGetSocketPage(pageId);
   const [messages, setMessages] = useRecoilState(socketMessageState(pageId));
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
