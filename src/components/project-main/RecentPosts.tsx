@@ -46,31 +46,34 @@ export const RecentPosts = () => {
   );
 };
 
-const Container = css`
+export const Container = css`
   display: flex;
   height: 20rem;
   width: 15rem;
   flex-direction: column;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
+  height: fit-content;
 `;
 
-const Title = css`
+export const Title = css`
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3rem;
   padding: 0.5rem;
   align-items: center;
   background-color: #ffd6dc;
-  border-top-left-radius: 0.37rem;
-  border-top-right-radius: 0.37rem;
   & svg {
-    width: 2rem;
+    width: 1.3rem;
   }
   margin-bottom: 0.5rem;
 `;
 
 const Content = css`
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 0.5rem;
-  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
+  padding: 0.4rem;
   margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
