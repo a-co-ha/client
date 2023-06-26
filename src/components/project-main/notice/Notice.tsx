@@ -23,7 +23,7 @@ export const Notice = () => {
   return (
     <section css={Container}>
       <Header setActiveComponent={changeActiveComponent} />
-      <Suspense fallback={<>로딩중...</>}>
+      <Suspense fallback={`로딩중...`}>
         {activeComponent === 'list' && (
           <NoticeList
             setActiveComponent={changeActiveComponent}
