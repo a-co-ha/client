@@ -146,7 +146,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                       className="container"
                       onKeyDown={handleDeleteBlocks}
                     >
-                      <Selecto
+                      {/* <Selecto
                         dragContainer={'.container'}
                         selectableTargets={['.list']}
                         hitRate={0}
@@ -167,7 +167,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                             setSelectedBlocks([]);
                           });
                         }}
-                      />
+                      /> */}
                       {blocks &&
                         blocks.map((block) => {
                           const position = blocks
