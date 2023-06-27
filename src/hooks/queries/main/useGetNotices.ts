@@ -15,11 +15,9 @@ export interface NoticeType {
   userName: string;
 }
 
-export const useGetNotices = (): UseInfiniteQueryResult<
-  InfiniteData<NoticeType[]>,
-  Error
-> => {
-  const { channelId } = useGetUrlInfo();
+export const useGetNotices = (
+  channelId: string | string[] | undefined
+): UseInfiniteQueryResult<InfiniteData<NoticeType[]>, Error> => {
   return useInfiniteQuery(
     ['infinityNotices', channelId],
     ({ pageParam = 0 }) => getNotices(pageParam, channelId),

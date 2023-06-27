@@ -1,9 +1,9 @@
 import { useGetNotice } from '@/hooks/queries/main/useGetNotice';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { css } from '@emotion/react';
+import type { NoticeProps } from './Notices';
 
-import type { NoticeProps } from './Notice';
-
-interface NoticeDetailProps extends NoticeProps {
+export interface NoticeDetailProps extends NoticeProps {
   selectNoticeId: string;
 }
 
@@ -11,7 +11,9 @@ export default function NoticeDetail({
   setActiveComponent,
   selectNoticeId,
 }: NoticeDetailProps) {
-  const { data } = useGetNotice(selectNoticeId);
+  const { channelId } = useGetUrlInfo();
+  const { data } = useGetNotice(selectNoticeId, channelId);
+
   console.log('🚀 ~ file: NoticeDetail.tsx:6 ~ NoticeDetail ~ data:', data);
 
   return (
@@ -21,6 +23,7 @@ export default function NoticeDetail({
       </button>
       <h4>{data?.title}</h4>
       <p>{data?.content}</p>
+      <button onClick={() => setActiveComponent('form')}>수정하기</button>
     </div>
   );
 }
