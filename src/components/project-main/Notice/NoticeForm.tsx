@@ -3,7 +3,7 @@ import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { css } from '@emotion/react';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
-import type { NoticeProps } from './Notice';
+import type { NoticeProps } from './Notices';
 
 export default function NoticeForm({ setActiveComponent }: NoticeProps) {
   const { channelId } = useGetUrlInfo();
@@ -16,7 +16,7 @@ export default function NoticeForm({ setActiveComponent }: NoticeProps) {
     if (!contentRef.current || !titleRef.current) return;
     const title = titleRef.current.value;
     const content = contentRef.current.value;
-    postNotice({ channelId, title, content });
+    postNotice({ title, content });
     titleRef.current.value = '';
     contentRef.current.value = '';
     toast.success('등록되었습니다.', {
