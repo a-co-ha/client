@@ -1,6 +1,8 @@
+import { useDeleteNotice } from '@/hooks/queries/main/useDeleteNotice';
 import { NoticeType, useGetNotices } from '@/hooks/queries/main/useGetNotices';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { css } from '@emotion/react';
-import type { ActiveComponentType, NoticeProps } from './Notice';
+import type { NoticeProps } from './Notices';
 
 interface NoticeListProps extends NoticeProps {
   setSelectNoticeId: (id: string) => void;
@@ -10,7 +12,9 @@ export default function NoticeList({
   setActiveComponent,
   setSelectNoticeId,
 }: NoticeListProps) {
-  const { data, fetchNextPage, hasNextPage } = useGetNotices();
+  const { channelId } = useGetUrlInfo();
+  const { data, fetchNextPage, hasNextPage } = useGetNotices(channelId);
+  const { mutate: deleteNotice } = useDeleteNotice(channelId);
 
   return (
     <ul css={NoticeUl}>
@@ -31,6 +35,7 @@ export default function NoticeList({
                   <span css={Noticetitle}>{notice.title}</span>
                   <br />
                   <span css={NoticeUser}>{notice.userName}</span>
+                  <button onClick={() => deleteNotice(notice.id)}>x</button>
                 </li>
               );
             })
