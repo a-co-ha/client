@@ -7,5 +7,5 @@ export const useGetNotice = (
   id: string,
   channelId: string | string[] | undefined
 ): UseQueryResult<NoticeType> => {
-  return useQuery(['notice', channelId], () => getNotice(id, channelId));
+  return useQuery(['notice', id], () => getNotice(id, channelId));
 };
