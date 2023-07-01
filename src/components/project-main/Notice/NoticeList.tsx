@@ -24,19 +24,28 @@ export default function NoticeList({
             Array.isArray(notices) &&
             notices.map((notice: NoticeType) => {
               return (
-                <li
-                  key={notice.id}
-                  css={NoticeLi}
-                  onClick={() => {
-                    setSelectNoticeId(notice.id);
-                    setActiveComponent('detail');
-                  }}
-                >
-                  <span css={Noticetitle}>{notice.title}</span>
-                  <br />
-                  <span css={NoticeUser}>{notice.userName}</span>
-                  <button onClick={() => deleteNotice(notice.id)}>x</button>
-                </li>
+                <div css={LiContainer}>
+                  <li
+                    key={notice.id}
+                    css={NoticeLi}
+                    onClick={() => {
+                      setSelectNoticeId(notice.id);
+                      setActiveComponent('detail');
+                    }}
+                  >
+                    <span css={Noticetitle}>{notice.title}</span>
+                    <br />
+                    <span css={NoticeUser}>{notice.userName}</span>
+                  </li>
+                  <button
+                    css={DeleteButton}
+                    onClick={() => {
+                      if (confirm('삭제하시겠습니까?')) deleteNotice(notice.id);
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
               );
             })
           );
@@ -55,9 +64,15 @@ export default function NoticeList({
   );
 }
 
+const LiContainer = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const NoticeUl = css`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem 0.5rem;
   height: 11rem;
@@ -85,6 +100,13 @@ const NoticeLi = css`
   border-bottom: solid 0.1px gray;
   gap: 1rem;
   align-items: center;
+  padding: 0.3rem;
+  width: 100%;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
 `;
 
 const Noticetitle = css`
@@ -101,4 +123,19 @@ const NoticeUser = css`
 
 const LoadMoreButton = css`
   height: 2rem;
+  padding: 0.3rem;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
+`;
+
+const DeleteButton = css`
+  padding: 0.3rem;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
 `;

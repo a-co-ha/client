@@ -5,37 +5,87 @@ import type { NoticeProps } from './Notices';
 
 export interface NoticeDetailProps extends NoticeProps {
   selectNoticeId: string;
+  changeNoticeFormStatus: (status: boolean) => void;
 }
 
 export default function NoticeDetail({
   setActiveComponent,
   selectNoticeId,
+  changeNoticeFormStatus,
 }: NoticeDetailProps) {
   const { channelId } = useGetUrlInfo();
   const { data } = useGetNotice(selectNoticeId, channelId);
 
-  console.log('🚀 ~ file: NoticeDetail.tsx:6 ~ NoticeDetail ~ data:', data);
-
   return (
-    <div css={Content}>
-      <button css={ToListButton} onClick={() => setActiveComponent('list')}>
-        {`< 목록으로`}
-      </button>
-      <h4>{data?.title}</h4>
-      <p>{data?.content}</p>
-      <button onClick={() => setActiveComponent('form')}>수정하기</button>
+    <div css={Container}>
+      <div css={Content}>
+        <div css={Title}>
+          <div css={InTitle}>
+            <h4>제목: {data?.title}</h4>
+            <p css={PostUser}>{data?.userName}</p>
+          </div>
+          <button
+            css={EditButton}
+            onClick={() => {
+              changeNoticeFormStatus(true);
+              setActiveComponent('form');
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+              />
+            </svg>
+          </button>
+        </div>
+        <p>{data?.content}</p>
+      </div>
     </div>
   );
 }
-const Content = css`
+const Container = css`
   height: 11rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  word-wrap: break-word;
   padding: 0.5rem;
 `;
 
-const ToListButton = css`
-  align-self: start;
+const EditButton = css`
+  // display: inline;
+`;
+
+const Content = css`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  word-wrap: break-word;
+`;
+
+const Title = css`
+  display: flex;
+  gap: 1rem;
+  border-bottom: solid;
+  border-color: gray;
+  justify-content: space-between;
+  padding-bottom: 0.2rem;
+`;
+
+const PostUser = css`
+  align-self: end;
+  font-size: 0.8rem;
+  color: gray;
+`;
+
+const InTitle = css`
+  display: flex;
+  gap: 1rem;
 `;

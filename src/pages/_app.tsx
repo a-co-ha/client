@@ -91,10 +91,10 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
             <Hydrate state={pageProps.dehydratedState}>
               <Layout>
                 <Component {...pageProps} />
-                {/* <ReactQueryDevtools
+                <ReactQueryDevtools
                   initialIsOpen={false}
                   position="bottom-right"
-                /> */}
+                />
               </Layout>
               <ToastContainer autoClose={2000} pauseOnHover />
             </Hydrate>
