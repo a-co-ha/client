@@ -68,4 +68,8 @@ const Container = css`
     0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
   height: fit-content;
   position: relative;
+
+  @media (max-width: 600px) {
+    width: 300px;
+  }
 `;
