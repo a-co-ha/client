@@ -20,10 +20,7 @@ export default function NoticeDetail({
     <div css={Container}>
       <div css={Content}>
         <div css={Title}>
-          <div css={InTitle}>
-            <h4>제목: {data?.title}</h4>
-            <p css={PostUser}>{data?.userName}</p>
-          </div>
+          <h4>제목: {data?.title}</h4>
           <button
             css={EditButton}
             onClick={() => {
@@ -56,11 +53,16 @@ const Container = css`
   height: 11rem;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
 `;
 
 const EditButton = css`
-  // display: inline;
+  padding: 0.3rem;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
 `;
 
 const Content = css`
@@ -72,20 +74,8 @@ const Content = css`
 
 const Title = css`
   display: flex;
-  gap: 1rem;
   border-bottom: solid;
   border-color: gray;
   justify-content: space-between;
-  padding-bottom: 0.2rem;
-`;
-
-const PostUser = css`
-  align-self: end;
-  font-size: 0.8rem;
-  color: gray;
-`;
-
-const InTitle = css`
-  display: flex;
-  gap: 1rem;
+  align-items: center;
 `;
