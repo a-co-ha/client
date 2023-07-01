@@ -24,9 +24,8 @@ export default function NoticeList({
             Array.isArray(notices) &&
             notices.map((notice: NoticeType) => {
               return (
-                <div css={LiContainer}>
+                <div key={notice.id} css={LiContainer}>
                   <li
-                    key={notice.id}
                     css={NoticeLi}
                     onClick={() => {
                       setSelectNoticeId(notice.id);
