@@ -7,6 +7,8 @@ import { CreateProgressTemplate } from './CreateProgressTemplate';
 import { Icon } from '../project-sidebar/Icons';
 import { Title } from './RecentPosts';
 import { css } from '@emotion/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPersonRunning } from '@fortawesome/free-solid-svg-icons';
 
 export interface PageProgress {
   pageName: string;
@@ -21,7 +23,7 @@ export const Progress = () => {
   return (
     <div css={Container}>
       <span css={Title}>
-        <Icon.Progress aria-hidden="true" />
+        <FontAwesomeIcon icon={faPersonRunning} />
         <b>진행률</b>
       </span>
       {pagePercentList.length > 0 ? (
