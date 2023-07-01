@@ -100,7 +100,7 @@ const NoticeLi = css`
   gap: 1rem;
   align-items: center;
   padding: 0.3rem;
-  width: 100%;
+  width: 90%;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
