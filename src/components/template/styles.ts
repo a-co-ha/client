@@ -100,7 +100,7 @@ export const singleChart = () => css`
 
 export const circularChart = () => css`
   display: block;
-  margin: 10px auto;
+  margin: 0.3rem 0;
   max-width: 80%;
   max-height: 250px;
 `;

@@ -328,12 +328,13 @@ export const progressContent = css`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding-bottom: 0.5rem;
+  padding: 0.8rem;
 `;
 
 export const progressTitleGuage = css`
   display: flex;
-  padding: 0.5rem;
+  padding-top: 0.5rem;
+  padding-right: 0.5rem;
 `;
 
 export const gaugeContainer = css`

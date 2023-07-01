@@ -48,13 +48,12 @@ export const RecentPosts = () => {
 
 export const Container = css`
   display: flex;
-  height: 20rem;
+  height: fit-content;
   width: 15rem;
   flex-direction: column;
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
-  height: fit-content;
 `;
 
 export const Title = css`
@@ -68,13 +67,11 @@ export const Title = css`
   & svg {
     width: 1.3rem;
   }
-  margin-bottom: 0.5rem;
 `;
 
 const Content = css`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
-  padding: 0.4rem;
-  margin-bottom: 0.5rem;
+  padding: 0.8rem;
   display: flex;
   flex-direction: column;
   &:hover {
