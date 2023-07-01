@@ -77,6 +77,11 @@ const Content = css`
   margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
 `;
 
 const UpdateAtStyle = css`
