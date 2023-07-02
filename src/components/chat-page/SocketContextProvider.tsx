@@ -48,7 +48,7 @@ interface Context {
   getAlert: (setIsAlert: Dispatch<SetStateAction<boolean>>) => void;
   alertSocket: (
     setIsAlert: Dispatch<SetStateAction<boolean>>,
-    setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>
+    setAlertList: Dispatch<SetStateAction<AlertValue[]>>
   ) => void;
 }
 
@@ -192,7 +192,7 @@ export const SocketContextProvider = ({
 
   const alertSocket = (
     setIsAlert: Dispatch<SetStateAction<boolean>>,
-    setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>
+    setAlertList: Dispatch<SetStateAction<AlertValue[]>>
   ) => {
     socket.on('ALERT', (data: Alert) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);

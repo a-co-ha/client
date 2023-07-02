@@ -23,7 +23,7 @@ export const Profile = () => {
 
   const { socket, getAlert, alertSocket } = useContext(SocketContext);
   const [isAlert, setIsAlert] = useState<boolean>(false);
-  const [alertList, setAlertList] = useState<AlertValue[] | null>(null);
+  const [alertList, setAlertList] = useState<AlertValue[]>([]);
 
   useEffect(() => {
     alertSocket(setIsAlert, setAlertList);
