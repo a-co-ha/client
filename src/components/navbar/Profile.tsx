@@ -1,28 +1,16 @@
 import { useGetUser } from '@/hooks/queries/user/getUser';
 import { api } from '@/pages/api/config/api-config';
-import {
-  channelMobileRightSidebarOpenState,
-  channelNameState,
-} from '@/recoil/project/atom';
+import { channelMobileRightSidebarOpenState } from '@/recoil/project/atom';
 import { loginState } from '@/recoil/user/atom';
+import { Menu } from '@headlessui/react';
 import { Bars3Icon, XCircleIcon } from '@heroicons/react/20/solid';
 import { deleteCookie, getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useResetRecoilState } from 'recoil';
-import { loginState } from '@/recoil/user/atom';
-import { channelNameState } from '@/recoil/project/atom';
-import { api } from '@/pages/api/config/api-config';
-import { AlertValue, SocketContext } from '../chat-page/SocketContextProvider';
 import { useContext, useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image';
-import { Alert } from './Alert';
-import { Menu } from '@headlessui/react';
-import { useContext } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { SocketContext } from '../chat-page/SocketContextProvider';
+import { AlertValue, SocketContext } from '../chat-page/SocketContextProvider';
+import { Alert } from './Alert';
 import * as styles from './styles';
 
 export const Profile = () => {
