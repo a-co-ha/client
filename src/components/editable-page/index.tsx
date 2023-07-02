@@ -11,7 +11,6 @@ import {
 import Label from '../editable-block/Label';
 import { useGetEditablePage } from '@/hooks/queries/editable/getPage';
 import { EditableBlock } from '@/components/editable-block';
-import { Notice } from '../notice/index';
 import { currentBlockIdState } from '@/recoil/editable-block/atom';
 import * as styles from './styles';
 import type { AddBlock, EditablePages, Block } from './type';
@@ -122,7 +121,6 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
                   </svg>
                 </button>
               )}
-              {isNewPage && <Notice status="SUCCESS" />}
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Label />
                 {selectedBlocks.length > 0 && (
