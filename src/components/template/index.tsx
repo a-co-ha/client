@@ -27,16 +27,12 @@ export const TemplatePage = ({
     type
   );
   const { data: pageList } = useGetEditablePage(channelId, pageId, type);
-  console.log('🚀 ~ file: index.tsx:31 ~ pageList:', pageList);
   const groupPageList = progressStatusType.map((status) =>
     pageList?.filter((page: PageInPageList) => page.progressStatus === status)
   );
   const [pageArr, setPageArr] = useState(groupPageList);
-  console.log('🚀 ~ file: index.tsx:36 ~ pageArr:', pageArr);
   const PageIdList = pageList?.map((page: PageInPageList) => page._id);
   const { mutate: upatePageList } = useUpadatePageList(channelId, pageId, type);
-  // useRouter query type이 template으로 시작할떄만 값가져오기
-  // useSetParentUrlInfo(channelId);
 
   useEffect(() => {
     localStorage.setItem('parentPageId', pageId);

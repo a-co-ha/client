@@ -1,6 +1,6 @@
 export const createImageNode = (
   contentEditable: React.RefObject<HTMLDivElement>,
-  imgUrl: string,
+  imgUrl: string
   // handleImageClick: () => void
 ) => {
   const selection = window.getSelection();

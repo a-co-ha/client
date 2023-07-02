@@ -4,9 +4,10 @@ import { ProgressGauge } from '../template/progressGauge';
 import * as styles from './styles';
 import Link from 'next/link';
 import { CreateProgressTemplate } from './CreateProgressTemplate';
-import { Icon } from '../project-sidebar/Icons';
 import { Title } from './RecentPosts';
 import { css } from '@emotion/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPersonRunning } from '@fortawesome/free-solid-svg-icons';
 
 export interface PageProgress {
   pageName: string;
@@ -21,7 +22,7 @@ export const Progress = () => {
   return (
     <div css={Container}>
       <span css={Title}>
-        <Icon.Progress aria-hidden="true" />
+        <FontAwesomeIcon icon={faPersonRunning} />
         <b>진행률</b>
       </span>
       {pagePercentList.length > 0 ? (
@@ -50,11 +51,14 @@ export const Progress = () => {
 
 const Container = css`
   display: flex;
-  height: 20rem;
-  width: 23rem;
+  height: fit-content;
+  width: 32rem;
   flex-direction: column;
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
-  height: fit-content;
+
+  @media (max-width: 600px) {
+    width: 300px;
+  }
 `;

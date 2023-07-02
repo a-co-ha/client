@@ -378,11 +378,12 @@ export const profileInnerBox = css`
   }
 `;
 
-export const profileImageBox = css`
+export const profileImageBox = (isAlert: boolean) => css`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
+  border: ${isAlert ? `solid #00ff04 1.5px;` : ``};
   @media screen and (max-width: 450px) {
     margin: 0 20px 0 auto;
   }
@@ -523,13 +524,8 @@ export const projectChangeImgSubmitBtn = css`
 `;
 
 export const alertMenuItem = css`
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  &:hover {
-    overflow: visible;
-    white-space: initial;
-    text-overflow: unset;
+  border-bottom: solid #a4b0bf;
+  &:last-child {
+    border-bottom: none;
   }
 `;

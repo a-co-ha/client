@@ -61,7 +61,7 @@ export const SelectTemplate = ({ pageType }: SelectTemplateProps) => {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-1"
       >
-        <Popover.Panel className="absolute left-1/5 z-10 mt-3 w-screen max-w-sm -translate-x-1/5 transform px-4 sm:px-0 lg:max-w-3xl">
+        <Popover.Panel className="absolute z-10 mt-3 w-screen max-w-sm lg:translate-x-0 translate-x-[40%] transform px-4 sm:px-0 lg:max-w-3xl right-1/4 lg:left-1/4">
           {({ close }) => (
             <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">

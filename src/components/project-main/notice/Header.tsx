@@ -1,10 +1,17 @@
 import { css } from '@emotion/react';
-import type { NoticeProps } from './Notice';
+import type { NoticeProps } from './Notices';
 
-export const Header = ({ setActiveComponent }: NoticeProps) => {
+interface HeaderProps extends NoticeProps {
+  changeNoticeFormStatus: (status: boolean) => void;
+}
+
+export const Header = ({
+  setActiveComponent,
+  changeNoticeFormStatus,
+}: HeaderProps) => {
   return (
-    <span css={Title}>
-      <div css={Left}>
+    <span css={Container}>
+      <div css={Title}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -21,27 +28,50 @@ export const Header = ({ setActiveComponent }: NoticeProps) => {
         </svg>
         <b>공지사항</b>
       </div>
-      <button onClick={() => setActiveComponent('form')}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
+      <div css={ButtonContainer}>
+        <button onClick={() => setActiveComponent('list')}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 hover:bg-[#e0c1c4] hover:rounded-md"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+            />
+          </svg>
+        </button>
+        <button
+          onClick={() => {
+            changeNoticeFormStatus(false);
+            setActiveComponent('form');
+          }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 6v12m6-6H6"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 hover:bg-[#e0c1c4] hover:rounded-md"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6v12m6-6H6"
+            />
+          </svg>
+        </button>
+      </div>
     </span>
   );
 };
 
-const Title = css`
+const Container = css`
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   display: flex;
@@ -55,8 +85,13 @@ const Title = css`
   margin-bottom: 0.5rem;
 `;
 
-const Left = css`
+const Title = css`
   display: flex;
   gap: 0.3rem;
   align-items: center;
+`;
+
+const ButtonContainer = css`
+  display: flex;
+  gap: 0.5rem;
 `;

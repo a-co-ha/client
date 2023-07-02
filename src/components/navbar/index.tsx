@@ -7,7 +7,6 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ErrorBoundary } from '../error-boundary';
 import { Error } from '../error-boundary/Error';
-import { Alert } from './Alert';
 import { LoginBtn } from './LoginBtn';
 import { ProjectMenu } from './ProjectMenu';
 import * as styles from './styles';
@@ -45,7 +44,7 @@ export const NavBar = () => {
 
             <ProjectMenu />
             <Title />
-            <Alert />
+
             <LoginBtn />
           </div>
           {/* </Suspense> */}
