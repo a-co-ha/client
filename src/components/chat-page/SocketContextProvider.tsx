@@ -45,8 +45,11 @@ interface Context {
   newMember: (func: (user: any) => void) => void;
   disconnectMember: (func: (user: any) => void) => void;
   joinChannel: (channelId: string) => void;
-  getAlert: (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => void;
-  alertSocket: (setIsAlert: Dispatch<SetStateAction<boolean | null>>,setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>) => void;
+  getAlert: (setIsAlert: Dispatch<SetStateAction<boolean>>) => void;
+  alertSocket: (
+    setIsAlert: Dispatch<SetStateAction<boolean>>,
+    setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>
+  ) => void;
 }
 
 export const SocketContext = createContext<Context>(null as any);
@@ -155,7 +158,7 @@ export const SocketContextProvider = ({
     });
   };
 
-  const getAlert = (setIsAlert: Dispatch<SetStateAction<boolean | null>>) => {
+  const getAlert = (setIsAlert: Dispatch<SetStateAction<boolean>>) => {
     socket.on('GET_ALERT', (data) => {
       console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
       toast.info(
@@ -188,7 +191,7 @@ export const SocketContextProvider = ({
   };
 
   const alertSocket = (
-    setIsAlert: Dispatch<SetStateAction<boolean | null>>,
+    setIsAlert: Dispatch<SetStateAction<boolean>>,
     setAlertList: Dispatch<SetStateAction<AlertValue[] | null>>
   ) => {
     socket.on('ALERT', (data: Alert) => {
