@@ -3,12 +3,10 @@ import { Progress } from './Progress';
 import { CommitLog } from './CommitLog';
 import { useSetRecoilState } from 'recoil';
 import { channelSidebarOpenState } from '@/recoil/project/atom';
-
 import * as styles from './styles';
 import { Notice } from './notice/Notices';
 import { Suspense } from 'react';
 import { RecentPosts } from './RecentPosts';
-import { Notice } from './notice/Notice';
 
 export const MainContent = () => {
   const setIsChannelSidebarOpen = useSetRecoilState(channelSidebarOpenState);
