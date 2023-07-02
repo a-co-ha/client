@@ -201,13 +201,8 @@ export const profileImageBox = (isAlert: boolean) => css`
 `;
 
 export const alertMenuItem = css`
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  &:hover {
-    overflow: visible;
-    white-space: initial;
-    text-overflow: unset;
+  border-bottom: solid #a4b0bf;
+  &:last-child {
+    border-bottom: none;
   }
 `;
