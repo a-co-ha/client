@@ -20,9 +20,9 @@ export const MainContent = () => {
     <Suspense fallback={'loaing..'}>
       <div css={styles.flexColumnCenter}>
         <div css={styles.mainContentBox} onClick={onClickHandler}>
-          <MainCalendar />
-          <Progress />
           <Notice />
+          <Progress />
+          <MainCalendar />
           <RecentPosts />
           <CommitLog />
         </div>

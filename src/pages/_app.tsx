@@ -10,6 +10,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { getCookie, setCookie } from 'cookies-next';
 import type { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
