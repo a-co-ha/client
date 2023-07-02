@@ -192,11 +192,12 @@ export const profileInnerBox = css`
   cursor: pointer;
 `;
 
-export const profileImageBox = css`
+export const profileImageBox = (isAlert: boolean) => css`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
+  border: ${isAlert ? `solid #00ff04 1.5px;` : ``};
 `;
 
 export const alertMenuItem = css`
