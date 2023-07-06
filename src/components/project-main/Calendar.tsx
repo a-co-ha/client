@@ -54,7 +54,6 @@ export const MainCalendar = () => {
   };
 
   const trashCanHandler = () => {
-    // setIndex(index);
     isDeleteBtnClicked
       ? setIsDeleteBtnClicked(false)
       : setIsDeleteBtnClicked(true);
@@ -65,94 +64,99 @@ export const MainCalendar = () => {
     setIsCalendarFormOpen(false);
   };
   return (
-    <div css={styles.mainCalendarBox}>
-      <div css={styles.mainCalendarTitleBox}>
-        <CalendarDaysIcon width={25} height={25} />
-        <h3 css={styles.mainCalendarTitle}>캘린더</h3>
-        <HelpModal
-          content={`날짜를 선택하고 일정을 추가해보세요`}
-          direction={`left`}
-        />
-      </div>
-      <div css={styles.mainCalendar}>
-        <Calendar
-          locale="ko"
-          onChange={onChangeHandler}
-          value={value}
-          showNeighboringMonth={false}
-          formatDay={(locale, date) => dayjs(date).format('DD')}
-          onClickDay={onClickHandler}
-          tileContent={({ date, view }) => {
-            let html = [];
-            if (
-              scheduleValue.find(
-                (x) => x.date === dayjs(date).format(`YYYY-MM-DD`)
-              )
-            ) {
-              html.push(
-                <div key={view} css={styles.calendarScheduleDot}></div>
-              );
-            }
-            return <>{html}</>;
-          }}
-        />
-        <CalendarForm channelId={channelId} clickDate={clickDate} />
-        <div css={styles.mainCalendarSchedule(isOpen)}>
-          <h2 css={styles.mainCalendarScheduleTitle}>
-            {clickDate}
-            <FontAwesomeIcon icon={faTrashCan} onClick={trashCanHandler} />
-          </h2>
-          <div>
-            {scheduleValue &&
-              [scheduleValue.filter((e) => e.date == clickDate)][0].map(
-                (e, i) => {
-                  return (
-                    <div key={i} css={styles.mainCalendarScheduleContent}>
-                      <ul>
-                        <li>
-                          {e.content}
-                          <button
-                            css={styles.calendarScheduleDeleteBtn(
-                              isDeleteBtnClicked
-                            )}
-                          ></button>
-                          <div
-                            css={styles.calendarScheduleDeleteConfirmBtn(
-                              isDeleteBtnClicked
-                            )}
-                          >
+    <>
+      <div css={styles.mainCalendarBox}>
+        <div css={styles.mainCalendarTitleBox}>
+          <CalendarDaysIcon width={25} height={25} />
+          <h3 css={styles.mainCalendarTitle}>캘린더</h3>
+          <HelpModal
+            content={`날짜를 선택하고 일정을 추가해보세요`}
+            direction={`left`}
+          />
+        </div>
+        <div css={styles.mainCalendar}>
+          <Calendar
+            locale="ko"
+            onChange={onChangeHandler}
+            value={value}
+            showNeighboringMonth={false}
+            formatDay={(locale, date) => dayjs(date).format('DD')}
+            onClickDay={onClickHandler}
+            tileContent={({ date, view }) => {
+              let html = [];
+              if (
+                scheduleValue.find(
+                  (x) => x.date === dayjs(date).format(`YYYY-MM-DD`)
+                )
+              ) {
+                html.push(
+                  <div key={view} css={styles.calendarScheduleDot}></div>
+                );
+              }
+              return <>{html}</>;
+            }}
+          />
+          <CalendarForm channelId={channelId} clickDate={clickDate} />
+          <div css={styles.mainCalendarSchedule(isOpen)}>
+            <h2 css={styles.mainCalendarScheduleTitle}>
+              {clickDate}
+              <FontAwesomeIcon icon={faTrashCan} onClick={trashCanHandler} />
+            </h2>
+            <div>
+              {scheduleValue &&
+                [scheduleValue.filter((e) => e.date == clickDate)][0].map(
+                  (e, i) => {
+                    return (
+                      <div key={i} css={styles.mainCalendarScheduleContent}>
+                        <ul>
+                          <li>
+                            {e.content}
                             <button
-                              aria-label={String(e.id)}
-                              onClick={onDeleteHandler}
+                              css={styles.calendarScheduleDeleteBtn(
+                                isDeleteBtnClicked
+                              )}
+                            ></button>
+                            <div
+                              css={styles.calendarScheduleDeleteConfirmBtn(
+                                isDeleteBtnClicked
+                              )}
                             >
-                              삭제
-                            </button>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  );
-                }
-              )}
+                              <button
+                                aria-label={String(e.id)}
+                                onClick={onDeleteHandler}
+                              >
+                                삭제
+                              </button>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    );
+                  }
+                )}
+            </div>
           </div>
         </div>
+        <div css={styles.calendarScheduleBtnBox}>
+          <button
+            // role={`button`}
+            data-testid={`addBtn`}
+            css={styles.calendarScheduleAddBtn(isClicked)}
+            onClick={addScheduleHandler}
+            disabled={!isClicked}
+          >
+            {isCalendarFormOpen ? `닫기` : `일정 추가`}
+            {/* 일정 추가 */}
+          </button>
+          <button
+            css={styles.calendarScheduleViewBtn(isClicked)}
+            onClick={isOpenHandler}
+            disabled={!isClicked}
+          >
+            {isOpen ? `닫기` : `일정 보기`}
+          </button>
+        </div>
       </div>
-      <div css={styles.calendarScheduleBtnBox}>
-        <button
-          css={styles.calendarScheduleAddBtn(isClicked)}
-          onClick={addScheduleHandler}
-          disabled={!isClicked}
-        >
-          {isCalendarFormOpen ? `닫기` : `일정 추가`}
-        </button>
-        <button
-          css={styles.calendarScheduleViewBtn(isClicked)}
-          onClick={isOpenHandler}
-          disabled={!isClicked}
-        >
-          {isOpen ? `닫기` : `일정 보기`}
-        </button>
-      </div>
-    </div>
+    </>
   );
 };

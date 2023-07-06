@@ -149,7 +149,7 @@ export const projectCreateThumbnail = (
     height: 5px;
     background: red;
     border-radius: 50%;
-    transform: translate3d(-200%, -50%, 0);
+    transform: translate3d(-130%, -50%, 0);
   }
 `;
 

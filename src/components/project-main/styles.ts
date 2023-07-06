@@ -880,3 +880,7 @@ export const svgIconStyles = css`
     transform: scale(1.1);
   }
 `;
+
+export const cal = css`
+  color: red;
+`;
