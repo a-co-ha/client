@@ -61,7 +61,7 @@ export const navBarRightSidebarIconBox = (isOpen: boolean) => css`
   align-items: center;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -90%;
   height: 100%;
   color: black;
   z-index: 5;
@@ -118,7 +118,8 @@ export const profileBox = css`
   min-width: 200px;
   box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   @media screen and (max-width: 450px) {
-    min-width: 25%;
+    min-width: 45%;
+    box-shadow: unset;
   }
 `;
 
@@ -129,6 +130,14 @@ export const titleBox = css`
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   @media screen and (max-width: 450px) {
     min-width: 55%;
+    box-shadow: unset;
+  }
+`;
+
+export const mobileTitleAndProfileBox = css`
+  display: flex;
+  @media screen and (max-width: 450px) {
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 `;
 
@@ -386,7 +395,7 @@ export const profileLogoutBtn = css`
   }
   @media screen and (max-width: 450px) {
     position: absolute;
-    right: 5%;
+    left: 25%;
     height: 100%;
   }
 `;
@@ -528,4 +537,8 @@ export const profileImageBox = (isAlert: boolean) => css`
   border-radius: 50%;
   overflow: hidden;
   border: ${isAlert ? `solid #00ff04 1.5px;` : ``};
+  @media screen and (max-width: 450px) {
+    width: 30px;
+    height: 30px;
+  }
 `;

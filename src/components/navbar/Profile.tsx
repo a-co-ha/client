@@ -30,7 +30,8 @@ export const Profile = () => {
     getAlert(setIsAlert);
   }, [socket]);
 
-  const rightSidebarClickHandler = () => {
+  const rightSidebarClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     isChannelRightSidebarOpen
       ? setIsChannelRightSidebarOpen(false)
       : setIsChannelRightSidebarOpen(true);

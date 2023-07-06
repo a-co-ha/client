@@ -10,12 +10,6 @@ export const LoginBtn = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
   const [isLoginModalOpen, setIsLoginModalOpen] =
     useRecoilState(loginModalState);
-  console.log(`이즈로그드이이인`, isLoggedIn);
-  useEffect(() => {
-    const token = getCookie(`accessToken`);
-    console.log(`로그인 버튼 토큰!@`, token);
-    // token ? setIsLoggedIn(true) : setIsLoggedIn(false);
-  }, []);
 
   const openModal = () => {
     setIsLoginModalOpen(true);
