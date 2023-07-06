@@ -92,6 +92,7 @@ export const mainCalendarBox = css`
   overflow: hidden;
   @media screen and (min-width: 768px) {
     width: 350px;
+    max-height: 410px;
   }
   @media screen and (max-width: 450px) {
     width: 285px;
