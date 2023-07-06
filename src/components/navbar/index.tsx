@@ -41,11 +41,11 @@ export const NavBar = () => {
             >
               <ArrowSmallLeftIcon />
             </div>
-
             <ProjectMenu />
-            <Title />
-
-            <LoginBtn />
+            <div css={styles.mobileTitleAndProfileBox}>
+              <Title />
+              <LoginBtn />
+            </div>
           </div>
           {/* </Suspense> */}
         </ErrorBoundary>

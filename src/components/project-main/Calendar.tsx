@@ -139,14 +139,12 @@ export const MainCalendar = () => {
         </div>
         <div css={styles.calendarScheduleBtnBox}>
           <button
-            // role={`button`}
             data-testid={`addBtn`}
             css={styles.calendarScheduleAddBtn(isClicked)}
             onClick={addScheduleHandler}
             disabled={!isClicked}
           >
             {isCalendarFormOpen ? `닫기` : `일정 추가`}
-            {/* 일정 추가 */}
           </button>
           <button
             css={styles.calendarScheduleViewBtn(isClicked)}

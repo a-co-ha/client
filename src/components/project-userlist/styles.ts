@@ -1,16 +1,20 @@
 import { css } from '@emotion/react';
 
-export const userListBox = (isOpen: boolean) => css`
+export const userListBox = (
+  isOpen: boolean,
+  type: string | string[] | undefined
+) => css`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 200px;
-  height: 30vh;
+  height: ${type === `socket` ? `30vh` : `100vh`};
   padding-inline: 1rem;
   box-shadow: 0 5px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
   @media screen and (max-width: 450px) {
     position: fixed;
     right: ${isOpen ? `0` : `100%`};
+    height: 30vh;
     z-index: 2;
     background: white;
   }
