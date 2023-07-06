@@ -8,6 +8,7 @@ import * as styles from './styles';
 import { Suspense } from 'react';
 import { RecentPosts } from './RecentPosts';
 import { Notice } from './notice/Notice';
+import { Cal } from './Cal';
 
 export const MainContent = () => {
   const setIsChannelSidebarOpen = useSetRecoilState(channelSidebarOpenState);
@@ -26,6 +27,7 @@ export const MainContent = () => {
           <Notice />
           <RecentPosts />
           <CommitLog />
+          <Cal />
         </div>
       </div>
     </Suspense>
