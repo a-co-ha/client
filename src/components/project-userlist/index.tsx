@@ -10,9 +10,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { SocketContext } from '../chat-page/SocketContextProvider';
 import * as styles from './styles';
 import { UserModal } from './UserModal';
+import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 
 export const UserList = () => {
   const { data: channelUsersData } = useGetUsers();
+  const { type } = useGetUrlInfo();
   const [onUser, setOnUser] = useRecoilState(onUserState);
   const [channelUsers, setChannelUsers] = useRecoilState(channelUserState);
   const [isUserModalOpen, setIsUserModalOpen] = useRecoilState(
@@ -25,9 +27,7 @@ export const UserList = () => {
 
   const addMember = (member: any) => {
     setOnUser((prev) => {
-      console.log(`prev`, prev);
       const newMember = prev.concat([member]);
-      console.log(`newMember`, newMember);
       return newMember;
     });
   };
@@ -37,7 +37,6 @@ export const UserList = () => {
       const newOnUsers = prev.filter(
         (prevUser: any) => prevUser.userID !== member.userID
       );
-      console.log(`deleteMember`, newOnUsers);
       return newOnUsers;
     });
   };
@@ -59,9 +58,8 @@ export const UserList = () => {
   const onClickHandler = (e: any) => {
     setIsUserModalOpen(true);
   };
-  console.log(`온유저`, onUser);
   return (
-    <div css={styles.userListBox(isChannelRightSidebarOpen)}>
+    <div css={styles.userListBox(isChannelRightSidebarOpen, type)}>
       <div css={styles.userListInnerBox}>
         {channelUsers &&
           channelUsers.map((member: ChannelUser, i: number) => {
@@ -87,9 +85,3 @@ export const UserList = () => {
     </div>
   );
 };
-
-//  MEMBER - 처음 연결시 한 번. 이거와 채널에 속한 유저api 비교,
-// NEW_MEMBER - 오프 -> 온라인 시마다
-// DISCONNECT_MEMEBER 끊긴 유저
-// 결론 : api로 우리 채널 유저 목록 표시 ->
-//

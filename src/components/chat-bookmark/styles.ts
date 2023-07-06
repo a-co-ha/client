@@ -19,7 +19,7 @@ export const chatBookmarkBox = (isOpen: boolean) => css`
 
 export const chatBookmarkCreateBtn = css`
   width: 100%;
-  height: 2rem;
+  min-height: 2rem;
   font-size: 0.9rem;
   &:hover {
     background: #eee;
@@ -31,12 +31,16 @@ export const chatBookmarkCreateBtn = css`
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
 `;
 
+export const chatBookmarkScrollBox = css`
+  width: 100%;
+  padding: 0.5rem 1rem;
+  overflow: auto;
+`;
+
 export const chatBookmarkItemBox = css`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0.5rem 1rem;
-  // outline: 1px solid blue;
 `;
 
 export const chatBookmarkItem = css`

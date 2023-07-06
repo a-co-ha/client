@@ -136,7 +136,9 @@ export const titleBox = css`
 
 export const mobileTitleAndProfileBox = css`
   display: flex;
+  flex-grow: 1;
   @media screen and (max-width: 450px) {
+    flex-grow: unset;
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 `;

@@ -78,24 +78,26 @@ export const ChatBookmark = ({
       >
         북마크 +
       </button>
-      <div css={styles.chatBookmarkItemBox}>
-        {chatBookmark.map((bookmark, i) => {
-          return (
-            <div
-              key={i}
-              css={styles.chatBookmarkItem}
-              onClick={(e) =>
-                onClickHandler(
-                  bookmark._id,
-                  bookmark.bookmarkName,
-                  bookmark.content
-                )
-              }
-            >
-              {bookmark.bookmarkName}
-            </div>
-          );
-        })}
+      <div css={styles.chatBookmarkScrollBox}>
+        <div css={styles.chatBookmarkItemBox}>
+          {chatBookmark.map((bookmark, i) => {
+            return (
+              <div
+                key={i}
+                css={styles.chatBookmarkItem}
+                onClick={(e) =>
+                  onClickHandler(
+                    bookmark._id,
+                    bookmark.bookmarkName,
+                    bookmark.content
+                  )
+                }
+              >
+                {bookmark.bookmarkName}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

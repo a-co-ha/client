@@ -83,7 +83,7 @@ export const mainCalendarBox = css`
   ${commonBoxStyle};
   min-width: 300px;
   max-width: 350px;
-  height: 370px;
+  min-height: 370px;
   z-index: 0;
   margin-bottom: 1rem;
   border-radius: 0.37rem;
@@ -94,7 +94,8 @@ export const mainCalendarBox = css`
     width: 350px;
   }
   @media screen and (max-width: 450px) {
-    width: 300px;
+    width: 285px;
+    min-width: 285px;
   }
 `;
 
