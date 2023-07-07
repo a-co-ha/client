@@ -57,9 +57,8 @@ const Container = css`
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
-
+  margin: 0 auto;
   @media (max-width: 600px) {
     width: 300px;
-    margin: 0 auto;
   }
 `;
