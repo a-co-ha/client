@@ -71,5 +71,6 @@ const Container = css`
 
   @media (max-width: 600px) {
     width: 300px;
+    margin: 0 auto;
   }
 `;
