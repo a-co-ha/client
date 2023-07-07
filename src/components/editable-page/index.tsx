@@ -19,9 +19,9 @@ import { ErrorBoundary } from '../error-boundary/index';
 import { Error } from '../error-boundary/Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
-import Selecto from 'react-selecto';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import Selecto from 'react-selecto';
+// import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   resetServerContext();
@@ -97,16 +97,7 @@ export const EditablePage = ({ channelId, pageId, type }: EditablePages) => {
   };
 
   return (
-    <div
-      style={{
-        ...(type !== 'normal'
-          ? {
-              width: '60%',
-            }
-          : { width: '100%' }),
-      }}
-      onClick={onClickHandler}
-    >
+    <div css={styles.Conatainer(type)} onClick={onClickHandler}>
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ErrorBoundary fallback={Error} onReset={reset}>
