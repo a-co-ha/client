@@ -18,6 +18,7 @@ export const userListBox = (
     z-index: 2;
     background: white;
   }
+  overflow-y: auto;
 `;
 
 export const userListInnerBox = css`
