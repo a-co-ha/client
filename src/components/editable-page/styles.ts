@@ -1,5 +1,18 @@
 import { css } from '@emotion/react';
 
+export const Conatainer = (type: string) => css`
+  width: ${type == 'normal' ? `100%` : `60%`};
+  @media screen and (min-width: 768px) {
+    position: static;
+    width: ${type == 'normal' ? `100%` : `60%`};
+  }
+  @media screen and (max-width: 767px) {
+    position: ${type == 'normal' ? `static` : `absolute`};
+    width: 100%;
+  }
+  background-color: white;
+`;
+
 export const contentBox = css`
   position: relative;
   flex-basis: 0;

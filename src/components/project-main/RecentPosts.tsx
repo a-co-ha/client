@@ -54,6 +54,8 @@ export const Container = css`
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
+
+  margin: 0 auto;
 `;
 
 export const Title = css`
@@ -63,7 +65,11 @@ export const Title = css`
   gap: 0.3rem;
   padding: 0.5rem;
   align-items: center;
-  background-color: #ffd6dc;
+  background: #ffe3e7;
+  transition: 0.5s;
+  &:hover {
+    background: #ffd6dc;
+  }
   & svg {
     width: 1.3rem;
   }

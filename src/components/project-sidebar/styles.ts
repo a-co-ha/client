@@ -307,7 +307,7 @@ export const pageNameLink = css`
 
 export const pageNameLinkTag = css`
   width: 70%;
-  z-index: 2;
+  z-index: 0;
 `;
 
 export const pageNameBtnStyle = css`
