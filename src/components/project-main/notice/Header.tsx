@@ -83,6 +83,12 @@ const Container = css`
     width: 1.3rem;
   }
   margin-bottom: 0.5rem;
+  background: #ffe3e7;
+
+  transition: 0.5s;
+  &:hover {
+    background: #ffd6dc;
+  }
 `;
 
 const Title = css`

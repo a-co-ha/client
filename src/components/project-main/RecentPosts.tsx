@@ -66,7 +66,11 @@ export const Title = css`
   gap: 0.3rem;
   padding: 0.5rem;
   align-items: center;
-  background-color: #ffd6dc;
+  background: #ffe3e7;
+  transition: 0.5s;
+  &:hover {
+    background: #ffd6dc;
+  }
   & svg {
     width: 1.3rem;
   }
