@@ -4,7 +4,7 @@ import { CommitLog } from './CommitLog';
 import { useSetRecoilState } from 'recoil';
 import { channelSidebarOpenState } from '@/recoil/project/atom';
 import * as styles from './styles';
-import { Notice } from './notice/Notices';
+import { Notice } from './notice/Notice';
 import { Suspense } from 'react';
 import { RecentPosts } from './RecentPosts';
 

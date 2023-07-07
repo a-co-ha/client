@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import type { NoticeProps } from './Notices';
+import type { NoticeProps } from './Notice';
 
 interface HeaderProps extends NoticeProps {
   changeNoticeFormStatus: (status: boolean) => void;
