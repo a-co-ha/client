@@ -1,0 +1,16 @@
+diff --git a/dist/types.d.ts b/dist/types.d.ts
+index 5d4d0bc1c64e5abb7eaf1f54db31e13558ec9330..eb06acbb3b37ee45079bb7eca68ec9b31a84c096 100644
+--- a/dist/types.d.ts
++++ b/dist/types.d.ts
+@@ -7,7 +7,10 @@ export declare type Expand<T> = T extends infer O ? {
+ } : never;
+ export declare type PropsOf<TTag extends ReactTag> = TTag extends React.ElementType ? React.ComponentProps<TTag> : never;
+ declare type PropsWeControl = 'as' | 'children' | 'refName' | 'className';
+-declare type CleanProps<TTag extends ReactTag, TOmitableProps extends PropertyKey = __> = TOmitableProps extends __ ? Omit<PropsOf<TTag>, PropsWeControl> : Omit<PropsOf<TTag>, TOmitableProps | PropsWeControl>;
++declare type CleanProps<
++  TTag extends ReactTag,
++  TOmitableProps extends PropertyKey = never
++> = Omit<PropsOf<TTag>, TOmitableProps | PropsWeControl>
+ declare type OurProps<TTag extends ReactTag, TSlot> = {
+     as?: TTag;
+     children?: ReactNode | ((bag: TSlot) => ReactElement);

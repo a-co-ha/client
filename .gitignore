@@ -28,8 +28,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
-
+.env*.*
 # vercel
 .vercel
 
@@ -71,3 +70,6 @@ sketch
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/react,nextjs,yarn
+
+nginx-proxy-manager
+# /portainer

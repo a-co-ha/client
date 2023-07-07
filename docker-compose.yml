@@ -1,0 +1,51 @@
+# docker 컨테이너 버전을 명시
+version: '3.8'
+
+# services는 컨테이너
+services:
+  npm:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: always
+    ports:
+      # - 81:81 #관리포트
+      - 80:80 #http
+      - 443:443 #https
+    volumes:
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    environment:
+      DISABLE_IPV6: 'true'
+    # environment:
+    # DB_MYSQL_HOST: db
+    # DB_MYSQL_PORT: 3306
+    # DB_MYSQL_USER: npm
+    # DB_MYSQL_PASSWORD: "Qwer1234!!"
+    # DB_MYSQL_NAME: npm
+    # DISABLE_IPV6: 'true'
+    depends_on:
+      - acoha-next
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    environment:
+      TZ: Asia/Seoul
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_REMOVE_VOLUMES: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  acoha-next:
+    container_name: acoha-container
+    # 현재 경로에 이미지 빌드
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - '3000:3000'
+
+networks:
+  default:
+    name: acoha
+    driver: bridge
