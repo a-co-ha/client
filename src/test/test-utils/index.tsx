@@ -13,6 +13,8 @@ const generateTestQueryClient = () => {
   return client;
 };
 
+console.log('ha');
+
 export const renderWithQueryClient = (
   ui: ReactElement,
   client?: QueryClient
