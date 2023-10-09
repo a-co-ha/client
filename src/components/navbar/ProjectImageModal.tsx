@@ -11,7 +11,7 @@ import {
 } from '@/recoil/project/atom';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -25,7 +25,6 @@ export const ProjectImageModal = ({
   channelId: string | string[] | undefined;
   channelNameValue: string;
 }) => {
-  console.log(`네임빌로`, channelNameValue);
   const [isChangeImgModal, setIsChangeImgModal] = useRecoilState(
     changeProjectImgModalState
   );
@@ -41,7 +40,6 @@ export const ProjectImageModal = ({
 
   useLayoutEffect(() => {
     setChannelImage(channelImageValue);
-    console.log(`나옴`, channelNameValue);
   }, [channelImageValue]);
 
   const imageMethods = useForm<ProjectChangeInfo>({
@@ -72,7 +70,6 @@ export const ProjectImageModal = ({
     setIsEditing(false);
     setIsChangeImgModal(false);
     setChannelImage(channelImageValue);
-    console.log(`이게뭔가`, channelNameValue);
     nameMethods.reset();
   };
 
@@ -84,7 +81,7 @@ export const ProjectImageModal = ({
     target: HTMLInputElement;
   }) => {
     if (target.files && target.files.length > 0) {
-      console.log(target.files[0]);
+      target.files[0];
 
       const url = URL.createObjectURL(target.files[0]);
       setChannelImage(url);
@@ -99,7 +96,6 @@ export const ProjectImageModal = ({
         toast.error(`너무 짧아요 (최소 1자)`);
         return;
       }
-      // setChannelName(projectChangeName.value);
       setIsEditing(false);
     }
   };
@@ -109,7 +105,6 @@ export const ProjectImageModal = ({
   };
 
   const imageFormOnSubmit = async (projectInfo: ProjectChangeInfo) => {
-    console.log(`imageChange`, projectInfo);
     try {
       patchProjectImage.mutate(projectInfo);
       setChannelImage(channelImage);
@@ -119,7 +114,6 @@ export const ProjectImageModal = ({
   };
 
   const nameFormOnSubmit = async (projectInfo: ProjectChangeName) => {
-    console.log(`imageChange`, projectInfo);
     try {
       patchProjectName.mutate(projectInfo);
       toast.success('페이지 이름을 바꿨어요');
@@ -230,7 +224,6 @@ export const ProjectImageModal = ({
                 ) : (
                   <div css={styles.projectChangeNameDiv}>
                     {channelName}
-                    {/* {channelNameValue} */}
                     <div
                       css={styles.projectChangeNameDivIcon}
                       onClick={projectChangeNameHandler}

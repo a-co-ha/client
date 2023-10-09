@@ -40,7 +40,6 @@ export const CalendarForm = ({
   }, [isCalendarFormOpen]);
 
   const onSubmit = (content: AddSchedule) => {
-    console.log(`스케쥴`, content);
     postScheduleMutate({ content: content.addSchedule, date: clickDate });
     setIsCalendarFormOpen(false);
     methods.reset();

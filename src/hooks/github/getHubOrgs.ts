@@ -12,7 +12,7 @@ export const useGetOrgs = () => {
   });
   return useMutation([`getOrgs`], () => getOrgs(), {
     onSuccess: (data) => {
-      console.log('org목록입니다', data);
+      'org목록입니다', data;
       setOrgSearchResponse(data);
     },
   });

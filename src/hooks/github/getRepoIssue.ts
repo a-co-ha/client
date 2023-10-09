@@ -21,7 +21,7 @@ export const useGetRepoIssue = (channelId: string | string[] | undefined) => {
     (orgRepoName: OrgRepoName) => getRepoIssue(orgRepoName.repo),
     {
       onSuccess: async (data) => {
-        console.log('repoIssues', data);
+        'repoIssues', data;
         const issueList = await commitDataTransfer(data);
         issueList == null ? setError(true) : setRepoIssue(issueList);
       },

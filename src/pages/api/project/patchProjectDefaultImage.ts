@@ -7,7 +7,6 @@ export const patchProjectDefaultImage = async (channelId: number) => {
     await fetch(`/images/channelImg/${randomCount}.png`)
       .then((res) => res.blob())
       .then((blob) => {
-        console.log(`blob`, blob);
         const file = new File([blob], 'image', { type: 'image/png' });
         formData.append(`image`, file, 'channelImg.png');
       });
@@ -20,10 +19,6 @@ export const patchProjectDefaultImage = async (channelId: number) => {
           'Content-Type': 'multipart/form-data',
         },
       }
-    );
-    console.log(
-      '🚀 ~ file: patchProjectImage.ts:38 ~ patchProjectImage ~ res:',
-      res.data
     );
     return res.data;
   } catch (err) {

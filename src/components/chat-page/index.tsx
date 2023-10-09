@@ -26,14 +26,10 @@ export const ChatPage = ({ pageId }: pageProps) => {
   const router = useRouter();
 
   const addMessage = (message: any) => {
-    console.log(`addmessage`, message);
     setMessages((prev) => {
-      console.log(`prev`, prev);
       const newMessage = prev.concat([message]);
-      console.log(`newMesage`, newMessage);
       return newMessage;
     });
-    console.log(`메세지스`, messages);
   };
   useLayoutEffect(() => {
     readMessage(pageId);

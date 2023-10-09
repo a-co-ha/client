@@ -70,9 +70,8 @@ export const CommitLogForm = ({
   const onSubmit = (searchOptions: CommitLogFormType) => {
     resetOrgResponse();
     resetRepoResponse();
-    console.log(`searchOptions`, searchOptions);
     if (searchOptions.searchOptionsInput === 'organization') {
-      console.log(searchOptions.searchOptionsInput);
+      searchOptions.searchOptionsInput;
       getOrgs.mutate();
     } else {
       getRepos.mutate();
@@ -123,7 +122,6 @@ export const CommitLogForm = ({
   const onCancelHandler = () => {
     setIsFocusContent('');
   };
-  console.log(`selected`, selected);
   return (
     <div>
       <div
@@ -276,22 +274,6 @@ export const CommitLogForm = ({
                       검색된 repository가 없어요
                     </div>
                   )}
-
-                  {/* <div>
-                    {orgSearchResponse.repos.map((repo, i) => {
-                      return (
-                        <div key={i} css={styles.orgRepoNameBox}>
-                          {orgSearchResponse.orgImg !== '' ? (
-                            <FontAwesomeIcon
-                              icon={faArrowTurnUp}
-                              rotation={90}
-                            />
-                          ) : null}
-                          <span css={styles.orgRepoName}>{repo.name}</span>
-                        </div>
-                      );
-                    })}
-                  </div> */}
                 </div>
               </div>
               <button

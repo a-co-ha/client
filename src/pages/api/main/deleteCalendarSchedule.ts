@@ -8,7 +8,6 @@ export const deleteCalendarSchedule = async (
     const res = await api.delete(
       `/api/calendar?channel=${channelId}&id=${scheduleId}`
     );
-    console.log(`delete schedule`, res.data);
     return res.data;
   } catch (err) {
     console.error(err);

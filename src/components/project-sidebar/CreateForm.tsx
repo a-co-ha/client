@@ -24,7 +24,6 @@ export const ProjectCreateForm = ({
   });
 
   const onSubmit = async (channelName: ProjectName) => {
-    console.log(channelName);
     postProject.mutate(channelName);
     closeModal();
     setIsInitialUser(false);

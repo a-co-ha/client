@@ -51,8 +51,6 @@ export const ChatBookmarkForm = ({
   }, [chatBookmarkFormModal]);
 
   const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
-    console.log(`submitData`, chatBookmark);
-
     setBookmark({
       bookmarkName: chatBookmark.chatBookmarkTitle,
       content: chatBookmark.chatBookmarkContent,
@@ -78,10 +76,6 @@ export const ChatBookmarkForm = ({
     e: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (e.nativeEvent.isComposing) return;
-    // e.preventDefault();
-    // if (e.key === 'Enter' && e.shiftKey) {
-    //   return;
-    // }
   };
 
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {

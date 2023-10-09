@@ -45,9 +45,9 @@ const deleteImageOnServer = async (imgUrl: string) => {
     const res = await api.post(`/api/image/delete`, {
       imgKey: imgUrl,
     });
-    console.log(res);
+    res;
   } catch (err) {
-    return console.log(err);
+    return err;
   }
 };
 
@@ -118,7 +118,7 @@ const updatePageOnserver = async (
       }
     );
   } catch (err) {
-    return console.log(err);
+    return err;
   }
 };
 

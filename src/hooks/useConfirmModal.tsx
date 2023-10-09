@@ -18,7 +18,6 @@ export const ConfirmModal = ({
     isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
     cancelFunc();
   };
-  console.log(`focusContent`, content);
   return (
     <div tabIndex={0}>
       <div

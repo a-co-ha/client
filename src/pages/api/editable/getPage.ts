@@ -8,7 +8,6 @@ export const getEditablePage = async (
     const res = await api.get(
       `/api/page/${pageId}?type=${type}&channel=${channelId}`
     );
-    console.log(`page 하나 조회입니다`, res.data);
     if (!res.data.blocks) return res.data.pages;
     const blocks = res.data.blocks;
     const newblocks = blocks.map(({ _id, ...keepAttrs }: any) => keepAttrs);

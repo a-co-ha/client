@@ -10,7 +10,6 @@ export const registerHub = async (
       repoName,
       repoType,
     });
-    console.log(`register github`, res.data);
     return res.data;
   } catch (err) {
     console.error(err);

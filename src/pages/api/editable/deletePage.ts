@@ -8,7 +8,6 @@ export const deleteEditablePage = async (
     const res = await api.delete(
       `/api/list/${pageId}?channel=${channelId}&type=${type}`
     );
-    console.log(`에디터블삭제`, res.data);
     return res.data;
   } catch (err) {
     console.error(err);

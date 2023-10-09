@@ -4,7 +4,6 @@ export const patchProjectImage = async (
   channelId: string | string[] | undefined,
   channelImg: any
 ) => {
-  console.log(`여기서보자`, channelImg);
   try {
     const formData = new FormData();
     formData.append(`channelImg`, channelImg);
@@ -16,10 +15,6 @@ export const patchProjectImage = async (
           'Content-Type': 'multipart/form-data',
         },
       }
-    );
-    console.log(
-      '🚀 ~ file: patchProjectImage.ts:38 ~ patchProjectImage ~ res:',
-      res.data
     );
     return res.data;
   } catch (err) {

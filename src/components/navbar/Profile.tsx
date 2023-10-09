@@ -39,7 +39,6 @@ export const Profile = () => {
 
   const onClickHandler = async () => {
     const sessionID = getCookie(`sessionId`);
-    console.log(`session`, sessionID);
     await api.post(`/api/user/logout`, {
       sessionID,
     });

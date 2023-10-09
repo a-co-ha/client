@@ -15,7 +15,6 @@ export const useInviteUser = (
   const userId = getCookie(`myUserId`);
   const queryClient = useQueryClient();
   const router = useRouter();
-  console.log(`인바이트`);
   return useMutation<InviteUser, AxiosError>(
     () => inviteUser(adminCode, channelName),
     {

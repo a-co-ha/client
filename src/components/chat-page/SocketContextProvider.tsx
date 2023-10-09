@@ -71,26 +71,16 @@ export const SocketContextProvider = ({
 
   useLayoutEffect(() => {
     if (!sessionId) return;
-    socket.on(`connect`, () => {
-      console.log(`connected`, socket);
-    });
-    socket.on(`connect_error`, (error) => console.log(error));
+    socket.on(`connect`, () => {});
+    socket.on(`connect_error`, (error) => error);
 
     socket.on(`MEMBERS`, (data) => {
       setOnUser(data);
-      console.log(`MEMBERS`, data);
     });
-    socket.on(`USER_INFO`, (data) => {
-      console.log(`session USER_INFO`, data);
-    });
-    socket.on(`NEW_MEMBER`, (data) => console.log(`유저 접속`, data));
+    socket.on(`USER_INFO`, (data) => {});
     socket.on(`MESSAGE_STATUS`, (data) => {
-      console.log(`status`, data);
       setMessageStatus(data);
     });
-    // socket.on(`UPDATE_STATUS`, (data) => {
-    //   console.log(`update status`, data);
-    // });
 
     return () => {
       console.log(`disconnect`);
@@ -105,29 +95,23 @@ export const SocketContextProvider = ({
   const getMessageStatus = () => {};
 
   const readMessage = (pageId: string) => {
-    console.log(`소케엣`, socket);
-    console.log(`보냅니다`);
     socket.emit(`READ_MESSAGE`, {
       roomId: pageId,
     });
   };
   const getMessage = (func: any) => {
     socket.on(`GET_MESSAGE`, (data: SocketMessage[]) => {
-      console.log(`리드`, data);
       func(data);
     });
   };
   const sendMessage = (message: string, pageId: string) => {
-    console.log(`보냅니다`);
     socket.emit(`SEND_MESSAGE`, {
       content: message,
       roomId: pageId,
     });
   };
   const receiveMessage = (func: any) => {
-    console.log(`받습니다`);
     socket.on(`RECEIVE_MESSAGE`, (data) => {
-      console.log(`없는듯`, data);
       func(data.message);
     });
   };
@@ -145,9 +129,7 @@ export const SocketContextProvider = ({
 
   const newBookmark = (func: any) => {
     socket.on(`NEW_BOOKMARK`, (data) => {
-      console.log(`받습니다`);
       func(data);
-      console.log(`여기다`, data);
     });
   };
 
@@ -169,7 +151,6 @@ export const SocketContextProvider = ({
 
   const getAlert = (setIsAlert: Dispatch<SetStateAction<boolean>>) => {
     socket.on('GET_ALERT', (data) => {
-      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data:', data);
       toast.info(
         <>
           <Link
@@ -204,7 +185,6 @@ export const SocketContextProvider = ({
     setAlertList: Dispatch<SetStateAction<AlertValue[]>>
   ) => {
     socket.on('ALERT', (data: Alert) => {
-      console.log('🚀 ~ file: Label.tsx:56 ~ socket.on ~ data status:', data);
       setAlertList(data.alerts);
       if (data.isRead === 'true') setIsAlert(true);
       else setIsAlert(false);

@@ -68,7 +68,6 @@ export const ChatSendForm = ({
 
   const onSubmit = (chat: ChatMessage) => {
     sendMessage(chat.chatMessage, pageId);
-    console.log(`보냅니다`);
     methods.reset();
   };
 

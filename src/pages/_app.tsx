@@ -47,11 +47,10 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
     }
   }, []);
   if (!shouldRender) {
-    // return null;
   }
   useEffect(() => {
     router.pathname === `/project/:*` && authState.isLoggedIn === false
-      ? (router.push(`/error`), console.log('ah'))
+      ? (router.push(`/error`), 'ah')
       : null;
   }, []);
   const [queryClient] = useState(
@@ -60,10 +59,7 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
         defaultOptions: {
           queries: {
             retry: 0,
-            // refetchOnMount: false,
             refetchOnWindowFocus: false,
-            // suspense: true,
-            // staleTime: 1000 * 3,
           },
           mutations: {
             useErrorBoundary: true,
@@ -76,7 +72,6 @@ export default function App({ Component, pageProps, authState }: MyAppProps) {
     () =>
       ({ set }: MutableSnapshot) => {
         if (authState) {
-          console.log(`이즈로그드인`, authState);
           set(loginState, authState.isLoggedIn);
         }
       },
@@ -116,10 +111,8 @@ App.getInitialProps = async (context: AppContext) => {
     isLoggedIn: false,
   };
   try {
-    // 새로고침시 전역 설정
     if (req) {
       const refreshToken = getCookie(`refreshToken`, { req, res });
-      console.log(`리프레에`, refreshToken);
       const accessToken = await getToken(refreshToken);
       setCookie(`accessToken`, accessToken, { req, res, maxAge: 60 * 60 * 24 });
       refreshToken

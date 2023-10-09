@@ -33,7 +33,6 @@ export const Message = ({
 
   useEffect(() => {
     if (messageHeightRef.current?.scrollHeight) {
-      console.log(`scollheight`, messageHeightRef.current?.scrollHeight);
       if (messageHeightRef.current.scrollHeight > 310) {
         (
           messageHeightRef.current.nextElementSibling as HTMLDivElement

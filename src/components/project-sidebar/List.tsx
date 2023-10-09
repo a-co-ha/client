@@ -84,12 +84,10 @@ export const List = () => {
     setReadChannel(set);
   }, [messageStatus]);
 
-  console.log('채널리스트 ', channelList);
-
   const onClickHandler = (channelData: ChannelList) => {
     setChannelName(channelData.channelName);
     setChannelImage(channelData.channelImg);
-    console.log(channelData.channelName);
+    channelData.channelName;
     router.push(`/project/${channelData.id}`);
     if (window) {
       window.innerWidth <= 450 ? setIsChannelRightSidebarOpen(false) : null;

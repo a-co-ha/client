@@ -8,9 +8,7 @@ export const UserModal = ({ userId }: { userId: number }) => {
   );
 
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log(isUserModalOpen);
     e.stopPropagation();
-
     setIsUserModalOpen(false);
   };
 

@@ -1,11 +1,8 @@
 import Head from 'next/head';
 import { DOMAIN } from '@/utils/const';
 import acohaImg from '@/images/channelImg/1.png';
-import type { OgData } from '../navbar/inviteModal';
 
 export const CustomHead = ({ type }: { type: string }) => {
-  // console.log(`customhead`, title, desc, image, id, type);
-
   return type === `invite` ? (
     <Head>
       <title>A-COHA | 아코하</title>

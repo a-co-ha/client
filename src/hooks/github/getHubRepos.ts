@@ -14,7 +14,7 @@ export const useGetRepos = () => {
   });
   return useMutation([`getRepos`], () => getRepos(), {
     onSuccess: (data) => {
-      console.log('repo 입니다', data);
+      'repo 입니다', data;
       // queryClient.invalidateQueries([`channelPages`, channelId]);
       setRepoSearchResponse(data);
     },

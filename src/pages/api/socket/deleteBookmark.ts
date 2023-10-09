@@ -4,7 +4,6 @@ export const deleteBookmark = async (channelId: string, bookmarkId: string) => {
     const res = await api.delete(
       `/api/bookmark/${bookmarkId}?channel=${channelId}`
     );
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.error(err);

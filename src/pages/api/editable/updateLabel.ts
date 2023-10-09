@@ -10,6 +10,7 @@ export const updateLabel = async (
       label: names?.map((name) => ({ content: name })),
     });
   } catch (err) {
-    return console.log(err);
+    console.error(err);
+    return err;
   }
 };

@@ -104,15 +104,10 @@ const IndexPage = () => {
   const [isProgressAni, setIsProgressAni] = useState(false);
   const setIsLoginModalOpen = useSetRecoilState(loginModalState);
   const setIsScroll = useSetRecoilState(LandingPageNavbarIsScroll);
-  console.log(`위messageA`, messageA);
   let yOffset = 0; // window.scrollY 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
   let enterNewScene = false; // 새로운 scene이 시작된 순간 true
-  let acc = 0.2;
-  let delayedYOffset = 0;
-  let rafId;
-  let rafState;
   let scrollToCount = 1;
 
   const throttledScroll = useMemo(
@@ -121,7 +116,6 @@ const IndexPage = () => {
         if (!messageA.current) return;
         yOffset = window.scrollY;
         scrollLoop();
-        // console.log(`scrollLoop`);
       }, 30),
     [yOffset]
   );
@@ -132,7 +126,7 @@ const IndexPage = () => {
     }
     setLayout();
     scrollLoop();
-    console.log('12');
+    ('12');
   }, []);
 
   useLayoutEffect(() => {
@@ -175,7 +169,7 @@ const IndexPage = () => {
       } else {
         setClickLabel(targetLabel);
       }
-      console.log(targetLabel);
+      targetLabel;
     }
   };
 
@@ -192,8 +186,6 @@ const IndexPage = () => {
         left: scrollBox.offsetWidth * scrollToCount,
         behavior: 'smooth',
       });
-      console.log(`left`, scrollBox.offsetWidth);
-      console.log(`scCount`, scrollToCount);
     } else if (targetLabel === `ArrowRight` && scrollBox) {
       scrollToCount++;
       if (scrollToCount === 7) {
@@ -203,7 +195,6 @@ const IndexPage = () => {
         left: scrollBox.offsetWidth * scrollToCount,
         behavior: 'smooth',
       });
-      console.log(`scCount`, scrollToCount);
     }
   };
 
@@ -214,7 +205,6 @@ const IndexPage = () => {
   const indexOpenHandler = () => {
     isIndexOpen ? setIsIndexOpen(false) : setIsIndexOpen(true);
     if (!isIndexOpen && indexLinkTranslateBox.current) {
-      console.log(`안쪽 isopen?`, isIndexOpen);
       indexLinkTranslateBox.current.style.transform = `translate3d(0,0,0)`;
     } else if (isIndexOpen && indexLinkTranslateBox.current) {
       if (indexOrder === `index1`) {
@@ -230,7 +220,6 @@ const IndexPage = () => {
       }
     }
   };
-  console.log(`open?`, isIndexOpen);
   const indexLinkHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
     const target = e.target as HTMLSpanElement;
     const targetLabel = target.ariaLabel;
@@ -277,7 +266,7 @@ const IndexPage = () => {
   const sceneInfo = [
     {
       type: 'sticky',
-      heightNum: 4, // 브라우저 높이의 5배로 scrollHeight 세팅
+      heightNum: 4, // 브라우저 높이의 4배로 scrollHeight 세팅
       scrollHeight: 0,
       objs: {
         container: introSection,
@@ -357,12 +346,7 @@ const IndexPage = () => {
         mainItemProgressSubTitle: mainItemProgressSubTitle,
         mainItemProgressDescBox: mainItemProgressDescBox,
       },
-      values: {
-        // mainItemPreviewTitle_translateY_in: [25, 0, { start: 0, end: 0.01 }],
-        // mainItemPreview_translateY_in: [25, 0, { start: 0.05, end: 0.05 }],
-        // mainItemPreviewTitle_opacity_in: [0, 1, { start: 0, end: 0.01 }],
-        // mainItemPreview_opacity_in: [0, 1, { start: 0.05, end: 0.3 }],
-      },
+      values: {},
     },
   ];
 
@@ -378,7 +362,6 @@ const IndexPage = () => {
         }px`;
       } else if (sceneInfo[1].objs.container) {
         sceneInfo[1].objs.container.current.style.height = `${sceneInfo[1].scrollHeight}px`;
-        // sceneInfo[1].objs.container.current.style.height = `8289.5px`;
       }
     }
 
@@ -388,11 +371,9 @@ const IndexPage = () => {
       totalScrollHeight += sceneInfo[i].scrollHeight;
       if (totalScrollHeight >= yOffset) {
         currentScene = i;
-        console.log(`currentScene`, currentScene);
         break;
       }
     }
-    console.log('setLayout');
   }, []);
 
   const calcValues = useCallback((values: any, currentYOffset: number) => {
@@ -404,7 +385,6 @@ const IndexPage = () => {
       const partScrollStart = values[2].start * scrollHeight;
       const partScrollEnd = values[2].end * scrollHeight;
       const partScrollHeight = partScrollEnd - partScrollStart;
-      console.log(`cY`, currentYOffset);
       if (
         currentYOffset >= partScrollStart &&
         currentYOffset <= partScrollEnd
@@ -529,8 +509,6 @@ const IndexPage = () => {
           objs.introChatReplyBox.current &&
           objs.introArrowDown.current
         ) {
-          console.log(`scroll`, scrollRatio);
-
           if (scrollRatio <= 0.77) {
             scrollToTopBtn.current.style.opacity = `0`;
             indexLinkBtn.current.style.opacity = `0`;
@@ -690,10 +668,8 @@ const IndexPage = () => {
           if (sceneInfo[0].objs.content.current) {
             sceneInfo[0].objs.content.current.style.position = `static`;
           }
-          console.log(`scene2`, scrollRatio);
           if (scrollRatio > 0.03) {
             setIndexOrder(`index1`);
-            console.log(`실제`, isIndexOpen);
             objs.mainItemPreviewTitle.current.style.transform = `translate3d(0,0,0)`;
             objs.mainItemPreviewScrollBoxTitle.current.style.transform = `translate3d(0,0,0)`;
             if (window.innerWidth < 520) {
@@ -834,7 +810,6 @@ const IndexPage = () => {
     for (let i = 0; i < currentScene; i++) {
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
-    console.log(`여기 y`, yOffset);
     if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       enterNewScene = true;
       if (currentScene < sceneInfo.length - 1) {
@@ -847,7 +822,6 @@ const IndexPage = () => {
         currentScene--;
         return;
       }
-      console.log(`커렌트씬`, currentScene);
       currentScene--;
     }
     if (enterNewScene) return;

@@ -12,7 +12,6 @@ export const usePostSocketPage = () => {
     () => postSocketPage(channelId),
     {
       onSuccess: async (data) => {
-        console.log(`포스트페이지 데이타`, data);
         if (data) {
           await queryClient.invalidateQueries([`channelPages`, channelId]);
           await router.push(

@@ -36,19 +36,17 @@ export const ChatBookmark = ({
   const addBookmark = useCallback((bookmark: any) => {
     setChatBookmark((prev) => {
       const newBookmark = prev.concat([bookmark]);
-      console.log(`newBook`, newBookmark);
       return newBookmark;
     });
   }, []);
   useEffect(() => {
     if (chatBookmarkList !== undefined) {
       setChatBookmark(chatBookmarkList.bookmarkList);
-      console.log(chatBookmarkList);
+      chatBookmarkList;
     }
   }, [chatBookmarkList]);
 
   useEffect(() => {
-    console.log(`받습니다`);
     newBookmark(addBookmark);
     refetch();
   }, [newBookmark]);

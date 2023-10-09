@@ -9,6 +9,5 @@ export const postBookmark = async (
     bookmarkName,
     content,
   });
-  console.log(`post북마크`, res.data);
   return res.data;
 };

@@ -59,15 +59,15 @@ export const Notice = () => {
 };
 
 const Container = css`
+  position: relative;
   display: flex;
-  height: 20rem;
-  width: 25rem;
   flex-direction: column;
+  height: fit-content;
+  width: 25rem;
+  margin: 0 auto;
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1), 0 -8px 10px -6px rgb(0 0 0 / 0.1);
-  height: fit-content;
-  position: relative;
 
   @media (max-width: 600px) {
     width: 300px;

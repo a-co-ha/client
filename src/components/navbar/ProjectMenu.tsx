@@ -28,7 +28,6 @@ export const ProjectMenu = () => {
   const { data: channelPages } = useGetChannelPages(channelId);
   const exitProject = useExitProject(channelId);
   let [isOpen, setIsOpen] = useState(false);
-  // const [channelName, setChannelName] = useRecoilState(channelNameState);
   const isChannelSidebarOpen = useRecoilValue(channelSidebarOpenState);
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
@@ -36,8 +35,6 @@ export const ProjectMenu = () => {
 
   useEffect(() => {
     if (channelPages !== undefined) {
-      // setChannelName(channelPages.channelName);
-      console.log(`뉴`, channelPages);
     }
   }, [channelPages, channelName]);
 
@@ -98,5 +95,3 @@ export const ProjectMenu = () => {
     </div>
   );
 };
-{
-}

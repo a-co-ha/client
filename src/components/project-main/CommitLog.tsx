@@ -62,7 +62,6 @@ export const CommitLog = () => {
   const [githubError, setGithubError] = useRecoilState(githubCommitErrorState);
 
   useLayoutEffect(() => {
-    console.log(`connectdata`, githubConnectData);
     if (
       githubConnectData.repoName !== '' &&
       githubConnectData.repoType === 'org'
@@ -115,7 +114,6 @@ export const CommitLog = () => {
       });
     }
   };
-  console.log(`issue`, githubOrgCommitData.length < 1);
 
   return (
     <div css={styles.commitLogBox} className="w-full max-w-md px-2 sm:px-0">
@@ -217,7 +215,6 @@ export const CommitLog = () => {
                 </button>
               </div>
             </div>
-            {/* <CommitLogNavbar /> */}
             <Tab.Panels className="mt-2 h-[307px]">
               {(githubConnectData.repoType === 'org'
                 ? githubOrgData['repos']
@@ -364,7 +361,6 @@ export const CommitLog = () => {
 
             <Tab.List className="flex space-x-1 rounded-b-md  p-1">
               {[`Client`, `Server`].map((category) => (
-                // {Object.keys(categories).map((category) => (
                 <Tab
                   key={category}
                   className={({ selected }) =>
@@ -380,7 +376,6 @@ export const CommitLog = () => {
                   {category}
                 </Tab>
               ))}
-              {/* <button onClick={() => getRepository.mutate()}>getRepository</button> */}
             </Tab.List>
             <div css={styles.commitLogPlusBtnBox}>
               {githubConnectData.repoName === '' ? (

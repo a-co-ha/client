@@ -19,7 +19,6 @@ import { ErrorBoundary } from '../error-boundary/index';
 import { Error } from '../error-boundary/Error';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
-import Selecto from 'react-selecto';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

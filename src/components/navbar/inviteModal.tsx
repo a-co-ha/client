@@ -15,14 +15,12 @@ export interface OgData {
 }
 
 export const InviteModal = () => {
-  const { userId, channelName, channelId } = useRecoilValue(inviteChannelState);
+  const { userId, channelName } = useRecoilValue(inviteChannelState);
   const [isInviteModal, setIsInviteModal] = useRecoilState(inviteModalState);
   let [isCopied, setIsCopied] = useState(false);
-  console.log(`인코딩 되기전`, userId, channelName);
   const encodedUserId = Buffer.from(String(userId)).toString('base64');
   const encodedChannelName = Buffer.from(channelName).toString('base64');
   const inviteUrl = `https://acoha.site/invite/${encodedUserId}?channelCode=${encodedChannelName}`;
-  console.log(`인코딩 된 후 `, encodedUserId, encodedChannelName);
   const onClickHandler = () => {
     setIsInviteModal(false);
     setIsCopied(false);

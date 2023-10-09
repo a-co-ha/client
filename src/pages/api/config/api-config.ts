@@ -13,7 +13,6 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-console.log('여기', process.env.NEXT_PUBLIC_DEV_SERVER_URL);
 
 api.interceptors.request.use(
   (config) => {
@@ -33,7 +32,6 @@ api.interceptors.response.use(
     return res;
   },
   (error) => {
-    console.log(`이거에러`, error);
     const errorStatus = error.response.status;
     if (errorStatus === 403) {
       if (window) window.location.href = `/error`;

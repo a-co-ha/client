@@ -20,7 +20,6 @@ export default function ProjectMain({
 }: {
   channelIdProps: string;
 }) {
-  console.log(`채널@@@`, channelIdProps);
   const setIsAdmin = useSetRecoilState(adminState(channelIdProps));
   const setInviteChannelData = useSetRecoilState(inviteChannelState);
   const setChannelGithubData = useSetRecoilState(
@@ -31,19 +30,15 @@ export default function ProjectMain({
 
   useLayoutEffect(() => {
     if (userData !== undefined && channelUsers !== undefined) {
-      console.log(`채널 유저스`, channelUsers);
       const myUserData = channelUsers.filter(
         (user: ChannelUser) => user.userId === userData.userId
       )[0];
       const isAdmin = myUserData.admin;
-      console.log(`이즈 어드민`, myUserData, isAdmin);
-      console.log('이거 인덱스 유저데이타', userData);
       const { userId, channelName, channelId } = channelUsers.filter(
         (user: ChannelUser) => user.admin === true
       )[0];
       setIsAdmin(isAdmin);
       setInviteChannelData({ userId, channelName, channelId });
-      console.log(`인바이트 인포`, userId, channelName);
       const channelGithubData = userData.channels.filter(
         (channel) => channelIdProps === String(channel.id)
       )[0];
@@ -52,7 +47,6 @@ export default function ProjectMain({
           repoName: channelGithubData.repoName,
           repoType: channelGithubData.repoType,
         });
-      console.log(`채널 깃허브`, channelGithubData);
     }
   }, [userData, channelUsers]);
 

@@ -4,7 +4,6 @@ export const getCalendarSchedule = async (
 ) => {
   try {
     const res = await api.get(`/api/calendar?channel=${channelId}`);
-    console.log(`get calendar`, res.data);
     return res.data;
   } catch (err) {
     console.error(err);

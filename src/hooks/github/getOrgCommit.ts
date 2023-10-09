@@ -25,7 +25,7 @@ export const useGetOrgCommit = (channelId: string | string[] | undefined) => {
         if (data == null) {
           setError(true);
         }
-        console.log('orgCommits', data);
+        'orgCommits', data;
         const commitList = await commitDataTransfer(data);
         commitList == null ? setError(true) : setOrgCommit(commitList);
       },

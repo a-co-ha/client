@@ -44,7 +44,6 @@ export const CahtBookmarkEditForm = ({
     });
 
   const onSubmit = (chatBookmark: ChatBookmarkFormType) => {
-    console.log(`submitData`, chatBookmark);
     setChatBookmarkEditContentShare({
       id: '',
       chatBookmarkTitle: chatBookmark.chatBookmarkTitle,

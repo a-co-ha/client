@@ -7,7 +7,6 @@ export const deleteSocketPage = async (
     const res = await api.delete(
       `/api/page/room/${roomId}?channel=${channelId}`
     );
-    console.log(`소켓 삭제`, res.data);
     return res.data;
   } catch (err) {
     console.error(err);
