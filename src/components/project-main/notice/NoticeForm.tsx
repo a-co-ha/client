@@ -5,7 +5,7 @@ import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
-import type { NoticeProps } from './Notices';
+import type { NoticeProps } from './Notice';
 
 export interface NoticeFormProps extends NoticeProps {
   selectNoticeId: string;

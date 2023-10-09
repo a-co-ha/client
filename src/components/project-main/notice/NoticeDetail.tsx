@@ -1,7 +1,7 @@
 import { useGetNotice } from '@/hooks/queries/main/useGetNotice';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { css } from '@emotion/react';
-import type { NoticeProps } from './Notices';
+import type { NoticeProps } from './Notice';
 
 export interface NoticeDetailProps extends NoticeProps {
   selectNoticeId: string;

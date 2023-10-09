@@ -2,7 +2,7 @@ import { useDeleteNotice } from '@/hooks/queries/main/useDeleteNotice';
 import { NoticeType, useGetNotices } from '@/hooks/queries/main/useGetNotices';
 import { useGetUrlInfo } from '@/hooks/useGetUrlInfo';
 import { css } from '@emotion/react';
-import type { NoticeProps } from './Notices';
+import type { NoticeProps } from './Notice';
 
 interface NoticeListProps extends NoticeProps {
   setSelectNoticeId: (id: string) => void;
