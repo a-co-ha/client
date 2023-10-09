@@ -4,7 +4,6 @@ import { postProject } from '@/pages/api/project/postProject';
 import { useSetRecoilState } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
 import { patchProjectDefaultImage } from '@/pages/api/project/patchProjectDefaultImage';
-import { toast } from 'react-toastify';
 import { getCookie } from 'cookies-next';
 import type { AxiosError } from 'axios';
 import type { PostProject } from '@/pages/api/project/type';

@@ -22,7 +22,6 @@ export const useGetOrgIssue = (channelId: string | string[] | undefined) => {
       getOrgIssue(orgRepoName.org, orgRepoName.repo),
     {
       onSuccess: async (data) => {
-        'orgIssues', data;
         const issueList = await commitDataTransfer(data);
         issueList == null ? setError(true) : setOrgIssue(issueList);
       },

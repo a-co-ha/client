@@ -19,7 +19,6 @@ export const useGetRepo = (channelId: string | string[] | undefined) => {
         setError(true);
         `github Error!`;
       }
-      'repo 하나조회입니다', data;
       setRepo(data);
     },
     onError: async () => {

@@ -6,7 +6,6 @@ import { patchProjectName } from '@/pages/api/project/patchProjectName';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { channelNameState } from '@/recoil/project/atom';
 
@@ -15,7 +14,6 @@ export const usePatchProjectName = (
 ) => {
   const userId = getCookie(`myUserId`);
   const queryClient = useQueryClient();
-  const router = useRouter();
   const setChannelName = useSetRecoilState(channelNameState);
 
   return useMutation<ProjectChangeInfoResponse, AxiosError, ProjectChangeName>(

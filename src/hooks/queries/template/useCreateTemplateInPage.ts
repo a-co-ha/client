@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useGetUrlInfo } from '../../useGetUrlInfo';
 import { postTemplateInPage } from '@/pages/api/templete/postTemplateInPage';
 
 export const useCreateTemplateInPage = (

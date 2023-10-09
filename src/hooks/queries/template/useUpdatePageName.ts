@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useGetUrlInfo } from '../../useGetUrlInfo';
 import { patchPageName } from '@/pages/api/templete/patchPageName';
 
 export const useUpadatePageName = (

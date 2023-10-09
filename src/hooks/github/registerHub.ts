@@ -29,7 +29,6 @@ export const useRegisterHub = (channelId: string | string[] | undefined) => {
       registerHub(channelId, registerData.repoName, registerData.repoType),
     {
       onSuccess: (data) => {
-        'register', data;
         setGithubConnectData({
           repoName: data.name,
           repoType: data.type,

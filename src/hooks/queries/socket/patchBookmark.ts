@@ -3,7 +3,6 @@ import { patchBookmark } from '@/pages/api/socket/patchBookmark';
 import type { AxiosError } from 'axios';
 import type { ChatBookmark } from '@/pages/api/socket/type';
 import type { ChatBookmarkFormType } from '@/components/chat-bookmark/type';
-import { useRouter } from 'next/router';
 
 export const usePatchBookmark = (channelId: string, pageId: string) => {
   const queryClient = useQueryClient();
@@ -16,7 +15,7 @@ export const usePatchBookmark = (channelId: string, pageId: string) => {
         chatBookmark.chatBookmarkContent
       ),
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         queryClient.invalidateQueries([`getChatBookmarks`, pageId]);
       },
     }

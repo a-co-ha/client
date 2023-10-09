@@ -25,7 +25,6 @@ export const Notice = () => {
   const changeNoticeFormStatus = (status: boolean) => {
     setIsEdit(status);
   };
-  //sdfaf
   return (
     <section css={Container}>
       <Header

@@ -24,7 +24,6 @@ export const useGetRepoCommit = (channelId: string | string[] | undefined) => {
         if (data == null) {
           setError(true);
         }
-        'repoCommits', data;
         const commitList = await commitDataTransfer(data);
         commitList == null ? setError(true) : setRepoCommit(commitList);
       },
