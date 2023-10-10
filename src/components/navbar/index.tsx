@@ -33,7 +33,6 @@ export const NavBar = () => {
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={Error} onReset={reset}>
-          {/* <Suspense fallback={<Loading />}> */}
           <div css={styles.navBar}>
             <div
               css={styles.navBarBackIconBox(isChannelSidebarOpen)}
@@ -45,7 +44,6 @@ export const NavBar = () => {
             <Title />
             <LoginBtn />
           </div>
-          {/* </Suspense> */}
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

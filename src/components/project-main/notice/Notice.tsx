@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { lazy, Suspense, useState } from 'react';
+import { lazy, useState } from 'react';
 import { Header } from './Header';
 
 const NoticeDetail = lazy(() => import('./NoticeDetail'));
@@ -31,28 +31,26 @@ export const Notice = () => {
         setActiveComponent={changeActiveComponent}
         changeNoticeFormStatus={changeNoticeFormStatus}
       />
-      <Suspense fallback={<>'loading..'</>}>
-        {activeComponent === 'list' && (
-          <NoticeList
-            setActiveComponent={changeActiveComponent}
-            setSelectNoticeId={(id: string) => setSelectNoticeId(id)}
-          />
-        )}
-        {activeComponent === 'form' && (
-          <NoticeForm
-            setActiveComponent={changeActiveComponent}
-            selectNoticeId={selectNoticeId}
-            isEdit={isEdit}
-          />
-        )}
-        {activeComponent === 'detail' && (
-          <NoticeDetail
-            setActiveComponent={changeActiveComponent}
-            selectNoticeId={selectNoticeId}
-            changeNoticeFormStatus={changeNoticeFormStatus}
-          />
-        )}
-      </Suspense>
+      {activeComponent === 'list' && (
+        <NoticeList
+          setActiveComponent={changeActiveComponent}
+          setSelectNoticeId={(id: string) => setSelectNoticeId(id)}
+        />
+      )}
+      {activeComponent === 'form' && (
+        <NoticeForm
+          setActiveComponent={changeActiveComponent}
+          selectNoticeId={selectNoticeId}
+          isEdit={isEdit}
+        />
+      )}
+      {activeComponent === 'detail' && (
+        <NoticeDetail
+          setActiveComponent={changeActiveComponent}
+          selectNoticeId={selectNoticeId}
+          changeNoticeFormStatus={changeNoticeFormStatus}
+        />
+      )}
     </section>
   );
 };

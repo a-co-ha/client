@@ -5,7 +5,6 @@ import { useSetRecoilState } from 'recoil';
 import { channelSidebarOpenState } from '@/recoil/project/atom';
 import * as styles from './styles';
 import { Notice } from './notice/Notice';
-import { Suspense } from 'react';
 import { RecentPosts } from './RecentPosts';
 
 export const MainContent = () => {
@@ -17,16 +16,14 @@ export const MainContent = () => {
   };
 
   return (
-    <Suspense fallback={'loaing..'}>
-      <div css={styles.flexColumnCenter}>
-        <div css={styles.mainContentBox} onClick={onClickHandler}>
-          <Notice />
-          <Progress />
-          <MainCalendar />
-          <RecentPosts />
-          <CommitLog />
-        </div>
+    <div css={styles.flexColumnCenter}>
+      <div css={styles.mainContentBox} onClick={onClickHandler}>
+        <Notice />
+        <Progress />
+        <MainCalendar />
+        <RecentPosts />
+        <CommitLog />
       </div>
-    </Suspense>
+    </div>
   );
 };

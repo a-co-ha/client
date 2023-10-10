@@ -55,16 +55,14 @@ export const Profile = () => {
     <div css={styles.profileBox}>
       {user && (
         <div css={styles.profileInnerBox}>
+          <div
+            css={styles.navBarRightSidebarIconBox(isChannelRightSidebarOpen)}
+            onClick={rightSidebarClickHandler}
+          >
+            <Bars3Icon />
+          </div>
           <Menu as="div" className="relative">
             <Menu.Button>
-              <div
-                css={styles.navBarRightSidebarIconBox(
-                  isChannelRightSidebarOpen
-                )}
-                onClick={rightSidebarClickHandler}
-              >
-                <Bars3Icon />
-              </div>
               <div
                 css={styles.profileImageBox(isAlert)}
                 onClick={() => {

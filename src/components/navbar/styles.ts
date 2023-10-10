@@ -59,9 +59,6 @@ export const navBarBackIconBox = (isOpen: boolean) => css`
 export const navBarRightSidebarIconBox = (isOpen: boolean) => css`
   display: none;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: -90%;
   height: 100%;
   color: black;
   z-index: 5;
@@ -367,7 +364,9 @@ export const loginModalBtnBox = css`
 export const profileInnerBox = css`
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
+  height: 100%;
   padding-inline: 1rem;
   gap: 0.5rem;
   cursor: pointer;
@@ -385,8 +384,6 @@ export const profileLogoutBtn = css`
     color: rgba(0, 0, 0, 0.4);
   }
   @media screen and (max-width: 450px) {
-    position: absolute;
-    left: 25%;
     height: 100%;
   }
 `;
