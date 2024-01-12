@@ -1511,10 +1511,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:2.0.0"\
       ],\
       [\
-        "jiti",\
-        "npm:1.21.0"\
-      ],\
-      [\
         "js-levenshtein",\
         "npm:1.1.6"\
       ],\
@@ -1616,7 +1612,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "lru-cache",\
-        "npm:6.0.0"\
+        "npm:7.14.1"\
       ],\
       [\
         "make-fetch-happen",\
@@ -2093,10 +2089,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "postcss-load-config",\
         "virtual:4c2aeb448a13b49bf7cb4a0ad705adbaf2cd848026109a11c6f5e26ffcf4e565541e2c71b2fea77a16d226ea57079b152ce9f08e5d15290b2c1f5c908044732e#npm:3.1.4"\
-      ],\
-      [\
-        "postcss-loader",\
-        "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.3.4"\
       ],\
       [\
         "postcss-nested",\
@@ -2800,7 +2792,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
             ["next-compose-plugins", "npm:2.2.1"],\
             ["postcss", "npm:8.4.33"],\
-            ["postcss-loader", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.3.4"],\
             ["prettier", "npm:2.8.2"],\
             ["react", "npm:18.2.0"],\
             ["react-beautiful-dnd", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.1"],\
@@ -4259,7 +4250,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.2"],\
             ["next-compose-plugins", "npm:2.2.1"],\
             ["postcss", "npm:8.4.33"],\
-            ["postcss-loader", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.3.4"],\
             ["prettier", "npm:2.8.2"],\
             ["react", "npm:18.2.0"],\
             ["react-beautiful-dnd", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:13.1.1"],\
@@ -5191,30 +5181,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["parse-json", "npm:5.2.0"],\
             ["path-type", "npm:4.0.0"],\
             ["yaml", "npm:1.10.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:8.3.6", {\
-          "packageLocation": "./.yarn/cache/cosmiconfig-npm-8.3.6-a5566e2779-dc339ebea4.zip/node_modules/cosmiconfig/",\
-          "packageDependencies": [\
-            ["cosmiconfig", "npm:8.3.6"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:12504045e4c73ab09476976c6671c2c73095ca61950573701ad598ba0a7a3a5bd58579c6faa405ef42f281fbfdf661cafd06a9870071b476f91400ac36db921d#npm:8.3.6", {\
-          "packageLocation": "./.yarn/__virtual__/cosmiconfig-virtual-e875f6ff5f/0/cache/cosmiconfig-npm-8.3.6-a5566e2779-dc339ebea4.zip/node_modules/cosmiconfig/",\
-          "packageDependencies": [\
-            ["cosmiconfig", "virtual:12504045e4c73ab09476976c6671c2c73095ca61950573701ad598ba0a7a3a5bd58579c6faa405ef42f281fbfdf661cafd06a9870071b476f91400ac36db921d#npm:8.3.6"],\
-            ["@types/typescript", null],\
-            ["import-fresh", "npm:3.3.0"],\
-            ["js-yaml", "npm:4.1.0"],\
-            ["parse-json", "npm:5.2.0"],\
-            ["path-type", "npm:4.0.0"],\
-            ["typescript", null]\
-          ],\
-          "packagePeers": [\
-            "@types/typescript",\
-            "typescript"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7599,15 +7565,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["jiti", [\
-        ["npm:1.21.0", {\
-          "packageLocation": "./.yarn/cache/jiti-npm-1.21.0-baebd5985a-a7bd5d6392.zip/node_modules/jiti/",\
-          "packageDependencies": [\
-            ["jiti", "npm:1.21.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["js-levenshtein", [\
         ["npm:1.1.6", {\
           "packageLocation": "./.yarn/cache/js-levenshtein-npm-1.1.6-ab883e61a3-409f052a7f.zip/node_modules/js-levenshtein/",\
@@ -9401,35 +9358,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["postcss-loader", [\
-        ["npm:7.3.4", {\
-          "packageLocation": "./.yarn/cache/postcss-loader-npm-7.3.4-c196834792-f109eb2665.zip/node_modules/postcss-loader/",\
-          "packageDependencies": [\
-            ["postcss-loader", "npm:7.3.4"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.3.4", {\
-          "packageLocation": "./.yarn/__virtual__/postcss-loader-virtual-12504045e4/0/cache/postcss-loader-npm-7.3.4-c196834792-f109eb2665.zip/node_modules/postcss-loader/",\
-          "packageDependencies": [\
-            ["postcss-loader", "virtual:4b378cd58f6701f35eed58fc5622b07e166c4d9fea2b14a925b9220493a3fb9940c8f7229bf2f52dbfbfdde42464a09f54f22afad7057821625bd5d66251819d#npm:7.3.4"],\
-            ["@types/postcss", null],\
-            ["@types/webpack", null],\
-            ["cosmiconfig", "virtual:12504045e4c73ab09476976c6671c2c73095ca61950573701ad598ba0a7a3a5bd58579c6faa405ef42f281fbfdf661cafd06a9870071b476f91400ac36db921d#npm:8.3.6"],\
-            ["jiti", "npm:1.21.0"],\
-            ["postcss", "npm:8.4.33"],\
-            ["semver", "npm:7.5.4"],\
-            ["webpack", null]\
-          ],\
-          "packagePeers": [\
-            "@types/postcss",\
-            "@types/webpack",\
-            "postcss",\
-            "webpack"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["postcss-nested", [\
         ["npm:6.0.0", {\
           "packageLocation": "./.yarn/cache/postcss-nested-npm-6.0.0-161af1b204-2105dc52cd.zip/node_modules/postcss-nested/",\
@@ -10333,14 +10261,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/semver-npm-7.3.8-25a996cb4f-ba9c7cbbf2.zip/node_modules/semver/",\
           "packageDependencies": [\
             ["semver", "npm:7.3.8"],\
-            ["lru-cache", "npm:6.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:7.5.4", {\
-          "packageLocation": "./.yarn/cache/semver-npm-7.5.4-c4ad957fcd-12d8ad952f.zip/node_modules/semver/",\
-          "packageDependencies": [\
-            ["semver", "npm:7.5.4"],\
             ["lru-cache", "npm:6.0.0"]\
           ],\
           "linkType": "HARD"\
