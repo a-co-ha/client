@@ -16,13 +16,6 @@ services:
       - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     environment:
       DISABLE_IPV6: 'true'
-    # environment:
-    # DB_MYSQL_HOST: db
-    # DB_MYSQL_PORT: 3306
-    # DB_MYSQL_USER: npm
-    # DB_MYSQL_PASSWORD: "Qwer1234!!"
-    # DB_MYSQL_NAME: npm
-    # DISABLE_IPV6: 'true'
     depends_on:
       - acoha-next
 
@@ -38,7 +31,6 @@ services:
 
   acoha-next:
     container_name: acoha-container
-    # 현재 경로에 이미지 빌드
     build:
       context: .
       dockerfile: Dockerfile.prod

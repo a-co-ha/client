@@ -13,11 +13,6 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
-  # whoami:
-  #   image: jwilder/whoami
-  #   environment:
-  #     - VIRTUAL_HOST=whoami.local
-
   acoha-next:
     container_name: acoha-container
     # 현재 경로에 이미지 빌드

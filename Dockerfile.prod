@@ -13,24 +13,7 @@ COPY . .
 # product 빌드 == next build
 RUN yarn build
 
-# RUN addgroup --system --gid 1001 nodejs
-# RUN adduser --system --uid 1001 nextjs
-
-# runner
-# FROM node:18-alpine AS runner
-# COPY --from=builder /app/next.config.js ./
-# COPY --from=builder /app/public ./public
-# COPY --from=builder /app/.next ./.next
-# COPY --from=builder /app/.next/server/pages /usr/share/nginx/html
-# nextjs를 docker에 올리기위해 필요
-# COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-# nextjs 정적 파일의 output을 자동으로 추적해서 이미지 사이즈 감소
-# COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-# COPY --from=builder /app/package.json ./package.json
-
 # 3000번 포트 노출
 EXPOSE 3000
 # yarn dev 스크립트 실행
 CMD ["yarn","start"]
-# 그리고 Dockerfile로 docker 이미지를 빌드해야한다.
-# $ docker build .
